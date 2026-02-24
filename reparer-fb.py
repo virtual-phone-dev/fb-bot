@@ -19,6 +19,20 @@ def extraire_fichier(compte):
     
 
 
+def preparer_storage_state(fichier):
+    dossier = os.path.dirname(fichier)
+    if dossier:
+        os.makedirs(dossier, exist_ok=True)
+
+    if not os.path.exists(fichier):
+        with open(fichier, "w", encoding="utf-8") as f:
+            json.dump({
+                "cookies": [],
+                "origins": []
+            }, f, indent=4)
+            
+            
+
 # VERIFIER COMMANDE CONSOLE
 async def verifier_commande(duree_minutes):
     secondes = duree_minutes * 60
@@ -67,16 +81,14 @@ async def main():
 
             print(f"\n===== {index+1}/{total} =====")
             print("Compte :", fichier)
-
+            
+            preparer_storage_state(fichier)
+            
             contexte = await navigateur.new_context(storage_state=fichier)
             page = await outils.ouvrir_facebook(contexte)
 
-            # print(f"⏳ pause {PAUSE_MINUTES} min")
-            # await outils.pause(PAUSE_MINUTES)
-
             await verifier_commande(PAUSE_MINUTES)
             await outils.sauvegarder_cookies(contexte, fichier)
-
             await contexte.close()
 
         await navigateur.close()
