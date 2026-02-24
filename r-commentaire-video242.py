@@ -73,21 +73,25 @@ JSON_FILE_COMMENTED_POSTS = "commented_posts.json"
 # Charger la blacklist si elle existe déjà
 try:
     with open("blacklist.json", "r", encoding="utf-8") as f:
-        BLACKLIST = set(json.load(f))
+        BLACKLIST = json.load(f)
 except:
-    BLACKLIST = set()
+    BLACKLIST = {}
 
 # Pages en erreur (à retenter)
 ERREURS = {}
 
-# Fonction pour charger les posts déjà commentés
-#def load_commented_posts():
-#    try:
-#        with open(JSON_FILE_COMMENTED_POSTS, "r", encoding="utf-8") as f:
-#            return set(json.load(f))
-#    except FileNotFoundError:
-#        return set()
 
+
+def extraire_fichier(compte):
+    if isinstance(compte, str):
+        fichier = compte
+    else:
+        fichier = compte["fichier"]
+
+    ignore = fichier.startswith("-")
+    return fichier.lstrip("-"), ignore
+    
+    
 
 def load_commented_posts():
 
@@ -124,7 +128,9 @@ def save_commented_posts(posts_set):
 # Charger les cookies
 async def load_cookies(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
-        raw_cookies = json.load(f)
+        data = json.load(f)
+        raw_cookies = data["cookies"] if isinstance(data, dict) else data
+        
     cookies = []
     for c in raw_cookies:
         cookies.append({
@@ -358,7 +364,7 @@ async def main():
         #await ensure_browser()
 
         browser = await p.chromium.launch(
-            headless=False,
+            headless=True,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
@@ -372,49 +378,72 @@ async def main():
 
         while True:  # boucle infinie
             for account in ACCOUNTS:
+                account_file, ignore = extraire_fichier(account)
+
+                if ignore:
+                    print("⏭ compte ignoré :", account_file)
+                    continue
+        
                 #url = next(pages_cycle)
                 page_obj = next(pages_cycle)
                 url = page_obj["url"]  # 🔹 on récupère une fois
 
                 # ignorer blacklist
-                if url in BLACKLIST:
-                    print(f"🚫 {url} est dans la blacklist → ignoré")
+                if url in BLACKLIST and account_file in BLACKLIST[url]:
+                    print(f"{url} est dans la blacklist → ignoré")
                     continue
 
-                ok = await visiter_page(browser, account, url, commented_posts)
+                ok = await visiter_page(browser, account_file, url, commented_posts)
 
                 if not ok:
                     # Initialiser la liste des comptes qui ont échoué
                     if url not in ERREURS:
                         ERREURS[url] = {"comptes_tentes": []}
-                    ERREURS[url]["comptes_tentes"].append(account)
+                    ERREURS[url]["comptes_tentes"].append(account_file)
 
                     # Si tous les comptes ont échoué → blacklist
                     if len(ERREURS[url]["comptes_tentes"]) == len(ACCOUNTS):
-                        print(f"⚠️ {url} a échoué avec tous les comptes → blacklisté")
-                        BLACKLIST.add(url)
+                        print(f"{url} a échoué avec tous les comptes → blacklisté")
+                        
+                        if url not in BLACKLIST:
+                            BLACKLIST[url] = []
+
+                        if account_file not in BLACKLIST[url]:
+                            BLACKLIST[url].append(account_file)
+
                         with open("blacklist.json", "w", encoding="utf-8") as f:
-                            json.dump(list(BLACKLIST), f, indent=2)
+                            json.dump(BLACKLIST, f, indent=2)
                         del ERREURS[url]
 
             # Retenter les pages en erreur toutes les 3 cycles
             if compteur % 3 == 0 and ERREURS:
                 print("🔄 Retente les pages échouées...")
                 for failed_url, infos in list(ERREURS.items()):
+                    
                     for acc in ACCOUNTS:
-                        if acc not in infos["comptes_tentes"]:
-                            ok = await visiter_page(browser, acc, failed_url, commented_posts)
+                        account_file, ignore = extraire_fichier(acc)
+                        if account_file not in infos["comptes_tentes"]:
+                            
+                            if ignore:
+                                continue
+
+                            ok = await visiter_page(browser, account_file, failed_url, commented_posts)
                             if ok:
-                                print(f"✅ Succès en réessayant {failed_url} avec {acc}")
+                                print(f"✅ Succès en réessayant {failed_url} avec {account_file}")
                                 del ERREURS[failed_url]
                                 break
                             else:
-                                infos["comptes_tentes"].append(acc)
+                                infos["comptes_tentes"].append(account_file)
                                 if len(infos["comptes_tentes"]) == len(ACCOUNTS):
-                                    print(f"⚠️ {failed_url} encore raté avec tous les comptes → blacklist")
-                                    BLACKLIST.add(failed_url)
+                                    print(f"{failed_url} encore raté avec tous les comptes → blacklist")
+                                    if failed_url not in BLACKLIST:
+                                        BLACKLIST[failed_url] = []
+                                        
+                                    if account_file not in BLACKLIST[failed_url]:
+                                        BLACKLIST[failed_url].append(account_file)
+
                                     with open("blacklist.json", "w", encoding="utf-8") as f:
-                                        json.dump(list(BLACKLIST), f, indent=2)
+                                        json.dump(BLACKLIST, f, indent=2)
                                     del ERREURS[failed_url]
 
                 compteur += 1
