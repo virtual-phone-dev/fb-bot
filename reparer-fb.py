@@ -64,7 +64,7 @@ async def verifier_commande(duree_minutes):
     
 # MAIN
 async def main():
-    comptes = json.load(open("accounts.json", encoding="utf-8"))
+    comptes = json.load(open("accounts-florinato.json", encoding="utf-8"))
 
     async with async_playwright() as p:
         navigateur = await p.chromium.launch(headless=False)
