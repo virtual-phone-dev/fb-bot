@@ -364,7 +364,7 @@ async def main():
         #await ensure_browser()
 
         browser = await p.chromium.launch(
-            headless=True,
+            headless=False,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",

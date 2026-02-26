@@ -1,7 +1,6 @@
-import asyncio, random
+import asyncio
 from playwright.async_api import async_playwright
-from outils_playwright import (creer_contexte, creer_page, aller, trouver_post, trouver_lien_post, 
-ouvrir_commentaire, envoyer_commentaire, pause_random, charger_json, post_deja_commente, ajouter_post, est_blacklist, ajouter_blacklist)
+from outils_playwright import (creer_contexte, creer_page, aller, envoyer_commentaire, charger_json, post_deja_commente, est_blacklist, ajouter_blacklist)
 
 FICHIER_POSTS = "sauvegarde/posts_commentes.json"
 FICHIER_BLACKLIST = "sauvegarde/blacklist.json"
@@ -17,28 +16,14 @@ async def visiter(browser, compte, url, comments, posts, blacklist):
 
     try:
         await aller(page, url)
-        post = await trouver_post(page)
-        lien = await trouver_lien_post(post)
-
-        if post_deja_commente(posts, lien):
-            print("Deja commenté :", lien)
-            await contexte.close()
-            return
-
-        await ouvrir_commentaire(post, page)
-        texte = random.choice(comments)
-        await envoyer_commentaire(page, texte)
-        print("Commentaire envoyé :", lien)
-
-        ajouter_post(posts, FICHIER_POSTS, lien)
-        await pause_random(30, 60)
-
+        await envoyer_commentaire(page, comments, posts, FICHIER_POSTS)
+        
     except Exception as e:
         print("Erreur :", e)
         ajouter_blacklist(blacklist, FICHIER_BLACKLIST, fichier, url)
-
+        
     await contexte.close()
-    
+
 
 async def main():
     comptes = charger_json("accounts.json", [])

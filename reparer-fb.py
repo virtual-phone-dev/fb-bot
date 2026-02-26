@@ -8,7 +8,6 @@ PAUSE_MINUTES = 1
 
 # EXTRAIRE INFOS COMPTE
 def extraire_fichier(compte):
-
     if isinstance(compte, str):
         fichier = compte
     else:
@@ -86,7 +85,7 @@ async def main():
             
             contexte = await navigateur.new_context(storage_state=fichier)
             page = await outils.ouvrir_facebook(contexte)
-
+            
             await verifier_commande(PAUSE_MINUTES)
             await outils.sauvegarder_cookies(contexte, fichier)
             await contexte.close()
