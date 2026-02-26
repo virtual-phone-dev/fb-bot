@@ -1,6 +1,7 @@
 import asyncio
+from itertools import cycle;
 from playwright.async_api import async_playwright
-from outils_playwright import (creer_contexte, creer_page, aller, envoyer_commentaire, charger_json, post_deja_commente, est_blacklist, ajouter_blacklist)
+from outils_playwright import (creer_context, creer_page, aller, envoyer_commentaire, charger_json, post_deja_commente, est_blacklist, ajouter_blacklist)
 
 FICHIER_POSTS = "sauvegarde/posts_commentes.json"
 FICHIER_BLACKLIST = "sauvegarde/blacklist.json"
@@ -11,7 +12,7 @@ async def visiter(browser, compte, url, comments, posts, blacklist):
     fichier = compte["fichier"]
     if est_blacklist(blacklist, fichier, url): print("Blacklist :", fichier, url); return
 
-    contexte = await creer_contexte(browser, fichier)
+    contexte = await creer_context(browser, fichier)
     page = await creer_page(contexte)
 
     try:
@@ -27,17 +28,21 @@ async def visiter(browser, compte, url, comments, posts, blacklist):
 
 async def main():
     comptes = charger_json("accounts.json", [])
-    pages = charger_json("liste-pages-congo.json", [])
+    pages = charger_json("pages-tout-pays.json", [])
     comments = charger_json("phrase-a-commenter.json", [])
     posts = charger_json(FICHIER_POSTS, [])
     blacklist = charger_json(FICHIER_BLACKLIST, {})
+    
+    # filtre comptes actifs
+    comptes = [c for c in comptes if not c["fichier"].startswith("-")]
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=False, args=["--disable-blink-features=AutomationControlled"])
-
+        cycle_comptes = cycle(comptes)
+        
         while True:
-            for i, page in enumerate(pages):
-                compte = comptes[i % len(comptes)]
-                await visiter(browser, compte, page["url"], comments, posts, blacklist)
+            for page in pages:
+                await visiter(browser, next(cycle_comptes), page["url"], comments, posts, blacklist)
 
 asyncio.run(main())
+

@@ -79,6 +79,15 @@ async def creer_contexte(browser, cookie_file):
     await injecter_cookies(contexte,cookie_file)
     return contexte
 
+
+    
+async def creer_context(browser, cookie_file):
+    contexte = await browser.new_context(storage_state=cookie_file)
+    contexte.set_default_timeout(180000)
+    contexte.set_default_navigation_timeout(180000)
+    return contexte
+    
+    
 # Créer page
 async def creer_page(contexte):
     page = await contexte.new_page()

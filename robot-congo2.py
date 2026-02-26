@@ -54,7 +54,7 @@ with open("accounts.json", "r", encoding="utf-8") as f:
     ACCOUNTS = json.load(f)
 
 # Charger la liste des pages
-with open("pages.json", "r", encoding="utf-8") as f:
+with open("pages-tout-pays.json", "r", encoding="utf-8") as f:
     PAGES = json.load(f)
 #URLS = [p["url"] for p in PAGES] # Extraire directement les URL
 
@@ -364,7 +364,7 @@ async def main():
     async with async_playwright() as p:
 
         browser = await p.chromium.launch(
-            headless=False,
+            headless=True,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
