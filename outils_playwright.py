@@ -253,29 +253,22 @@ async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, co
         await asyncio.sleep(random.uniform(4, 6))
         await page.keyboard.press("Enter")
 
-        print("Commentaire envoyé")
-        #print(f"Post : {identifiant_post}")
-        print(f"Commentaire : {comment}")
+        print(f"✅ Commentaire envoyé : {comment}")
 
-        await asyncio.sleep(random.uniform(24,30))
+        await asyncio.sleep(random.uniform(10, 15))
         return True
 
     # CAS 2
     if post_link:
-        print("a25")
         comment_box=page.locator("div[role='textbox']").first
         comment=random.choice(COMMENTS)
-        print("a26")
         await comment_box.fill(comment)
-        print("a27")
         await page.keyboard.press("Enter")
 
         print("✅ Commentaire envoyé (cas 2)")
         #print(f"Post : {identifiant_post}")
-        print(f"Commentaire : {comment}")
-
-        await asyncio.sleep(random.uniform(24,30))
-        print("a28")
+        print(f"✅ Commentaire réussi : {comment}")
+        await asyncio.sleep(random.uniform(10, 15))
         return True
 
     # CAS 3

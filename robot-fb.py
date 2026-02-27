@@ -1,7 +1,7 @@
 import asyncio
 from itertools import cycle;
 from playwright.async_api import async_playwright
-from outils_playwright import (creer_context, creer_page, aller, envoyer_commentaire, charger_json, post_deja_commente, est_blacklist, ajouter_blacklist)
+from outils_playwright import (creer_context, creer_page, aller, envoyer_commentaire, charger_json, post_deja_commente, est_blacklist, ajouter_blacklist, sauvegarder_json)
 
 FICHIER_POSTS = "sauvegarde/posts_commentes.json"
 FICHIER_BLACKLIST = "sauvegarde/blacklist.json"
