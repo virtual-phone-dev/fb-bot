@@ -33,6 +33,18 @@ async def main():
     posts = charger_json(FICHIER_POSTS, [])
     blacklist = charger_json(FICHIER_BLACKLIST, {})
     
+    # pour choisir la zone ou demarrer
+    index_zone = charger_json("index_zone.json", {})
+    start_zone = index_zone.get("start_zone")
+
+    start_index = 0
+    if start_zone:
+        for i, item in enumerate(pages):
+            if item.get("zone") == start_zone:
+                start_index = i + 1
+                print("Démarrage à partir de la zone :", start_zone)
+                break
+    
     # filtre comptes actifs
     comptes = [c for c in comptes if not c["fichier"].startswith("-")]
 
@@ -41,7 +53,16 @@ async def main():
         cycle_comptes = cycle(comptes)
         
         while True:
-            for page in pages:
+            for page in pages[start_index:]:
+                
+                # SI C’EST UNE ZONE → ON SAUVEGARDE
+                if "zone" in page:
+                    print("Nouvelle zone détectée :", page["zone"])
+                    sauvegarder_json("index_zone.json", {"start_zone": page["zone"]})
+                    continue
+        
+                if "url" not in page:
+                    continue
                 await visiter(browser, next(cycle_comptes), page["url"], comments, posts, blacklist)
 
 asyncio.run(main())

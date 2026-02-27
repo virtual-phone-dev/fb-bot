@@ -55,6 +55,7 @@ async def sauvegarder_cookies(contexte, fichier):
         json.dump(state,f,indent=4,ensure_ascii=False)
     print("✅ cookies sauvegardés :", fichier)
 
+
 # Ouvrir Facebook
 async def ouvrir_facebook(contexte):
     page = await contexte.new_page()
@@ -62,14 +63,17 @@ async def ouvrir_facebook(contexte):
     await page.goto("https://www.facebook.com",timeout=0)
     return page
 
+
 # Pause en minutes
 async def pause(minutes):
     await asyncio.sleep(minutes * 60)
+
 
 # Injecter cookies
 async def injecter_cookies(contexte, fichier):
     cookies = charger_cookies(fichier)
     await contexte.add_cookies(cookies)
+
 
 # Créer contexte
 async def creer_contexte(browser, cookie_file):
@@ -93,6 +97,7 @@ async def creer_page(contexte):
     page = await contexte.new_page()
     await appliquer_stealth(page)
     return page
+
 
 # Aller vers URL
 async def aller(page, url):
@@ -159,173 +164,100 @@ def ajouter_blacklist(blacklist, fichier, compte, page):
         blacklist[compte].append(page)
         sauvegarder_json(fichier, blacklist)
 
-
-        
-async def envoyer_commentairee(page, COMMENTS, posts=None, fichier_posts=None):
-    print("on cherche le post puis on clique sur le bouton Commenter")
-
-    # cas 1
-    post_comment_button=page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first
-    count_post_comment_button=await post_comment_button.count()
-    print("count_post_comment_button",count_post_comment_button)
-
-    if count_post_comment_button>0:
-        await post_comment_button.click()
-        print("Attente apparition zone commentaire")
-        await asyncio.sleep(random.uniform(24,60))
-
-        post=await page.query_selector('[id][data-ad-preview="message"]')
-
-        comment_box=page.locator("div[role='textbox']").first
-        comment=random.choice(COMMENTS)
-        await comment_box.fill(comment)
-
-        await asyncio.sleep(random.uniform(6,12))
-        await page.keyboard.press("Enter")
-
-        print("✅ Commentaire envoyé même sans texte du post")
-        await asyncio.sleep(random.uniform(24, 30))
-        return True
-    
-    # cas 2
-    first_post2=page.locator('[role="article"]').nth(0)
-    post_link=await first_post2.locator("a[href*='/posts/'], a[href*='/videos/']").nth(0).get_attribute("href")
-
-    if post_link:
-        good_url=post_link.split('?')[0]
-        print(f"bb ✅ Lien du post le plus récent : {good_url}")
-
-        if posts and post_deja_commente(posts,good_url):
-            print(f"hh 🔄 Post déjà commenté : {good_url}")
-            return True
-
-        comment_box=page.locator("div[role='textbox']").first
-        comment=random.choice(COMMENTS)
-        await comment_box.fill(comment)
-        await page.keyboard.press("Enter")
-
-        print("Commentaire réussi")
-        print(f"Post : {good_url}")
-        print(f"Commentaire : {comment}")
-
-        print("gg on sauvegarde le lien du post")
-        if posts and fichier_posts: ajouter_post(posts, fichier_posts, good_url)
-        print("zz post sauvegarder")
-
-        await asyncio.sleep(random.uniform(24, 30))
-        return True
-
-    # cas 3
-    print("❌ Aucun selecteur commentaire trouvé (Cas 3 à ajouter)")
-    return False
-    
     
     
 async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, commented_posts=None, context=None):
-    print("Recherche du post pour commenter...")
     identifiant_post=None; post_link=None
-
+    
+    # 🔹 Vérification indisponibilité
+    try:
+        indisponible = await page.evaluate('''() => { return document.body.innerText.includes("Ce contenu n’est pas disponible pour le moment") }''')
+        if indisponible:
+            print("❌ Page indisponible, fermeture du navigateur")
+            if context:
+                await page.close()
+                await context.close()
+            return False
+    except:
+        pass
+        
     # CHOIX DU PREMIER POST
     post_comment_button = page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first
     count_post_comment_button = await post_comment_button.count()
 
     if count_post_comment_button > 0:        
-        print("Source utilisée : article nth(0)")
-        source_post = page.locator('[role="article"]').nth(0)
-        print("a00")
-    else:
-        print("Source utilisée : bouton commentaire")
+        #print("Source: bouton commentaire")
         source_post = post_comment_button
-        print("a0")
+    else:
+        print("Source: article nth(0)")
+        source_post = page.locator('[role="article"]').nth(0)
+        
     
+    # RÉCUPÉRATION TEXTE POST (NOUVELLE MÉTHODE)
+    try:
+        #print("Recherche texte du post")
+        
+        post_element = page.locator('[data-ad-rendering-role="story_message"]').first
+        #print("b1")
+        texte = await post_element.text_content()
+        #texte = await post_element.inner_text()
+        
+        # 🔥 ICI on coupe à 500 caractères
+        identifiant_post = " ".join(texte.split())[:500]
+        print(f"Texte : {identifiant_post[:80]}")
 
+        # Vérification déjà commenté
+        if posts and post_deja_commente(posts, identifiant_post):
+            #print(f"Déjà commenté")
+
+            if context:
+                await page.close()
+                await context.close()
+
+            return True
+
+        # Sauvegarde texte
+        if posts is not None and fichier_posts:
+            ajouter_post(posts, fichier_posts, identifiant_post)
+            #print("Texte sauvegardé")
+
+    except Exception as e:
+        print("Impossible de récupérer le texte :", e)
+        return False
+        
+        
     # RÉCUPÉRATION LIEN
     link_locator = source_post.locator("a[href*='/posts/'], a[href*='/videos/']")
     count_link = await link_locator.count()
-    print("lien compter nombre :", count_link)
-
+    #print("lien compter nombre :", count_link)
 
     if count_link > 0:
-        print("a1")
+        #print("a1")
         post_link = await link_locator.first.get_attribute("href")
-        print("a2 lien trouvé :", post_link)
+        print("lien trouvé :", post_link)
     else:
         post_link = None
-        print("a4 aucun lien trouvé")
-
-    if post_link:
-        print("a5")
-        identifiant_post=post_link.split('?')[0]
-        print(f"✅ Lien détecté : {identifiant_post}")
-
-        if posts and post_deja_commente(posts, identifiant_post):
-            print(f"🔄 Déjà commenté : {identifiant_post}")
-            if context:
-                print("a6")
-                await page.close(); await context.close()
-                print("a7")
-            return True
-
-        if posts and fichier_posts:
-            print("a8")
-            ajouter_post(posts, fichier_posts, identifiant_post)
-            print("✅ Lien sauvegardé")
-
-    # SINON TEXTE
-    if not identifiant_post:
-        try:
-            print("a9")
-            post=await source_post.locator('[data-ad-preview="message"]').first
-            print("a10")
-            texte=await post.inner_text()
-            print("a11")
-            identifiant_post=texte.strip()
-            print(f"✅ Texte détecté : {identifiant_post}")
-
-            if commented_posts and identifiant_post in commented_posts:
-                print(f"🔄 Déjà commenté : {identifiant_post}")
-                if context:
-                    print("a12")
-                    await page.close(); await context.close()
-                    print("a13")
-                return True
-
-            if commented_posts is not None:
-                print("a14")
-                commented_posts.add(identifiant_post)
-                print("a15")
-                save_commented_posts(commented_posts)
-                print("✅ Texte sauvegardé")
-        except:
-            print("a16")
-            pass
-            print("a17")
+        #print("a4 aucun lien trouvé")
+   
 
     # CAS 1
     # CAS 1
     if count_post_comment_button > 0:
-        print("a18")
         await post_comment_button.click()
         print("Attente apparition zone commentaire")
-        await asyncio.sleep(random.uniform(14,30))
-        print("a19")
+        await asyncio.sleep(random.uniform(10, 15))
 
         comment_box=page.locator("div[role='textbox']").first
-        print("a20")
         comment=random.choice(COMMENTS)
-        print("a21")
         await comment_box.fill(comment)
-        print("a22")
-        await asyncio.sleep(random.uniform(6,12))
-        print("a23")
+        await asyncio.sleep(random.uniform(4, 6))
         await page.keyboard.press("Enter")
 
-        print("✅ Commentaire envoyé (cas 1)")
-        print(f"Post : {identifiant_post}")
+        print("Commentaire envoyé")
+        #print(f"Post : {identifiant_post}")
         print(f"Commentaire : {comment}")
 
         await asyncio.sleep(random.uniform(24,30))
-        print("a24")
         return True
 
     # CAS 2
@@ -339,7 +271,7 @@ async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, co
         await page.keyboard.press("Enter")
 
         print("✅ Commentaire envoyé (cas 2)")
-        print(f"Post : {identifiant_post}")
+        #print(f"Post : {identifiant_post}")
         print(f"Commentaire : {comment}")
 
         await asyncio.sleep(random.uniform(24,30))
