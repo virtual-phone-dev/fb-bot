@@ -194,13 +194,9 @@ async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, co
         
     
     # RÉCUPÉRATION TEXTE POST (NOUVELLE MÉTHODE)
-    try:
-        #print("Recherche texte du post")
-        
+    try:        
         post_element = page.locator('[data-ad-rendering-role="story_message"]').first
-        #print("b1")
         texte = await post_element.text_content()
-        #texte = await post_element.inner_text()
         
         # 🔥 ICI on coupe à 500 caractères
         identifiant_post = " ".join(texte.split())[:500]
@@ -229,15 +225,12 @@ async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, co
     # RÉCUPÉRATION LIEN
     link_locator = source_post.locator("a[href*='/posts/'], a[href*='/videos/']")
     count_link = await link_locator.count()
-    #print("lien compter nombre :", count_link)
 
     if count_link > 0:
-        #print("a1")
         post_link = await link_locator.first.get_attribute("href")
         print("lien trouvé :", post_link)
     else:
         post_link = None
-        #print("a4 aucun lien trouvé")
    
 
     # CAS 1
@@ -255,7 +248,7 @@ async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, co
 
         print(f"✅ Commentaire envoyé : {comment}")
 
-        await asyncio.sleep(random.uniform(10, 15))
+        await asyncio.sleep(random.uniform(20, 25))
         return True
 
     # CAS 2
@@ -268,7 +261,7 @@ async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, co
         print("✅ Commentaire envoyé (cas 2)")
         #print(f"Post : {identifiant_post}")
         print(f"✅ Commentaire réussi : {comment}")
-        await asyncio.sleep(random.uniform(10, 15))
+        await asyncio.sleep(random.uniform(20, 25))
         return True
 
     # CAS 3
