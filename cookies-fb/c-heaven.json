@@ -21,16 +21,6 @@
             "sameSite": "None"
         },
         {
-            "name": "wd",
-            "value": "1280x720",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1772491808,
-            "httpOnly": false,
-            "secure": true,
-            "sameSite": "Lax"
-        },
-        {
             "name": "c_user",
             "value": "100056579364376",
             "domain": ".facebook.com",
@@ -71,16 +61,6 @@
             "sameSite": "None"
         },
         {
-            "name": "fr",
-            "value": "1EAV4naEqXIyNOqHR.AWfeSDTCAjugqbiROm7iwMvn-Op1_kXRL0vKuvLaif1KBYvxYmA.BpnNmM..AAA.0.0.BpnNmM.AWdGZRojZraoBPxmfW4XLkz3BcA",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1779662999.398769,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
             "name": "xs",
             "value": "9%3AH2tbPKp9A-NN5w%3A2%3A1771878495%3A-1%3A-1%3A%3AAczdY4tziO4-5z0pSOmrYmhyjmrQ_WRBUuGeHW9_3w",
             "domain": ".facebook.com",
@@ -91,8 +71,28 @@
             "sameSite": "None"
         },
         {
+            "name": "fr",
+            "value": "1EAV4naEqXIyNOqHR.AWco8hud84gqanvUWai7W2wbSKTOfJp7g13a51hUTyUlCRfCfvE.BpnNmM..AAA.0.0.BprxGi.AWcntozg_XfDZdh5bYVQp4dIScw",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1780856992.710124,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "wd",
+            "value": "1280x720",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1773685807,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
             "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1771887009397%2C%22v%22%3A1%7D",
+            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1773081013344%2C%22v%22%3A1%7D",
             "domain": ".facebook.com",
             "path": "/",
             "expires": -1,
@@ -111,19 +111,19 @@
                 },
                 {
                     "name": "Session",
-                    "value": "6u0yqm:1771887048500"
+                    "value": "3g1zr3:1773081120579"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1771878252289.8"
+                    "value": "1773081005093.5"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"100056579364376\",\"currentIntervalLastTick\":1771887011,\"currentIntervalStart\":1771886986,\"initRemoteAgg\":{\"timestamp\":-1,\"today_s\":0},\"intervals\":[{\"end\":1771878896,\"start\":1771878836}],\"lastCallbackAttempt\":1771886986,\"localStorageId\":\"80740291\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                    "value": "{\"actorId\":\"100056579364376\",\"currentIntervalLastTick\":1773081083,\"currentIntervalStart\":1773081001,\"initRemoteAgg\":{\"timestamp\":1772200786,\"today_s\":0},\"intervals\":[{\"end\":1771878896,\"start\":1771878836},{\"end\":1771887011,\"start\":1771886986}],\"lastCallbackAttempt\":1773081001,\"localStorageId\":\"19639267\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
                 },
                 {
                     "name": "last_headload_time",
-                    "value": "1771886986567"
+                    "value": "1773081001834"
                 },
                 {
                     "name": "RSTData",
@@ -135,7 +135,7 @@
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1771887008098"
+                    "value": "1773081037789"
                 },
                 {
                     "name": "ares_last_signal_flush",
@@ -143,7 +143,7 @@
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1771887008196"
+                    "value": "1773081008224"
                 },
                 {
                     "name": "topicsLastReportingTime",

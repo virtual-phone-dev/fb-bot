@@ -21,21 +21,11 @@
             "sameSite": "None"
         },
         {
-            "name": "wd",
-            "value": "1280x720",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1772491770,
-            "httpOnly": false,
-            "secure": true,
-            "sameSite": "Lax"
-        },
-        {
             "name": "c_user",
             "value": "100058728397113",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1803422972.346558,
+            "expires": 1804616859.368549,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -71,28 +61,38 @@
             "sameSite": "None"
         },
         {
-            "name": "fr",
-            "value": "2yikPaGCz0bDK7lOX.AWfYU5L2QITaBnFKBEJUFompWYbyog0drBTikg78eas6S05lRQI.BpnNl9..AAA.0.0.BpnNl9.AWew3RinO-y7sMXwYq1fzac7h90",
+            "name": "wd",
+            "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1779662972.346772,
+            "expires": 1773685655,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "fr",
+            "value": "1Jy5J0Ixi2OKxuVJU.AWchswRZKz-F5FEi1Jkmp7YhXSvP8gv8REsNPW5AjD6h9V-t2Ak.BprxEb..AAA.0.0.BprxEb.AWcg6dWhyai7HaqSOQWaxN5pCe4",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1780856859.368752,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "36%3AZx7yg4wytMzmQg%3A2%3A1771875620%3A-1%3A-1%3A%3AAcwmzXueE3CoYmqt9LbjMq-bacP6ixco92-JpRCDww",
+            "value": "36%3AZx7yg4wytMzmQg%3A2%3A1771875620%3A-1%3A-1%3A%3AAczZcu3ViCXnI2EG0CH-TTDO5YYHRUF3euxjBMxa7Q",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1803422972.346891,
+            "expires": 1804616859.36902,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1771886972436%2C%22v%22%3A1%7D",
+            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1773080921994%2C%22v%22%3A1%7D",
             "domain": ".facebook.com",
             "path": "/",
             "expires": -1,
@@ -123,7 +123,7 @@
                 },
                 {
                     "name": "Session",
-                    "value": "4ou9qj:1771887003412"
+                    "value": "5mp13q:1773080896593"
                 },
                 {
                     "name": "_oz_bandwidthEstimate",
@@ -131,15 +131,15 @@
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1771872724916.1"
+                    "value": "1773080840644.5"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"100058728397113\",\"currentIntervalLastTick\":1771886974,\"currentIntervalStart\":1771886969,\"initRemoteAgg\":{\"timestamp\":-1,\"today_s\":0},\"intervals\":[{\"end\":1771875722,\"start\":1771875632},{\"end\":1771878236,\"start\":1771878096},{\"end\":1771878440,\"start\":1771878435}],\"lastCallbackAttempt\":1771886969,\"localStorageId\":\"73699946\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                    "value": "{\"actorId\":\"100058728397113\",\"currentIntervalLastTick\":1773080985,\"currentIntervalStart\":1773080838,\"initRemoteAgg\":{\"timestamp\":1772007453,\"today_s\":0},\"intervals\":[{\"end\":1771875722,\"start\":1771875632},{\"end\":1771878236,\"start\":1771878096},{\"end\":1771878440,\"start\":1771878435},{\"end\":1771886974,\"start\":1771886969}],\"lastCallbackAttempt\":1773080838,\"localStorageId\":\"20210335\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
                 },
                 {
                     "name": "last_headload_time",
-                    "value": "1771886971557"
+                    "value": "1773080839406"
                 },
                 {
                     "name": "RSTData",
@@ -151,7 +151,7 @@
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1771886970708"
+                    "value": "1773080886033"
                 },
                 {
                     "name": "_oz_bandwidthAndTTFBSamples",
@@ -163,7 +163,7 @@
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1771886971349"
+                    "value": "1773080856132"
                 },
                 {
                     "name": "topicsLastReportingTime",

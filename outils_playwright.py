@@ -166,7 +166,7 @@ def ajouter_blacklist(blacklist, fichier, compte, page):
 
     
     
-async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, commented_posts=None, context=None):
+async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, page_name=None, page_url=None, cookie_file=None, commented_posts=None, context=None):
     identifiant_post=None; post_link=None
     
     # 🔹 Vérification indisponibilité
@@ -181,15 +181,14 @@ async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, co
     except:
         pass
         
+        
     # CHOIX DU PREMIER POST
     post_comment_button = page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first
     count_post_comment_button = await post_comment_button.count()
 
     if count_post_comment_button > 0:        
-        #print("Source: bouton commentaire")
         source_post = post_comment_button
     else:
-        print("Source: article nth(0)")
         source_post = page.locator('[role="article"]').nth(0)
         
     
@@ -234,35 +233,60 @@ async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, co
    
 
     # CAS 1
-    # CAS 1
     if count_post_comment_button > 0:
         await post_comment_button.click()
         print("Attente apparition zone commentaire")
-        await asyncio.sleep(random.uniform(10, 15))
+        await asyncio.sleep(random.uniform(5, 8))
+
+        # CLIQUER SUR "RÉPONDRE"
+        await page.evaluate(""" 
+        const btn = Array.from(document.querySelectorAll('button, [role="button"]'))
+          .find(b => b.innerText.trim() === 'Répondre');
+        if (btn) btn.click(); 
+        """);
+        
+        await asyncio.sleep(random.uniform(5, 8))
 
         comment_box=page.locator("div[role='textbox']").first
         comment=random.choice(COMMENTS)
         await comment_box.fill(comment)
         await asyncio.sleep(random.uniform(4, 6))
         await page.keyboard.press("Enter")
-
+        
         print(f"✅ Commentaire envoyé : {comment}")
-
+        print(f"{page_name}")
+        print(f"{page_url}")     
+        print(f"{cookie_file}")
+        
         await asyncio.sleep(random.uniform(20, 25))
         return True
+        
 
     # CAS 2
     if post_link:
+        # CLIQUER SUR "RÉPONDRE"
+        await page.evaluate(""" 
+        const btn = Array.from(document.querySelectorAll('button, [role="button"]'))
+          .find(b => b.innerText.trim() === 'Répondre');
+        if (btn) btn.click(); 
+        """);
+
+        await asyncio.sleep(random.uniform(4, 6))
+    
         comment_box=page.locator("div[role='textbox']").first
         comment=random.choice(COMMENTS)
         await comment_box.fill(comment)
         await page.keyboard.press("Enter")
-
-        print("✅ Commentaire envoyé (cas 2)")
-        #print(f"Post : {identifiant_post}")
-        print(f"✅ Commentaire réussi : {comment}")
+        
+        print("Cas 2")
+        print(f"✅ Commentaire envoyé : {comment}")
+        print(f"{page_name}")
+        print(f"{page_url}")
+        print(f"{cookie_file}")
+        
         await asyncio.sleep(random.uniform(20, 25))
         return True
+
 
     # CAS 3
     print("❌ Aucun selecteur commentaire trouvé (Cas 3 à ajouter)")
