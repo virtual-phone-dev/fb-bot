@@ -63,7 +63,14 @@ async def ouvrir_facebook(contexte):
     await page.goto("https://www.facebook.com",timeout=0)
     return page
 
-
+# Ouvrir bs
+async def ouvrir_bs(contexte):
+    page = await contexte.new_page()
+    await appliquer_stealth(page)
+    await page.goto("https://bsky.app/",timeout=0)
+    return page
+    
+    
 # Pause en minutes
 async def pause(minutes):
     await asyncio.sleep(minutes * 60)
@@ -102,6 +109,7 @@ async def creer_page(contexte):
 # Aller vers URL
 async def aller(page, url):
     await page.goto(url)
+    await page.wait_for_load_state("networkidle")
 
 
 # Pause aléatoire en secondes
@@ -164,8 +172,84 @@ def ajouter_blacklist(blacklist, fichier, compte, page):
         blacklist[compte].append(page)
         sauvegarder_json(fichier, blacklist)
 
+
+
+async def envoyer_commentaire_bs(page, COMMENTS, posts=None, fichier_posts=None, page_name=None, page_url=None, cookie_file=None):
+    identifiant_post = None
+
+    # 🔹 trouver le premier post
+    post_locator = page.locator('div[data-testid="contentHider-post"]').first
+    count_post = await post_locator.count()
+
+    if count_post == 0:
+        print("❌ Aucun post trouvé")
+        return False
+
+    # 🔹 récupérer texte du post
+    try:
+        texte = await post_locator.text_content() or ""
+        identifiant_post = " ".join(texte.split())[:500]
+        print("Texte :", identifiant_post[:80])
+
+        # vérifier déjà commenté
+        if posts and post_deja_commente(posts, identifiant_post):
+            print("Déjà commenté")
+            return True
+
+        # sauvegarder texte
+        if posts is not None and fichier_posts:
+            ajouter_post(posts, fichier_posts, identifiant_post)
+
+    except Exception as e:
+        print("Erreur récupération texte :", e)
+        return False
+
+
+    # 🔹 cliquer sur le post
+    await page.evaluate("""
+    const posts = document.querySelectorAll('div[data-testid="contentHider-post"]');
+    if (posts.length > 0) {
+      posts[0].click();
+    } """)
+    await asyncio.sleep(random.uniform(5, 7))
+
+
+    # 🔹 cliquer sur le bouton Repondre ou rédiger réponse
+    await page.evaluate("""
+    const buttonRédiger = document.querySelector('button[aria-label="Rédiger une réponse"]');
+    if (buttonRédiger) {
+      buttonRédiger.click();
+    } """)
+    await asyncio.sleep(random.uniform(5, 7))
+    
+    # attendre apparition zone texte
+    await page.wait_for_selector("div[role='textbox']", timeout=10000)
+
+    # écrire le commentaire
+    comment_box = page.locator("div[role='textbox']").first
+    comment = random.choice(COMMENTS)
+    await comment_box.fill(comment)
+    await asyncio.sleep(random.uniform(4, 6))
+
+    # publier
+    await page.evaluate("""
+    const boutonPublier = document.querySelector('button[aria-label="Publier la réponse"]');
+    if (boutonPublier) {
+      boutonPublier.click();
+    } """)
+    
+    print("✅ Commentaire envoyé :", comment)
+    print(cookie_file)
+    print(page_name)
+    print(page_url)
+        
+    await asyncio.sleep(random.uniform(10, 15))
+    return True
     
     
+    
+
+        
 async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, page_name=None, page_url=None, cookie_file=None, commented_posts=None, context=None):
     identifiant_post=None; post_link=None
     

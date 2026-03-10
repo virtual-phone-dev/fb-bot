@@ -1,7 +1,7 @@
 import asyncio
 from itertools import cycle;
 from playwright.async_api import async_playwright
-from outils_playwright import (creer_context, creer_page, aller, envoyer_commentaire, charger_json, post_deja_commente, est_blacklist, ajouter_blacklist, sauvegarder_json)
+from outils_playwright import (creer_context, creer_page, aller, envoyer_commentaire_bs, charger_json, post_deja_commente, est_blacklist, ajouter_blacklist, sauvegarder_json)
 
 FICHIER_POSTS = "sauvegarde-bs/posts_commentes.json"
 FICHIER_BLACKLIST = "sauvegarde-bs/blacklist.json"
@@ -17,7 +17,7 @@ async def visiter(browser, compte, url, comments, posts, blacklist, page_name=No
 
     try:
         await aller(page, url)
-        await envoyer_commentaire(page, comments, posts, FICHIER_POSTS, page_name, url, fichier)
+        await envoyer_commentaire_bs(page, comments, posts, FICHIER_POSTS, page_name, url, fichier)
         
     except Exception as e:
         print("Erreur :", e)
@@ -49,7 +49,7 @@ async def main():
     comptes = [c for c in comptes if not c["fichier"].startswith("-")]
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True, args=["--disable-blink-features=AutomationControlled"])
+        browser = await p.chromium.launch(headless=False, args=["--disable-blink-features=AutomationControlled"])
         cycle_comptes = cycle(comptes)
         
         while True:

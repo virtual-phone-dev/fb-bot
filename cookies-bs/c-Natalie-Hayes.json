@@ -1,0 +1,67 @@
+{
+    "cookies": [
+        {
+            "name": "AWSALB",
+            "value": "LqiNvftMvWkLqsE3u6OBETacuAvgreSLHKHzuw2Xxkpno/zKy7TCLzDkDe3EvpbTx36UQcBhd5lW8bR8YymejuVzKyCbTmF9cyTETa8yjZ6SAWo3WnWKc1SuXcks",
+            "domain": "bsky.app",
+            "path": "/",
+            "expires": 1773768693.789061,
+            "httpOnly": false,
+            "secure": false,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "AWSALBCORS",
+            "value": "LqiNvftMvWkLqsE3u6OBETacuAvgreSLHKHzuw2Xxkpno/zKy7TCLzDkDe3EvpbTx36UQcBhd5lW8bR8YymejuVzKyCbTmF9cyTETa8yjZ6SAWo3WnWKc1SuXcks",
+            "domain": "bsky.app",
+            "path": "/",
+            "expires": 1773768693.789717,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "None"
+        }
+    ],
+    "origins": [
+        {
+            "origin": "https://bsky.app",
+            "localStorage": [
+                {
+                    "name": "agent-labelers:did:plc:y3psxnl33i32fgnxg65ntaqr",
+                    "value": "[\"did:plc:ar7c4by46qjdydhdevvrndac\"]"
+                },
+                {
+                    "name": "bsky_device\\deviceId",
+                    "value": "{\"data\":\"b015082b-d3f0-4b8f-b05c-91e8eb1d345a\"}"
+                },
+                {
+                    "name": "BSKY_STORAGE",
+                    "value": "{\"colorMode\":\"system\",\"darkTheme\":\"dim\",\"session\":{\"accounts\":[{\"service\":\"https://bsky.social/\",\"did\":\"did:plc:y3psxnl33i32fgnxg65ntaqr\",\"handle\":\"natalie-hayes.bsky.social\",\"email\":\"jefflambo298@gmail.com\",\"emailConfirmed\":false,\"emailAuthFactor\":false,\"refreshJwt\":\"eyJ0eXAiOiJyZWZyZXNoK2p3dCIsImFsZyI6IkVTMjU2SyJ9.eyJzY29wZSI6ImNvbS5hdHByb3RvLnJlZnJlc2giLCJzdWIiOiJkaWQ6cGxjOnkzcHN4bmwzM2kzMmZnbnhnNjVudGFxciIsImF1ZCI6ImRpZDp3ZWI6YnNreS5zb2NpYWwiLCJqdGkiOiIvVjZWbUh4S0RXTDdUaDB2czJLa3VqT2I2b1hLYzRaaXJwVDliZktERDA4IiwiaWF0IjoxNzczMTYzNjA1LCJleHAiOjE3ODA5Mzk2MDV9.3_SG0BPUI-4Wi-AuQ4k529NDV5feoLM4wsIaadh_d50uM4gwNWoLe5Ayz-eT8Wz3KZbbmL7-C0FDhQpDG6QOKw\",\"accessJwt\":\"eyJ0eXAiOiJhdCtqd3QiLCJhbGciOiJFUzI1NksifQ.eyJzY29wZSI6ImNvbS5hdHByb3RvLmFjY2VzcyIsInN1YiI6ImRpZDpwbGM6eTNwc3hubDMzaTMyZmdueGc2NW50YXFyIiwiaWF0IjoxNzczMTYzNjA1LCJleHAiOjE3NzMxNzA4MDUsImF1ZCI6ImRpZDp3ZWI6c3Ryb3BoYXJpYS51cy13ZXN0Lmhvc3QuYnNreS5uZXR3b3JrIn0.z71xGUbd-G06HMQl_W1q2uWrPo7WDBF_H9HPCrSdHSCp9JUWY1oxwDorwy3bXev9BE9qugiYGSDN7lllYTAl2Q\",\"signupQueued\":false,\"active\":true,\"pdsUrl\":\"https://stropharia.us-west.host.bsky.network/\",\"isSelfHosted\":false}],\"currentAccount\":{\"service\":\"https://bsky.social/\",\"did\":\"did:plc:y3psxnl33i32fgnxg65ntaqr\",\"handle\":\"natalie-hayes.bsky.social\",\"email\":\"jefflambo298@gmail.com\",\"emailConfirmed\":false,\"emailAuthFactor\":false,\"refreshJwt\":\"eyJ0eXAiOiJyZWZyZXNoK2p3dCIsImFsZyI6IkVTMjU2SyJ9.eyJzY29wZSI6ImNvbS5hdHByb3RvLnJlZnJlc2giLCJzdWIiOiJkaWQ6cGxjOnkzcHN4bmwzM2kzMmZnbnhnNjVudGFxciIsImF1ZCI6ImRpZDp3ZWI6YnNreS5zb2NpYWwiLCJqdGkiOiIvVjZWbUh4S0RXTDdUaDB2czJLa3VqT2I2b1hLYzRaaXJwVDliZktERDA4IiwiaWF0IjoxNzczMTYzNjA1LCJleHAiOjE3ODA5Mzk2MDV9.3_SG0BPUI-4Wi-AuQ4k529NDV5feoLM4wsIaadh_d50uM4gwNWoLe5Ayz-eT8Wz3KZbbmL7-C0FDhQpDG6QOKw\",\"accessJwt\":\"eyJ0eXAiOiJhdCtqd3QiLCJhbGciOiJFUzI1NksifQ.eyJzY29wZSI6ImNvbS5hdHByb3RvLmFjY2VzcyIsInN1YiI6ImRpZDpwbGM6eTNwc3hubDMzaTMyZmdueGc2NW50YXFyIiwiaWF0IjoxNzczMTYzNjA1LCJleHAiOjE3NzMxNzA4MDUsImF1ZCI6ImRpZDp3ZWI6c3Ryb3BoYXJpYS51cy13ZXN0Lmhvc3QuYnNreS5uZXR3b3JrIn0.z71xGUbd-G06HMQl_W1q2uWrPo7WDBF_H9HPCrSdHSCp9JUWY1oxwDorwy3bXev9BE9qugiYGSDN7lllYTAl2Q\",\"signupQueued\":false,\"active\":true,\"pdsUrl\":\"https://stropharia.us-west.host.bsky.network/\",\"isSelfHosted\":false}},\"reminders\":{\"lastEmailConfirm\":\"2026-03-10T17:26:48.929Z\"},\"languagePrefs\":{\"primaryLanguage\":\"fr\",\"contentLanguages\":[\"fr\"],\"postLanguage\":\"fr\",\"postLanguageHistory\":[\"fr\",\"en\",\"ja\",\"pt\",\"de\"],\"appLanguage\":\"fr\"},\"requireAltTextEnabled\":false,\"largeAltBadgeEnabled\":false,\"externalEmbeds\":{},\"mutedThreads\":[],\"invites\":{\"copiedInvites\":[]},\"onboarding\":{\"step\":\"Home\"},\"hiddenPosts\":[],\"pdsAddressHistory\":[],\"disableHaptics\":false,\"disableAutoplay\":false,\"kawaii\":false,\"hasCheckedForStarterPack\":true,\"subtitlesEnabled\":true,\"trendingDisabled\":false,\"trendingVideoDisabled\":false}"
+                },
+                {
+                    "name": "welcomeModalShown",
+                    "value": "true"
+                },
+                {
+                    "name": "bsky_account\\did:plc:y3psxnl33i32fgnxg65ntaqr:birthdateLastUpdatedAt",
+                    "value": "{\"data\":\"2026-03-10T17:26:48.735Z\"}"
+                },
+                {
+                    "name": "bsky_features_cache\\gbFeaturesCache",
+                    "value": "[[\"https://events.bsky.app/gb||sdk-7gkUkGy9wguUjyFe\",{\"data\":{\"status\":200,\"features\":{\"import_contacts:onboarding:disable\":{\"defaultValue\":false},\"import_contacts:settings:disable\":{\"defaultValue\":false},\"live_now_beta:disable\":{\"defaultValue\":false},\"debug_feed_context\":{\"defaultValue\":false,\"rules\":[{\"id\":\"fr_7q8pm31umkpzxi23\",\"condition\":{\"did\":{\"$inGroup\":\"grp_5jfg1omkpx8ufb\"}},\"force\":true}]},\"is_bsky_team\":{\"defaultValue\":false,\"rules\":[{\"id\":\"fr_lw1mmkq0cbbi\",\"condition\":{\"did\":{\"$inGroup\":\"grp_5jfg1omkpx8ufb\"}},\"force\":true}]},\"aa-test\":{\"defaultValue\":false,\"rules\":[{\"id\":\"fr_bcvv2v1omm9q6o3a\",\"coverage\":1,\"hashAttribute\":\"did\",\"seed\":\"18ca9bae-288b-44c0-a7e4-c9338bb51645\",\"hashVersion\":2,\"variations\":[false,true],\"weights\":[0.5,0.5],\"key\":\"aa-test\",\"meta\":[{\"key\":\"0\",\"name\":\"Control\"},{\"key\":\"1\",\"name\":\"Enabled\"}],\"phase\":\"2\",\"name\":\"aa-test\"}]},\"new-feature\":{\"defaultValue\":false,\"rules\":[{\"id\":\"fr_bx8rg91ommava75g\",\"coverage\":1,\"hashAttribute\":\"did\",\"seed\":\"a42d68e7-ccd7-44b7-a34b-24e980c962cb\",\"hashVersion\":2,\"variations\":[true,false],\"weights\":[0.5,0.5],\"key\":\"test-experiment\",\"meta\":[{\"key\":\"0\",\"name\":\"Enabled\"},{\"key\":\"1\",\"name\":\"Disabled\"}],\"phase\":\"0\",\"name\":\"Test Experiment\"}]},\"native_language_detection:disable\":{\"defaultValue\":false}},\"dateUpdated\":\"2026-03-09T20:51:09.124Z\",\"savedGroups\":{\"grp_5jfg1omkpx8ufb\":[\"did:plc:3jpt2mvvsumj2r7eqk4gzzjz\",\"did:plc:dpajgwmnecpdyjyqzjzm6bnb\",\"did:plc:gsbue2dtbtqzw5du5btlh7p2\",\"did:plc:p2cp5gopk7mgjegy6wadk3ep\",\"did:plc:f57ltatxgp5fxc6ajgpd7xx5\",\"did:plc:2dzyut5lxna5ljiaasgeuffz\",\"did:plc:ragtjsm2j2vknwkz3zp4oxrd\",\"did:plc:tgqseeot47ymot4zro244fj3\",\"did:plc:4uz2445cjiw7w4nobfgnu35f\",\"did:plc:yk4dd2qkboz2yv6tpubpc6co\",\"did:plc:7ditsi7667pzlxve5kr63u6c\",\"did:plc:upo6iq6ekh66d4mbhmiy6se4\",\"did:plc:bffne4bxiscwjymsqwuf7uyy\",\"did:plc:aea5ouir47ufzoujcwwgm6yc\",\"did:plc:l3rouwludahu3ui3bt66mfvj\",\"did:plc:44ybard66vv44zksje25o7dz\",\"did:plc:my4ujjzrbmcikzuddeg55u77\",\"did:plc:3272gdrjsuikiff7qsgokgas\",\"did:plc:xsonm4pxopcdtr4jqpc6wsal\",\"did:plc:ksjfbda7262bbqmuoly54lww\",\"did:plc:vwzwgnygau7ed7b7wt5ux7y2\",\"did:plc:ry4imxuyyuy24rwptucka2a3\",\"did:plc:qrllvid7s54k4hnwtqxwetrf\",\"did:plc:vkj5mdp3zgu43hpdeukcesqa\",\"did:plc:mfmak3wlgviv6zoj4uandsr5\",\"did:plc:esfp3jurmmtjcugslja5dhb6\",\"did:plc:ubvsev66j6angr65hdny6oqf\",\"did:plc:6rn66vit5xmoho7minunpqan\"]}},\"version\":\"2026-03-09T20:51:09.124Z\",\"staleAt\":\"2026-03-10T17:32:36.853Z\",\"sse\":false}]]"
+                },
+                {
+                    "name": "bsky_device\\mergedGeolocation",
+                    "value": "{\"data\":{\"countryCode\":\"CG\",\"regionCode\":\"15\"}}"
+                },
+                {
+                    "name": "bsky_device\\geolocationServiceResponse",
+                    "value": "{\"data\":{\"countryCode\":\"CG\",\"regionCode\":\"15\"}}"
+                },
+                {
+                    "name": "ALF_THEME",
+                    "value": "light"
+                }
+            ]
+        }
+    ]
+}
