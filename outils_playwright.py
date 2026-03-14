@@ -1,4 +1,5 @@
 import json, os, asyncio, random
+from db_profils import ajouter_profil
 
 
 # Stealth
@@ -109,9 +110,14 @@ async def creer_page(contexte):
 # Aller vers URL
 async def aller(page, url):
     await page.goto(url)
-    await page.wait_for_load_state("networkidle")
+    # await page.wait_for_load_state("networkidle")
 
 
+async def goto_with_domcontentloaded(page, url):
+    await page.goto(url)
+    await page.wait_for_load_state("domcontentloaded")
+    
+    
 # Pause aléatoire en secondes
 async def pause_random(min, max):
     import random
@@ -171,11 +177,80 @@ def ajouter_blacklist(blacklist, fichier, compte, page):
     if page not in blacklist[compte]:
         blacklist[compte].append(page)
         sauvegarder_json(fichier, blacklist)
+        
 
+async def envoyer_message(page, MESSAGES, page_name = None, page_url = None, cookie_file = None):
+    
+    await page.evaluate("""
+    const messageButton = document.querySelector('div[aria-label="Message"]'); // cliquer sur le bouton Message, une popup s'ouvre alors , pour ecrire le message
+    if (messageButton) { messageButton.click(); } """)
+    
+    await asyncio.sleep(random.uniform(5, 7))
 
+    message_box = page.locator("div[role='textbox']").first
+    message = random.choice(MESSAGES)
+    await message_box.fill(message)
 
+    await asyncio.sleep(random.uniform(2, 4))
+    await page.keyboard.press("Enter")
+
+    print("Message envoyé :", message); print(page_name); print(page_url); print(cookie_file)
+    await asyncio.sleep(random.uniform(10, 15))
+    return True
+    
+    
+async def collecter_liens(page, zone):
+    print("a1")
+    liens_vus = set()
+    print("a2")
+
+    while True:
+        profils = await page.evaluate("""() => { 
+        const links = document.querySelectorAll('.x78zum5.x1q0g3np.x1a02dak.x1qughib a'); 
+        
+        const result = []; 
+        links.forEach(link => { 
+            const span = link.querySelector('span'); // sélectionner le span à l’intérieur du lien
+            
+            if(!span) return; // Vérifie si le span existe
+            const href = link.href; 
+            const nom = span.textContent.trim(); 
+            
+            if(nom === '') return; // Ignorer si le nom est vide
+            if(href.endsWith('friends_mutual')) return; // Ignorer si l'URL se termine par 'friends_mutual'
+            
+            // Ignorer pages, events, groups
+            if(href.includes('/pages/')) return;
+            if(href.includes('/events/')) return;
+            if(href.includes('/groups/')) return;
+        
+            result.push({url: href, name: nom}); // Obtenir le lien et le nom
+        }); 
+        return result; }""")
+        nouveaux = 0
+
+        for profil in profils:
+            url = profil["url"]; nom = profil["name"]
+            if url not in liens_vus:
+                liens_vus.add(url); ajouter_profil(url, nom, zone); nouveaux += 1
+                print("profil ajouté :", nom, url); print("zone :", zone)
+
+        print("nouveaux liens :", nouveaux)
+        await page.mouse.wheel(0, 5000)
+        await asyncio.sleep(3)
+        
+        
+        
 async def envoyer_commentaire_bs(page, COMMENTS, posts=None, fichier_posts=None, page_name=None, page_url=None, cookie_file=None):
     identifiant_post = None
+    
+    # attendre chargement posts
+    try:
+        await page.wait_for_selector('div[data-testid="contentHider-post"]', timeout=60000)
+    except:
+        print("Les posts ne se chargent pas")
+        return False
+
 
     # 🔹 trouver le premier post
     post_locator = page.locator('div[data-testid="contentHider-post"]').first
