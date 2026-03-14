@@ -1,5 +1,4 @@
-import json, os, asyncio, random
-from db_profils import ajouter_profil
+import json, os, asyncio, random, sqlite3
 
 
 # Stealth
@@ -187,22 +186,27 @@ async def envoyer_message(page, MESSAGES, page_name = None, page_url = None, coo
     
     await asyncio.sleep(random.uniform(5, 7))
 
-    message_box = page.locator("div[role='textbox']").first
+    message_box = page.locator('div[aria-label="Écrire un message"]').first
     message = random.choice(MESSAGES)
     await message_box.fill(message)
 
     await asyncio.sleep(random.uniform(2, 4))
     await page.keyboard.press("Enter")
 
-    print("Message envoyé :", message); print(page_name); print(page_url); print(cookie_file)
+    print("Message envoyé :", message); print(cookie_file); print(page_name); print(page_url);
     await asyncio.sleep(random.uniform(10, 15))
     return True
     
     
+
+def ajouter_profil(url, name, zone):
+    conn = sqlite3.connect("profils.db"); cur = conn.cursor()
+    cur.execute("INSERT OR IGNORE INTO profils(url, name, zone) VALUES(?, ?, ?)", (url, name, zone))
+    conn.commit()
+
+
 async def collecter_liens(page, zone):
-    print("a1")
     liens_vus = set()
-    print("a2")
 
     while True:
         profils = await page.evaluate("""() => { 
@@ -320,9 +324,7 @@ async def envoyer_commentaire_bs(page, COMMENTS, posts=None, fichier_posts=None,
         
     await asyncio.sleep(random.uniform(10, 15))
     return True
-    
-    
-    
+
 
         
 async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, page_name=None, page_url=None, cookie_file=None, commented_posts=None, context=None):

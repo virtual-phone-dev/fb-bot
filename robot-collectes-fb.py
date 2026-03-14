@@ -18,4 +18,3 @@ async def main():
         for compte in comptes: await visiter(browser, compte)
 
 asyncio.run(main())
-
