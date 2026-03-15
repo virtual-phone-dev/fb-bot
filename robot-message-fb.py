@@ -1,12 +1,27 @@
-import asyncio, random
+import asyncio, random, json
 from datetime import datetime, timedelta
 from itertools import cycle
 from playwright.async_api import async_playwright
 
-from outils_playwright import (creer_context, creer_page, aller, envoyer_message, charger_json, sauvegarder_json)
+from outils_playwright import (creer_context, creer_page, aller, envoyer_message, charger_json)
 from db import (profils_a_envoyer, maj_prochain_message, messages_envoyes_aujourdhui, incrementer_message)
 
 
+# ca sauvegarde manuellement et ne modifies pas ton style dans le fichier json
+def sauvegarder_json(fichier, data):
+    import json
+
+    lignes = []
+    for item in data:
+        ligne = json.dumps(item, ensure_ascii=False)
+        lignes.append("\t" + ligne + ",")
+
+    contenu = "\n".join(lignes)
+
+    with open(fichier, "w", encoding="utf-8") as f:
+        f.write(contenu)
+        
+        
 def prochaine_date():
     jours = random.randint(90, 120)
     date = datetime.now() + timedelta(days = jours)
@@ -17,23 +32,24 @@ def calculer_prochaine_pause():
     minutes = random.randint(45, 60)
     date = datetime.now() + timedelta(minutes=minutes)
     return date.strftime("%Y-%m-%d %H:%M")
-    
-
-def verifier_pause(compte):
-    pause = compte.get("pause_prochain_envoi", "")
-    if pause == "":
+  
+  
+def verifier_pause(compte, pauses):
+    identifiant = compte["id_inchangeable"]
+    pause = pauses.get(identifiant)
+    if not pause:
         return True
-        
+
     date_pause = datetime.strptime(pause, "%Y-%m-%d %H:%M")
     return datetime.now() >= date_pause
 
 
 
-async def visiter(browser, compte, profil, messages, comptes):
+async def visiter(browser, compte, profil, messages, comptes, pauses):
     profil_id, url, name = profil
     fichier = compte["fichier"]
     
-    if not verifier_pause(compte):
+    if not verifier_pause(compte, pauses):
         print("Compte en pause :", fichier)
         return
     
@@ -51,36 +67,42 @@ async def visiter(browser, compte, profil, messages, comptes):
             date = prochaine_date()
             maj_prochain_message(profil_id, date)
             incrementer_message(fichier)
-            
-            compte["pause_prochain_envoi"] = calculer_prochaine_pause()
-            sauvegarder_json("accounts-fb.json", comptes)
+
+            identifiant = compte["id_inchangeable"]
+            pauses[identifiant] = calculer_prochaine_pause()
+            sauvegarder_json("pause_prochain_envoi.json", pauses) 
     
     except Exception as e:
         print("Erreur :", e)
+        
     await contexte.close()
     
     
+    
 async def main():
-    comptes = charger_json("accounts-fb.json", [])
-    messages = charger_json("phrases-travail.json", [])
+    comptes = charger_json("accounts-fb.json", []); 
+    messages = charger_json("phrases-travail.json", []); 
+    pauses = charger_json("pause_prochain_envoi.json", {}); 
     index_zone = charger_json("index_zone_rm.json", {})
-    zone = index_zone.get("start_zone")
-
-    comptes = [c for c in comptes if not c["fichier"].startswith("-")]
+    
+    comptes_actifs = [c for c in comptes if not c["fichier"].startswith("-")]
+    cycle_comptes = cycle(comptes_actifs)
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless = False, args = ["--disable-blink-features=AutomationControlled"])
-        cycle_comptes = cycle(comptes)
 
         while True:
-            profils = profils_a_envoyer(zone)
-            if not profils:
-                print("Aucun profil à contacter")
-                await asyncio.sleep(300)
-                continue
+            profils = profils_a_envoyer()
+            if not profils: print("Aucun profil à contacter"); continue
 
             for profil in profils:
-                await visiter(browser, next(cycle_comptes), profil, messages, comptes)
+                compte = next(cycle_comptes)
+                index_zone["start_zone"] = compte["id_inchangeable"] # sauvegarder quel compte travaille
 
+                with open("index_zone_rm.json", "w", encoding = "utf-8") as f: 
+                    json.dump(index_zone, f, ensure_ascii = False, indent = 2)
+                    
+                await visiter(browser, compte, profil, messages, comptes, pauses)
+                
 asyncio.run(main())
 

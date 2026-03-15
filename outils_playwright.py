@@ -194,7 +194,7 @@ async def envoyer_message(page, MESSAGES, page_name = None, page_url = None, coo
     await page.keyboard.press("Enter")
 
     print("Message envoyé :", message); print(cookie_file); print(page_name); print(page_url);
-    await asyncio.sleep(random.uniform(10, 15))
+    await asyncio.sleep(random.uniform(15, 20))
     return True
     
     
