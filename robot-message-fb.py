@@ -9,8 +9,6 @@ from db import (profils_a_envoyer, maj_prochain_message, messages_envoyes_aujour
 
 # ca sauvegarde manuellement et ne modifies pas ton style dans le fichier json
 def sauvegarder_json(fichier, data):
-    import json
-
     lignes = []
     for item in data:
         ligne = json.dumps(item, ensure_ascii=False)
@@ -28,23 +26,28 @@ def prochaine_date():
     return date.strftime("%Y-%m-%d")
 
 
-def calculer_prochaine_pause():
+def calculer_prochain_envoi():
     minutes = random.randint(45, 60)
     date = datetime.now() + timedelta(minutes=minutes)
     return date.strftime("%Y-%m-%d %H:%M")
   
   
+def pause_24h():
+    date = datetime.now() + timedelta(hours=24)
+    return date.strftime("%Y-%m-%d %H:%M")
+    
+    
 def verifier_pause(compte, pauses):
     identifiant = compte["id_inchangeable"]
     pause = pauses.get(identifiant)
     if not pause:
         return True
 
-    date_pause = datetime.strptime(pause, "%Y-%m-%d %H:%M")
+    date_pause = datetime.strptime(pause["prochain_envoi"], "%Y-%m-%d %H:%M")
     return datetime.now() >= date_pause
 
 
-
+    
 async def visiter(browser, compte, profil, messages, comptes, pauses):
     profil_id, url, name = profil
     fichier = compte["fichier"]
@@ -62,16 +65,25 @@ async def visiter(browser, compte, profil, messages, comptes, pauses):
 
     try:
         await aller(page, url)
-        ok = await envoyer_message(page, messages, name, url, fichier)
-        if ok:
-            date = prochaine_date()
-            maj_prochain_message(profil_id, date)
-            incrementer_message(fichier)
+        resultat = await envoyer_message(page, messages, name, url, fichier)
+        identifiant = compte["id_inchangeable"]
 
-            identifiant = compte["id_inchangeable"]
-            pauses[identifiant] = calculer_prochaine_pause()
-            sauvegarder_json("pause_prochain_envoi.json", pauses) 
-    
+        # limite facebook
+        if resultat == "limite":
+            pauses[identifiant] = { "prochain_envoi": pause_24h(), "limite": "Oui" }
+
+            with open("pause_prochain_envoi.json", "w", encoding = "utf-8") as f: 
+                json.dump(pauses, f, ensure_ascii = False, indent = 2)
+            print("Compte bloqué 24h :", identifiant)
+            return
+            
+        if resultat == "ok":
+            date = prochaine_date(); 
+            maj_prochain_message(profil_id, date); incrementer_message(fichier)
+
+            pauses[identifiant] = { "prochain_envoi": calculer_prochain_envoi(), "limite": "" }
+            with open("pause_prochain_envoi.json", "w", encoding = "utf-8") as f: 
+                json.dump(pauses, f, ensure_ascii = False, indent = 2)
     except Exception as e:
         print("Erreur :", e)
         

@@ -178,26 +178,31 @@ def ajouter_blacklist(blacklist, fichier, compte, page):
         sauvegarder_json(fichier, blacklist)
         
 
-async def envoyer_message(page, MESSAGES, page_name = None, page_url = None, cookie_file = None):
-    
+
+async def envoyer_message(page, MESSAGES, page_name=None, page_url=None, cookie_file=None):
+
     await page.evaluate("""
     const messageButton = document.querySelector('div[aria-label="Message"]'); // cliquer sur le bouton Message, une popup s'ouvre alors , pour ecrire le message
-    if (messageButton) { messageButton.click(); } """)
-    
+    if (messageButton) { messageButton.click(); }
+    """)
     await asyncio.sleep(random.uniform(5, 7))
+
+    # detection limite facebook
+    limite = await page.locator("span:has-text('Vous avez atteint la limite d’invitations par message')").count()
+    if limite > 0: print("Limite: ", cookie_file); return "limite"
 
     message_box = page.locator('div[aria-label="Écrire un message"]').first
     message = random.choice(MESSAGES)
     await message_box.fill(message)
-
+    
     await asyncio.sleep(random.uniform(2, 4))
     await page.keyboard.press("Enter")
 
-    print("Message envoyé :", message); print(cookie_file); print(page_name); print(page_url);
+    print("Message envoyé :", message); print(cookie_file); print(page_name); print(page_url)
     await asyncio.sleep(random.uniform(15, 20))
-    return True
+    return "ok"   
     
-    
+
 
 def ajouter_profil(url, name, zone):
     conn = sqlite3.connect("profils.db"); cur = conn.cursor()
