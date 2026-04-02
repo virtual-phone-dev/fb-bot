@@ -25,7 +25,7 @@
             "value": "100002486711654",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1805007107.371899,
+            "expires": 1806655891.828353,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -36,36 +36,6 @@
             "domain": ".facebook.com",
             "path": "/",
             "expires": 1806439059.155191,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
-            "name": "wd",
-            "value": "1280x720",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1774076065,
-            "httpOnly": false,
-            "secure": true,
-            "sameSite": "Lax"
-        },
-        {
-            "name": "xs",
-            "value": "49%3ARi_3IY8b92b_mw%3A2%3A1771879057%3A-1%3A-1%3A%3AAcyQeniSv7qRbnVrXGTun7-lp94t3xWoh8Oxwx3-vW4",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1805007107.372268,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
-            "name": "fr",
-            "value": "1Vr9mmiqjChzvHVOX.AWcuEz6_CYYrL_KT5GsvLIvWCU7IjTO3eudAsDO04NtxR1ccxyc.BptQWE..AAA.0.0.BptQXz.AWencFiRtI5JYNmYd_3WFcwhS4E",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1781247218.726399,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
@@ -91,8 +61,38 @@
             "sameSite": "None"
         },
         {
+            "name": "wd",
+            "value": "1280x720",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1775724689,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "fr",
+            "value": "17K3hNa9jIsKPlggi.AWeOcmaxavBKqZODZeYIWAWUu4wyaC56WCh3zGnJHaPkgYoy0ms.Bpzi4U..AAA.0.0.Bpzi4U.AWdi50761yNFReWWqU6k8bGifNQ",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1782895891.828682,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "xs",
+            "value": "49%3ARi_3IY8b92b_mw%3A2%3A1771879057%3A-1%3A-1%3A%3AAcwuzC6XJgJSg8spgFoE5bZXppUf8HzIqw0XY0ljzGE",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1806655891.828805,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
             "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1773471300465%2C%22v%22%3A1%7D",
+            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1775120071152%2C%22v%22%3A1%7D",
             "domain": ".facebook.com",
             "path": "/",
             "expires": -1,
@@ -115,23 +115,27 @@
                 },
                 {
                     "name": "Session",
-                    "value": "0ydkyj:1773472356440"
+                    "value": "s7kvji:1775120550592"
+                },
+                {
+                    "name": "mutex_falco_queue_log^$100002486711654^#100002486711654^#^#hmac_ttl.1775119885.AR1pj1RfbVCq8R3oSp2QGqUKxjPFwFRkR0QjdHxCxuhqdS2e^$",
+                    "value": "dqolpz:1775119888736"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1773471106980.2"
-                },
-                {
-                    "name": "ps:100002486711654:6dd78f90-cb77-480b-9e56-33163c4d79b4",
-                    "value": "f9eb62b6-85b6-48f0-afb5-00a1f51493da:1773472319098"
+                    "value": "1775119893854.5999"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"100002486711654\",\"currentIntervalLastTick\":1773472326,\"currentIntervalStart\":1773471246,\"initRemoteAgg\":{\"timestamp\":1773294985,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1773472311,\"localStorageId\":\"76062853\",\"syncedL24HS\":-1,\"syncedTodayS\":1125,\"lastSyncTimeStamp\":1773472311}"
+                    "value": "{\"actorId\":\"100002486711654\",\"currentIntervalLastTick\":1775120518,\"currentIntervalStart\":1775119888,\"initRemoteAgg\":{\"timestamp\":1773472313,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1775120493,\"localStorageId\":\"67980544\",\"syncedL24HS\":-1,\"syncedTodayS\":605,\"lastSyncTimeStamp\":1775120493}"
+                },
+                {
+                    "name": "mutex_falco_queue_critical^$100002486711654^#100002486711654^#^#hmac_ttl.1775119885.AR1pj1RfbVCq8R3oSp2QGqUKxjPFwFRkR0QjdHxCxuhqdS2e^$",
+                    "value": "dqolpz:1775119888737"
                 },
                 {
                     "name": "last_headload_time",
-                    "value": "1773471246770"
+                    "value": "1775119888675"
                 },
                 {
                     "name": "RSTData",
@@ -143,7 +147,7 @@
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1773471135776"
+                    "value": "1775119922287"
                 },
                 {
                     "name": "ares_last_signal_flush",
@@ -151,11 +155,23 @@
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1773471105857"
+                    "value": "1775119892354"
+                },
+                {
+                    "name": "mutex_falco_queue_immediately^$100002486711654^#100002486711654^#^#hmac_ttl.1775119885.AR1pj1RfbVCq8R3oSp2QGqUKxjPFwFRkR0QjdHxCxuhqdS2e^$",
+                    "value": "dqolpz:1775119888736"
                 },
                 {
                     "name": "topicsLastReportingTime",
                     "value": "1771879082544"
+                },
+                {
+                    "name": "__MWSimpleNux.WEB_MSGR_PINNED_MESSAGES_NUX__",
+                    "value": "{\"lastViewDate\":1775120071139,\"views\":1}"
+                },
+                {
+                    "name": "ps:100002486711654:b11d11ca-42ad-42af-baf7-c13f55e86dfe",
+                    "value": "e5d2bdea-e1d4-4497-80d0-bd9d58e35a68:1775120399639"
                 }
             ]
         }
