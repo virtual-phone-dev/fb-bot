@@ -44,8 +44,52 @@ def incrementer_message(nomFichierCompte):
     today = datetime.now().strftime("%Y-%m-%d")
     cur.execute("""INSERT INTO messages_jour(date, compte, envoyes) VALUES(?, ?, 1) ON CONFLICT(date, compte) DO UPDATE SET envoyes = envoyes + 1""", (today, nomFichierCompte))
     conn.commit(); conn.close()
-	
-	
+
+
+def verifier_pause(nomFichierCompte, lesPause):
+    pause = lesPause.get(nomFichierCompte)
+    if not pause:
+        return True
+
+    date_pause = datetime.strptime(pause["prochain_envoi"], "%Y-%m-%d %H:%M")
+    #return datetime.now() >= date_pause
+    return datetime.now() < date_pause 
+    
+    
+async def tous_en_pause(comptes_actifs, lesPause):
+    for c in comptes_actifs:        
+        await asyncio.sleep(3)
+        nomFichierCompte = c['id_inchangeable'];
+        data_lien = ObtenirLien(nomFichierCompte)
+
+        if data_lien:
+            print("Le compte a des amis")
+            if verifier_pause(nomFichierCompte, lesPause): print(f"Le compte est en pause - {nomFichierCompte}"); continue
+            else: print(f"Le compte N'EST PAS en pause - {nomFichierCompte}"); return False
+        else: print(f"Aucun ami sur le compte de {nomFichierCompte}")
+            
+    #print("\n Tous les comptes sont en pause")
+    print("\n Tous les comptes sont en pause")
+    return True
+    
+    
+def get_prochaine_pause(lesPause):
+    dates = []
+
+    for compte, pause in lesPause.items():
+        try:
+            date_str = pause["prochain_envoi"];
+            date_pause = datetime.strptime(date_str, "%Y-%m-%d %H:%M");
+            dates.append((date_pause, compte))
+        except Exception as e: print(f"Erreur pour {compte} : {e}")
+
+    # Remplace if not dates
+    if dates:
+        resultat = min(dates, key = lambda x: x[0]); print(f"Prochaine pause : {resultat}")
+        return resultat
+    else: print("Aucune date valide trouvée"); return None
+    
+        
 # ca sauvegarde manuellement et ne modifies pas ton style dans le fichier json
 def sauvegarder_json(fichier, data):
     lignes = []
@@ -74,16 +118,6 @@ def calculer_prochain_envoi():
 def pause_24h():
     date = datetime.now() + timedelta(hours=24)
     return date.strftime("%Y-%m-%d %H:%M")
-    
-    
-def verifier_pause(nomFichierCompte, lesPause):
-    #identifiant = compte["id_inchangeable"]
-    pause = lesPause.get(nomFichierCompte)
-    if not pause:
-        return True
-
-    date_pause = datetime.strptime(pause["prochain_envoi"], "%Y-%m-%d %H:%M")
-    return datetime.now() >= date_pause
 
 
 async def visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrase, lesPause):
@@ -142,15 +176,33 @@ async def main():
         browser = await p.chromium.launch(headless = False, args = ["--disable-blink-features=AutomationControlled"])
 
         while True:
+            # Vérifier si tous les comptes avec amis sont en pause
+            if await tous_en_pause(comptes_actifs, lesPause):
+                prochaine_pause = get_prochaine_pause(lesPause)
+                if prochaine_pause:
+                    date_pause, compte_associe = prochaine_pause
+                    maintenant = datetime.now()
+                    delta = (date_pause - maintenant).total_seconds()
+                    if delta > 0:
+                        print(f"Tous les comptes avec amis en pause. En pause jusqu'à {date_pause}. Attente de {delta} secondes.")
+                        await asyncio.sleep(delta)
+                    else:
+                        print("La pause est déjà passée, on continue")
+                continue  # Recommencer la boucle après la pause
+                
+            #print("Pause terminé")
+            #await asyncio.sleep(10)
+            
+        
             for compte in comptes_actifs:
                 nomFichierCompte = compte['id_inchangeable'] 
                 nomFichierCookie = compte['fichier'] 
                 data_lien = ObtenirLien(nomFichierCompte)
                 
-                if not verifier_pause(nomFichierCompte, lesPause):
-                    print("Compte en pause :", nomFichierCompte)
-                    continue
-    
+                #if not verifier_pause(nomFichierCompte, lesPause):
+                #    print("Compte en pause :", nomFichierCompte)
+                #    continue
+                
                 if not data_lien:
                     print(f"Aucun ami sur le compte de {nomFichierCompte}")
                     continue
@@ -159,6 +211,8 @@ async def main():
                 ami = data_lien[0]
                 await visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrase, lesPause)
                 
+            await asyncio.sleep(15)   
+            
             #zone = index_zone.get("start_zone")
             #liens = profils_a_envoyer(zone)
             #if not liens: print("Aucun lien à acceder"); continue

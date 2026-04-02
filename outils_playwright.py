@@ -204,13 +204,13 @@ async def envoyer_message(page, MESSAGES, page_name=None, page_url=None, cookie_
     
 
 
-def ajouter_profil(url, name, zone):
+def ajouter_profil(lienAmis, nomAmis, monCompte):
     conn = sqlite3.connect("profils.db"); cur = conn.cursor()
-    cur.execute("INSERT OR IGNORE INTO profils(url, name, zone) VALUES(?, ?, ?)", (url, name, zone))
+    cur.execute("INSERT OR IGNORE INTO listeAmis(lienAmis, nomAmis, monCompte) VALUES(?, ?, ?)", (lienAmis, nomAmis, monCompte))
     conn.commit()
 
 
-async def collecter_liens(page, zone):
+async def collecter_liens(page, nomFichierCompte):
     liens_vus = set()
 
     while True:
@@ -233,17 +233,18 @@ async def collecter_liens(page, zone):
             if(href.includes('/events/')) return;
             if(href.includes('/groups/')) return;
         
-            result.push({url: href, name: nom}); // Obtenir le lien et le nom
+            result.push({lienAmis: href, nomAmis: nom}); // Obtenir le lien et le nom
         }); 
         return result; }""")
         nouveaux = 0
 
         for profil in profils:
-            url = profil["url"]; nom = profil["name"]
+            url = profil["lienAmis"]; nom = profil["nomAmis"]
             if url not in liens_vus:
-                liens_vus.add(url); ajouter_profil(url, nom, zone); nouveaux += 1
-                print("profil ajouté :", nom, url); print("zone :", zone)
-
+                liens_vus.add(url); ajouter_profil(url, nom, nomFichierCompte); nouveaux += 1
+                print("lien ajouté :", nom, url); 
+                
+        print("monCompte :", nomFichierCompte)
         print("nouveaux liens :", nouveaux)
         await page.mouse.wheel(0, 5000)
         await asyncio.sleep(3)
