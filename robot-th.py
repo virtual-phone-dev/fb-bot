@@ -195,8 +195,8 @@ async def main():
             
         
             for compte in comptes_actifs:
-                nomFichierCompte = compte['id_inchangeable'] 
-                nomFichierCookie = compte['fichier'] 
+                nomFichierCompte = compte['id_inchangeable']
+                nomFichierCookie = compte['fichier']
                 data_lien = ObtenirLien(nomFichierCompte)
                 
                 #if not verifier_pause(nomFichierCompte, lesPause):

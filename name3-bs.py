@@ -76,7 +76,7 @@ async def main():
         await apply_stealth(page)
 
         print("on va sur le site")
-        await page.goto("https://mail.google.com", timeout=0)
+        await page.goto("https://www.threads.com/@muriel_blanche/post/DWgXEecjSOz", timeout=0)
 
         print("on patiente 6 min")
         await asyncio.sleep(360)
