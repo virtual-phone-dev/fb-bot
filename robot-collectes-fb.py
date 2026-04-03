@@ -14,7 +14,7 @@ async def main():
     comptes = [c for c in comptes if not c["fichier"].startswith("-")]
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless = False, args = ["--disable-blink-features=AutomationControlled"])
+        browser = await p.chromium.launch(headless = True, args = ["--disable-blink-features=AutomationControlled"])
         for compte in comptes: await visiter(browser, compte)
 
 asyncio.run(main())

@@ -25,7 +25,7 @@
             "value": "100002486711654",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1806655891.828353,
+            "expires": 1806709503.25488,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -65,34 +65,34 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1775724689,
+            "expires": 1775778303,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
         },
         {
             "name": "fr",
-            "value": "17K3hNa9jIsKPlggi.AWeOcmaxavBKqZODZeYIWAWUu4wyaC56WCh3zGnJHaPkgYoy0ms.Bpzi4U..AAA.0.0.Bpzi4U.AWdi50761yNFReWWqU6k8bGifNQ",
+            "value": "13AOFh7LuCvfBGVFt.AWdrZBbWL9JiISYdaT9hcTJvKUdktXw7GlHNZBEC9El0FwPHe7M.Bpzv-A..AAA.0.0.Bpzv-A.AWd7N9_QpYkPDciOGl-w0d7ylR4",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1782895891.828682,
+            "expires": 1782949503.255095,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "49%3ARi_3IY8b92b_mw%3A2%3A1771879057%3A-1%3A-1%3A%3AAcwuzC6XJgJSg8spgFoE5bZXppUf8HzIqw0XY0ljzGE",
+            "value": "49%3ARi_3IY8b92b_mw%3A2%3A1771879057%3A-1%3A-1%3A%3AAczVOrn_jeyBTPk3FkbMJ5Z7_J_iTzFlYHlAa6dTV7o",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1806655891.828805,
+            "expires": 1806709503.255227,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1775120071152%2C%22v%22%3A1%7D",
+            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1775173505949%2C%22v%22%3A1%7D",
             "domain": ".facebook.com",
             "path": "/",
             "expires": -1,
@@ -115,31 +115,31 @@
                 },
                 {
                     "name": "Session",
-                    "value": "s7kvji:1775120550592"
-                },
-                {
-                    "name": "mutex_falco_queue_log^$100002486711654^#100002486711654^#^#hmac_ttl.1775119885.AR1pj1RfbVCq8R3oSp2QGqUKxjPFwFRkR0QjdHxCxuhqdS2e^$",
-                    "value": "dqolpz:1775119888736"
+                    "value": "ojdsdd:1775173541901"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1775119893854.5999"
+                    "value": "1775173504541.0999"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"100002486711654\",\"currentIntervalLastTick\":1775120518,\"currentIntervalStart\":1775119888,\"initRemoteAgg\":{\"timestamp\":1773472313,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1775120493,\"localStorageId\":\"67980544\",\"syncedL24HS\":-1,\"syncedTodayS\":605,\"lastSyncTimeStamp\":1775120493}"
-                },
-                {
-                    "name": "mutex_falco_queue_critical^$100002486711654^#100002486711654^#^#hmac_ttl.1775119885.AR1pj1RfbVCq8R3oSp2QGqUKxjPFwFRkR0QjdHxCxuhqdS2e^$",
-                    "value": "dqolpz:1775119888737"
+                    "value": "{\"actorId\":\"100002486711654\",\"currentIntervalLastTick\":1775173503,\"currentIntervalStart\":1775173503,\"initRemoteAgg\":{\"timestamp\":1775126176,\"today_s\":0},\"intervals\":[{\"end\":1775120518,\"start\":1775119888}],\"lastCallbackAttempt\":1775173503,\"localStorageId\":\"98633130\",\"syncedL24HS\":-1,\"syncedTodayS\":605,\"lastSyncTimeStamp\":1775120493}"
                 },
                 {
                     "name": "last_headload_time",
-                    "value": "1775119888675"
+                    "value": "1775173503295"
                 },
                 {
                     "name": "RSTData",
                     "value": "{}"
+                },
+                {
+                    "name": "mutex_falco_queue_critical^$100002486711654^#100002486711654^#^#hmac_ttl.1775173499.AR3yorrFRdhN43uXdmUwfatq3_qSn4N2Z4bP2lk-Ci_0mrCr^$",
+                    "value": "shn1dp:1775173502597"
+                },
+                {
+                    "name": "mutex_falco_queue_immediately^$100002486711654^#100002486711654^#^#hmac_ttl.1775173499.AR3yorrFRdhN43uXdmUwfatq3_qSn4N2Z4bP2lk-Ci_0mrCr^$",
+                    "value": "shn1dp:1775173502597"
                 },
                 {
                     "name": "bdz_playback_state",
@@ -147,7 +147,7 @@
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1775119922287"
+                    "value": "1775173505577"
                 },
                 {
                     "name": "ares_last_signal_flush",
@@ -155,11 +155,7 @@
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1775119892354"
-                },
-                {
-                    "name": "mutex_falco_queue_immediately^$100002486711654^#100002486711654^#^#hmac_ttl.1775119885.AR1pj1RfbVCq8R3oSp2QGqUKxjPFwFRkR0QjdHxCxuhqdS2e^$",
-                    "value": "dqolpz:1775119888736"
+                    "value": "1775173505725"
                 },
                 {
                     "name": "topicsLastReportingTime",
@@ -168,6 +164,10 @@
                 {
                     "name": "__MWSimpleNux.WEB_MSGR_PINNED_MESSAGES_NUX__",
                     "value": "{\"lastViewDate\":1775120071139,\"views\":1}"
+                },
+                {
+                    "name": "mutex_falco_queue_log^$100002486711654^#100002486711654^#^#hmac_ttl.1775173499.AR3yorrFRdhN43uXdmUwfatq3_qSn4N2Z4bP2lk-Ci_0mrCr^$",
+                    "value": "shn1dp:1775173502597"
                 },
                 {
                     "name": "ps:100002486711654:b11d11ca-42ad-42af-baf7-c13f55e86dfe",

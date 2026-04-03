@@ -63,7 +63,7 @@ async def tous_en_pause(comptes_actifs, lesPause):
         data_lien = ObtenirLien(nomFichierCompte)
 
         if data_lien:
-            print("Le compte a des amis")
+            #print("Le compte a des amis")
             if verifier_pause(nomFichierCompte, lesPause): print(f"Le compte est en pause - {nomFichierCompte}"); continue
             else: print(f"Le compte N'EST PAS en pause - {nomFichierCompte}"); return False
         else: print(f"Aucun ami sur le compte de {nomFichierCompte}")
@@ -141,13 +141,13 @@ async def visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrase, lesP
         #identifiant = compte["id_inchangeable"]
 
         # limite facebook
-        #if resultat == "limite":
-        #    lesPause[nomFichierCompte] = { "prochain_envoi": pause_24h(), "limite": "Oui" }
+        if resultat == "limite":
+            lesPause[nomFichierCompte] = { "prochain_envoi": pause_24h(), "limite": "Oui" }
 
-        #    with open("pause_prochain_envoi.json", "w", encoding = "utf-8") as f: 
-        #        json.dump(lesPause, f, ensure_ascii = False, indent = 2)
-        #    print("Compte bloqué 24h :", nomFichierCompte)
-        #    return
+            with open("pause_prochain_envoi.json", "w", encoding = "utf-8") as f: 
+                json.dump(lesPause, f, ensure_ascii = False, indent = 2)
+            print("Compte bloqué 24h :", nomFichierCompte)
+            return
             
         if resultat == "ok":
             date = prochaine_date(); 
