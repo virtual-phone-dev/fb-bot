@@ -5,7 +5,7 @@ from playwright.async_api import async_playwright
 
 async def save_cookies(context):
     cookies = await context.cookies()
-    with open("cookies-fb2.json", "w") as f:
+    with open("c-th-sandra.json", "w") as f:
         json.dump(cookies, f, indent=4, ensure_ascii=False)
         # json.dump(cookies, f)
 
@@ -28,7 +28,7 @@ async def apply_stealth(page):
     # )
 
 
-def load_cookies(file_path="cookies-fb2.json"):
+def load_cookies(file_path="c-th-sandra.json"):
     with open(file_path, "r", encoding="utf-8") as f:
         raw_cookies = json.load(f)
 
@@ -67,8 +67,8 @@ async def main():
         context = await browser.new_context()
 
         # Charger les cookies AVANT d'ouvrir la page
-        #cookies = load_cookies()
-        #await context.add_cookies(cookies)
+        cookies = load_cookies()
+        await context.add_cookies(cookies)
 
         page = await context.new_page()
 
@@ -78,11 +78,11 @@ async def main():
         print("on va sur le site")
         await page.goto("https://www.threads.com/@muriel_blanche/post/DWgXEecjSOz", timeout=0)
 
-        print("on patiente 6 min")
-        await asyncio.sleep(360)
-
         print("on patiente 1 min")
         await asyncio.sleep(60)
+
+        print("on patiente 1 min")
+        #await asyncio.sleep(60)
 
         print("on enregistre les cookies")
 
