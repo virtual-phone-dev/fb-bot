@@ -335,7 +335,7 @@ async def envoyer_commentaire_bs(page, COMMENTS, posts=None, fichier_posts=None,
         
 async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, page_name=None, page_url=None, cookie_file=None, commented_posts=None, context=None):
     identifiant_post=None; post_link=None
-    
+
     # 🔹 Vérification indisponibilité
     try:
         indisponible = await page.evaluate('''() => { return document.body.innerText.includes("Ce contenu n’est pas disponible pour le moment") }''')
@@ -348,7 +348,7 @@ async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, pa
     except:
         pass
         
-        
+
     # CHOIX DU PREMIER POST
     post_comment_button = page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first
     count_post_comment_button = await post_comment_button.count()
@@ -357,7 +357,7 @@ async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, pa
         source_post = post_comment_button
     else:
         source_post = page.locator('[role="article"]').nth(0)
-        
+
     
     # RÉCUPÉRATION TEXTE POST (NOUVELLE MÉTHODE)
     try:        

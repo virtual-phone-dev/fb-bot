@@ -27,9 +27,9 @@ async def visiter(browser, compte, url, comments, posts, blacklist, page_name=No
 
 
 async def main():
-    comptes = charger_json("accounts.json", [])
+    comptes = charger_json("accounts-fb.json", [])
     pages = charger_json("pages-tout-pays.json", [])
-    comments = charger_json("phrases-travail.json", [])
+    comments = charger_json("phrase-site-internet.json", [])
     posts = charger_json(FICHIER_POSTS, [])
     blacklist = charger_json(FICHIER_BLACKLIST, {})
     
@@ -49,7 +49,7 @@ async def main():
     comptes = [c for c in comptes if not c["fichier"].startswith("-")]
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True, args=["--disable-blink-features=AutomationControlled"])
+        browser = await p.chromium.launch(headless=False, args=["--disable-blink-features=AutomationControlled"])
         cycle_comptes = cycle(comptes)
         
         while True:
