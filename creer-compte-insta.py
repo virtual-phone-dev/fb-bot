@@ -1,5 +1,4 @@
-import json
-import asyncio
+import json, asyncio
 from playwright.async_api import async_playwright
 
 
@@ -7,7 +6,6 @@ async def save_cookies(context):
     cookies = await context.cookies()
     with open("c-insta-laura.json", "w") as f:
         json.dump(cookies, f, indent=4, ensure_ascii=False)
-        # json.dump(cookies, f)
 
 
 async def apply_stealth(page):
@@ -19,13 +17,6 @@ async def apply_stealth(page):
     """
     )
 
-    # await page.add_init_script(
-    #    """
-    # Object.defineProperty(navigator, 'webdriver', {get: () => false});
-    # Object.defineProperty(navigator, 'languages', {get: () => ['fr-FR', 'fr']});
-    # Object.defineProperty(navigator, 'plugins', {get: () => [1,2,3,4,5]});
-    # """
-    # )
 
 
 def load_cookies(file_path="c-insta-laura.json"):
@@ -50,13 +41,32 @@ def load_cookies(file_path="c-insta-laura.json"):
 
 
 async def creer_compte(page):
-    page.get_by_label("Numéro de mobile ou adresse e-mail").fill("gillesilluminati@gmail.com")
-    page.get_by_label("Mot de passe").fill("Diel2019@#")
-    page.get_by_label("Nom complet").fill("Laura")
-    page.get_by_label("Nom de profil").fill("Mercier")
-    page.get_by_text("Jour").click()
-    page.wait_for_timeout(500) # attendre que les options apparaissent
-    page.get_by_text("05").click()
+    await page.get_by_label("Numéro de mobile ou adresse e-mail").fill("membrerdc001@gmail.com")
+    await page.get_by_label("Mot de passe").fill("Diel2019@#")
+    await page.get_by_label("Nom complet").fill("Laura")
+    await page.get_by_label("Nom de profil").fill("Laura_Mercier5")
+    
+    # selectionner le jour
+    await page.evaluate(''' [...document.querySelectorAll("div, span")].find(el => el.textContent.trim() === "Jour").click(); ''')
+    await page.wait_for_timeout(100)
+    await page.evaluate(''' [...document.querySelectorAll('[role="option"]')].find(el => el.textContent.trim() === "1").click(); ''')
+    
+    await page.locator('div[aria-label="Sélectionnez le mois"]').click()
+    await page.get_by_role("option", name="janvier").click()
+    
+    # selectionner l'année
+    await page.evaluate(''' [...document.querySelectorAll("div, span")].find(el => el.textContent.trim() === "Année").click(); ''')
+    await page.wait_for_timeout(100)
+    await page.evaluate(''' [...document.querySelectorAll('[role="option"]')].find(el => el.textContent.trim() === "2000").click(); ''')
+    
+    
+    await page.locator('div[role="button"]', has_text="Envoyer").click()
+    
+    await page.get_by_role("checkbox").click()
+    await page.evaluate("""
+    const checkbox = document.querySelector('#recaptcha-anchor');
+    if (checkbox) { checkbox.click(); } """
+
     
     
 async def main():
@@ -78,8 +88,8 @@ async def main():
         context = await browser.new_context()
 
         # Charger les cookies AVANT d'ouvrir la page
-        cookies = load_cookies()
-        await context.add_cookies(cookies)
+        #cookies = load_cookies()
+        #await context.add_cookies(cookies)
 
         page = await context.new_page()
 
@@ -92,7 +102,7 @@ async def main():
         #await page.goto("https://www.threads.com/@muriel_blanche/post/DWgXEecjSOz", timeout=0)
 
         print("on patiente 1 min")
-        await asyncio.sleep(60)
+        #await asyncio.sleep(60)
 
         print("on patiente 1 min")
         #await asyncio.sleep(60)
