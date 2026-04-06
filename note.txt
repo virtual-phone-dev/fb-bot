@@ -632,6 +632,17 @@ buttons.forEach(btn => {
 
 
 
+
+obtenir le code html dans la console
+
+const bio = [...document.querySelectorAll('label')]
+  .find(el => el.innerText.includes("Bio"));
+
+console.log(bio);
+
+
+
+
 On ne peut pas prêcher l’espérance à quelqu’un qui te voit vivre mieux grâce à son sacrifice.
 
 
