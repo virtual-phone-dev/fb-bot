@@ -1,16 +1,29 @@
 import json, asyncio
 from playwright.async_api import async_playwright
 
-fichier_cookie = "c-insta-Olivia-Rose.json"
-
-nom_complet = "Emily Vibes"
-nom_profil = "Emily_vibes20"
-email = "alimatousidibe001@gmail.com"
-mot_de_passe = "Diel2019@#"
+#fichier_cookie = "c-insta-Olivia-Rose.json"
 mot_de_passe_gmail = "diel2019"
 
 
-    
+async def charger_comptes(fichier_des_comptes):
+    with open(fichier_des_comptes, "r", encoding="utf-8") as f:
+        return json.load(f)
+        
+
+
+async def marquer_creer(compte, fichier_des_comptes):
+    with open(fichier_des_comptes, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    for item in data:
+        if item["fichier"] == compte["fichier"]:
+            item["creer"] = "Oui"
+
+    with open(fichier_des_comptes, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
+        
+        
+        
 async def save_cookies(context):
     print("patiente 7s")
     await asyncio.sleep(7)
@@ -32,9 +45,9 @@ async def apply_stealth(page):
     Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
 
 
-
-def load_cookies(file_path=fichier_cookie):
-    with open(file_path, "r", encoding="utf-8") as f:
+        
+def load_cookies(fichier_des_comptes):
+    with open(fichier_des_comptes, "r", encoding="utf-8") as f:
         raw_cookies = json.load(f)
 
     cookies = []
@@ -54,7 +67,7 @@ def load_cookies(file_path=fichier_cookie):
 
 
 
-async def connecter_gmail(page):
+async def connecter_gmail(page, email):
     await page.get_by_label("Adresse e-mail ou téléphone").fill(email)
     await page.get_by_role("button", name="Suivant").click()
     
@@ -132,7 +145,7 @@ async def patiente_photo_profil_insta_ajouter(page):
 
     
         
-async def mettre_photo_profil_insta(page):    
+async def mettre_photo_profil_insta(page, nom_profil):    
     await page.goto(f"https://www.instagram.com/{nom_profil}", timeout=0)
     
     while True:
@@ -180,7 +193,7 @@ async def patiente_compte_insta_connecter(page, context):
     #await save_cookies(context)           
     
     
-async def connecter_compte_insta(page, context):
+async def connecter_compte_insta(page, context, nom_profil):
     await page.get_by_label("Numéro de mobile, nom de profil ou adresse e-mail").fill(email)
     await page.get_by_label("Mot de passe").fill(mot_de_passe)
     await page.locator('div[aria-label="Se connecter"]').click()
@@ -189,7 +202,7 @@ async def connecter_compte_insta(page, context):
     await asyncio.sleep(10)
     
     await patiente_compte_insta_connecter(page, context)
-    await mettre_photo_profil_insta(page)
+    await mettre_photo_profil_insta(page, nom_profil)
 
     #page2 = await context.new_page()
     #await apply_stealth(page2)
@@ -199,7 +212,9 @@ async def connecter_compte_insta(page, context):
     
     
             
-async def creer_compte_insta(page, context):
+async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe):
+    print(f"Création du compte : {nom_complet}")
+    
     #while True:
     #    await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0)
     #    await asyncio.sleep(1)
@@ -229,7 +244,8 @@ async def creer_compte_insta(page, context):
     await page.locator('div[role="button"]', has_text="Envoyer").click()
     
     await patiente_compte_insta_connecter(page, context)
-    await mettre_photo_profil_insta(page)
+    await marquer_creer(compte, fichier_des_comptes) # marquer comme créé
+    await mettre_photo_profil_insta(page, nom_profil)
 
 
 
@@ -246,27 +262,44 @@ async def main():
         )
 
         context = await browser.new_context()
+        
+        fichier_des_comptes = "comptes-insta-th.json"
+        comptes = await charger_comptes(fichier_des_comptes)
 
         # Charger les cookies AVANT d'ouvrir la page
-        #cookies = load_cookies()
+        #cookies = load_cookies(fichier_des_comptes)
         #await context.add_cookies(cookies)
 
-        page2 = await context.new_page()
-        await apply_stealth(page2) # appliquer stealth
-        await page2.goto("https://mail.google.com", timeout=0)        
-        await connecter_gmail(page2)
+        #page = await context.new_page() # nouvel onglet
+        #await apply_stealth(page)
         
-        
-        page = await context.new_page() # nouvel onglet
-        await apply_stealth(page)
-        
-        await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0)
-        await creer_compte_insta(page, context)
+        for compte in comptes:
+            nom_complet = compte["nom_complet"]
+            nom_profil = compte["nom_profil"]
+            email = compte["email"]
+            mot_de_passe = compte["mot_de_passe"]
 
-        #await page.goto("https://www.instagram.com", timeout=0)
-        #await connecter_compte_insta(page, context)
+            if compte.get("creer") == "Oui":
+                continue  # skip si déjà créé
+
+            #page2 = await context.new_page()
+            #await apply_stealth(page2) # appliquer stealth
+            #await page2.goto("https://mail.google.com", timeout=0)        
+            #await connecter_gmail(page2, email)
+            
+            
+            page = await context.new_page()
+            await apply_stealth(page)
+            
+            #await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0)
+            #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
+
+            await page.goto("https://www.instagram.com", timeout=0)
+            await connecter_compte_insta(page, context, nom_profil)
+            break
 
         await asyncio.sleep(10000)
+
 
 
 if __name__ == "__main__":
