@@ -93,19 +93,19 @@ async def connecter_gmail(page, email):
     
 async def procedure_pendant_creation_compte_threads(page):
     while True:
+        print("patiente 2s"); await asyncio.sleep(2)
         btn = page.locator('div[role="button"]', has_text="Suivant").first
         if await btn.is_visible():
             await btn.click()
-            
-        print("patiente 2s"); await asyncio.sleep(2)
+            break
+    
+    while True:
+        print("patiente 1s"); await asyncio.sleep(1)
         btn = page.locator('div[role="button"]', has_text="Rejoindre Threads")
         if await btn.is_visible():
             await btn.click()
             break
             
-        print("patiente 5s")
-        await asyncio.sleep(5)
-
 
 
 async def creer_compte_threads(page):
@@ -280,29 +280,32 @@ async def main():
         #await apply_stealth(page)
         
         for compte in comptes:
+            if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
+                continue
+                
+            if compte.get("creer") == "Oui":
+                continue  # skip si compte déjà créé
+        
             nom_complet = compte["nom_complet"]
             nom_profil = compte["nom_profil"]
             email = compte["email"]
             mot_de_passe = compte["mot_de_passe"]
 
-            if compte.get("creer") == "Oui":
-                continue  # skip si déjà créé
-
-            #page2 = await context.new_page()
-            #await apply_stealth(page2) # appliquer stealth
-            #await page2.goto("https://mail.google.com", timeout=0)        
-            #await connecter_gmail(page2, email)
+            page2 = await context.new_page()
+            await apply_stealth(page2) # appliquer stealth
+            await page2.goto("https://mail.google.com", timeout=0)        
+            await connecter_gmail(page2, email)
             
             
             page = await context.new_page()
             await apply_stealth(page)
             
-            #await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0)
-            #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
+            await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0)
+            await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
 
-            await page.goto("https://www.instagram.com", timeout=0)
-            await connecter_compte_insta(page, context, email, mot_de_passe, nom_profil)
-            break
+            #await page.goto("https://www.instagram.com", timeout=0)
+            #await connecter_compte_insta(page, context, email, mot_de_passe, nom_profil)
+            #break
 
         await asyncio.sleep(10000)
 
