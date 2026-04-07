@@ -5,7 +5,7 @@ fichier_cookie = "c-insta-Olivia-Rose.json"
 
 nom_complet = "Emily Vibes"
 nom_profil = "Emily_vibes20"
-email = "leoilluminati001@gmail.com"
+email = "alimatousidibe001@gmail.com"
 mot_de_passe = "Diel2019@#"
 mot_de_passe_gmail = "diel2019"
 
