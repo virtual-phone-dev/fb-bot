@@ -146,8 +146,14 @@ async def patiente_photo_profil_insta_ajouter(page):
     
         
 async def mettre_photo_profil_insta(page, nom_profil):    
-    await page.goto(f"https://www.instagram.com/{nom_profil}", timeout=0)
-    
+    try:
+        await page.goto(f"https://www.instagram.com/{nom_profil}", timeout=0)
+        await page.wait_for_load_state("domcontentloaded")
+    except:
+        print("receharge la page")
+        await page.goto(f"https://www.instagram.com/{nom_profil}", timeout=0)
+        #return
+            
     while True:
         print("patiente 2s")
         await asyncio.sleep(2)
@@ -193,7 +199,7 @@ async def patiente_compte_insta_connecter(page, context):
     #await save_cookies(context)           
     
     
-async def connecter_compte_insta(page, context, nom_profil):
+async def connecter_compte_insta(page, context, email, mot_de_passe, nom_profil):
     await page.get_by_label("Numéro de mobile, nom de profil ou adresse e-mail").fill(email)
     await page.get_by_label("Mot de passe").fill(mot_de_passe)
     await page.locator('div[aria-label="Se connecter"]').click()
@@ -295,7 +301,7 @@ async def main():
             #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
 
             await page.goto("https://www.instagram.com", timeout=0)
-            await connecter_compte_insta(page, context, nom_profil)
+            await connecter_compte_insta(page, context, email, mot_de_passe, nom_profil)
             break
 
         await asyncio.sleep(10000)
