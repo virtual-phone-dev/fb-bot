@@ -3,9 +3,9 @@ from playwright.async_api import async_playwright
 
 fichier_cookie = "c-insta-Olivia-Rose.json"
 
-nom_complet = "Alice Monroe"
-nom_profil = "Alice.Monroe12"
-email = "karterilluminati@gmail.com"
+nom_complet = "Emily Vibes"
+nom_profil = "Emily_vibes20"
+email = "leoilluminati001@gmail.com"
 mot_de_passe = "Diel2019@#"
 mot_de_passe_gmail = "diel2019"
 
@@ -62,15 +62,19 @@ async def connecter_gmail(page):
     await asyncio.sleep(5)
     await page.get_by_label("Saisissez votre mot de passe").fill(mot_de_passe_gmail)
     await page.get_by_role("button", name="Suivant").click()
-    
-    while True:
-        print("patiente 10s") 
-        await asyncio.sleep(10)
+    print("patiente 10s"); await asyncio.sleep(10)
+     
+    count = 0
+    while count < 2:
+        print("patiente 2s") 
+        await asyncio.sleep(2)
         
         btn = page.get_by_label("Ignorer")
         if await btn.is_visible():
             await btn.click()
             break
+            
+        count += 1
 
     
     
@@ -121,8 +125,8 @@ async def patiente_photo_profil_insta_ajouter(page):
             await page.goto("https://threads.com", timeout=0)
             break
         else:
-            print("patiente 10s")
-            await asyncio.sleep(10)
+            print("patiente 5s")
+            await asyncio.sleep(5)
         
     await creer_compte_threads(page)   
 
@@ -170,8 +174,8 @@ async def patiente_compte_insta_connecter(page, context):
             pass
 
         # attendre seulement si rien trouvé
-        print("patiente 10s")
-        await asyncio.sleep(10)
+        print("patiente 5s")
+        await asyncio.sleep(5)
         
     #await save_cookies(context)           
     
@@ -194,8 +198,16 @@ async def connecter_compte_insta(page, context):
     #await creer_compte_threads(page2)  
     
     
-    
+            
 async def creer_compte_insta(page, context):
+    #while True:
+    #    await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0)
+    #    await asyncio.sleep(1)
+        
+    #    btn = page.get_by_label("Numéro de mobile ou adresse e-mail")
+    #    if await btn.is_visible():
+    #        break
+    
     await page.get_by_label("Numéro de mobile ou adresse e-mail").fill(email)
     await page.get_by_label("Mot de passe").fill(mot_de_passe)
     await page.get_by_label("Nom complet").fill(nom_complet)
@@ -247,7 +259,6 @@ async def main():
         
         page = await context.new_page() # nouvel onglet
         await apply_stealth(page)
-        
         
         await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0)
         await creer_compte_insta(page, context)

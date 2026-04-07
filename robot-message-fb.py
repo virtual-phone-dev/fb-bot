@@ -165,7 +165,7 @@ async def visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrase, lesP
     
 async def main():
     comptes = charger_json("accounts-fb.json", []); 
-    phrase = charger_json("phrases-travail.json", []); 
+    phrase = charger_json("phrase-voyage.json", []); 
     lesPause = charger_json("pause_prochain_envoi.json", {}); 
     index_zone = charger_json("index_zone_rm.json", {})
     
