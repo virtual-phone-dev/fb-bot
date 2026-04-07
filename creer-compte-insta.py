@@ -106,6 +106,7 @@ async def procedure_pendant_creation_compte_threads(page):
             await btn.click()
             break
             
+    print("patiente 10s"); await asyncio.sleep(10)      
 
 
 async def creer_compte_threads(page):
@@ -221,13 +222,13 @@ async def connecter_compte_insta(page, context, email, mot_de_passe, nom_profil)
 async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe):
     print(f"Création du compte : {nom_complet}")
     
-    #while True:
-    #    await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0)
-    #    await asyncio.sleep(1)
-        
-    #    btn = page.get_by_label("Numéro de mobile ou adresse e-mail")
-    #    if await btn.is_visible():
-    #        break
+    page2 = await context.new_page() #acceder a gmail
+    await apply_stealth(page2) # appliquer stealth
+    await page2.goto("https://mail.google.com", timeout=0)        
+    await connecter_gmail(page2, email)
+    
+    await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0) #acceder a instagram
+
     
     await page.get_by_label("Numéro de mobile ou adresse e-mail").fill(email)
     await page.get_by_label("Mot de passe").fill(mot_de_passe)
@@ -285,30 +286,24 @@ async def main():
                 
             if compte.get("creer") == "Oui":
                 continue  # skip si compte déjà créé
+            
+            context = await browser.new_context() #nouveau contexte pour chaque compte
         
             nom_complet = compte["nom_complet"]
             nom_profil = compte["nom_profil"]
             email = compte["email"]
             mot_de_passe = compte["mot_de_passe"]
 
-            page2 = await context.new_page()
-            await apply_stealth(page2) # appliquer stealth
-            await page2.goto("https://mail.google.com", timeout=0)        
-            await connecter_gmail(page2, email)
-            
-            
             page = await context.new_page()
             await apply_stealth(page)
+            #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
+
+            await page.goto("https://www.instagram.com", timeout=0)
+            await connecter_compte_insta(page, context, email, mot_de_passe, nom_profil)
+            break
             
-            await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0)
-            await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
-
-            #await page.goto("https://www.instagram.com", timeout=0)
-            #await connecter_compte_insta(page, context, email, mot_de_passe, nom_profil)
-            #break
-
+            await context.close() #fermer le contexte (ou la fenetre)
         await asyncio.sleep(10000)
-
 
 
 if __name__ == "__main__":
