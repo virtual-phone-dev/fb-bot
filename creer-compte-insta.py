@@ -6,7 +6,7 @@ mot_de_passe_gmail = "diel2019"
 
 
 
-async def formatter(fichier_des_comptes):
+async def formatter(data, fichier_des_comptes):
     with open(fichier_des_comptes, "w", encoding="utf-8") as f:
         f.write("[\n")
 
@@ -40,7 +40,7 @@ async def marquer_creer(compte, fichier_des_comptes):
         if item["fichier"] == compte["fichier"]:
             item["creer"] = "Oui"
 
-    await formatter(fichier_des_comptes)
+    await formatter(data, fichier_des_comptes)
         
         
         
@@ -105,17 +105,55 @@ async def connecter_gmail(page, email):
             await page.get_by_role("button", name="Suivant").click()
             break
     print("patiente 10s"); await asyncio.sleep(10)
-             
+    
     count = 0
     while count < 2:
-        print("patiente 2s"); await asyncio.sleep(2)
+        print("patiente 5s"); await asyncio.sleep(5)
         btn = page.get_by_label("Ignorer")
         if await btn.is_visible():
             await btn.click()
             break
             
         count += 1
+    
+    
+    while True:
+       print("patiente 2s"); await asyncio.sleep(2)
+       btn = page.locator('div[role="link"]:has-text("Confirmer votre adresse e-mail de récupération")')
+       if await btn.is_visible():
+           await btn.click()
+           break
+    
+    while True:
+       print("patiente 3s"); await asyncio.sleep(3)
+       btn = page.get_by_label("Saisissez l'adresse e-mail de récupération")
+       if await btn.is_visible():
+           await page.get_by_label("Saisissez l'adresse e-mail de récupération").fill("kilendodingha@gmail.com")
+           await page.get_by_role("button", name="Suivant").click()
+           break
 
+    while True:
+       print("patiente 2s"); await asyncio.sleep(2)
+       btn = page.locator('span:has-text("Besoin d\'aide pour récupérer votre compte")')
+       if await btn.is_visible():
+           await btn.click()
+           break
+    
+    while True:
+       print("patiente 4s"); await asyncio.sleep(4)
+       btn = page.get_by_label("Saisissez votre dernier mot de passe")
+       if await btn.is_visible():
+           await page.get_by_label("Saisissez votre dernier mot de passe").fill(mot_de_passe_gmail)
+           await page.get_by_role("button", name="Suivant").click()
+           break
+
+    while True:
+       print("patiente 2s"); await asyncio.sleep(2)
+       btn = page.get_by_label("Continuer")
+       if await btn.is_visible():
+           await btn.click()
+           break
+           
     
     
 async def procedure_pendant_creation_compte_threads(page):
@@ -228,7 +266,7 @@ async def patiente_compte_insta_connecter(page, context):
     #await save_cookies(context)           
     
     
-async def connecter_compte_insta(page, context, email, mot_de_passe, nom_profil):
+async def connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil):
     await page.get_by_label("Numéro de mobile, nom de profil ou adresse e-mail").fill(email)
     await page.get_by_label("Mot de passe").fill(mot_de_passe)
     await page.locator('div[aria-label="Se connecter"]').click()
@@ -237,6 +275,7 @@ async def connecter_compte_insta(page, context, email, mot_de_passe, nom_profil)
     await asyncio.sleep(10)
     
     await patiente_compte_insta_connecter(page, context)
+    await marquer_creer(compte, fichier_des_comptes)
     await mettre_photo_profil_insta(page, nom_profil)
     
     #page2 = await context.new_page()
@@ -324,11 +363,11 @@ async def main():
 
             page = await context.new_page()
             await apply_stealth(page)
-            await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
+            #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
 
-            #await page.goto("https://www.instagram.com", timeout=0)
-            #await connecter_compte_insta(page, context, email, mot_de_passe, nom_profil)
-            #break
+            await page.goto("https://www.instagram.com", timeout=0)
+            await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
+            break
             
             await context.close() #fermer le contexte (ou la fenetre)
         await asyncio.sleep(10000)
