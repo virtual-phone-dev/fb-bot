@@ -5,9 +5,31 @@ from playwright.async_api import async_playwright
 mot_de_passe_gmail = "diel2019"
 
 
+
+async def formatter(fichier_des_comptes):
+    with open(fichier_des_comptes, "w", encoding="utf-8") as f:
+        f.write("[\n")
+
+    for i, item in enumerate(data):
+        ligne = json.dumps(item, ensure_ascii=False)
+
+        # ajouter virgule sauf dernier
+        if i < len(data) - 1:
+            f.write(f"    {ligne},\n")
+        else:
+            f.write(f"    {ligne}\n")
+
+        # saut de ligne après chaque 5 comptes
+        if (i + 1) % 5 == 0:
+            f.write("\n")
+
+    f.write("]")
+    
+    
 async def charger_comptes(fichier_des_comptes):
     with open(fichier_des_comptes, "r", encoding="utf-8") as f:
         return json.load(f)
+        
         
     
 async def marquer_creer(compte, fichier_des_comptes):
@@ -18,8 +40,7 @@ async def marquer_creer(compte, fichier_des_comptes):
         if item["fichier"] == compte["fichier"]:
             item["creer"] = "Oui"
 
-    with open(fichier_des_comptes, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False)
+    await formatter(fichier_des_comptes)
         
         
         
