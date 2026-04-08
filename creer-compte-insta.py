@@ -104,50 +104,63 @@ async def connecter_gmail(page, email):
             
     
     while True:    
-        print("patiente 1s"); await asyncio.sleep(1)
-        btn = page.get_by_label("Ignorer")
-        if await btn.count() > 0:
-            await btn.click()
+        #print("patiente 1s"); await asyncio.sleep(1)
+        try:
+            btn = page.get_by_label("Ignorer")
+            if await btn.count() > 0:
+                await btn.click()
+        except:
+            pass  
             
 
-        #print("patiente 2s"); await asyncio.sleep(2)
-        btn = page.locator('div[role="link"]:has-text("Confirmer votre adresse e-mail de récupération")')
-        if await btn.count() > 0:
-            await btn.click()
+        try:
+            btn = page.locator('div[role="link"]:has-text("Confirmer votre adresse e-mail de récupération")')
+            if await btn.count() > 0:
+                await btn.click()
+        except:
+            pass
+            
     
-    
-        #print("patiente 3s"); await asyncio.sleep(3)
-        btn = page.get_by_label("Saisissez l'adresse e-mail de récupération")
-        if await btn.count() > 0:
-            await page.get_by_label("Saisissez l'adresse e-mail de récupération").fill("kilendodingha@gmail.com")
-            await page.get_by_role("button", name="Suivant").click()
+        try:
+            btn = page.get_by_label("Saisissez l'adresse e-mail de récupération")
+            if await btn.count() > 0:
+                await page.get_by_label("Saisissez l'adresse e-mail de récupération").fill("kilendodingha@gmail.com")
+                await page.get_by_role("button", name="Suivant").click()
+        except:
+            pass
+            
+        
+        try:
+            btn = page.locator('span:has-text("Besoin d\'aide pour récupérer votre compte")')
+            if await btn.count() > 0:
+                await btn.click()
+        except:
+            pass
 
 
-        #print("patiente 2s"); await asyncio.sleep(2)
-        btn = page.locator('span:has-text("Besoin d\'aide pour récupérer votre compte")')
-        if await btn.count() > 0:
-            await btn.click()
-
-
-        #print("patiente 4s"); await asyncio.sleep(4)
-        btn = page.get_by_label("Saisissez votre dernier mot de passe")
-        if await btn.count() > 0: 
-            await page.get_by_label("Saisissez votre dernier mot de passe").fill(mot_de_passe_gmail)
-            await page.get_by_role("button", name="Suivant").click()
-
-
-        #print("patiente 3s"); await asyncio.sleep(3)
-        btn = page.get_by_label("Continuer")
-        if await btn.count() > 0:
-            await btn.click()
+        try:
+            btn = page.get_by_label("Saisissez votre dernier mot de passe")
+            if await btn.count() > 0: 
+                await page.get_by_label("Saisissez votre dernier mot de passe").fill(mot_de_passe_gmail)
+                await page.get_by_role("button", name="Suivant").click()
+        except:
+            pass
 
         
-        #print("patiente 2s"); await asyncio.sleep(2)
-        btn = page.locator('div[role="button"]:has-text("Nouveau message")')
-        if await btn.count() > 0:
-            break
+        try:
+            btn = page.get_by_label("Continuer")
+            if await btn.count() > 0:
+                await btn.click()
+        except:
+            pass
             
-        #await page.locator('div[role="button"]:has-text("Nouveau message")').click()
+
+        try:
+            btn = page.locator('div[role="button"]:has-text("Nouveau message")')
+            if await btn.count() > 0:
+                break
+        except:
+            pass   
            
     
     
