@@ -9,8 +9,7 @@ async def charger_comptes(fichier_des_comptes):
     with open(fichier_des_comptes, "r", encoding="utf-8") as f:
         return json.load(f)
         
-
-
+    
 async def marquer_creer(compte, fichier_des_comptes):
     with open(fichier_des_comptes, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -20,7 +19,7 @@ async def marquer_creer(compte, fichier_des_comptes):
             item["creer"] = "Oui"
 
     with open(fichier_des_comptes, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
+        json.dump(data, f, ensure_ascii=False)
         
         
         
@@ -66,22 +65,29 @@ def load_cookies(fichier_des_comptes):
     return cookies
 
 
-
+                
 async def connecter_gmail(page, email):
-    await page.get_by_label("Adresse e-mail ou téléphone").fill(email)
-    await page.get_by_role("button", name="Suivant").click()
+    while True:
+        print("patiente 2s"); await asyncio.sleep(2)
+        btn = page.get_by_label("Adresse e-mail ou téléphone")
+        if await btn.is_visible():
+            await page.get_by_label("Adresse e-mail ou téléphone").fill(email)
+            await btn.click()
+            await page.get_by_role("button", name="Suivant").click()
+            break
     
-    print("patiente 5s")
-    await asyncio.sleep(5)
-    await page.get_by_label("Saisissez votre mot de passe").fill(mot_de_passe_gmail)
-    await page.get_by_role("button", name="Suivant").click()
+    while True:
+        print("patiente 4s"); await asyncio.sleep(4)
+        btn = page.get_by_label("Saisissez votre mot de passe")
+        if await btn.is_visible():
+            await page.get_by_label("Saisissez votre mot de passe").fill(mot_de_passe_gmail)
+            await page.get_by_role("button", name="Suivant").click()
+            break
     print("patiente 10s"); await asyncio.sleep(10)
-     
+             
     count = 0
     while count < 2:
-        print("patiente 2s") 
-        await asyncio.sleep(2)
-        
+        print("patiente 2s"); await asyncio.sleep(2)
         btn = page.get_by_label("Ignorer")
         if await btn.is_visible():
             await btn.click()
@@ -106,7 +112,7 @@ async def procedure_pendant_creation_compte_threads(page):
             await btn.click()
             break
             
-    print("patiente 10s"); await asyncio.sleep(10)      
+    print("patiente 20s"); await asyncio.sleep(10)      
 
 
 async def creer_compte_threads(page):
@@ -144,26 +150,27 @@ async def patiente_photo_profil_insta_ajouter(page):
         
     await creer_compte_threads(page)   
 
-    
+
         
 async def mettre_photo_profil_insta(page, nom_profil):    
     try:
         await page.goto(f"https://www.instagram.com/{nom_profil}", timeout=0)
         await page.wait_for_load_state("domcontentloaded")
     except:
-        print("receharge la page")
+        print("recharge la page")
         await page.goto(f"https://www.instagram.com/{nom_profil}", timeout=0)
-        #return
-            
-    while True:
-        print("patiente 2s")
-        await asyncio.sleep(2)
+    
+    count = 0
+    while count < 5:
+        print("patiente 3s")
+        await asyncio.sleep(3)
         
         btn = page.locator('button[title="Ajouter une photo de profil"]')
         if await btn.is_visible():
             await btn.click()
             break
-        
+            
+        count += 1
     await patiente_photo_profil_insta_ajouter(page)   
     
     
@@ -210,7 +217,7 @@ async def connecter_compte_insta(page, context, email, mot_de_passe, nom_profil)
     
     await patiente_compte_insta_connecter(page, context)
     await mettre_photo_profil_insta(page, nom_profil)
-
+    
     #page2 = await context.new_page()
     #await apply_stealth(page2)
     #await page2.goto("https://threads.com", timeout=0)
@@ -296,11 +303,11 @@ async def main():
 
             page = await context.new_page()
             await apply_stealth(page)
-            #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
+            await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
 
-            await page.goto("https://www.instagram.com", timeout=0)
-            await connecter_compte_insta(page, context, email, mot_de_passe, nom_profil)
-            break
+            #await page.goto("https://www.instagram.com", timeout=0)
+            #await connecter_compte_insta(page, context, email, mot_de_passe, nom_profil)
+            #break
             
             await context.close() #fermer le contexte (ou la fenetre)
         await asyncio.sleep(10000)
