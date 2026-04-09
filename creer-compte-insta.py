@@ -83,7 +83,55 @@ def load_cookies(fichier_des_comptes):
     return cookies
 
 
-                
+
+async def commenter_th(page, email, mot_de_passe):
+    try:
+        await page.goto("https://www.threads.com/login", timeout=0)
+        await page.wait_for_load_state("domcontentloaded")
+    except:
+        print("recharge la page")
+        await page.goto("https://www.threads.com/login", timeout=0)
+        #await page.goto("https://www.threads.com/@herman_amisi/post/DW3v9FCjU5P", timeout=0)
+        
+    await connecter_th_login(page, email, mot_de_passe)
+    
+    while True:
+        print("patiente 2s"); await asyncio.sleep(2)
+        btn = page.get_by_label("Répondre")
+        if await btn.count() > 0:
+            await page.get_by_label("Répondre").click()
+            break
+
+
+async def connecter_th_login(page, email, mot_de_passe):
+    while True:
+        print("patiente 1s"); await asyncio.sleep(1)        
+        input_box = page.get_by_placeholder("Nom de profil, numéro de mobile ou e-mail")
+        if await input_box.count() > 0:            
+            await input_box.fill(email)
+            break
+            
+    while True:
+        print("patiente 2s"); await asyncio.sleep(2)        
+        input_box = page.get_by_placeholder("Mot de passe")
+        if await input_box.count() > 0:            
+            await input_box.fill(mot_de_passe)
+            break
+            
+            
+    while True:       
+        try:
+            print("patiente 1s"); await asyncio.sleep(1)            
+            clicked = await page.evaluate("""let btn = [...document.querySelectorAll('div[role="button"]')].find(el => el.innerText.includes("Se connecter"))
+            if (btn) { btn.click(); return true; } return false;""")
+            if clicked:
+                print("Bouton cliqué")
+                break
+        except:
+            pass              
+            
+            
+            
 async def connecter_gmail(page, email):
     while True:
         print("patiente 2s"); await asyncio.sleep(2)
@@ -273,7 +321,8 @@ async def patiente_compte_insta_connecter(page, context):
         
     #await save_cookies(context)           
     
-    
+            
+
 async def connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil):
     await page.get_by_label("Numéro de mobile, nom de profil ou adresse e-mail").fill(email)
     await page.get_by_label("Mot de passe").fill(mot_de_passe)
@@ -359,8 +408,8 @@ async def main():
             if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
                 continue
                 
-            if compte.get("creer") == "Oui":
-                continue  # skip si compte déjà créé
+            #if compte.get("creer") == "Oui":
+            #    continue  # skip si compte déjà créé
             
             context = await browser.new_context() #nouveau contexte pour chaque compte
         
@@ -371,11 +420,14 @@ async def main():
 
             page = await context.new_page()
             await apply_stealth(page)
-            await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
+            #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
 
             #await page.goto("https://www.instagram.com", timeout=0)
             #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
-            #break
+            
+            await commenter_th(page, email, mot_de_passe)
+            break
+            
             
             await context.close() #fermer le contexte (ou la fenetre)
         await asyncio.sleep(10000)
