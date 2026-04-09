@@ -3,6 +3,7 @@ from playwright.async_api import async_playwright
 
 #fichier_cookie = "c-insta-Olivia-Rose.json"
 mot_de_passe_gmail = "diel2019"
+url_post = "https://www.threads.com/@magelya_officiel/post/DW6-lPmjG-T"
 
 
 async def formatter(data, fichier_des_comptes):
@@ -84,7 +85,7 @@ def load_cookies(fichier_des_comptes):
 
 
 
-async def connecter_th_login(page, email, mot_de_passe):
+async def connecter_th_byLogin(page, email, mot_de_passe):
     while True:
         input_box = page.get_by_placeholder("Nom de profil, numéro de mobile ou e-mail")
         if await input_box.count() > 0:            
@@ -107,36 +108,75 @@ async def connecter_th_login(page, email, mot_de_passe):
             print("L'élément 'Se connecter' n'existe pas.")             
     
     
-    while True:       
-        print("patiente 2s"); await asyncio.sleep(2)   
-        element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
-        if element:
-            await page.goto("https://www.threads.com/@herman_amisi/post/DW3v9FCjU5P", timeout=0)
-            await page.wait_for_load_state("domcontentloaded")
-            break
-            
+    while True:    
+        try:
+            print("patiente 2s"); await asyncio.sleep(2)   
+            element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
+            if element:
+                await page.goto(url_post, timeout=0)
+                break
+        except:
+            pass  
 
 
+
+async def ecrire_commentaire_th(page):
+    print("patiente 2s"); await asyncio.sleep(2)   
+    element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
+    if element:
+        await element.fill("Prêt d’argent disponible. Cliquez ici pour recevoir un Prêt d'argent https://florinato105.onrender.com ")
+        
+                
+ 
 async def commenter_th(page, email, mot_de_passe):
     try:
         await page.goto("https://www.threads.com/login", timeout=0)
-        await page.wait_for_load_state("domcontentloaded")
     except:
         print("recharge la page")
         await page.goto("https://www.threads.com/login", timeout=0)
-        await page.wait_for_load_state("domcontentloaded")
         
-    await connecter_th_login(page, email, mot_de_passe)
+    await connecter_th_byLogin(page, email, mot_de_passe)
     
     while True:
-        print("patiente 2s"); await asyncio.sleep(2)
-        element = await page.query_selector('svg[aria-label="Répondre"]')
-        if element:
-            await element.click()
-            break
-        else:
-            print("L'élément 'Répondre' n'a pas été trouvé.")
-    
+        try:
+            print("patiente 1s"); await asyncio.sleep(1)
+            element = await page.query_selector_all('svg[aria-label="Répondre"]')
+            if element:
+                await element[2].click()
+            
+            await ecrire_commentaire_th(page)
+            
+            print("patiente 4s"); await asyncio.sleep(4)      
+            element = await page.query_selector("text=Publier")
+            if element:    
+                await page.evaluate("""() => { const buttons = [...document.querySelectorAll('div[role="button"]')];
+                const btn = buttons.find(el => el.innerText.includes("Publier")); if (btn) { btn.click(); }} """)
+                print("cliquée"); 
+                break
+        except:
+            pass
+            
+            
+            
+    while True:
+        try:
+            print("patiente 4s"); await asyncio.sleep(4)
+            element = await page.query_selector('svg[aria-label="Répondre"]')
+            if element:
+                await element.click()
+            
+            await ecrire_commentaire_th(page)
+            
+            print("patiente 4s"); await asyncio.sleep(4)      
+            element = await page.query_selector("text=Publier")
+            if element:    
+                await page.evaluate("""() => { const buttons = [...document.querySelectorAll('div[role="button"]')];
+                const btn = buttons.find(el => el.innerText.includes("Publier")); if (btn) { btn.click(); }} """)
+                print("cliquée principal"); 
+                break
+        except:
+            pass
+
     
     
 async def connecter_gmail(page, email):
