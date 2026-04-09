@@ -105,31 +105,33 @@ async def commenter_th(page, email, mot_de_passe):
 
 async def connecter_th_login(page, email, mot_de_passe):
     while True:
-        print("patiente 1s"); await asyncio.sleep(1)        
         input_box = page.get_by_placeholder("Nom de profil, numéro de mobile ou e-mail")
         if await input_box.count() > 0:            
             await input_box.fill(email)
             break
             
     while True:
-        print("patiente 2s"); await asyncio.sleep(2)        
         input_box = page.get_by_placeholder("Mot de passe")
         if await input_box.count() > 0:            
             await input_box.fill(mot_de_passe)
             break
             
-            
     while True:       
-        try:
-            print("patiente 1s"); await asyncio.sleep(1)            
-            clicked = await page.evaluate("""let btn = [...document.querySelectorAll('div[role="button"]')].find(el => el.innerText.includes("Se connecter"))
-            if (btn) { btn.click(); return true; } return false;""")
-            if clicked:
-                print("Bouton cliqué")
-                break
-        except:
-            pass              
-            
+        print("patiente 1s"); await asyncio.sleep(1)            
+        element = await page.query_selector("text=Se connecter")
+        if element:
+            await element.click()
+            break
+        else:
+            print("L'élément 'Se connecter' n'existe pas.")             
+    
+    
+    while True:       
+        print("patiente 2s"); await asyncio.sleep(2)   
+        element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
+        if element:
+            await page.goto("https://www.threads.com/@herman_amisi/post/DW3v9FCjU5P", timeout=0)
+            break
             
             
 async def connecter_gmail(page, email):
