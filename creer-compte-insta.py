@@ -3,7 +3,7 @@ from playwright.async_api import async_playwright
 
 #fichier_cookie = "c-insta-Olivia-Rose.json"
 mot_de_passe_gmail = "diel2019"
-url_post = "https://www.threads.com/@magelya_officiel/post/DW6-lPmjG-T"
+url_post = "https://www.threads.com/@les_luxueux_du_congo/post/DW6jd9cjM2P"
 
 
 async def formatter(data, fichier_des_comptes):
@@ -85,6 +85,21 @@ def load_cookies(fichier_des_comptes):
 
 
 
+async def reparer_th(page, context, nom_complet, email, mot_de_passe):
+    print(f"reparer {nom_complet}")
+    await connecter_th_byLogin(page, email, mot_de_passe)
+    
+    count = 0
+    while count < 3:       
+        print("patiente 5s"); await asyncio.sleep(5)            
+        element = await page.query_selector("text=Une erreur s’est produite, veuillez réessayer plus tard.")
+        if element:
+            print("désactiver")
+            await context.close()
+        count += 1
+
+            
+            
 async def connecter_th_byLogin(page, email, mot_de_passe):
     while True:
         input_box = page.get_by_placeholder("Nom de profil, numéro de mobile ou e-mail")
@@ -107,7 +122,6 @@ async def connecter_th_byLogin(page, email, mot_de_passe):
         else:
             print("L'élément 'Se connecter' n'existe pas.")             
     
-    
     while True:    
         try:
             print("patiente 2s"); await asyncio.sleep(2)   
@@ -121,7 +135,7 @@ async def connecter_th_byLogin(page, email, mot_de_passe):
 
 
 async def ecrire_commentaire_th(page):
-    print("patiente 2s"); await asyncio.sleep(2)   
+    print("ecrire commentaire"); await asyncio.sleep(5)   
     element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
     if element:
         await element.fill("Prêt d’argent disponible. Cliquez ici pour recevoir un Prêt d'argent https://florinato105.onrender.com ")
@@ -146,7 +160,7 @@ async def commenter_th(page, email, mot_de_passe):
             
             await ecrire_commentaire_th(page)
             
-            print("patiente 4s"); await asyncio.sleep(4)      
+            print("patiente 2s"); await asyncio.sleep(2)      
             element = await page.query_selector("text=Publier")
             if element:    
                 await page.evaluate("""() => { const buttons = [...document.querySelectorAll('div[role="button"]')];
@@ -167,7 +181,7 @@ async def commenter_th(page, email, mot_de_passe):
             
             await ecrire_commentaire_th(page)
             
-            print("patiente 4s"); await asyncio.sleep(4)      
+            print("patiente 2s"); await asyncio.sleep(2)      
             element = await page.query_selector("text=Publier")
             if element:    
                 await page.evaluate("""() => { const buttons = [...document.querySelectorAll('div[role="button"]')];
@@ -472,8 +486,10 @@ async def main():
             #await page.goto("https://www.instagram.com", timeout=0)
             #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
             
-            await commenter_th(page, email, mot_de_passe)
-            break
+            #await commenter_th(page, email, mot_de_passe)
+            #break
+            
+            await reparer_th(page, context, nom_complet, email, mot_de_passe)
             
             
             await context.close() #fermer le contexte (ou la fenetre)
