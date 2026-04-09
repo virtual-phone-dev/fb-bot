@@ -84,25 +84,6 @@ def load_cookies(fichier_des_comptes):
 
 
 
-async def commenter_th(page, email, mot_de_passe):
-    try:
-        await page.goto("https://www.threads.com/login", timeout=0)
-        await page.wait_for_load_state("domcontentloaded")
-    except:
-        print("recharge la page")
-        await page.goto("https://www.threads.com/login", timeout=0)
-        #await page.goto("https://www.threads.com/@herman_amisi/post/DW3v9FCjU5P", timeout=0)
-        
-    await connecter_th_login(page, email, mot_de_passe)
-    
-    while True:
-        print("patiente 2s"); await asyncio.sleep(2)
-        btn = page.get_by_label("Répondre")
-        if await btn.count() > 0:
-            await page.get_by_label("Répondre").click()
-            break
-
-
 async def connecter_th_login(page, email, mot_de_passe):
     while True:
         input_box = page.get_by_placeholder("Nom de profil, numéro de mobile ou e-mail")
@@ -131,9 +112,33 @@ async def connecter_th_login(page, email, mot_de_passe):
         element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
         if element:
             await page.goto("https://www.threads.com/@herman_amisi/post/DW3v9FCjU5P", timeout=0)
+            await page.wait_for_load_state("domcontentloaded")
             break
             
-            
+
+
+async def commenter_th(page, email, mot_de_passe):
+    try:
+        await page.goto("https://www.threads.com/login", timeout=0)
+        await page.wait_for_load_state("domcontentloaded")
+    except:
+        print("recharge la page")
+        await page.goto("https://www.threads.com/login", timeout=0)
+        await page.wait_for_load_state("domcontentloaded")
+        
+    await connecter_th_login(page, email, mot_de_passe)
+    
+    while True:
+        print("patiente 2s"); await asyncio.sleep(2)
+        element = await page.query_selector('svg[aria-label="Répondre"]')
+        if element:
+            await element.click()
+            break
+        else:
+            print("L'élément 'Répondre' n'a pas été trouvé.")
+    
+    
+    
 async def connecter_gmail(page, email):
     while True:
         print("patiente 2s"); await asyncio.sleep(2)
