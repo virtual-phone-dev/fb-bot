@@ -3,7 +3,7 @@ from playwright.async_api import async_playwright
 
 #fichier_cookie = "c-insta-Olivia-Rose.json"
 mot_de_passe_gmail = "diel2019"
-url_post = "https://www.facebook.com/reel/967317769091632/"
+url_post = "https://www.facebook.com/LesStarsCongolaisesDrc/posts/pfbid0Wx5cWc2c8NoqUpxKRAvqiKgo5aTitktKPeMFnWbM5B9Zr8HFM1FJRWam3Su37x2cl"
 
 
 async def formatter(data, fichier_des_comptes):
@@ -473,15 +473,19 @@ async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_com
 
 
 async def liker_post(page):
-    await page.goto(url_post, timeout=0)   
+    await page.goto(url_post, timeout=0) 
+    print(" a")    
     buttons = await page.query_selector_all('[aria-label="J’aime"]')
-
+    print("aa ")
     for btn in buttons:
         try:
-            print("patiente 3s"); await asyncio.sleep(3)
+            print("patiente 1s"); await asyncio.sleep(1); print("b ")
             await btn.click()
+             print(" bb")
         except:
+            print(" c")
             continue
+            print("cc ")
             
     print("Terminé : Tous cliqués");   
         
