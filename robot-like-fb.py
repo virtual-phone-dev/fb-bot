@@ -1,4 +1,4 @@
-import json, asyncio, os
+import json, asyncio
 from playwright.async_api import async_playwright
 
 #fichier_cookie = "c-insta-Olivia-Rose.json"
@@ -63,13 +63,32 @@ async def apply_stealth(page):
     Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
 
 
-
+        
 def load_cookies(fichier_des_comptes):
-    if not os.path.exists(fichier_des_comptes):
+    with open(fichier_des_comptes, "r", encoding="utf-8") as f:
+        raw_cookies = json.load(f)
+
+    cookies = []
+    for c in raw_cookies:
+        cookies.append(
+            {
+                "name": c.get("name"),
+                "value": c.get("value"),
+                "domain": c.get("domain"),
+                "path": c.get("path", "/"),
+                "httpOnly": c.get("httpOnly", False),
+                "secure": c.get("secure", False),
+                "expires": c.get("expirationDate", -1),
+            }
+        )
+    return cookies
+
+def charger_cookies(fichier_des_comptes):
+    if not os.path.exists(fichier):
         return []
 
     try:
-        with open(fichier_des_comptes, "r", encoding="utf-8") as f:
+        with open(fichier, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         if isinstance(data, dict):
@@ -458,7 +477,6 @@ async def liker_post(page):
     await page.goto(url_post, timeout=0)
     
     
-    
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
@@ -471,9 +489,9 @@ async def main():
             ],
         )
 
-        context = await browser.new_context()
+        #context = await browser.new_context()
         
-        fichier_des_comptes = "comptes-fb.json"
+        fichier_des_comptes = "comptes-fb.json" # fichier_des_comptes ou fichier_cookies
         comptes = await charger_comptes(fichier_des_comptes)        
 
         #page = await context.new_page() # nouvel onglet
@@ -486,15 +504,17 @@ async def main():
             #if compte.get("creer") == "Oui":
             #    continue  # skip si compte déjà créé
             
+            fichier_cookie = compte["fichier"]
             context = await browser.new_context() #nouveau contexte pour chaque compte
         
+            
             #nom_complet = compte["nom_complet"]
             #nom_profil = compte["nom_profil"]
             #email = compte["email"]
             #mot_de_passe = compte["mot_de_passe"]
             
             # Charger les cookies AVANT d'ouvrir la page
-            cookies = load_cookies(fichier_des_comptes)
+            cookies = load_cookies(fichier_cookie)
             await context.add_cookies(cookies)
 
             page = await context.new_page()

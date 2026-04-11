@@ -453,7 +453,7 @@ async def main():
             ],
         )
 
-        context = await browser.new_context()
+        #context = await browser.new_context()
         
         fichier_des_comptes = "comptes-insta-th.json"
         comptes = await charger_comptes(fichier_des_comptes)
