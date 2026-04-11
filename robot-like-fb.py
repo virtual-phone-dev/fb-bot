@@ -1,9 +1,9 @@
-import json, asyncio
+import json, asyncio, os
 from playwright.async_api import async_playwright
 
 #fichier_cookie = "c-insta-Olivia-Rose.json"
 mot_de_passe_gmail = "diel2019"
-url_post = "https://www.facebook.com/romeo242pageofficielle/posts/pfbid0H5re6vX9mxAn4iE2JvkN85d43hSxwnDPCwDkKnDdsJaP5vUvn9nH5vN84qbRhdqkl"
+url_post = "https://www.facebook.com/reel/967317769091632/"
 
 
 async def formatter(data, fichier_des_comptes):
@@ -64,7 +64,7 @@ async def apply_stealth(page):
 
 
         
-def load_cookies(fichier_des_comptes):
+def load_cookiess(fichier_des_comptes):
     with open(fichier_des_comptes, "r", encoding="utf-8") as f:
         raw_cookies = json.load(f)
 
@@ -83,12 +83,12 @@ def load_cookies(fichier_des_comptes):
         )
     return cookies
 
-def charger_cookies(fichier_des_comptes):
-    if not os.path.exists(fichier):
+def load_cookies(fichier_compte):
+    if not os.path.exists(fichier_compte):
         return []
 
     try:
-        with open(fichier, "r", encoding="utf-8") as f:
+        with open(fichier_compte, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         if isinstance(data, dict):
@@ -472,11 +472,21 @@ async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_com
     await mettre_photo_profil_insta(page, nom_profil)
 
 
-
 async def liker_post(page):
-    await page.goto(url_post, timeout=0)
-    
-    
+    await page.goto(url_post, timeout=0)   
+    buttons = await page.query_selector_all('[aria-label="J’aime"]')
+
+    for btn in buttons:
+        try:
+            print("patiente 3s"); await asyncio.sleep(3)
+            await btn.click()
+        except:
+            continue
+            
+    print("Terminé : Tous cliqués");   
+        
+        
+        
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
@@ -488,8 +498,6 @@ async def main():
                 "--disable-web-security",
             ],
         )
-
-        #context = await browser.new_context()
         
         fichier_des_comptes = "comptes-fb.json" # fichier_des_comptes ou fichier_cookies
         comptes = await charger_comptes(fichier_des_comptes)        
@@ -504,7 +512,7 @@ async def main():
             #if compte.get("creer") == "Oui":
             #    continue  # skip si compte déjà créé
             
-            fichier_cookie = compte["fichier"]
+            fichier_cookie = compte.get("fichier")
             context = await browser.new_context() #nouveau contexte pour chaque compte
         
             
