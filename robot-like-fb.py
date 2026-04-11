@@ -1,9 +1,9 @@
-import json, asyncio
+import json, asyncio, os
 from playwright.async_api import async_playwright
 
 #fichier_cookie = "c-insta-Olivia-Rose.json"
 mot_de_passe_gmail = "diel2019"
-url_post = "https://www.threads.com/@les_luxueux_du_congo/post/DW6jd9cjM2P"
+url_post = "https://www.facebook.com/romeo242pageofficielle/posts/pfbid0H5re6vX9mxAn4iE2JvkN85d43hSxwnDPCwDkKnDdsJaP5vUvn9nH5vN84qbRhdqkl"
 
 
 async def formatter(data, fichier_des_comptes):
@@ -63,27 +63,40 @@ async def apply_stealth(page):
     Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
 
 
-        
+
 def load_cookies(fichier_des_comptes):
-    with open(fichier_des_comptes, "r", encoding="utf-8") as f:
-        raw_cookies = json.load(f)
+    if not os.path.exists(fichier_des_comptes):
+        return []
+
+    try:
+        with open(fichier_des_comptes, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        if isinstance(data, dict):
+            raw_cookies = data.get("cookies", [])
+        elif isinstance(data, list):
+            raw_cookies = data
+        else:
+            return []
+    except:
+        return []
 
     cookies = []
     for c in raw_cookies:
-        cookies.append(
-            {
-                "name": c.get("name"),
-                "value": c.get("value"),
-                "domain": c.get("domain"),
-                "path": c.get("path", "/"),
-                "httpOnly": c.get("httpOnly", False),
-                "secure": c.get("secure", False),
-                "expires": c.get("expirationDate", -1),
-            }
-        )
+        if not isinstance(c, dict):
+            continue
+
+        cookies.append({
+            "name": c.get("name"),
+            "value": c.get("value"),
+            "domain": c.get("domain"),
+            "path": c.get("path", "/"),
+            "httpOnly": c.get("httpOnly", False),
+            "secure": c.get("secure", False),
+            "expires": c.get("expirationDate", -1),
+        })
     return cookies
-
-
+    
 
 async def reparer_th(page, context, nom_complet, email, mot_de_passe):
     print(f"reparer {nom_complet}")
@@ -441,6 +454,11 @@ async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_com
 
 
 
+async def liker_post(page):
+    await page.goto(url_post, timeout=0)
+    
+    
+    
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
@@ -455,12 +473,8 @@ async def main():
 
         context = await browser.new_context()
         
-        fichier_des_comptes = "comptes-insta-th.json"
-        comptes = await charger_comptes(fichier_des_comptes)
-
-        # Charger les cookies AVANT d'ouvrir la page
-        #cookies = load_cookies(fichier_des_comptes)
-        #await context.add_cookies(cookies)
+        fichier_des_comptes = "comptes-fb.json"
+        comptes = await charger_comptes(fichier_des_comptes)        
 
         #page = await context.new_page() # nouvel onglet
         #await apply_stealth(page)
@@ -474,23 +488,19 @@ async def main():
             
             context = await browser.new_context() #nouveau contexte pour chaque compte
         
-            nom_complet = compte["nom_complet"]
-            nom_profil = compte["nom_profil"]
-            email = compte["email"]
-            mot_de_passe = compte["mot_de_passe"]
+            #nom_complet = compte["nom_complet"]
+            #nom_profil = compte["nom_profil"]
+            #email = compte["email"]
+            #mot_de_passe = compte["mot_de_passe"]
+            
+            # Charger les cookies AVANT d'ouvrir la page
+            cookies = load_cookies(fichier_des_comptes)
+            await context.add_cookies(cookies)
 
             page = await context.new_page()
             await apply_stealth(page)
-            #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
-
-            #await page.goto("https://www.instagram.com", timeout=0)
-            #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
-            
-            #await commenter_th(page, email, mot_de_passe)
-            #break
-            
-            await reparer_th(page, context, nom_complet, email, mot_de_passe)
-            
+            await liker_post(page)
+            break
             
             await context.close() #fermer le contexte (ou la fenetre)
         await asyncio.sleep(10000)
