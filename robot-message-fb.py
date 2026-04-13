@@ -163,7 +163,6 @@ async def envoyer_message(page, contexte, idAmi, phrases, monCompte, nomAmis, li
     if await btn_amis.count() > 0:
 
         btn_message = page.get_by_label("Message").first
-        print(" pp");
         count = await btn_message.count()
         if count == 0:
             print("❌ Pas de bouton: Message"); await contexte.close(); return
