@@ -85,8 +85,6 @@ async def injecter_cookies(contexte, fichier):
 # Créer contexte
 async def creer_contexte(browser, cookie_file):
     contexte = await browser.new_context()
-    contexte.set_default_timeout(180000)
-    contexte.set_default_navigation_timeout(180000)
     await injecter_cookies(contexte,cookie_file)
     return contexte
 

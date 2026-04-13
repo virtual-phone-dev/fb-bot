@@ -1,9 +1,10 @@
 import json, asyncio, os
 from playwright.async_api import async_playwright
 
-#fichier_cookie = "c-insta-Olivia-Rose.json"
 mot_de_passe_gmail = "diel2019"
-url_post = "https://www.facebook.com/LesStarsCongolaisesDrc/posts/pfbid0Wx5cWc2c8NoqUpxKRAvqiKgo5aTitktKPeMFnWbM5B9Zr8HFM1FJRWam3Su37x2cl"
+url_post = "https://www.facebook.com/plateaudhonneur/posts/pfbid0xsFNsMqg3Y6sDa2SUxcXpu5ecwtXsnbUjf4msWi2Qs66Vb4QZg2yrw6NadTgEd9El"
+
+
 
 
 async def formatter(data, fichier_des_comptes):
@@ -63,32 +64,12 @@ async def apply_stealth(page):
     Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
 
 
-        
-def load_cookiess(fichier_des_comptes):
-    with open(fichier_des_comptes, "r", encoding="utf-8") as f:
-        raw_cookies = json.load(f)
-
-    cookies = []
-    for c in raw_cookies:
-        cookies.append(
-            {
-                "name": c.get("name"),
-                "value": c.get("value"),
-                "domain": c.get("domain"),
-                "path": c.get("path", "/"),
-                "httpOnly": c.get("httpOnly", False),
-                "secure": c.get("secure", False),
-                "expires": c.get("expirationDate", -1),
-            }
-        )
-    return cookies
-
-def load_cookies(fichier_compte):
-    if not os.path.exists(fichier_compte):
+def load_cookies(fichier_cookie):
+    if not os.path.exists(fichier_cookie):
         return []
 
     try:
-        with open(fichier_compte, "r", encoding="utf-8") as f:
+        with open(fichier_cookie, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         if isinstance(data, dict):
@@ -472,25 +453,43 @@ async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_com
     await mettre_photo_profil_insta(page, nom_profil)
 
 
+
 async def liker_post(page):
     await page.goto(url_post, timeout=0) 
-    print(" a")    
-    buttons = await page.query_selector_all('[aria-label="J’aime"]')
-    print("aa ")
-    for btn in buttons:
-        try:
-            print("patiente 1s"); await asyncio.sleep(1); print("b ")
-            await btn.click()
-             print(" bb")
-        except:
-            print(" c")
-            continue
-            print("cc ")
-            
-    print("Terminé : Tous cliqués");   
-        
-        
-        
+    
+    #await page.evaluate('window.scrollBy(0, 100)') # Effectue un petit scroll vers le bas (par exemple, 100 pixels)
+    #print("patiente 1s"); await asyncio.sleep(1); 
+    #print("b ")
+    
+    # Initialiser le compteur de clics dans le contexte de la page
+    await page.evaluate("""
+        window.clickCount = 0;
+    """)
+    
+    # Cliquer sur tous les boutons et incrémenter le compteur
+    await page.evaluate("""
+        const likeButtons = document.querySelectorAll('div[aria-label="J’aime"]');
+        likeButtons.forEach(btn => {
+            // Incrementer le compteur dans le contexte de la page
+            window.clickCount += 1;
+            if (btn && typeof btn.click === 'function') {
+                btn.click();
+            } else {
+                if (btn.parentElement && typeof btn.parentElement.click === 'function') {
+                    btn.parentElement.click();
+                }
+            }
+        });
+    """)
+    
+    # Récupérer le nombre total de clics
+    total_clics = await page.evaluate("window.clickCount")
+    print(f"Nombre total de clics effectués : {total_clics}")
+
+    print("Terminé.")
+    
+    
+    
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        

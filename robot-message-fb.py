@@ -173,7 +173,7 @@ async def main():
     cycle_comptes = cycle(comptes_actifs)
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless = True, args = ["--disable-blink-features=AutomationControlled"])
+        browser = await p.chromium.launch(headless = False, args = ["--disable-blink-features=AutomationControlled"])
 
         while True:
             # Vérifier si tous les comptes avec amis sont en pause
@@ -213,18 +213,4 @@ async def main():
                 
             await asyncio.sleep(15)   
             
-            #zone = index_zone.get("start_zone")
-            #liens = profils_a_envoyer(zone)
-            #if not liens: print("Aucun lien à acceder"); continue
-
-            #for lien in liens:
-            #    compte = next(cycle_comptes)
-            #    index_zone["start_zone"] = compte["id_inchangeable"] # sauvegarder quel compte travaille
-
-            #    with open("index_zone_rm.json", "w", encoding = "utf-8") as f: 
-            #        json.dump(index_zone, f, ensure_ascii = False, indent = 2)
-                    
-            #    await visiter(browser, compte, lien, messages, comptes, pauses)
-                
 asyncio.run(main())
-
