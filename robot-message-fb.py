@@ -64,14 +64,14 @@ def verifier_pause(nomFichierCompte, lesPause):
     
 async def tous_en_pause(comptes_actifs, lesPause):
     for c in comptes_actifs:        
-        await asyncio.sleep(3)
+        #await asyncio.sleep(1)
         nomFichierCompte = c['id_inchangeable'];
         data_lien = ObtenirLien(nomFichierCompte)
 
         if data_lien:
             #print("Le compte a des amis")
-            if verifier_pause(nomFichierCompte, lesPause): print(f"Le compte est en pause - {nomFichierCompte}"); continue
-            else: print(f"Le compte N'EST PAS en pause - {nomFichierCompte}"); return False
+            if verifier_pause(nomFichierCompte, lesPause): print(f"Compte en pause : {nomFichierCompte}"); continue
+            else: print(f"Compte actuel : {nomFichierCompte}"); return False
         else: print(f"Aucun ami sur le compte de {nomFichierCompte}")
             
     #print("\n Tous les comptes sont en pause")
@@ -156,44 +156,54 @@ async def mettre_a_jour_prochainMessage_et_raison(idAmi):
 
 
 
-async def envoyer_message(page, contexte, idAmi, phrase, monCompte, nomAmis, lienAmis):
-    print(nomAmis); print(monCompte); print(lienAmis)
+async def envoyer_message(page, contexte, idAmi, phrases, monCompte, nomAmis, lienAmis):
+    print("ami :", monCompte); print(nomAmis); print(lienAmis); 
     
     await page.evaluate("""
     const messageButton = document.querySelector('div[aria-label="Message"]'); // cliquer sur le bouton Message, une popup s'ouvre alors , pour ecrire le message
     if (messageButton) { messageButton.click(); }
     """)
     
-    print("Patiente 3s"); await asyncio.sleep(3) 
-    element = await page.query_selector("text=ne peut pas encore accéder à cette discussion")
-    if element:
-        print("❌ Discussion inaccessible")
-        await mettre_a_jour_prochainMessage_et_raison(idAmi)
-        print("terminé, 05 mois"); await contexte.close(); return
+    print("Patiente 2s"); await asyncio.sleep(2);
+    while True:
+        element = await page.query_selector("text=ne peut pas encore accéder à cette discussion")
+        if element:
+            print("❌ Discussion inaccessible")
+            await mettre_a_jour_prochainMessage_et_raison(idAmi)
+            print("terminé, 05 mois"); await contexte.close(); return
 
 
-    element = await page.query_selector("text=Vous avez atteint la limite d’invitations par message")
-    if element:
-        print("❌ limite atteinte"); await contexte.close(); return
+        element = await page.query_selector("text=Vous avez atteint la limite d’invitations par message")
+        if element:
+            print("❌ limite atteinte"); await contexte.close(); return
+        
+        
+        element = await page.query_selector("text=Ce contenu n’est pas disponible pour le moment")
+        if element:
+            print("Compte inexistant"); await contexte.close(); return
     
     
-    element = await page.query_selector("text=Ce contenu n’est pas disponible pour le moment")
-    if element:
-        print("Compte inexistant"); await contexte.close(); return
-    
-    
-    message_box = page.locator('div[aria-label="Écrire un message"]').first
-    message = random.choice(phrase)
-    await message_box.fill(message)
-    
-    print("Patiente 2s"); await asyncio.sleep(2)
-    await page.keyboard.press("Enter")
+        message_box = page.locator('div[aria-label="Écrire un message"]').first
+        if await message_box.count() > 0:
+            phrase = random.choice(phrases)
+            await message_box.fill(phrase)        
+            
+            print("Patiente 1s"); await asyncio.sleep(1)
+            await page.keyboard.press("Enter")
 
-    print("Message envoyé :", message);
-    print("Patiente 15s"); await asyncio.sleep(15)
-
-
-async def visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrase, lesPause):
+            print("Message envoyé :", phrase);
+            print("Patiente 7s"); await asyncio.sleep(7)
+            break
+            
+    #while True:
+    #    input_box = page.get_by_placeholder("Nom de profil, numéro de mobile ou e-mail")
+    #    if await input_box.count() > 0:            
+    #        await input_box.fill(email)
+    #        break
+            
+            
+            
+async def visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrases, lesPause):
     idAmi, nomAmis, lienAmis, monCompte = ami
     #fichier = compte["fichier"]
     
@@ -210,7 +220,7 @@ async def visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrase, lesP
 
     try:
         await aller(page, lienAmis)
-        await envoyer_message(page, contexte, idAmi, phrase, monCompte, nomAmis, lienAmis)
+        await envoyer_message(page, contexte, idAmi, phrases, monCompte, nomAmis, lienAmis)
         #print("Patiente 10000s"); await asyncio.sleep(10000)
                 
         #resultat = await envoyer_message(page, phrase, nomAmis, lienAmis, monCompte)
@@ -243,7 +253,7 @@ async def main():
     #print("Patiente 5000s"); await asyncio.sleep(5000)
     
     comptes = charger_json("comptes-fb.json", []); 
-    phrase = charger_json("phrase-pret.json", []); 
+    phrases = charger_json("phrase-pret.json", []); 
     lesPause = charger_json("pause_prochain_envoi.json", {}); 
     index_zone = charger_json("index_zone_rm.json", {})
     
@@ -287,7 +297,7 @@ async def main():
                 
                 # Si tu veux traiter uniquement le premier contact filtré
                 ami = data_lien[0]
-                await visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrase, lesPause)
+                await visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrases, lesPause)
                 
             await asyncio.sleep(15)   
             
