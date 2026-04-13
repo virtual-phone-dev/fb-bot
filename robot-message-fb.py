@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from itertools import cycle
 from playwright.async_api import async_playwright
 from datetime import datetime
-from outils_playwright import (creer_context, creer_page, aller, envoyer_message, charger_json)
+from outils_playwright import (creer_context, creer_page, aller, charger_json)
 from db import (maj_prochain_message, messages_envoyes_aujourdhui, incrementer_message)
 
 DB = "profils.db"
@@ -120,6 +120,20 @@ def pause_24h():
     return date.strftime("%Y-%m-%d %H:%M")
 
 
+async def envoyer_message(page):
+    await page.evaluate("""
+    const messageButton = document.querySelector('div[aria-label="Message"]'); // cliquer sur le bouton Message, une popup s'ouvre alors , pour ecrire le message
+    if (messageButton) { messageButton.click(); }
+    """)
+    
+    print("Patiente 10s"); await asyncio.sleep(10)
+    element = await page.query_selector("text=ne peut pas encore accéder à cette discussion")
+    if element:
+        print("❌ Discussion inaccessible")
+    else:
+        print("✅ Discussion accessible")
+
+
 async def visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrase, lesPause):
     idAmi, nomAmis, lienAmis, monCompte = ami
     #fichier = compte["fichier"]
@@ -137,6 +151,9 @@ async def visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrase, lesP
 
     try:
         await aller(page, lienAmis)
+        await envoyer_message(page)
+        print("Patiente 10000s"); await asyncio.sleep(10000)
+        
         resultat = await envoyer_message(page, phrase, nomAmis, lienAmis, monCompte)
         #identifiant = compte["id_inchangeable"]
 
