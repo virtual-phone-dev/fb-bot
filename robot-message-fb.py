@@ -159,6 +159,16 @@ async def mettre_a_jour_prochainMessage_et_raison(idAmi):
 async def envoyer_message(page, contexte, idAmi, phrases, monCompte, nomAmis, lienAmis):
     print("ami :", monCompte); print(nomAmis); print(lienAmis); 
     
+    btn_amis = page.get_by_label("Ami(e)s")
+    if await btn_amis.count() > 0:
+
+        btn_message = page.get_by_label("Message").first
+        print(" pp");
+        count = await btn_message.count()
+        if count == 0:
+            print("❌ Pas de bouton: Message"); await contexte.close(); return
+                        
+    
     await page.evaluate("""
     const messageButton = document.querySelector('div[aria-label="Message"]'); // cliquer sur le bouton Message, une popup s'ouvre alors , pour ecrire le message
     if (messageButton) { messageButton.click(); }
@@ -187,14 +197,6 @@ async def envoyer_message(page, contexte, idAmi, phrases, monCompte, nomAmis, li
             print("❌ Confirmez identité pour lui envoyer message"); await contexte.close(); return
             
         
-        btn_amis = page.get_by_label("Ami(e)s")
-        if await btn_amis.count() > 0:
-                
-            btn_message = page.get_by_label("Message")
-            if await btn_message.count() < 1:
-                print("❌ Pas de bouton: Message"); await contexte.close(); return
-    
-    
         message_box = page.locator('div[aria-label="Écrire un message"]').first
         if await message_box.count() > 0:
             phrase = random.choice(phrases)
@@ -203,7 +205,7 @@ async def envoyer_message(page, contexte, idAmi, phrases, monCompte, nomAmis, li
             print("Patiente 1s"); await asyncio.sleep(1)
             await page.keyboard.press("Enter")
 
-            print("Message envoyé :", phrase);
+            print("✅ Message envoyé :", phrase);
             print("Patiente 7s"); await asyncio.sleep(7)
             break
             
