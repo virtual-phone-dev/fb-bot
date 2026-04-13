@@ -168,9 +168,8 @@ async def envoyer_message(page, contexte, idAmi, phrases, monCompte, nomAmis, li
     while True:
         element = await page.query_selector("text=ne peut pas encore accéder à cette discussion")
         if element:
-            print("❌ Discussion inaccessible")
-            await mettre_a_jour_prochainMessage_et_raison(idAmi)
-            print("terminé, 05 mois"); await contexte.close(); return
+            print("❌ Discussion inaccessible - Attendre sa prochaine connexion à Messenger")
+            await mettre_a_jour_prochainMessage_et_raison(idAmi); await contexte.close(); return
 
 
         element = await page.query_selector("text=Vous avez atteint la limite d’invitations par message")
@@ -180,7 +179,20 @@ async def envoyer_message(page, contexte, idAmi, phrases, monCompte, nomAmis, li
         
         element = await page.query_selector("text=Ce contenu n’est pas disponible pour le moment")
         if element:
-            print("Compte inexistant"); await contexte.close(); return
+            print("❌ Compte inexistant"); await contexte.close(); return
+            
+        
+        element = await page.query_selector("text=Confirmez votre identité pour envoyer des messages")
+        if element:
+            print("❌ Confirmez identité pour lui envoyer message"); await contexte.close(); return
+            
+        
+        btn_amis = page.get_by_label("Ami(e)s")
+        if await btn_amis.count() > 0:
+                
+            btn_message = page.get_by_label("Message")
+            if await btn_message.count() < 1:
+                print("❌ Pas de bouton: Message"); await contexte.close(); return
     
     
         message_box = page.locator('div[aria-label="Écrire un message"]').first
