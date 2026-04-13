@@ -4,7 +4,7 @@ from itertools import cycle
 from playwright.async_api import async_playwright
 from datetime import datetime
 from outils_playwright import (creer_context, creer_page, aller, charger_json)
-from db import (maj_prochain_message, messages_envoyes_aujourdhui, incrementer_message)
+#from db import (maj_prochain_message, messages_envoyes_aujourdhui, incrementer_message)
 
 DB = "profils.db"
 
@@ -12,23 +12,35 @@ DB = "profils.db"
 def connexion(): return sqlite3.connect(DB)
 
 
+def ajouter_colonne():
+    conn = sqlite3.connect(DB)
+    cur = conn.cursor()
+
+    # Vérifier si la colonne 'raison' existe déjà
+    cur.execute("PRAGMA table_info(listeAmis)")
+    colonnes = [info[1] for info in cur.fetchall()]
+
+    if 'raison' not in colonnes:
+        # Ajouter la colonne 'raison'
+        cur.execute("ALTER TABLE listeAmis ADD COLUMN raison TEXT")
+        print("Colonne 'raison' ajoutée avec succès.")
+    else:
+        print("La colonne 'raison' existe déjà.")
+    conn.commit(); conn.close()
+
+
 def ObtenirLien(monCompte):
     conn = connexion()
     cur = conn.cursor()
     today_str = datetime.now().strftime("%Y-%m-%d")
-    cur.execute(
-        """SELECT id, nomAmis, lienAmis, monCompte FROM listeAmis WHERE monCompte = ? AND (prochain_message IS NULL OR prochain_message <= ?)""", 
-        (monCompte, today_str)
-    )
-    rows = cur.fetchall()
+    cur.execute("""SELECT id, nomAmis, lienAmis, monCompte FROM listeAmis WHERE monCompte = ? AND (prochain_message IS NULL OR prochain_message <= ?)""", 
+        (monCompte, today_str))
+    
+    data = cur.fetchall()   # 🔥 récupère les données
     conn.close()
-    return rows
 
-
-def maj_prochain_message(idAmi, date):
-    conn = connexion(); cur = conn.cursor()
-    cur.execute("UPDATE listeAmis SET prochain_message = ? WHERE id = ?", (date, idAmi))
-    conn.commit(); conn.close()
+    return data
+    
 
 def messages_envoyes_aujourdhui(nomFichierCompte):
     conn = connexion(); cur = conn.cursor()
@@ -38,12 +50,6 @@ def messages_envoyes_aujourdhui(nomFichierCompte):
     conn.close()
     if row: return row[0]
     return 0
-
-def incrementer_message(nomFichierCompte):
-    conn = connexion(); cur = conn.cursor()
-    today = datetime.now().strftime("%Y-%m-%d")
-    cur.execute("""INSERT INTO messages_jour(date, compte, envoyes) VALUES(?, ?, 1) ON CONFLICT(date, compte) DO UPDATE SET envoyes = envoyes + 1""", (today, nomFichierCompte))
-    conn.commit(); conn.close()
 
 
 def verifier_pause(nomFichierCompte, lesPause):
@@ -102,36 +108,89 @@ def sauvegarder_json(fichier, data):
     with open(fichier, "w", encoding="utf-8") as f:
         f.write(contenu)
         
-        
-def prochaine_date():
+  
+def pause_24h():
+    date = datetime.now() + timedelta(hours=24)
+    return date.strftime("%Y-%m-%d %H:%M")
+  
+
+async def maj_prochain_message(idAmi, date):
+    conn = connexion(); cur = conn.cursor()
+    cur.execute("UPDATE listeAmis SET prochain_message = ? WHERE id = ?", (date, idAmi))
+    conn.commit(); conn.close()
+
+async def incrementer_message(nomFichierCompte):
+    conn = connexion(); cur = conn.cursor()
+    today = datetime.now().strftime("%Y-%m-%d")
+    cur.execute("""INSERT INTO messages_jour(date, compte, envoyes) VALUES(?, ?, 1) ON CONFLICT(date, compte) DO UPDATE SET envoyes = envoyes + 1""", (today, nomFichierCompte))
+    conn.commit(); conn.close()
+
+  
+async def prochaine_date():
     jours = random.randint(90, 120)
     date = datetime.now() + timedelta(days = jours)
     return date.strftime("%Y-%m-%d")
 
-
-def calculer_prochain_envoi():
+async def calculer_prochain_envoi():
     minutes = random.randint(45, 60)
     date = datetime.now() + timedelta(minutes=minutes)
     return date.strftime("%Y-%m-%d %H:%M")
   
   
-def pause_24h():
-    date = datetime.now() + timedelta(hours=24)
-    return date.strftime("%Y-%m-%d %H:%M")
+async def mettre_a_jour_prochainMessage_et_raison(idAmi):
+    conn = sqlite3.connect(DB)
+    cur = conn.cursor()
+
+    # Calculer la date dans 5 mois
+    date_prochain = datetime.now() + timedelta(days=150)
+    date_str = date_prochain.strftime("%Y-%m-%d")
+
+    # Mettre à jour 'prochain_message' et 'raison'
+    cur.execute("""
+        UPDATE listeAmis 
+        SET prochain_message = ?, raison = ? 
+        WHERE id = ?
+    """, (date_str, "attendreConnexionMessenger", idAmi))
+    
+    conn.commit(); conn.close()
 
 
-async def envoyer_message(page):
+
+async def envoyer_message(page, contexte, idAmi, phrase, monCompte, nomAmis, lienAmis):
+    print(nomAmis); print(monCompte); print(lienAmis)
+    
     await page.evaluate("""
     const messageButton = document.querySelector('div[aria-label="Message"]'); // cliquer sur le bouton Message, une popup s'ouvre alors , pour ecrire le message
     if (messageButton) { messageButton.click(); }
     """)
     
-    print("Patiente 10s"); await asyncio.sleep(10)
+    print("Patiente 3s"); await asyncio.sleep(3) 
     element = await page.query_selector("text=ne peut pas encore accéder à cette discussion")
     if element:
         print("❌ Discussion inaccessible")
-    else:
-        print("✅ Discussion accessible")
+        await mettre_a_jour_prochainMessage_et_raison(idAmi)
+        print("terminé, 05 mois"); await contexte.close(); return
+
+
+    element = await page.query_selector("text=Vous avez atteint la limite d’invitations par message")
+    if element:
+        print("❌ limite atteinte"); await contexte.close(); return
+    
+    
+    element = await page.query_selector("text=Ce contenu n’est pas disponible pour le moment")
+    if element:
+        print("Compte inexistant"); await contexte.close(); return
+    
+    
+    message_box = page.locator('div[aria-label="Écrire un message"]').first
+    message = random.choice(phrase)
+    await message_box.fill(message)
+    
+    print("Patiente 2s"); await asyncio.sleep(2)
+    await page.keyboard.press("Enter")
+
+    print("Message envoyé :", message);
+    print("Patiente 15s"); await asyncio.sleep(15)
 
 
 async def visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrase, lesPause):
@@ -151,36 +210,38 @@ async def visiter(browser, nomFichierCookie, nomFichierCompte, ami, phrase, lesP
 
     try:
         await aller(page, lienAmis)
-        await envoyer_message(page)
-        print("Patiente 10000s"); await asyncio.sleep(10000)
-        
-        resultat = await envoyer_message(page, phrase, nomAmis, lienAmis, monCompte)
+        await envoyer_message(page, contexte, idAmi, phrase, monCompte, nomAmis, lienAmis)
+        #print("Patiente 10000s"); await asyncio.sleep(10000)
+                
+        #resultat = await envoyer_message(page, phrase, nomAmis, lienAmis, monCompte)
         #identifiant = compte["id_inchangeable"]
 
         # limite facebook
-        if resultat == "limite":
-            lesPause[nomFichierCompte] = { "prochain_envoi": pause_24h(), "limite": "Oui" }
+        #if resultat == "limite":
+        #    lesPause[nomFichierCompte] = { "prochain_envoi": pause_24h(), "limite": "Oui" }
 
-            with open("pause_prochain_envoi.json", "w", encoding = "utf-8") as f: 
-                json.dump(lesPause, f, ensure_ascii = False, indent = 2)
-            print("Compte bloqué 24h :", nomFichierCompte)
-            return
+        #    with open("pause_prochain_envoi.json", "w", encoding = "utf-8") as f: 
+        #        json.dump(lesPause, f, ensure_ascii = False, indent = 2)
+        #    print("Compte bloqué 24h :", nomFichierCompte)
+        #    return
             
-        if resultat == "ok":
-            date = prochaine_date(); 
-            maj_prochain_message(idAmi, date); incrementer_message(nomFichierCompte)
+        date = await prochaine_date(); 
+        await maj_prochain_message(idAmi, date); await incrementer_message(nomFichierCompte)
 
-            lesPause[nomFichierCompte] = { "prochain_envoi": calculer_prochain_envoi(), "limite": "" }
-            with open("pause_prochain_envoi.json", "w", encoding = "utf-8") as f: 
-                json.dump(lesPause, f, ensure_ascii = False, indent = 2)
+        lesPause[nomFichierCompte] = { "prochain_envoi": await calculer_prochain_envoi(), "limite": "" }
+        with open("pause_prochain_envoi.json", "w", encoding = "utf-8") as f: 
+            json.dump(lesPause, f, ensure_ascii = False, indent = 2)
+            
     except Exception as e:
-        print("Erreur :", e)
-        
-    await contexte.close()
-    
+        print("Erreur :", e)        
+    finally:
+        await contexte.close()
     
     
 async def main():
+    #ajouter_colonne()
+    #print("Patiente 5000s"); await asyncio.sleep(5000)
+    
     comptes = charger_json("comptes-fb.json", []); 
     phrase = charger_json("phrase-pret.json", []); 
     lesPause = charger_json("pause_prochain_envoi.json", {}); 
