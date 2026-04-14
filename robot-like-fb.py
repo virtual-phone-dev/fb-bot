@@ -2,7 +2,7 @@ import json, asyncio, os
 from playwright.async_api import async_playwright
 
 mot_de_passe_gmail = "diel2019"
-url_post = "https://www.facebook.com/plateaudhonneur/posts/pfbid0xsFNsMqg3Y6sDa2SUxcXpu5ecwtXsnbUjf4msWi2Qs66Vb4QZg2yrw6NadTgEd9El"
+url_post = "https://fb.com"
 
 
 
@@ -454,17 +454,44 @@ async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_com
 
 
 
+async def basculer_sur_leprofil(page):
+    while True:
+        print("aa")
+        btn = page.get_by_label("Votre profil")
+        print(" bb")
+        if await btn.count() > 0:
+            print("cc ")            
+            
+            await page.evaluate("""
+            const btn = document.querySelector('div[aria-label="Votre profil"]');
+            if (btn) { btn.click(); } """)
+            
+            print(" dd")
+            break
+    
+    while True:
+        btn = page.get_by_label("Basculer sur")
+        if await btn.count() > 0:
+            await btn.click()
+            break
+            
+        #except:
+        #    pass
+
+        #print("patiente 5s"); await asyncio.sleep(5)
+        
+        
 async def liker_post(page):
     await page.goto(url_post, timeout=0) 
+    
+    await basculer_sur_leprofil(page) 
     
     #await page.evaluate('window.scrollBy(0, 100)') # Effectue un petit scroll vers le bas (par exemple, 100 pixels)
     #print("patiente 1s"); await asyncio.sleep(1); 
     #print("b ")
     
     # Initialiser le compteur de clics dans le contexte de la page
-    await page.evaluate("""
-        window.clickCount = 0;
-    """)
+    await page.evaluate("""window.clickCount = 0; """)
     
     # Cliquer sur tous les boutons et incrémenter le compteur
     await page.evaluate("""

@@ -274,7 +274,7 @@ async def main():
     cycle_comptes = cycle(comptes_actifs)
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless = False, args = ["--disable-blink-features=AutomationControlled"])
+        browser = await p.chromium.launch(headless = True, args = ["--disable-blink-features=AutomationControlled"])
 
         while True:
             # Vérifier si tous les comptes avec amis sont en pause
