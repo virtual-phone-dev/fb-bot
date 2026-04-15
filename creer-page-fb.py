@@ -74,91 +74,139 @@ async def verifier_commande(page, duree_minutes):
     print("suivant automatique")
 
 
-
+    
 async def creer_page(page, context):  
-    await page.goto("https://www.facebook.com/pages/creation/?ref_type=comet_home", timeout=0)
-    print("Patiente 4s"); await asyncio.sleep(4)
-    
-    btn = page.locator('span:has-text("Nom de la Page (obligatoire)")')
-    if await btn.count() > 0:
-        await btn.fill("Richesse avec SATAN")
-    
-    
-    btn = page.get_by_label("Catégorie (obligatoire)") 
-    if await btn.count() > 0:
-        await page.get_by_label("Catégorie (obligatoire)").fill("reli")    
-        print("Patiente 2s"); await asyncio.sleep(2)
-    
-        await page.evaluate("""
-        const span = Array.from(document.querySelectorAll('span')).find(el => el.textContent.trim() === 'Centre religieux');
-        if (span) { span.click(); } """)
+    try:
+        await page.goto("https://www.facebook.com/pages/creation/?ref_type=comet_home", timeout=0)
+        #print("Patiente 1s"); await asyncio.sleep(1)
+        
+        btn = page.locator('span:has-text("Nom de la Page (obligatoire)")')
+        if await btn.count() > 0:
+            await btn.fill("Richesse avec SATAN")
         
         
-    btn = page.locator('span:has-text("Bio (facultatif)")')
-    if await btn.count() > 0:
-        await btn.fill("Viens faire ton sacrifice pour avoir la Richesse")
+        btn = page.get_by_label("Catégorie (obligatoire)") 
+        if await btn.count() > 0:
+            await page.get_by_label("Catégorie (obligatoire)").fill("reli")    
+            print("Patiente 2s"); await asyncio.sleep(1)
         
-    
-    btn = page.get_by_label("Créer une Page") 
-    if await btn.count() > 0:
-        await btn.click()
-        #print("Patiente 5s"); await asyncio.sleep(5)
-        
-    while True:    
-        element = await page.query_selector("text=Une erreur est survenue lors de la création de la page.")
-        if element:
-            print("impossible de crée la Page")
-            await context.close()
-            break
+            await page.evaluate("""
+            const span = Array.from(document.querySelectorAll('span')).find(el => el.textContent.trim() === 'Centre religieux');
+            if (span) { span.click(); } """)
             
-        element = await page.query_selector("text=Terminez la configuration de votre Page")
-        if element:
-            print("Page crée")
-            break
-           
-           
-    while True:
-        btn = page.get_by_label("Suivant")
-        if await btn.count() > 0:  
-            await btn.click(); 
-            break
+            
+        btn = page.locator('span:has-text("Bio (facultatif)")')
+        if await btn.count() > 0:
+            await btn.fill("Viens faire ton sacrifice pour avoir la Richesse")
+            
+        
+        btn = page.get_by_label("Créer une Page") 
+        if await btn.count() > 0:
+            await btn.click()
+            #print("Patiente 5s"); await asyncio.sleep(5)
+            
+        while True:    
+            element = await page.query_selector("text=Une erreur est survenue lors de la création de la page.")
+            if element:
+                print("impossible de crée la Page")
+                await context.close()
+                break
                 
-                
-    while True:
-        try:            
-            #print("patiente 5s"); await asyncio.sleep(5)
+            element = await page.query_selector("text=Terminez la configuration de votre Page")
+            if element:
+                print("Page crée")
+                break
+               
+        debut = time.time()       
+        while True:
             btn = page.get_by_label("Suivant")
             if await btn.count() > 0:  
                 await btn.click(); 
+                print("Suivant 1"); 
+                break
                 
-            btn = page.get_by_label("Ignorer")
+            if time.time() - debut > 5:
+                print("fb.com")
+                await page.goto("https://fb.com", timeout=0)
+                break
+                
+                
+        while True:
+            btn = page.get_by_label("Suivant")
             if await btn.count() > 0:  
                 await btn.click(); 
+                print("Suivant 2"); 
+                break
+        
+        debut = time.time()
+        while True:
+            try:
+                btn = page.get_by_label("Ignorer")
+                if await btn.count() > 0:  
+                    await btn.click(); 
+                    print("Ignorer"); 
+                    break
+            except:
+                pass
+                
+            # si 5 secondes dépassées
+            if time.time() - debut > 5:
+                print("fb.com")
+                await page.goto("https://www.facebook.com", timeout=0)
+                break
+           
+           
+        while True:
+            btn = page.get_by_label("Suivant")
+            if await btn.count() > 0:  
+                await btn.click(); 
+                print("Suivant 3"); 
+                
+            btn = page.get_by_label("Terminé")
+            if await btn.count() > 0:  
+                await btn.click(); 
+                print("Terminé"); 
+                break
+                
+        print("Patiente 30s"); await asyncio.sleep(30);
+    except:
+        return 
+   
+
+   
+async def basculer_sur_la_page(page):
+    while True:
+        try:
+            btn = page.get_by_label("Votre profil")
+            if await btn.count() > 0:
+                await page.evaluate("""
+                const btn = document.querySelector('div[aria-label="Votre profil"]');
+                if (btn) { btn.click(); } """)
+                
+    
+            print("patiente 5s"); await asyncio.sleep(5)
+            btn = page.get_by_label("Basculer sur")
+            if await btn.count() > 0:  
+                await btn.click();
+                
+            element = await page.query_selector("text=Tableau de bord professionnel")
+            if element:
+                print("Connecté sur la page :")
+                print("patiente 3s"); await asyncio.sleep(3)
+                await page.goto(url_post, timeout=0) 
+                print("patiente 4s"); await asyncio.sleep(4)
                 break
         except:
-            pass     
-            
-            
-    while True:
-        btn = page.get_by_label("Suivant")
-        if await btn.count() > 0:  
-            await btn.click(); 
-            
-        btn = page.get_by_label("Terminé")
-        if await btn.count() > 0:  
-            await btn.click(); 
-            break
-            
-    print("Patiente 10000s"); await asyncio.sleep(10000)   
-    #try:
-    #    btn = page.get_by_label("Menu Facebook")
-    #    if await btn.count() > 0:
-    #        await btn.click()
-    #except:
-    #    pass 
-            
-            
-            
+            pass
+
+          
+async publier_post(page) :
+    await page.goto("https://www.facebook.com", timeout=0)
+    await basculer_sur_la_page(page)
+    print("Patiente 10000s"); await asyncio.sleep(10000);
+
+
+          
 async def main():
     comptes = json.load(open("comptes-fb.json", encoding="utf-8"))
 
@@ -182,18 +230,17 @@ async def main():
             context = await browser.new_context(storage_state=fichier)   
             
             page = await context.new_page()
-            await appliquer_stealth(page)
-            
-            await creer_page(page, context)            
-            
-            #await verifier_commande(page, PAUSE_MINUTES)
-            
-            
-            await outils.sauvegarder_cookies(contexte, fichier)
-            await context.close()
-
-        await context.close()
-        print("\n✅ terminé")
+            await appliquer_stealth(page)            
+            try:
+                #await creer_page(page, context)
+                await publier_post(page)
+                # await verifier_commande(page, PAUSE_MINUTES)  # si besoin
+                # Sauvegarder cookies ou autres si nécessaire
+                await outils.sauvegarder_cookies(context, fichier)
+            except:
+                continue
+            finally:
+                await context.close()
 
 asyncio.run(main())
 
