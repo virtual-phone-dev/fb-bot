@@ -75,7 +75,7 @@ async def verifier_commande(page, duree_minutes):
 
 
 
-async def creer_page(page):  
+async def creer_page(page, context):  
     await page.goto("https://www.facebook.com/pages/creation/?ref_type=comet_home", timeout=0)
     print("Patiente 4s"); await asyncio.sleep(4)
     
@@ -108,6 +108,7 @@ async def creer_page(page):
         element = await page.query_selector("text=Une erreur est survenue lors de la création de la page.")
         if element:
             print("impossible de crée la Page")
+            await context.close()
             break
             
         element = await page.query_selector("text=Terminez la configuration de votre Page")
@@ -183,9 +184,9 @@ async def main():
             page = await context.new_page()
             await appliquer_stealth(page)
             
-            #await creer_page(page)            
+            await creer_page(page, context)            
             
-            await verifier_commande(page, PAUSE_MINUTES)
+            #await verifier_commande(page, PAUSE_MINUTES)
             
             
             await outils.sauvegarder_cookies(contexte, fichier)
