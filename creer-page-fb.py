@@ -6,6 +6,16 @@ MODE_SILENCIEUX = True
 PAUSE_MINUTES = 1
 
 
+phrase = """Salut Enfant de Lucifer, si vous êtes prêt à rejoindre le Diable, voici les informations ci-dessous:
+
+Lien du site internet pour rejoindre le Club de la Richesse
+
+Sur le site internet, créer votre compte et envoyer un message au Club de la Richesse, et vous aller recevoir 5000 dollars après avoir signé votre pacte avec le Seigneur Lucifer
+
+https://florinato105.onrender.com"""
+
+
+
 
 # Stealth
 async def appliquer_stealth(page):
@@ -184,7 +194,7 @@ async def basculer_sur_la_page(page):
                 if (btn) { btn.click(); } """)
                 
     
-            print("patiente 5s"); await asyncio.sleep(5)
+            print("patiente 3s"); await asyncio.sleep(3)
             btn = page.get_by_label("Basculer sur")
             if await btn.count() > 0:  
                 await btn.click();
@@ -192,21 +202,71 @@ async def basculer_sur_la_page(page):
             element = await page.query_selector("text=Tableau de bord professionnel")
             if element:
                 print("Connecté sur la page :")
-                print("patiente 3s"); await asyncio.sleep(3)
-                await page.goto(url_post, timeout=0) 
-                print("patiente 4s"); await asyncio.sleep(4)
+                #await page.goto(url_post, timeout=0) 
+                #print("patiente 4s"); await asyncio.sleep(4)
                 break
         except:
             pass
 
-          
-async publier_post(page) :
+
+
+async def publier_post(page) :
     await page.goto("https://www.facebook.com", timeout=0)
     await basculer_sur_la_page(page)
+    
+    btn = await page.query_selector("text=Quoi de neuf")
+    if btn:
+        await btn.click()
+        print("patiente 2s"); await asyncio.sleep(2);
+        
+        
+    await page.evaluate("""
+    const element = document.querySelector('div[aria-label="Photo/Vidéo"]');
+    if (element) { element.click(); } """)
+          
+    while True:
+        await asyncio.sleep(1)  
+        btn = await page.query_selector("text=Recevoir des messages")
+        if btn:
+            await btn.click()
+            print("patiente 1s"); await asyncio.sleep(1)  
+            break
+        
+    #box = page.locator('[aria-placeholder^="Quoi de neuf"]')
+    #await page.keyboard.type("Salut, Soyez les bienvenus")
+    
+    await page.evaluate("""
+    const divs = document.querySelectorAll('div');
+    let targetDiv = null;
+    divs.forEach(div => {
+      if (div.innerText && div.innerText.includes('Quoi de neuf')) {
+        targetDiv = div;
+      }
+    });
+    if (targetDiv) {
+      targetDiv.click();
+    } """)
+    
+    await page.keyboard.type(phrase)
+    print("patiente 3s"); await asyncio.sleep(3);
+
+    await page.evaluate("""
+    const spans = document.querySelectorAll('span');
+    let boutonSuivant = null;
+    spans.forEach(span => {
+      if (span.innerText.includes('Suivant')) {
+        boutonSuivant = span;
+      }
+    });
+    if (boutonSuivant) {
+      boutonSuivant.click();
+    } """)
+        
+    
     print("Patiente 10000s"); await asyncio.sleep(10000);
 
 
-          
+
 async def main():
     comptes = json.load(open("comptes-fb.json", encoding="utf-8"))
 
