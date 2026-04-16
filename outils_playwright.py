@@ -1,6 +1,38 @@
 import json, os, asyncio, random, sqlite3
 
 
+
+async def basculer_sur_la_page(page):
+    while True:
+        print("patiente 2s"); await asyncio.sleep(2)
+        btn = page.get_by_label("Votre profil")
+        if await btn.count() > 0:
+            await page.evaluate("""
+            const btn = document.querySelector('div[aria-label="Votre profil"]');
+            if (btn) { btn.click(); } """)
+            break
+            
+    while True:
+        print("patiente 3s"); await asyncio.sleep(3)  
+        btn = page.get_by_label("Basculer sur")
+        if await btn.count() > 0:
+            await page.evaluate("""
+            const btn = document.querySelector('div[aria-label*="Basculer sur"]');
+            if (btn) { btn.click(); } """)
+            break
+                      
+    while True:   
+        try:
+            print("patiente 5s"); await asyncio.sleep(5)
+            btn = await page.query_selector("text=Quoi de neuf")
+            if btn:
+                print("Connecté sur la page")
+                break
+        except:
+            pass
+            
+            
+
 # Stealth
 async def appliquer_stealth(page):
     await page.add_init_script(
@@ -54,6 +86,9 @@ async def sauvegarder_cookies(contexte, fichier):
     with open(fichier,"w",encoding="utf-8") as f:
         json.dump(state,f,indent=4,ensure_ascii=False)
     print("✅ cookies sauvegardés :", fichier)
+
+
+
 
 
 # Ouvrir Facebook

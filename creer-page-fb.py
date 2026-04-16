@@ -1,6 +1,8 @@
 import json, asyncio, os, sys, msvcrt, time
 import outils_playwright as outils
 from playwright.async_api import async_playwright
+from outils_playwright import (basculer_sur_la_page)
+
 
 MODE_SILENCIEUX = True
 PAUSE_MINUTES = 1
@@ -181,29 +183,6 @@ async def creer_page(page, context):
         return 
    
 
-   
-async def basculer_sur_la_page(page):
-    while True:
-        try:
-            btn = page.get_by_label("Votre profil")
-            if await btn.count() > 0:
-                await page.evaluate("""
-                const btn = document.querySelector('div[aria-label="Votre profil"]');
-                if (btn) { btn.click(); } """)
-                
-    
-            print("patiente 3s"); await asyncio.sleep(3)
-            btn = page.get_by_label("Basculer sur")
-            if await btn.count() > 0:  
-                await btn.click()
-                
-            element = await page.query_selector("text=Tableau de bord professionnel")
-            if element:
-                print("Connecté sur la page :")
-                break
-        except:
-            pass
-            
 
 
 async def mettre_photo_profil(page) :
@@ -212,16 +191,24 @@ async def mettre_photo_profil(page) :
         btn = page.locator('span:has-text("Choisir une photo de profil")')
         if await btn.count() > 0:
             await btn.first.click()
-            break
+            
 
-    print("patiente 2s"); await asyncio.sleep(2);    
-    btn = page.locator('span:has-text("Importer une photo")')
-    if await btn.count() > 0:
-        await btn.first.click()
-        print("photo profil");
+        print("patiente 2s"); await asyncio.sleep(2);    
+        btn = page.locator('span:has-text("Importer une photo")')
+        if await btn.count() > 0:
+            await btn.first.click()
+            print("photo profil");
+            break
         
             
+            
 async def mettre_photo_couverture(page) :
+    print("patiente 5s"); await asyncio.sleep(5)  
+    btn = await page.query_selector("text=Utiliser la page")
+    if btn:
+        await btn.click()
+            
+            
     while True:
         print("patiente 1s"); await asyncio.sleep(1);
         link = page.locator('div[aria-label*="Ajouter une photo de couverture"]').first
@@ -247,43 +234,35 @@ async def mettre_photo(page) :
 
 
 async def acceder_page(page) :
-    while True:
-        print("patiente 1s"); await asyncio.sleep(1)  
-        link = page.locator('a[aria-label*="Journal de"]').first
-        if await link.count() > 0:
-            await link.click()
+    print("patiente 5s"); await asyncio.sleep(5)  
+    link = page.locator('a[aria-label*="Journal de"]').first
+    if await link.count() > 0:
+        await link.click()
             
-        print("patiente 10s"); await asyncio.sleep(10)  
-        btn = await page.query_selector("text=Utiliser la page")
+        
+async def publier_post(page) :
+    #await page.goto("https://www.facebook.com", timeout=0)
+    #await basculer_sur_la_page(page)
+    
+    while True:
+        btn = await page.query_selector("text=Quoi de neuf")
         if btn:
             await btn.click()
+            print("patiente 2s"); await asyncio.sleep(2);
             break
-        
-        
-    
-async def publier_post(page) :
-    await page.goto("https://www.facebook.com", timeout=0)
-    await basculer_sur_la_page(page)
-    
-    btn = await page.query_selector("text=Quoi de neuf")
-    if btn:
-        await btn.click()
-        print("patiente 2s"); await asyncio.sleep(2);
-        
         
     await page.evaluate("""
     const element = document.querySelector('div[aria-label="Photo/Vidéo"]');
     if (element) { element.click(); } """)
           
     while True:
-        await asyncio.sleep(1)  
+        await asyncio.sleep(1)
         btn = await page.query_selector("text=Recevoir des messages")
         if btn:
             await btn.click()
             print("patiente 1s"); await asyncio.sleep(1)  
             break
         
-    
     await page.evaluate("""
     const divs = document.querySelectorAll('div');
     let targetDiv = null;
@@ -328,7 +307,7 @@ async def publier_post(page) :
     print("Patiente 5s"); await asyncio.sleep(5);
 
     await acceder_page(page)
-    await mettre_photo(page)
+    #await mettre_photo(page)
     
 
 
@@ -365,6 +344,7 @@ async def main():
                 #await acceder_page(page)
                 
                 await mettre_photo(page)
+                await publier_post(page)
                 print("Patiente 10000s"); await asyncio.sleep(10000);
                 
                 # await verifier_commande(page, PAUSE_MINUTES)  # si besoin
