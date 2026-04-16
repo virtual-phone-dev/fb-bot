@@ -6,9 +6,7 @@ MODE_SILENCIEUX = True
 PAUSE_MINUTES = 1
 
 
-phrase = """Salut Enfant de Lucifer, si vous êtes prêt à rejoindre le Diable, voici les informations ci-dessous:
-
-Lien du site internet pour rejoindre le Club de la Richesse
+phrase = """Lien du site internet pour rejoindre le Club de la Richesse
 
 Sur le site internet, créer votre compte et envoyer un message au Club de la Richesse, et vous aller recevoir 5000 dollars après avoir signé votre pacte avec le Seigneur Lucifer
 
@@ -197,19 +195,72 @@ async def basculer_sur_la_page(page):
             print("patiente 3s"); await asyncio.sleep(3)
             btn = page.get_by_label("Basculer sur")
             if await btn.count() > 0:  
-                await btn.click();
+                await btn.click()
                 
             element = await page.query_selector("text=Tableau de bord professionnel")
             if element:
                 print("Connecté sur la page :")
-                #await page.goto(url_post, timeout=0) 
-                #print("patiente 4s"); await asyncio.sleep(4)
                 break
         except:
             pass
+            
+
+
+async def mettre_photo_profil(page) :
+    while True:
+        print("patiente 1s"); await asyncio.sleep(1);
+        btn = page.locator('span:has-text("Choisir une photo de profil")')
+        if await btn.count() > 0:
+            await btn.first.click()
+            break
+
+    print("patiente 2s"); await asyncio.sleep(2);    
+    btn = page.locator('span:has-text("Importer une photo")')
+    if await btn.count() > 0:
+        await btn.first.click()
+        print("photo profil");
+        
+            
+async def mettre_photo_couverture(page) :
+    while True:
+        print("patiente 1s"); await asyncio.sleep(1);
+        link = page.locator('div[aria-label*="Ajouter une photo de couverture"]').first
+        if await link.count() > 0:
+            await link.click()
+            break
+    
+    print("patiente 2s"); await asyncio.sleep(2);    
+    btn = page.locator('span:has-text("Importer une photo")')
+    if await btn.count() > 0:
+        await btn.first.click()
+        print("photo couverture");
 
 
 
+async def mettre_photo(page) :
+    await page.goto("https://www.facebook.com", timeout=0)
+    await basculer_sur_la_page(page)
+    await acceder_page(page)
+                
+    await mettre_photo_couverture(page)
+    await mettre_photo_profil(page)
+
+
+async def acceder_page(page) :
+    while True:
+        print("patiente 1s"); await asyncio.sleep(1)  
+        link = page.locator('a[aria-label*="Journal de"]').first
+        if await link.count() > 0:
+            await link.click()
+            
+        print("patiente 10s"); await asyncio.sleep(10)  
+        btn = await page.query_selector("text=Utiliser la page")
+        if btn:
+            await btn.click()
+            break
+        
+        
+    
 async def publier_post(page) :
     await page.goto("https://www.facebook.com", timeout=0)
     await basculer_sur_la_page(page)
@@ -232,8 +283,6 @@ async def publier_post(page) :
             print("patiente 1s"); await asyncio.sleep(1)  
             break
         
-    #box = page.locator('[aria-placeholder^="Quoi de neuf"]')
-    #await page.keyboard.type("Salut, Soyez les bienvenus")
     
     await page.evaluate("""
     const divs = document.querySelectorAll('div');
@@ -250,6 +299,7 @@ async def publier_post(page) :
     await page.keyboard.type(phrase)
     print("patiente 3s"); await asyncio.sleep(3);
 
+
     await page.evaluate("""
     const spans = document.querySelectorAll('span');
     let boutonSuivant = null;
@@ -261,10 +311,25 @@ async def publier_post(page) :
     if (boutonSuivant) {
       boutonSuivant.click();
     } """)
-        
+    print("Patiente 3s"); await asyncio.sleep(3);
     
-    print("Patiente 10000s"); await asyncio.sleep(10000);
+    
+    await page.evaluate("""
+    const divs = document.querySelectorAll('div');
+    let targetDiv = null;
+    divs.forEach(div => {
+      if (div.innerText && div.innerText.includes('Publier')) {
+        targetDiv = div;
+      }
+    });
+    if (targetDiv) {
+      targetDiv.click();
+    } """)
+    print("Patiente 5s"); await asyncio.sleep(5);
 
+    await acceder_page(page)
+    await mettre_photo(page)
+    
 
 
 async def main():
@@ -293,7 +358,15 @@ async def main():
             await appliquer_stealth(page)            
             try:
                 #await creer_page(page, context)
-                await publier_post(page)
+                #await publier_post(page)
+                
+                #await page.goto("https://www.facebook.com", timeout=0)
+                #await basculer_sur_la_page(page)
+                #await acceder_page(page)
+                
+                await mettre_photo(page)
+                print("Patiente 10000s"); await asyncio.sleep(10000);
+                
                 # await verifier_commande(page, PAUSE_MINUTES)  # si besoin
                 # Sauvegarder cookies ou autres si nécessaire
                 await outils.sauvegarder_cookies(context, fichier)

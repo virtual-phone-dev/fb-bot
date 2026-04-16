@@ -3,8 +3,15 @@ from playwright.async_api import async_playwright
 
 mot_de_passe_gmail = "diel2019"
 url_site = "https://fb.com"
-url_post = "https://www.facebook.com/PeupahZouzoua"
+#url_post = "https://www.facebook.com/PeupahZouzoua"
+#url_post = "https://www.facebook.com/Just.Slaybabe"
+#url_post = "https://www.facebook.com/brazzanewsofficiel1"
 
+#url_post = "https://www.facebook.com/Congolaistv.officiel"
+#url_post = "https://www.facebook.com/DidiBkiffnobeat"
+#url_post = "https://www.facebook.com/profile.php?id=100063701452356" #manuel actu
+#url_post = "https://www.facebook.com/FallyIpupaOfficial"
+url_post = "https://www.facebook.com/kebaneloemba"
 
 
 async def formatter(data, fichier_des_comptes):
@@ -471,15 +478,16 @@ async def basculer_sur_leprofil(page):
             element = await page.query_selector("text=Tableau de bord professionnel")
             if element:
                 print("Connecté sur la page :")
-                print("patiente 3s"); await asyncio.sleep(3)
-                await page.goto(url_post, timeout=0) 
-                print("patiente 4s"); await asyncio.sleep(4)
+                #print("patiente 3s"); await asyncio.sleep(3)
                 break
         except:
             pass
         
 
 async def post_recent(page):
+    await page.goto(url_post, timeout=0) 
+    #print("patiente 4s"); await asyncio.sleep(4)
+                
     btn = page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first
     if await btn.count() > 0:    
         await btn.click()
@@ -489,12 +497,12 @@ async def post_recent(page):
 async def liker_post(page, context):
     await page.goto(url_site, timeout=0) 
     
-    await basculer_sur_leprofil(page) 
+    #await basculer_sur_leprofil(page) 
     await post_recent(page)
     
     
     temps_debut = time.monotonic()  # Enregistre le temps de début
-    temps = 30
+    temps = 60
     
     while True:
         # Vérifie si le temps écoulé dépasse 30 secondes
@@ -517,52 +525,7 @@ async def liker_post(page, context):
             #print(f"Nombre total de clics effectués : {total_clics}"); print("Terminé.")
             #break
     await context.close()
-
-
     
-async def liker_post1(page):
-    await page.goto(url_site, timeout=0) 
-    
-    await basculer_sur_leprofil(page) 
-    
-    #await page.evaluate("window.scrollBy(0, 1000);")
-    #print("patiente 1s"); await asyncio.sleep(1); 
-    
-    while True:
-        #await page.evaluate("window.scrollBy(0, 1000);")
-            
-        btn = page.get_by_label("J’aime")
-        if await btn.count() > 0:                                   
-            await page.evaluate("""window.clickCount = 0; """) # Initialiser le compteur de clics dans le contexte de la page
-            
-            # Cliquer sur tous les boutons et incrémenter le compteur
-            await page.evaluate("""
-                const likeButtons = document.querySelectorAll('div[aria-label="J’aime"]');
-                likeButtons.forEach(btn => {
-                    // Incrementer le compteur dans le contexte de la page
-                    window.clickCount += 1;
-                    if (btn && typeof btn.click === 'function') {
-                        btn.click();
-                    } else {
-                        if (btn.parentElement && typeof btn.parentElement.click === 'function') {
-                            btn.parentElement.click();
-                        }
-                    }
-                });
-            """)
-            
-            await page.evaluate("""
-            const buttons = document.querySelectorAll('div[aria-label="J’aime"]');
-            for (let i = 0; i < Math.min(20, buttons.length); i++) {
-              buttons[i].scrollIntoView({ behavior: "smooth", block: "center" });
-              buttons[i].click();
-            } """)
-        
-            # Récupérer le nombre total de clics
-            total_clics = await page.evaluate("window.clickCount")
-            print(f"Nombre total de clics effectués : {total_clics}"); print("Terminé.")
-            break
-        
        
 
 async def main():
