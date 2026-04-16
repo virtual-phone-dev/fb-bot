@@ -1,8 +1,9 @@
 import json, asyncio, os, time
+from itertools import cycle
 from playwright.async_api import async_playwright
 
 mot_de_passe_gmail = "diel2019"
-url_site = "https://fb.com"
+url_fb = "https://fb.com"
 #url_post = "https://www.facebook.com/PeupahZouzoua"
 #url_post = "https://www.facebook.com/Just.Slaybabe"
 #url_post = "https://www.facebook.com/brazzanewsofficiel1"
@@ -484,9 +485,9 @@ async def basculer_sur_leprofil(page):
             pass
         
 
-async def post_recent(page):
-    await page.goto(url_post, timeout=0) 
-    #print("patiente 4s"); await asyncio.sleep(4)
+async def post_recent(page, url_page):
+    await page.goto(url_page, timeout=0) 
+    print("patiente 4s"); await asyncio.sleep(4)
                 
     btn = page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first
     if await btn.count() > 0:    
@@ -494,16 +495,16 @@ async def post_recent(page):
         print("patiente 2s"); await asyncio.sleep(2); 
 
 
-async def liker_post(page, context):
-    await page.goto(url_site, timeout=0) 
-    
-    #await basculer_sur_leprofil(page) 
-    await post_recent(page)
-    
-    
+async def liker_post(page, context, url_page):
+    await page.goto(url_fb, timeout=0) 
+        
+    await basculer_sur_leprofil(page) 
+    await post_recent(page, url_page)
+        
+        
     temps_debut = time.monotonic()  # Enregistre le temps de début
-    temps = 60
-    
+    temps = 10
+        
     while True:
         # Vérifie si le temps écoulé dépasse 30 secondes
         temps_ecouler = time.monotonic() - temps_debut
@@ -524,10 +525,9 @@ async def liker_post(page, context):
             #total_clics = await page.evaluate("window.clickCount")
             #print(f"Nombre total de clics effectués : {total_clics}"); print("Terminé.")
             #break
-    await context.close()
+    #await context.close()
     
-       
-
+    
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
@@ -540,38 +540,48 @@ async def main():
             ],
         )
         
-        fichier_des_comptes = "comptes-fb.json" # fichier_des_comptes ou fichier_cookies
-        comptes = await charger_comptes(fichier_des_comptes)        
-
-        #page = await context.new_page() # nouvel onglet
-        #await apply_stealth(page)
+        comptes = await charger_comptes("comptes-fb.json")        
         
-        for compte in comptes:
-            if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
-                continue
-                
-            #if compte.get("creer") == "Oui":
-            #    continue  # skip si compte déjà créé
+        # Charger la liste de pages
+        with open('pages-tout-pays.json', 'r', encoding='utf-8') as f:
+            pages_list = json.load(f)
+        
+        # ✅ FILTRAGE AVANT
+        comptes = [c for c in comptes if not c["fichier"].startswith("-")]
+        pages_list = [p for p in pages_list if "url" in p]
+        cycle_comptes = cycle(comptes)
+        
+        for page_info in pages_list:
             
+            compte = next(cycle_comptes)
+            if compte["fichier"].startswith("-"): continue #ignorer les comptes qui commencent par "-"
             fichier_cookie = compte.get("fichier")
-            context = await browser.new_context() #nouveau contexte pour chaque compte
-        
             
-            #nom_complet = compte["nom_complet"]
-            #nom_profil = compte["nom_profil"]
-            #email = compte["email"]
-            #mot_de_passe = compte["mot_de_passe"]
+            #if not page_info["url"]: continue  #IGNORER les zones
+            #url_page = page_info["url"]
             
+            
+            #if "url" not in page_info:
+            #        continue
+    
+            url_page = page_info.get('url')
+            name = page_info.get('name', 'Inconnu')
+            
+            print(f"Traitement de {name} : {url_page}")
+                
             # Charger les cookies AVANT d'ouvrir la page
+            context = await browser.new_context() #nouveau contexte pour chaque compte
             cookies = load_cookies(fichier_cookie)
             await context.add_cookies(cookies)
-
+                
             page = await context.new_page()
             await apply_stealth(page)
-            await liker_post(page, context)
-            break
             
+            
+            await liker_post(page, context, url_page)
+            #break
             await context.close() #fermer le contexte (ou la fenetre)
+                
         await asyncio.sleep(10000)
 
 
