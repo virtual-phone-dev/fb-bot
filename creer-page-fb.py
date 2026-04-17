@@ -8,7 +8,7 @@ MODE_SILENCIEUX = True
 PAUSE_MINUTES = 1
 
 
-phrase = """Lien du site internet pour rejoindre le Club de la Richesse
+phrase = """Lien du site internet pour rejoindre le Club du Diable
 
 Sur le site internet, créer votre compte et envoyer un message au Club de la Richesse, et vous aller recevoir 5000 dollars après avoir signé votre pacte avec le Seigneur Lucifer
 
@@ -335,25 +335,22 @@ async def main():
             
             page = await context.new_page()
             await appliquer_stealth(page)            
-            try:
-                #await creer_page(page, context)
-                #await publier_post(page)
+
+            #await creer_page(page, context)
+            #await publier_post(page)
                 
-                #await page.goto("https://www.facebook.com", timeout=0)
-                #await basculer_sur_la_page(page)
-                #await acceder_page(page)
+            #await page.goto("https://www.facebook.com", timeout=0)
+            #await basculer_sur_la_page(page)
+            #await acceder_page(page)
                 
-                await mettre_photo(page)
-                await publier_post(page)
-                print("Patiente 10000s"); await asyncio.sleep(10000);
+            await mettre_photo(page)
+            await publier_post(page)
+            print("Patiente 10000s"); await asyncio.sleep(10000);
                 
-                # await verifier_commande(page, PAUSE_MINUTES)  # si besoin
-                # Sauvegarder cookies ou autres si nécessaire
-                await outils.sauvegarder_cookies(context, fichier)
-            except:
-                continue
-            finally:
-                await context.close()
+            # await verifier_commande(page, PAUSE_MINUTES)  # si besoin
+            # Sauvegarder cookies ou autres si nécessaire
+            await outils.sauvegarder_cookies(context, fichier)
+            #await context.close()
 
 asyncio.run(main())
 

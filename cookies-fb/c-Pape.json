@@ -25,7 +25,7 @@
             "value": "100026686693249",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1807797347.313046,
+            "expires": 1807959637.984524,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -41,44 +41,64 @@
             "sameSite": "None"
         },
         {
-            "name": "fr",
-            "value": "1Ol7HHMJibyKVjc7u.AWchat3_0tU1R-9w9_kce7BfCizlsMlA0jxyL6g520K7SZXAbwU.Bp35jl..AAA.0.0.Bp35jl.AWfJxLGo1v7njZN5WZKAJQQjnsc",
+            "name": "wd",
+            "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1784037347.313257,
+            "expires": 1777026633,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "i_user",
+            "value": "61573358147382",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1807957485.654931,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "ps_l",
+            "value": "1",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1810981488.063063,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "ps_n",
+            "value": "1",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1810981488.063309,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "fr",
+            "value": "1gKGqnxYVo8ugKPrY.AWcRL66d7GYWDJM3aBAjFhQSEXcidxlj5NV6TQvX5esf-bCzDOU.Bp4hLX..AAA.0.0.Bp4hLX.AWfP2Jf4kuqCAOZV7MWRc5fSR7s",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1784199637.985099,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "17%3Aq6ShUfgUovW3ew%3A2%3A1772139511%3A-1%3A-1%3A%3AAcxYoyBJtVujcZxvRY79ZZMNSPwNDJH1WC2Xe0FQTA",
+            "value": "17%3Aq6ShUfgUovW3ew%3A2%3A1772139511%3A-1%3A-1%3A%3AAczxJInd78Otm7GZW6bCSGuQPZ3f9R11wgbEKhooRA",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1807797347.313401,
+            "expires": 1807959637.985242,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
-        },
-        {
-            "name": "wd",
-            "value": "1280x720",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1776866148,
-            "httpOnly": false,
-            "secure": true,
-            "sameSite": "Lax"
-        },
-        {
-            "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1776261349866%2C%22v%22%3A1%7D",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": -1,
-            "httpOnly": false,
-            "secure": true,
-            "sameSite": "Lax"
         }
     ],
     "origins": [
@@ -86,16 +106,12 @@
             "origin": "https://www.facebook.com",
             "localStorage": [
                 {
-                    "name": "ps:100026686693249:fdf58ff2-da36-4c5a-b815-9a31267dbcf3",
-                    "value": "a850e873-77e1-495e-b359-7aa59144ba92:1775124576656"
+                    "name": "falco_queue_log^$100026686693249^#100026686693249^#^#hmac_ttl.1776421474.AR2g-JQgaDTpLwwN2VuZDiO3Osy-T1Jy5nF3Llw8t7nIdT_b^$f3812b7716e0d1b1e",
+                    "value": "{\"items\":[{\"name\":\"merlin_unified_protocol_event\",\"policy\":{\"r\":1},\"time\":1776421488442.5,\"extra\":\"{\\\"element_visibility_absolute_ts\\\":{\\\"min_visible_px\\\":[{\\\"enter_ts\\\":\\\"1776421480255\\\",\\\"exit_ts\\\":\\\"1776421486617\\\"}]},\\\"entity_id\\\":\\\"AZYufolgXrNJwMvl77s6hsrgV2guoQp-sARDjz2k9WQF958EeWjiEk42tgCYyz_Ud1S_iwIbBryecZL8-8aMEIPSS4rTu4zmX9GYCnjVCNIHikeKUlInXJM8_qSESU15SINASwLc_fBoBoY6YyVq2mrXeBoYuD6Wcdjdk_ZZN-SXWC85P7XJT-j4kWCyjx3_FOMNyCYqxCbIBdvZpG7quDTiHxxtfr8XFnAGtDPTf7EWwIK4lbQ7H7jG8XdR1pLpeGZ1HJ5pUdVIOn94i-_vtrm8nndGZJrhmQQz5mCPLyffBPGNP-NLenabT6euklWV3bajUtEpTAWWzpEEwBB2NaUBDJ2xUG2or0-CUhc1SKR2ZPQwFIU0g29tLQr3rFznYNqK7qaXeA3nxXzjzklIILe9LK2-vtxx62EySyc651Gkwr7UpLlEbVNGhUtngXNDDfpMiF2Qk86gp-lytqM1QJoBfKHhFojnhUI3z_8LQKE82wFHgZufLoASaCqSNlPAQuMrEMUOacAP5GPccBqRH_lfXgCglItPjAdUHf_Hy3UkwBE35QJwyoYwpPOLRmmZ0fd2drbVsrhmlwVZmgGLGkJx_l4Fy6yzBqoK9_IRqA1Olz0M2QmdgByRELHpKBz9ndBGl3seLQ5fz3t04ZBZsLsMRloUGL10E6v3uvSEd3E0gJIwH464WDcmn81j3pI9xzxCwMWELix7FFVji8i4_NDY8p_9e8uzuJP8I-Z_-3HkS2t6Vu07knG_Cze_5__wtyE\\\",\\\"origin\\\":\\\"fb_newsfeed\\\",\\\"payload\\\":{\\\"placeholder_payload\\\":\\\"{\\\\\\\"csp\\\\\\\":0,\\\\\\\"feed_session_id\\\\\\\":\\\\\\\"1776421477678\\\\\\\",\\\\\\\"is_agg\\\\\\\":null,\\\\\\\"is_self\\\\\\\":null,\\\\\\\"is_seo\\\\\\\":false,\\\\\\\"logged_before\\\\\\\":false,\\\\\\\"nav_attribution_id_v2\\\\\\\":\\\\\\\"CometHomeRoot.react,comet.home,via_cold_start,1776421476318,850861,4748854339,,\\\\\\\",\\\\\\\"seo_container_id\\\\\\\":null,\\\\\\\"seo_type\\\\\\\":null,\\\\\\\"sid_raw\\\\\\\":\\\\\\\"4sdh2a:08bg1t:bx8lez\\\\\\\",\\\\\\\"source\\\\\\\":0,\\\\\\\"story_height\\\\\\\":678,\\\\\\\"story_width\\\\\\\":590,\\\\\\\"vpvd_start_timestamp_ms\\\\\\\":1776421480255,\\\\\\\"vpvd_time_delta_ms\\\\\\\":6362,\\\\\\\"xt\\\\\\\":\\\\\\\"AZYufolgXrNJwMvl77s6hsrgV2guoQp-sARDjz2k9WQF958EeWjiEk42tgCYyz_Ud1S_iwIbBryecZL8-8aMEIPSS4rTu4zmX9GYCnjVCNIHikeKUlInXJM8_qSESU15SINASwLc_fBoBoY6YyVq2mrXeBoYuD6Wcdjdk_ZZN-SXWC85P7XJT-j4kWCyjx3_FOMNyCYqxCbIBdvZpG7quDTiHxxtfr8XFnAGtDPTf7EWwIK4lbQ7H7jG8XdR1pLpeGZ1HJ5pUdVIOn94i-_vtrm8nndGZJrhmQQz5mCPLyffBPGNP-NLenabT6euklWV3bajUtEpTAWWzpEEwBB2NaUBDJ2xUG2or0-CUhc1SKR2ZPQwFIU0g29tLQr3rFznYNqK7qaXeA3nxXzjzklIILe9LK2-vtxx62EySyc651Gkwr7UpLlEbVNGhUtngXNDDfpMiF2Qk86gp-lytqM1QJoBfKHhFojnhUI3z_8LQKE82wFHgZufLoASaCqSNlPAQuMrEMUOacAP5GPccBqRH_lfXgCglItPjAdUHf_Hy3UkwBE35QJwyoYwpPOLRmmZ0fd2drbVsrhmlwVZmgGLGkJx_l4Fy6yzBqoK9_IRqA1Olz0M2QmdgByRELHpKBz9ndBGl3seLQ5fz3t04ZBZsLsMRloUGL10E6v3uvSEd3E0gJIwH464WDcmn81j3pI9xzxCwMWELix7FFVji8i4_NDY8p_9e8uzuJP8I-Z_-3HkS2t6Vu07knG_Cze_5__wtyE\\\\\\\"}\\\"}}\",\"tags\":[1,128],\"sessionId\":\"4sdh2a:08bg1t:bx8lez\",\"deviceId\":\"fd.ARsU7zT_yzCFAbktuPR1aEs-6hP_4YsakqCeCDyckaTj_F2uDoDIuZy8ypLz8kH7UC91XEOcOMDotfPWOt3j6qpa\",\"appVersion\":\"1037.554.587.0 (1037554587)\"}],\"ts\":1776421486619.9}"
                 },
                 {
                     "name": "CacheStorageVersion",
                     "value": "3b"
-                },
-                {
-                    "name": "mw_encrypted_backups_restore_upsell_first_impression_time_key",
-                    "value": "1772139541812"
                 },
                 {
                     "name": "falco_queue_log^$100026686693249^#100026686693249^#^#hmac_ttl.1776261346.AR2jdFQq-UYgEx5nexLQ4cJL_XSetAnTvhk_DEYpWav7QDbZ^$fa3e44828bd5d1100",
@@ -103,55 +119,99 @@
                 },
                 {
                     "name": "Session",
-                    "value": "42pbrw:1776261395148"
+                    "value": "g5ji41:1776423716575"
                 },
                 {
-                    "name": "banzai:last_storage_flush",
-                    "value": "1776261350317.3"
+                    "name": "mutex_falco_queue_immediately^$100026686693249^#61573358147382^#^#hmac_ttl.1776421830.AR3iyk-xD4J_q4bS4raQ86p8XosRtfhcgdIgwIAFSeXzZqrF^$",
+                    "value": "dtjb4e:1776421833714"
                 },
                 {
-                    "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"100026686693249\",\"currentIntervalLastTick\":1776261356,\"currentIntervalStart\":1776261347,\"initRemoteAgg\":{\"timestamp\":1775228217,\"today_s\":0},\"intervals\":[{\"end\":1772544367,\"start\":1772543931},{\"end\":1773082571,\"start\":1773082492},{\"end\":1775124586,\"start\":1775124531},{\"end\":1775174150,\"start\":1775174143}],\"lastCallbackAttempt\":1776261347,\"localStorageId\":\"16897091\",\"syncedL24HS\":-1,\"syncedTodayS\":879,\"lastSyncTimeStamp\":1772544116}"
+                    "name": "mutex_falco_queue_critical^$100026686693249^#100026686693249^#^#hmac_ttl.1776421474.AR2g-JQgaDTpLwwN2VuZDiO3Osy-T1Jy5nF3Llw8t7nIdT_b^$",
+                    "value": "dtjb4e:1776421833714"
                 },
                 {
                     "name": "last_headload_time",
-                    "value": "1775174140892"
+                    "value": "1776421833598"
                 },
                 {
-                    "name": "RSTData",
-                    "value": "{}"
+                    "name": "mutex_falco_queue_log^$100026686693249^#100026686693249^#^#hmac_ttl.1776261346.AR2jdFQq-UYgEx5nexLQ4cJL_XSetAnTvhk_DEYpWav7QDbZ^$",
+                    "value": "dtjb4e:1776421833713"
                 },
                 {
-                    "name": "ps:100026686693249:6dec593d-f162-434e-b181-5b43f213387d",
-                    "value": "a170573a-308a-4054-bfa1-2107c4fc4109:1776261347746"
-                },
-                {
-                    "name": "bdz_playback_state",
-                    "value": "{\"session_key\":\"mlpnqosn\",\"buffer_length\":60}"
-                },
-                {
-                    "name": "hb_timestamp",
-                    "value": "1776261348983"
+                    "name": "mutex_falco_queue_critical^$100026686693249^#61573358147382^#^#hmac_ttl.1776421830.AR3iyk-xD4J_q4bS4raQ86p8XosRtfhcgdIgwIAFSeXzZqrF^$",
+                    "value": "dtjb4e:1776421833714"
                 },
                 {
                     "name": "ares_last_signal_flush",
-                    "value": "1771275569927"
+                    "value": "1775557493329"
                 },
                 {
                     "name": "falco_queue_immediately^$100026686693249^#100026686693249^#^#hmac_ttl.1776261346.AR2jdFQq-UYgEx5nexLQ4cJL_XSetAnTvhk_DEYpWav7QDbZ^$f74eead66e72a31de",
                     "value": "{\"items\":[{\"name\":\"web_time_spent_navigation\",\"policy\":{\"r\":1},\"time\":1776261362379.75,\"extra\":\"{\\\"cause\\\":\\\"unload\\\",\\\"custom_data_json\\\":\\\"{\\\\\\\"source_pa\\\\\\\":\\\\\\\"{\\\\\\\\\\\\\\\"0\\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\\"bookmark_id\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"250100865708545\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"bookmark_type_name\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"session\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"42pbrw:50ywk3:h2ys1p\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"subsession\\\\\\\\\\\\\\\":1,\\\\\\\\\\\\\\\"tap_point\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"via_cold_start\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"timestamp\\\\\\\\\\\\\\\":1776261346189,\\\\\\\\\\\\\\\"trace_policy\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"comet.profile_plus.create\\\\\\\\\\\\\\\"}}\\\\\\\",\\\\\\\"source_pav2\\\\\\\":\\\\\\\"AdditionalProfilePlusCreationRoot.react,comet.profile_plus.create,via_cold_start,1776261346189,989685,250100865708545,,\\\\\\\",\\\\\\\"source_uri\\\\\\\":\\\\\\\"/pages/creation/?ref_type=comet_home\\\\\\\",\\\\\\\"source_imp_id\\\\\\\":\\\\\\\"0ejXIf3cYcdgxMKwC\\\\\\\",\\\\\\\"source_visitation_id\\\\\\\":\\\\\\\"comet.profile_plus.create:h2ys1p:1:1776261346.191\\\\\\\"}\\\",\\\"sid_raw\\\":\\\"42pbrw:50ywk3:h2ys1p\\\",\\\"source_path\\\":\\\"comet.profile_plus.create\\\"}\",\"tags\":[1,128],\"sessionId\":\"42pbrw:50ywk3:h2ys1p\",\"deviceId\":\"fd.ARulVTHGZlrd6q6K5KBEtM6YsA7DiyQTBHfLdvnlKJtNciD9Bjp02wJjBIABo6Zafz_RMJrxnnAf4vTMdBM6XjfA\",\"appVersion\":\"1037.385.434.0 (1037385434)\"},{\"name\":\"web_time_spent_bit_array\",\"policy\":{\"r\":1},\"time\":1776261362380.15,\"extra\":\"{\\\"sid_raw\\\":\\\"42pbrw:50ywk3:h2ys1p\\\",\\\"start_endpoint\\\":\\\"comet.profile_plus.create\\\",\\\"start_event\\\":\\\"click\\\",\\\"start_time\\\":1776261354,\\\"tos_array\\\":[17,0],\\\"tos_cum\\\":5,\\\"tos_id\\\":\\\"h2ys1p\\\",\\\"tos_len\\\":7,\\\"tos_seq\\\":1}\",\"tags\":[1,128],\"sessionId\":\"42pbrw:50ywk3:h2ys1p\",\"deviceId\":\"fd.ARulVTHGZlrd6q6K5KBEtM6YsA7DiyQTBHfLdvnlKJtNciD9Bjp02wJjBIABo6Zafz_RMJrxnnAf4vTMdBM6XjfA\",\"appVersion\":\"1037.385.434.0 (1037385434)\"}],\"ts\":1776261360150}"
                 },
                 {
+                    "name": "mutex_falco_queue_immediately^$100026686693249^#100026686693249^#^#hmac_ttl.1776261346.AR2jdFQq-UYgEx5nexLQ4cJL_XSetAnTvhk_DEYpWav7QDbZ^$",
+                    "value": "dtjb4e:1776421833713"
+                },
+                {
+                    "name": "ps:61573358147382:44e16a25-804c-4848-8041-a6d44d87b273",
+                    "value": "7d1dd566-b86e-41d2-a01a-8b20fb0ce54d:1776423122257"
+                },
+                {
+                    "name": "ps:61573358147382:2762ceac-9c5f-43d6-8199-8774233420e8",
+                    "value": "33816b0a-41f9-407e-8f5a-439c7b7b7d13:1776421649790"
+                },
+                {
+                    "name": "falco_queue_critical^$100026686693249^#100026686693249^#^#hmac_ttl.1776421474.AR2g-JQgaDTpLwwN2VuZDiO3Osy-T1Jy5nF3Llw8t7nIdT_b^$fcad80827b13732cb",
+                    "value": "{\"items\":[{\"name\":\"ods_web_batch\",\"policy\":{\"r\":1,\"s\":1},\"time\":1776421489280.0999,\"extra\":\"{\\\"batch\\\":{\\\"2966\\\":{\\\"mqtt_ws_client\\\":{\\\"219994525426954.protocol.publish./ls_req\\\":{\\\"n\\\":100,\\\"d\\\":null},\\\"protocol.publish./ls_req\\\":{\\\"n\\\":100,\\\"d\\\":null},\\\"219994525426954.protocol.onmessagedelivered\\\":{\\\"n\\\":100,\\\"d\\\":null},\\\"protocol.onmessagedelivered\\\":{\\\"n\\\":100,\\\"d\\\":null},\\\"219994525426954.message_arrived./ls_resp\\\":{\\\"n\\\":100,\\\"d\\\":null},\\\"message_arrived./ls_resp\\\":{\\\"n\\\":100,\\\"d\\\":null},\\\"219994525426954.protocol.puback.received\\\":{\\\"n\\\":100,\\\"d\\\":null},\\\"protocol.puback.received\\\":{\\\"n\\\":100,\\\"d\\\":null},\\\"219994525426954.protocol.publish\\\":{\\\"n\\\":100,\\\"d\\\":null},\\\"protocol.publish\\\":{\\\"n\\\":100,\\\"d\\\":null}}},\\\"3185\\\":{\\\"ls_download_dependency.bootloader\\\":{\\\"LSInsertAttachment\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSDeleteAllCmFbEventData\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSRemoveExistingPersistentMenuItems\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSInsertPersistentMenuItemsForThread\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSRemoveExistingPersistentMenuCtas\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSInsertPersistentMenuCtasForThread\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSTruncateFeatureLimits\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSTruncateReachabilitySettings\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSDeleteThenInsertDeliverySetting\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSDeleteAllDeliverySettingWarnings\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSInsertDeliverySettingWarning\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"3303\\\":{\\\"maw_thread_mapping\\\":{\\\"bulk_create_thread.batched_mapping\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"3478\\\":{\\\"comet_notifications.list\\\":{\\\"see_all.impression.PRIORITY_INBOX\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"3589\\\":{\\\"dgw_web_client\\\":{\\\"realtime.WebSocketTransport.stream_group_establishment_success\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"streamcontroller.WebSocketTransport.stream_group_establishment_success\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"realtime.DGWPinger.reset.newtimeout\\\":{\\\"n\\\":19,\\\"d\\\":null},\\\"realtime.WebSocketTransport.stream_establishment_pending\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"streamcontroller.DGWPinger.reset.newtimeout\\\":{\\\"n\\\":47,\\\"d\\\":null},\\\"streamcontroller.WebSocketTransport.stream_establishment_pending\\\":{\\\"n\\\":11,\\\"d\\\":null},\\\"realtime.DGWPinger.reset\\\":{\\\"n\\\":18,\\\"d\\\":null},\\\"realtime.WebSocketTransport.stream_establishment_success\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"realtime.WebStreamAckManager.ack_expected\\\":{\\\"n\\\":8,\\\"d\\\":null},\\\"streamcontroller.DGWPinger.reset\\\":{\\\"n\\\":46,\\\"d\\\":null},\\\"streamcontroller.WebSocketTransport.stream_establishment_success\\\":{\\\"n\\\":11,\\\"d\\\":null},\\\"streamcontroller.WebStreamAckManager.ack_expected\\\":{\\\"n\\\":12,\\\"d\\\":null},\\\"realtime.GroupedWebStream.ack_received\\\":{\\\"n\\\":8,\\\"d\\\":null},\\\"realtime.WebStreamAckManager.ack_received\\\":{\\\"n\\\":8,\\\"d\\\":null},\\\"realtime.GroupedWebStream.data_received\\\":{\\\"n\\\":9,\\\"d\\\":null},\\\"realtime.GroupedWebStream.ack_sent\\\":{\\\"n\\\":9,\\\"d\\\":null},\\\"streamcontroller.GroupedWebStream.ack_received\\\":{\\\"n\\\":12,\\\"d\\\":null},\\\"streamcontroller.WebStreamAckManager.ack_received\\\":{\\\"n\\\":12,\\\"d\\\":null},\\\"streamcontroller.GroupedWebStream.data_received\\\":{\\\"n\\\":23,\\\"d\\\":null},\\\"streamcontroller.GroupedWebStream.ack_sent\\\":{\\\"n\\\":23,\\\"d\\\":null}}},\\\"7173\\\":{\\\"entities.ff_js_web.bd_pdc_signals.2220391788200892.1037.C3\\\":{\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.non_critical_failure.streaming_init_not_complete\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.banzai.log.upload_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.ghl_test_ubt.2220391788200892.1037.C3\\\":{\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.non_critical_failure.streaming_init_not_complete\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.banzai.log.upload_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.perf.2220391788200892.1037.C3\\\":{\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":14,\\\"d\\\":null},\\\"event.non_critical_failure.streaming_init_not_complete\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"event.info.banzai.log_immediately.upload_processing\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":14,\\\"d\\\":null},\\\"event.logged\\\":{\\\"n\\\":16,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log_immediately\\\":{\\\"n\\\":13,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":13,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":16,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":11,\\\"d\\\":null},\\\"event.non_critical_failure.streaming.ack_failed\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.banzai_fallback\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":10,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":10,\\\"d\\\":null}},\\\"entities.ff_js_web.comet_topnav_item_impression.2220391788200892.1037.C3\\\":{\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.non_critical_failure.streaming_init_not_complete\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.banzai.log.upload_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.web_time_spent_bit_array.2220391788200892.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log_immediately\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.non_critical_failure.streaming.ack_failed\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.banzai_fallback\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.banzai.log_immediately.upload_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.mqtt_unified_client_connect.2220391788200892.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.filters.sampling\\\":{\\\"n\\\":2,\\\"d\\\":null}},\\\"entities.ff_js_web.mqtt_unified_client_incoming_publish.2220391788200892.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":52,\\\"d\\\":null},\\\"event.filters.sampling\\\":{\\\"n\\\":52,\\\"d\\\":null}},\\\"entities.ff_js_web.comet_metrics_viewable_impression.2220391788200892.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log_immediately\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.non_critical_failure.streaming.ack_failed\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.banzai_fallback\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.banzai.log_immediately.upload_processing\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":2,\\\"d\\\":null}},\\\"entities.ff_js_web.mqtt_unified_client_outgoing_publish.2220391788200892.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":106,\\\"d\\\":null},\\\"event.filters.sampling\\\":{\\\"n\\\":106,\\\"d\\\":null}},\\\"entities.ff_js_web.switcher_button_tapped.2220391788200892.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.switch_user_tapped.2220391788200892.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.profile_engagement.2220391788200892.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.merlin_unified_protocol_event.2220391788200892.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"7319\\\":{\\\"useMWEncryptedBackupsFetchBackupIdsV2.destination\\\":{\\\"mainthread.gql.isBackendSetupSuccessful=false\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"9819\\\":{\\\"worm.db_migration\\\":{\\\"reverb-populate-media-tags.isMigrated.true\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"wmi-media-services-migrate-media-references.isMigrated.true\\\":{\\\"n\\\":1,\\\"d\\\":null}}}}}\",\"tags\":[1,128],\"sessionId\":\"4sdh2a:08bg1t:bx8lez\",\"deviceId\":\"fd.ARsU7zT_yzCFAbktuPR1aEs-6hP_4YsakqCeCDyckaTj_F2uDoDIuZy8ypLz8kH7UC91XEOcOMDotfPWOt3j6qpa\",\"appVersion\":\"1037.554.587.0 (1037554587)\"}],\"ts\":1776421487457.4}"
+                },
+                {
+                    "name": "falco_queue_immediately^$100026686693249^#100026686693249^#^#hmac_ttl.1776421474.AR2g-JQgaDTpLwwN2VuZDiO3Osy-T1Jy5nF3Llw8t7nIdT_b^$f7da723acef5c19da",
+                    "value": "{\"items\":[{\"name\":\"perf\",\"policy\":{\"r\":1,\"s\":1},\"time\":1776421488887.9,\"extra\":\"{\\\"marker_id\\\":701246226,\\\"action_id\\\":2,\\\"instance_id\\\":1776421504700,\\\"sample_rate\\\":5,\\\"method\\\":\\\"random_sampling\\\",\\\"duration_ns\\\":\\\"324200195\\\",\\\"points\\\":[{\\\"name\\\":\\\"publish\\\",\\\"timeSinceStart\\\":\\\"0\\\"},{\\\"name\\\":\\\"response\\\",\\\"timeSinceStart\\\":\\\"324\\\"}],\\\"metadata\\\":{\\\"application_analytics\\\":{\\\"time_since_qpl_module_init\\\":10894},\\\"memory_stats\\\":{\\\"total_mem\\\":4294967296},\\\"network_stats\\\":{\\\"downlink_megabits\\\":10,\\\"network_subtype\\\":\\\"4g\\\",\\\"rtt_ms\\\":150},\\\"sitedata_info\\\":{\\\"client_push_phase\\\":\\\"C3\\\",\\\"client_revision\\\":1037554587,\\\"server_revision\\\":1037554587},\\\"locale_info\\\":{\\\"locale\\\":\\\"fr_FR\\\",\\\"isRTL\\\":0}},\\\"marker_type\\\":1,\\\"flags\\\":1,\\\"annotations\\\":{\\\"networkStatus\\\":\\\"true\\\",\\\"streamGroupId\\\":\\\"mqtt\\\",\\\"streamGroupStatus\\\":\\\"Disconnected\\\"},\\\"annotations_int\\\":{\\\"databaseType\\\":\\\"-1\\\",\\\"requestType\\\":\\\"3\\\"},\\\"config_type\\\":\\\"prod\\\"}\",\"tags\":[1,128],\"sessionId\":\"4sdh2a:08bg1t:bx8lez\",\"deviceId\":\"fd.ARsU7zT_yzCFAbktuPR1aEs-6hP_4YsakqCeCDyckaTj_F2uDoDIuZy8ypLz8kH7UC91XEOcOMDotfPWOt3j6qpa\",\"appVersion\":\"1037.554.587.0 (1037554587)\"},{\"name\":\"perf\",\"policy\":{\"r\":1,\"s\":1},\"time\":1776421488979.8,\"extra\":\"{\\\"marker_id\\\":701246226,\\\"action_id\\\":2,\\\"instance_id\\\":1776421505514,\\\"sample_rate\\\":5,\\\"method\\\":\\\"random_sampling\\\",\\\"duration_ns\\\":\\\"453500000\\\",\\\"points\\\":[{\\\"name\\\":\\\"publish\\\",\\\"timeSinceStart\\\":\\\"0\\\"},{\\\"name\\\":\\\"response\\\",\\\"timeSinceStart\\\":\\\"453\\\"}],\\\"metadata\\\":{\\\"application_analytics\\\":{\\\"time_since_qpl_module_init\\\":10986},\\\"memory_stats\\\":{\\\"total_mem\\\":4294967296},\\\"network_stats\\\":{\\\"downlink_megabits\\\":10,\\\"network_subtype\\\":\\\"4g\\\",\\\"rtt_ms\\\":150},\\\"sitedata_info\\\":{\\\"client_push_phase\\\":\\\"C3\\\",\\\"client_revision\\\":1037554587,\\\"server_revision\\\":1037554587},\\\"locale_info\\\":{\\\"locale\\\":\\\"fr_FR\\\",\\\"isRTL\\\":0}},\\\"marker_type\\\":1,\\\"flags\\\":1,\\\"annotations\\\":{\\\"networkStatus\\\":\\\"true\\\",\\\"streamGroupId\\\":\\\"mqtt\\\",\\\"streamGroupStatus\\\":\\\"Disconnected\\\"},\\\"annotations_int\\\":{\\\"databaseType\\\":\\\"-1\\\",\\\"requestType\\\":\\\"3\\\"},\\\"config_type\\\":\\\"prod\\\"}\",\"tags\":[1,128],\"sessionId\":\"4sdh2a:08bg1t:bx8lez\",\"deviceId\":\"fd.ARsU7zT_yzCFAbktuPR1aEs-6hP_4YsakqCeCDyckaTj_F2uDoDIuZy8ypLz8kH7UC91XEOcOMDotfPWOt3j6qpa\",\"appVersion\":\"1037.554.587.0 (1037554587)\"},{\"name\":\"perf\",\"policy\":{\"r\":1,\"s\":1},\"time\":1776421488980.4,\"extra\":\"{\\\"marker_id\\\":701246226,\\\"action_id\\\":2,\\\"instance_id\\\":1776421499572,\\\"sample_rate\\\":5,\\\"method\\\":\\\"random_sampling\\\",\\\"duration_ns\\\":\\\"441000000\\\",\\\"points\\\":[{\\\"name\\\":\\\"publish\\\",\\\"timeSinceStart\\\":\\\"0\\\"},{\\\"name\\\":\\\"response\\\",\\\"timeSinceStart\\\":\\\"440\\\"}],\\\"metadata\\\":{\\\"application_analytics\\\":{\\\"time_since_qpl_module_init\\\":10986.599853515625},\\\"memory_stats\\\":{\\\"total_mem\\\":4294967296},\\\"network_stats\\\":{\\\"downlink_megabits\\\":10,\\\"network_subtype\\\":\\\"4g\\\",\\\"rtt_ms\\\":150},\\\"sitedata_info\\\":{\\\"client_push_phase\\\":\\\"C3\\\",\\\"client_revision\\\":1037554587,\\\"server_revision\\\":1037554587},\\\"locale_info\\\":{\\\"locale\\\":\\\"fr_FR\\\",\\\"isRTL\\\":0}},\\\"marker_type\\\":1,\\\"flags\\\":1,\\\"annotations\\\":{\\\"networkStatus\\\":\\\"true\\\",\\\"streamGroupId\\\":\\\"mqtt\\\",\\\"streamGroupStatus\\\":\\\"Disconnected\\\"},\\\"annotations_int\\\":{\\\"databaseType\\\":\\\"-1\\\",\\\"requestType\\\":\\\"3\\\"},\\\"config_type\\\":\\\"prod\\\"}\",\"tags\":[1,128],\"sessionId\":\"4sdh2a:08bg1t:bx8lez\",\"deviceId\":\"fd.ARsU7zT_yzCFAbktuPR1aEs-6hP_4YsakqCeCDyckaTj_F2uDoDIuZy8ypLz8kH7UC91XEOcOMDotfPWOt3j6qpa\",\"appVersion\":\"1037.554.587.0 (1037554587)\"},{\"name\":\"web_time_spent_navigation\",\"policy\":{\"r\":1},\"time\":1776421489283.9,\"extra\":\"{\\\"cause\\\":\\\"unload\\\",\\\"custom_data_json\\\":\\\"{\\\\\\\"source_pa\\\\\\\":\\\\\\\"{\\\\\\\\\\\\\\\"0\\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\\"bookmark_id\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"4748854339\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"bookmark_type_name\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"session\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"4sdh2a:ptajez:bx8lez\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"subsession\\\\\\\\\\\\\\\":1,\\\\\\\\\\\\\\\"tap_point\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"via_cold_start\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"timestamp\\\\\\\\\\\\\\\":1776421476245,\\\\\\\\\\\\\\\"trace_policy\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"comet.home\\\\\\\\\\\\\\\"}}\\\\\\\",\\\\\\\"source_pav2\\\\\\\":\\\\\\\"CometHomeRoot.react,comet.home,via_cold_start,1776421476245,820041,4748854339,,\\\\\\\",\\\\\\\"source_uri\\\\\\\":\\\\\\\"/\\\\\\\",\\\\\\\"source_imp_id\\\\\\\":\\\\\\\"0nLaPu8HrjHdS9PSa\\\\\\\",\\\\\\\"source_visitation_id\\\\\\\":\\\\\\\"comet.home:bx8lez:1:1776421476.247\\\\\\\"}\\\",\\\"sid_raw\\\":\\\"4sdh2a:08bg1t:bx8lez\\\",\\\"source_path\\\":\\\"comet.home\\\"}\",\"tags\":[1,128],\"sessionId\":\"4sdh2a:08bg1t:bx8lez\",\"deviceId\":\"fd.ARsU7zT_yzCFAbktuPR1aEs-6hP_4YsakqCeCDyckaTj_F2uDoDIuZy8ypLz8kH7UC91XEOcOMDotfPWOt3j6qpa\",\"appVersion\":\"1037.554.587.0 (1037554587)\"},{\"name\":\"web_time_spent_bit_array\",\"policy\":{\"r\":1},\"time\":1776421489284.7,\"extra\":\"{\\\"sid_raw\\\":\\\"4sdh2a:ptajez:bx8lez\\\",\\\"start_endpoint\\\":\\\"comet.home\\\",\\\"start_event\\\":\\\"click\\\",\\\"start_time\\\":1776421485,\\\"tos_array\\\":[1,0],\\\"tos_cum\\\":6,\\\"tos_id\\\":\\\"bx8lez\\\",\\\"tos_len\\\":3,\\\"tos_seq\\\":1}\",\"tags\":[1,128],\"sessionId\":\"4sdh2a:08bg1t:bx8lez\",\"deviceId\":\"fd.ARsU7zT_yzCFAbktuPR1aEs-6hP_4YsakqCeCDyckaTj_F2uDoDIuZy8ypLz8kH7UC91XEOcOMDotfPWOt3j6qpa\",\"appVersion\":\"1037.554.587.0 (1037554587)\"}],\"ts\":1776421487461.7}"
+                },
+                {
+                    "name": "mutex_falco_queue_log^$100026686693249^#61573358147382^#^#hmac_ttl.1776421830.AR3iyk-xD4J_q4bS4raQ86p8XosRtfhcgdIgwIAFSeXzZqrF^$",
+                    "value": "dtjb4e:1776421833713"
+                },
+                {
+                    "name": "_oz_bandwidthEstimate",
+                    "value": "10000000"
+                },
+                {
+                    "name": "banzai:last_storage_flush",
+                    "value": "1776421479770.7"
+                },
+                {
+                    "name": "screen_time_period_logging_facebook",
+                    "value": "{\"actorId\":\"61573358147382\",\"currentIntervalLastTick\":1776424442,\"currentIntervalStart\":1776421833,\"initRemoteAgg\":{\"timestamp\":-1,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1776424237,\"localStorageId\":\"28203405\",\"syncedL24HS\":-1,\"syncedTodayS\":2559,\"lastSyncTimeStamp\":1776424237}"
+                },
+                {
+                    "name": "mutex_falco_queue_immediately^$100026686693249^#100026686693249^#^#hmac_ttl.1776421474.AR2g-JQgaDTpLwwN2VuZDiO3Osy-T1Jy5nF3Llw8t7nIdT_b^$",
+                    "value": "dtjb4e:1776421833713"
+                },
+                {
+                    "name": "RSTData",
+                    "value": "{}"
+                },
+                {
+                    "name": "bdz_playback_state",
+                    "value": "{\"session_key\":\"mnoh361d\",\"buffer_length\":60}"
+                },
+                {
+                    "name": "hb_timestamp",
+                    "value": "1776421482267"
+                },
+                {
+                    "name": "_oz_bandwidthAndTTFBSamples",
+                    "value": "{\"b\":[],\"t\":[]}"
+                },
+                {
                     "name": "signal_flush_timestamp",
-                    "value": "1776261349243"
+                    "value": "1776421482473"
                 },
                 {
-                    "name": "ps::6dec593d-f162-434e-b181-5b43f213387d",
-                    "value": "d294e1a6-f193-4d6d-a00c-616f14ad74e4:1776261353833"
-                },
-                {
-                    "name": "topicsLastReportingTime",
-                    "value": "1772543217666"
+                    "name": "mutex_falco_queue_log^$100026686693249^#100026686693249^#^#hmac_ttl.1776421474.AR2g-JQgaDTpLwwN2VuZDiO3Osy-T1Jy5nF3Llw8t7nIdT_b^$",
+                    "value": "dtjb4e:1776421833713"
                 }
             ]
         }
