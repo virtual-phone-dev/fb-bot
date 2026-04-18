@@ -137,9 +137,10 @@ async def recuperer_texte(page, context, posts, url_page, fichier_posts):
             ajouter_post(posts, fichier_posts, identifiant_post)
             #print("Texte sauvegardé")
 
-    except Exception as e:
-        print("Impossible de récupérer le texte :", e)
-        return False
+    except:
+        pass
+        #print("Impossible de récupérer le texte :", e)
+        #return False
         
         
     # RÉCUPÉRATION LIEN
@@ -162,7 +163,7 @@ async def post_recent(page, context, url_page):
     
     element = await page.query_selector("text=Ce contenu n’est pas disponible pour le moment")
     if element:
-        print("❌ Compte inexistant"); await context.close(); return
+        print("❌ Compte inexistant"); return
             
         
     fichier_posts = "posts_deja_commentes.json"
@@ -171,7 +172,7 @@ async def post_recent(page, context, url_page):
     stop = await recuperer_texte(page, context, posts, url_page, fichier_posts) # Vérifier si posts deja commentes
     if stop:
         print("Déjà liké")
-        return True
+        return
                     
     btn = page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first
     if await btn.count() > 0:    
@@ -213,11 +214,11 @@ async def liker_post(page, context, url_page):
             } """)
             
     
-    
+
 async def main():
     async with async_playwright() as p: 
         browser = await p.chromium.launch(        
-            headless=True,
+            headless=False,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
@@ -240,39 +241,40 @@ async def main():
         pages_list = [p for p in pages_list if "url" in p]
         cycle_comptes = cycle(comptes)
         
-        for page_info in pages_list:
-            compte = next(cycle_comptes); 
-            if compte["fichier"].startswith("-"): continue #ignorer les comptes qui commencent par "-"
-            fichier_cookie = compte.get("fichier")
-            nomDeMonCompte = compte.get("id_inchangeable")
-            
-            url_page = page_info.get('url')
-            name = page_info.get('name', 'Inconnu')
-            
-            #if not url_page: continue  #ignorer les zones
-            
-            if not demarrer:
-                if name == derniere_page:
-                    demarrer = True
-                else:
-                    continue
-                        
-            #print(f"Traitement de {name} : {url_page}")
-            print(name); print(url_page); print(nomDeMonCompte);
+        while True:
+            for page_info in pages_list:
+                compte = next(cycle_comptes); 
+                if compte["fichier"].startswith("-"): continue #ignorer les comptes qui commencent par "-"
+                fichier_cookie = compte.get("fichier")
+                nomDeMonCompte = compte.get("id_inchangeable")
                 
-            # Charger les cookies AVANT d'ouvrir la page
-            context = await browser.new_context() #nouveau contexte pour chaque compte
-            cookies = load_cookies(fichier_cookie)
-            await context.add_cookies(cookies)
-            
-            page = await context.new_page()
-            await apply_stealth(page)
-            
-            await liker_post(page, context, url_page)
-            await sauvegarder_derniere_page(name) # ✅ sauvegarde de la dernière page
-            await context.close() #fermer le contexte (ou la fenetre)
+                url_page = page_info.get('url')
+                name = page_info.get('name', 'Inconnu')
                 
-        await asyncio.sleep(10000)
+                #if not url_page: continue  #ignorer les zones
+                
+                if not demarrer:
+                    if name == derniere_page:
+                        demarrer = True
+                    else:
+                        continue
+                            
+                #print(f"Traitement de {name} : {url_page}")
+                print("✅", nomDeMonCompte); print(name); print(url_page);
+                    
+                # Charger les cookies AVANT d'ouvrir la page
+                context = await browser.new_context() #nouveau contexte pour chaque compte
+                cookies = load_cookies(fichier_cookie)
+                await context.add_cookies(cookies)
+                
+                page = await context.new_page()
+                await apply_stealth(page)
+                
+                await liker_post(page, context, url_page)
+                await sauvegarder_derniere_page(name) # ✅ sauvegarde de la dernière page
+                await context.close() #fermer le contexte (ou la fenetre)
+                
+        #await asyncio.sleep(10000)
 
 
 if __name__ == "__main__":

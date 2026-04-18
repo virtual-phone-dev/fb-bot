@@ -224,7 +224,8 @@ async def mettre_photo_couverture(page) :
 
 
 
-async def mettre_photo(page) :
+async def mettre_photo(page, context) :
+    await creer_page(page, context)
     await page.goto("https://www.facebook.com", timeout=0)
     await basculer_sur_la_page(page)
     await acceder_page(page)
@@ -343,7 +344,7 @@ async def main():
             #await basculer_sur_la_page(page)
             #await acceder_page(page)
                 
-            await mettre_photo(page)
+            await mettre_photo(page, context)
             await publier_post(page)
             print("Patiente 10000s"); await asyncio.sleep(10000);
                 
