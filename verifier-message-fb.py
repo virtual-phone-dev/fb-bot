@@ -1,21 +1,10 @@
 import json, asyncio, os, sys, msvcrt, time
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail, sauvegarder_cookies)
+from outils_playwright import (connecter_gmail, sauvegarder_cookies, appliquer_stealth)
 
 MODE_SILENCIEUX = True
 PAUSE_MINUTES = 1
 
-
-
-# Stealth
-async def appliquer_stealth(page):
-    await page.add_init_script(
-    """
-    Object.defineProperty(navigator,'webdriver',{get:()=>undefined});
-    Object.defineProperty(navigator,'plugins',{get:()=>[1,2,3]});
-    Object.defineProperty(navigator,'languages',{get:()=>['fr-FR','fr']});
-    """
-    )
 
 
 # EXTRAIRE INFOS COMPTE
@@ -75,8 +64,8 @@ async def verifier_commande(page, duree_minutes):
     
             
             
-async def verifier_message(page, email):
-    await connecter_gmail(page, email)
+async def verifier_message(context, email):
+    await connecter_gmail(context, email)
     
 
             
@@ -105,8 +94,8 @@ async def main():
             page = await context.new_page()
             await appliquer_stealth(page)
             
-            await verifier_message(page, email)
-            #await verifier_commande(page, PAUSE_MINUTES)
+            await verifier_message(context, email)
+            await verifier_commande(page, PAUSE_MINUTES)
             
             print("Patiente 10000s"); await asyncio.sleep(10000)
             print("\n✅ terminé")

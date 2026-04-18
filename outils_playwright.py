@@ -3,6 +3,13 @@ import json, os, asyncio, random, sqlite3
 mot_de_passe_gmail = "diel2019"
 
 
+async def appliquer_stealth(page):
+    await page.add_init_script(
+    """
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+    Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
+    Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
+
 
 async def basculer_sur_la_page(page):
     while True:
@@ -35,7 +42,11 @@ async def basculer_sur_la_page(page):
             
             
             
-async def connecter_gmail(page, email):
+async def connecter_gmail(context, email):
+    page = await context.new_page() #acceder a gmail
+    await apply_stealth(page) # appliquer stealth
+    await page.goto("https://mail.google.com", timeout=0)  
+    
     while True:
         print("patiente 2s"); await asyncio.sleep(2)
         btn = page.get_by_label("Adresse e-mail ou téléphone")

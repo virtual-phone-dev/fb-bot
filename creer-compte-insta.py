@@ -326,15 +326,10 @@ async def connecter_compte_insta(page, context, compte, fichier_des_comptes, ema
             
 async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe):
     print(f"Création du compte : {nom_complet}")
-    
-    page2 = await context.new_page() #acceder a gmail
-    await apply_stealth(page2) # appliquer stealth
-    await page2.goto("https://mail.google.com", timeout=0)        
-    await connecter_gmail(page2, email)
-    
+          
+    await connecter_gmail(context, email)
     await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0) #acceder a instagram
 
-    
     await page.get_by_label("Numéro de mobile ou adresse e-mail").fill(email)
     await page.get_by_label("Mot de passe").fill(mot_de_passe)
     await page.get_by_label("Nom complet").fill(nom_complet)

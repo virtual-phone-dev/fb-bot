@@ -1,7 +1,7 @@
 import json, asyncio, os, time
 from itertools import cycle
 from playwright.async_api import async_playwright 
-from outils_playwright import (basculer_sur_la_page)
+from outils_playwright import (basculer_sur_la_page, appliquer_stealth)
 
 url_fb = "https://fb.com"
 
@@ -41,18 +41,41 @@ def charger_derniere_page():
             return data.get("name")
     except:
         return None
-
+        
 
 async def sauvegarder_derniere_page(name):
     with open("derniere_page.json", "w", encoding="utf-8") as f:
         json.dump({"name": name}, f, indent=4, ensure_ascii=False)
   
-
-
+  
 def sauvegarder_json(fichier, data):
     with open(fichier,"w",encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
+
+
+async def charger_fichier(fichier):
+    if not os.path.exists(fichier):
+        return {}
+    with open(fichier, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+async def sauvegarder_fichier(fichier, data):
+    with open(fichier, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
+
+
+async def verifier_compte_disponible(heure_dernier_like, nom_compte):
+    dernier_passage = heure_dernier_like.get(nom_compte)
+
+    if not dernier_passage:
+        return True
+
+    date_dernier = datetime.fromisoformat(dernier_passage)
+    return datetime.now() - date_dernier >= timedelta(hours=1)
+    
+    
 
 # Posts commentés
 def post_deja_commente(posts, lien):
@@ -68,14 +91,6 @@ def ajouter_post(posts, fichier, lien):
         sauvegarder_json(fichier, posts)
         
         
-        
-async def apply_stealth(page):
-    await page.add_init_script(
-    """
-    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-    Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
-    Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
-
 
 def load_cookies(fichier_cookie):
     if not os.path.exists(fichier_cookie):
@@ -171,7 +186,7 @@ async def post_recent(page, context, url_page):
         
     stop = await recuperer_texte(page, context, posts, url_page, fichier_posts) # Vérifier si posts deja commentes
     if stop:
-        print("Déjà liké")
+        print("❌ Déjà liké")
         return
                     
     btn = page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first
@@ -214,7 +229,7 @@ async def liker_post(page, context, url_page):
             } """)
             
     
-
+    
 async def main():
     async with async_playwright() as p: 
         browser = await p.chromium.launch(        
@@ -228,6 +243,10 @@ async def main():
         )        
         
         comptes = await charger_comptes("comptes-fb.json")   
+        
+        fichier_heure_dernier_like = "heure_dernier_like.json"
+        heure_dernier_like = await charger_fichier(fichier_heure_dernier_like)
+        
         derniere_page = charger_derniere_page() 
         demarrer = False if derniere_page else True
         
@@ -247,6 +266,10 @@ async def main():
                 if compte["fichier"].startswith("-"): continue #ignorer les comptes qui commencent par "-"
                 fichier_cookie = compte.get("fichier")
                 nomDeMonCompte = compte.get("id_inchangeable")
+                
+                if not verifier_compte_disponible(heure_dernier_like, nomDeMonCompte):
+                    print(f"{nomDeMonCompte} : Patiente 1h)")
+                    continue
                 
                 url_page = page_info.get('url')
                 name = page_info.get('name', 'Inconnu')
@@ -268,9 +291,12 @@ async def main():
                 await context.add_cookies(cookies)
                 
                 page = await context.new_page()
-                await apply_stealth(page)
+                await appliquer_stealth(page)
                 
                 await liker_post(page, context, url_page)
+                heure_dernier_like[nomDeMonCompte] = datetime.now().isoformat()
+                await sauvegarder_fichier(fichier_heure_dernier_like, heure_dernier_like)
+
                 await sauvegarder_derniere_page(name) # ✅ sauvegarde de la dernière page
                 await context.close() #fermer le contexte (ou la fenetre)
                 
