@@ -1,6 +1,6 @@
 import json, asyncio, os, sys, msvcrt, time
 from playwright.async_api import async_playwright
-from outils_playwright import (sauvegarder_cookies)
+from outils_playwright import (connecter_gmail, sauvegarder_cookies)
 
 MODE_SILENCIEUX = True
 PAUSE_MINUTES = 1
@@ -75,6 +75,11 @@ async def verifier_commande(page, duree_minutes):
     
             
             
+async def verifier_message(page, email):
+    await connecter_gmail(page, email)
+    
+
+            
 async def main():
     comptes = json.load(open("comptes-fb.json", encoding="utf-8"))
 
@@ -92,20 +97,20 @@ async def main():
 
             print(f"\n===== {index+1}/{total} =====")
             print("Compte :", fichier)
+            email = compte["email"]; print("Email :", email);
             
             await preparer_storage_state(fichier)
-            
-            context = await browser.new_context(storage_state=fichier)   
+            context = await browser.new_context(storage_state=fichier)
             
             page = await context.new_page()
             await appliquer_stealth(page)
             
-            #await creer_page(page)            
+            await verifier_message(page, email)
+            #await verifier_commande(page, PAUSE_MINUTES)
             
-            await verifier_commande(page, PAUSE_MINUTES)
-            
-            
-            await sauvegarder_cookies(context, fichier)
+            print("Patiente 10000s"); await asyncio.sleep(10000)
+            print("\n✅ terminé")
+            #await sauvegarder_cookies(context, fichier)
             await context.close()
 
         await context.close()
