@@ -1,9 +1,10 @@
 import json, asyncio
 from playwright.async_api import async_playwright
+from outils_playwright import (connecter_gmail)
 
-#fichier_cookie = "c-insta-Olivia-Rose.json"
-mot_de_passe_gmail = "diel2019"
 url_post = "https://www.threads.com/@les_luxueux_du_congo/post/DW6jd9cjM2P"
+
+
 
 
 async def formatter(data, fichier_des_comptes):
@@ -191,88 +192,7 @@ async def commenter_th(page, email, mot_de_passe):
         except:
             pass
 
-    
-    
-async def connecter_gmail(page, email):
-    while True:
-        print("patiente 2s"); await asyncio.sleep(2)
-        btn = page.get_by_label("Adresse e-mail ou téléphone")
-        if await btn.count() > 0:
-            await page.get_by_label("Adresse e-mail ou téléphone").fill(email)
-            await btn.click()
-            await page.get_by_role("button", name="Suivant").click()
-            break
-    
-    while True:
-        print("patiente 4s"); await asyncio.sleep(4)
-        btn = page.get_by_label("Saisissez votre mot de passe")
-        if await btn.count() > 0:
-            await page.get_by_label("Saisissez votre mot de passe").fill(mot_de_passe_gmail)
-            await page.get_by_role("button", name="Suivant").click()
-            break
-            
-    
-    while True:    
-        #print("patiente 1s"); await asyncio.sleep(1)
-        try:
-            btn = page.get_by_label("Ignorer")
-            if await btn.count() > 0:
-                await btn.click()
-        except:
-            pass  
-            
 
-        try:
-            btn = page.locator('div[role="link"]:has-text("Confirmer votre adresse e-mail de récupération")')
-            if await btn.count() > 0:
-                await btn.click()
-        except:
-            pass
-            
-    
-        try:
-            btn = page.get_by_label("Saisissez l'adresse e-mail de récupération")
-            if await btn.count() > 0:
-                await page.get_by_label("Saisissez l'adresse e-mail de récupération").fill("kilendodingha@gmail.com")
-                await page.get_by_role("button", name="Suivant").click()
-        except:
-            pass
-            
-        
-        try:
-            btn = page.locator('span:has-text("Besoin d\'aide pour récupérer votre compte")')
-            if await btn.count() > 0:
-                await btn.click()
-        except:
-            pass
-
-
-        try:
-            btn = page.get_by_label("Saisissez votre dernier mot de passe")
-            if await btn.count() > 0: 
-                await page.get_by_label("Saisissez votre dernier mot de passe").fill(mot_de_passe_gmail)
-                await page.get_by_role("button", name="Suivant").click()
-        except:
-            pass
-
-        
-        try:
-            btn = page.get_by_label("Continuer")
-            if await btn.count() > 0:
-                await btn.click()
-        except:
-            pass
-            
-
-        try:
-            btn = page.locator('div[role="button"]:has-text("Nouveau message")')
-            if await btn.count() > 0:
-                break
-        except:
-            pass   
-           
-    
-    
 async def procedure_pendant_creation_compte_threads(page):
     while True:
         print("patiente 2s"); await asyncio.sleep(2)

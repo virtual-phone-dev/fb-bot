@@ -1,6 +1,6 @@
 import json, asyncio, os, sys, msvcrt, time
-import outils_playwright as outils
 from playwright.async_api import async_playwright
+from outils_playwright import (connecter_gmail, sauvegarder_cookies)
 
 MODE_SILENCIEUX = True
 PAUSE_MINUTES = 1
@@ -105,7 +105,7 @@ async def main():
             await verifier_commande(page, PAUSE_MINUTES)
             
             
-            await outils.sauvegarder_cookies(context, fichier)
+            await sauvegarder_cookies(context, fichier)
             await context.close()
 
         await context.close()

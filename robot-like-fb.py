@@ -218,7 +218,7 @@ async def liker_post(page, context, url_page):
 async def main():
     async with async_playwright() as p: 
         browser = await p.chromium.launch(        
-            headless=False,
+            headless=True,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",

@@ -1,5 +1,7 @@
 import json, os, asyncio, random, sqlite3
 
+mot_de_passe_gmail = "diel2019"
+
 
 
 async def basculer_sur_la_page(page):
@@ -32,7 +34,88 @@ async def basculer_sur_la_page(page):
             pass
             
             
+            
+async def connecter_gmail(page, email):
+    while True:
+        print("patiente 2s"); await asyncio.sleep(2)
+        btn = page.get_by_label("Adresse e-mail ou téléphone")
+        if await btn.count() > 0:
+            await page.get_by_label("Adresse e-mail ou téléphone").fill(email)
+            await btn.click()
+            await page.get_by_role("button", name="Suivant").click()
+            break
+    
+    while True:
+        print("patiente 4s"); await asyncio.sleep(4)
+        btn = page.get_by_label("Saisissez votre mot de passe")
+        if await btn.count() > 0:
+            await page.get_by_label("Saisissez votre mot de passe").fill(mot_de_passe_gmail)
+            await page.get_by_role("button", name="Suivant").click()
+            break
+            
+    
+    while True:    
+        #print("patiente 1s"); await asyncio.sleep(1)
+        try:
+            btn = page.get_by_label("Ignorer")
+            if await btn.count() > 0:
+                await btn.click()
+        except:
+            pass  
+            
 
+        try:
+            btn = page.locator('div[role="link"]:has-text("Confirmer votre adresse e-mail de récupération")')
+            if await btn.count() > 0:
+                await btn.click()
+        except:
+            pass
+            
+    
+        try:
+            btn = page.get_by_label("Saisissez l'adresse e-mail de récupération")
+            if await btn.count() > 0:
+                await page.get_by_label("Saisissez l'adresse e-mail de récupération").fill("kilendodingha@gmail.com")
+                await page.get_by_role("button", name="Suivant").click()
+        except:
+            pass
+            
+        
+        try:
+            btn = page.locator('span:has-text("Besoin d\'aide pour récupérer votre compte")')
+            if await btn.count() > 0:
+                await btn.click()
+        except:
+            pass
+
+
+        try:
+            btn = page.get_by_label("Saisissez votre dernier mot de passe")
+            if await btn.count() > 0: 
+                await page.get_by_label("Saisissez votre dernier mot de passe").fill(mot_de_passe_gmail)
+                await page.get_by_role("button", name="Suivant").click()
+        except:
+            pass
+
+        
+        try:
+            btn = page.get_by_label("Continuer")
+            if await btn.count() > 0:
+                await btn.click()
+        except:
+            pass
+            
+
+        try:
+            btn = page.locator('div[role="button"]:has-text("Nouveau message")')
+            if await btn.count() > 0:
+                break
+        except:
+            pass   
+           
+    
+ 
+ 
 # Stealth
 async def appliquer_stealth(page):
     await page.add_init_script(
