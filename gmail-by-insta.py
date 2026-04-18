@@ -1,9 +1,40 @@
-import json, asyncio
+import json, asyncio, time, msvcrt
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail)
+from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies, basculer_sur_la_page)
 
 url_post = "https://www.threads.com/@les_luxueux_du_congo/post/DW6jd9cjM2P"
+PAUSE_MINUTES = 1
 
+
+
+# VERIFIER COMMANDE CONSOLE
+async def verifier_commande(page, duree_minutes):
+    print("Écrivez..")
+    secondes = duree_minutes * 60
+    debut = time.time()
+
+    while time.time() - debut < secondes:
+        if msvcrt.kbhit():
+            cmd = input().strip().lower()
+
+            # passer au compte suivant immédiatement
+            if cmd == "+":
+                print("compte suivant")
+                return
+
+            # pause
+            if cmd in ["stop", "-"]:
+                print("PAUSE")
+
+                while True:
+                    cmd = input("Tape + pour continuer : ").strip()
+                    if cmd == "+":
+                        print("reprise")
+                        debut = time.time()
+                        break
+
+        await asyncio.sleep(0.2)
+    print("suivant automatique")
 
 
 
@@ -63,26 +94,6 @@ async def apply_stealth(page):
     Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
     Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
 
-
-        
-def load_cookies(fichier_des_comptes):
-    with open(fichier_des_comptes, "r", encoding="utf-8") as f:
-        raw_cookies = json.load(f)
-
-    cookies = []
-    for c in raw_cookies:
-        cookies.append(
-            {
-                "name": c.get("name"),
-                "value": c.get("value"),
-                "domain": c.get("domain"),
-                "path": c.get("path", "/"),
-                "httpOnly": c.get("httpOnly", False),
-                "secure": c.get("secure", False),
-                "expires": c.get("expirationDate", -1),
-            }
-        )
-    return cookies
 
 
 
@@ -324,16 +335,17 @@ async def connecter_compte_insta(page, context, compte, fichier_des_comptes, ema
     
     
             
-async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe):
-    print(f"Création du compte : {nom_complet}")
+async def creer_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe):
+#async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe):
+    #print(f"Création du compte : {nom_complet}")
           
     await connecter_gmail(context, email)
     await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0) #acceder a instagram
 
     await page.get_by_label("Numéro de mobile ou adresse e-mail").fill(email)
     await page.get_by_label("Mot de passe").fill(mot_de_passe)
-    await page.get_by_label("Nom complet").fill(nom_complet)
-    await page.get_by_label("Nom de profil").fill(nom_profil)
+    #await page.get_by_label("Nom complet").fill(nom_complet)
+    #await page.get_by_label("Nom de profil").fill(nom_profil)
     
     # selectionner le jour
     await page.evaluate(''' [...document.querySelectorAll("div, span")].find(el => el.textContent.trim() === "Jour").click(); ''')
@@ -356,6 +368,19 @@ async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_com
 
 
 
+async def verifier_message_fb(page):
+    #print(f"Création du compte : {nom_complet}")
+    await page.goto("https://fb.com", timeout=0) #acceder a fb
+    
+    print("patiente 5s"); await asyncio.sleep(5)
+    btn = await page.query_selector("text=Tableau de bord")
+    if btn:
+        print("Connecté sur la page")
+    else:
+        await basculer_sur_la_page(page)
+    
+    
+    
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
@@ -370,33 +395,45 @@ async def main():
 
         #context = await browser.new_context()
         
-        fichier_des_comptes = "comptes-insta-th.json"
+        #fichier_des_comptes = "comptes-insta-th.json"
+        fichier_des_comptes = "comptes-fb.json"
         comptes = await charger_comptes(fichier_des_comptes)
-
-        # Charger les cookies AVANT d'ouvrir la page
-        #cookies = load_cookies(fichier_des_comptes)
-        #await context.add_cookies(cookies)
 
         #page = await context.new_page() # nouvel onglet
         #await apply_stealth(page)
         
         for compte in comptes:
+            
             if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
                 continue
                 
+            fichier_cookie = compte["fichier"]
+            email = compte["email"]
+            nom = compte["id_inchangeable"]
+            print("Compte : ", nom);
+            
             #if compte.get("creer") == "Oui":
             #    continue  # skip si compte déjà créé
             
             context = await browser.new_context() #nouveau contexte pour chaque compte
+            
+            # Charger les cookies AVANT d'ouvrir la page
+            cookies = charger_cookies(fichier_cookie)
+            await context.add_cookies(cookies)
         
-            nom_complet = compte["nom_complet"]
-            nom_profil = compte["nom_profil"]
-            email = compte["email"]
-            mot_de_passe = compte["mot_de_passe"]
+            #nom_complet = compte["nom_complet"]
+            #nom_profil = compte["nom_profil"]
+            #mot_de_passe = compte["mot_de_passe"]
 
             page = await context.new_page()
             await apply_stealth(page)
-            await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
+            
+            #await connecter_gmail(context, email)
+            await verifier_message_fb(page);
+            
+            await verifier_commande(page, PAUSE_MINUTES)
+            await sauvegarder_cookies(context, fichier_cookie)
+            #await creer_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe)
 
             #await page.goto("https://www.instagram.com", timeout=0)
             #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
@@ -408,7 +445,8 @@ async def main():
             
             
             await context.close() #fermer le contexte (ou la fenetre)
-        await asyncio.sleep(10000)
+        #print("Patiente 10000s"); await asyncio.sleep(10000)
+        await context.close()
 
 
 if __name__ == "__main__":

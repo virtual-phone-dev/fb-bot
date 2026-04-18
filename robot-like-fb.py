@@ -1,7 +1,8 @@
 import json, asyncio, os, time
 from itertools import cycle
 from playwright.async_api import async_playwright 
-from outils_playwright import (basculer_sur_la_page, appliquer_stealth)
+from outils_playwright import (basculer_sur_la_page, appliquer_stealth, charger_cookies)
+from datetime import datetime, timedelta
 
 url_fb = "https://fb.com"
 
@@ -66,14 +67,14 @@ async def sauvegarder_fichier(fichier, data):
         json.dump(data, f, indent=4)
 
 
-async def verifier_compte_disponible(heure_dernier_like, nom_compte):
+def verifier_compte_disponible(heure_dernier_like, nom_compte):
     dernier_passage = heure_dernier_like.get(nom_compte)
 
     if not dernier_passage:
         return True
 
-    date_dernier = datetime.fromisoformat(dernier_passage)
-    return datetime.now() - date_dernier >= timedelta(hours=1)
+    date_dernier_passage = datetime.fromisoformat(dernier_passage)
+    return datetime.now() - date_dernier_passage >= timedelta(hours=1)
     
     
 
@@ -89,42 +90,6 @@ def ajouter_post(posts, fichier, lien):
     if lien not in posts:
         posts.append(lien)
         sauvegarder_json(fichier, posts)
-        
-        
-
-def load_cookies(fichier_cookie):
-    if not os.path.exists(fichier_cookie):
-        return []
-
-    try:
-        with open(fichier_cookie, "r", encoding="utf-8") as f:
-            data = json.load(f)
-
-        if isinstance(data, dict):
-            raw_cookies = data.get("cookies", [])
-        elif isinstance(data, list):
-            raw_cookies = data
-        else:
-            return []
-    except:
-        return []
-
-    cookies = []
-    for c in raw_cookies:
-        if not isinstance(c, dict):
-            continue
-
-        cookies.append({
-            "name": c.get("name"),
-            "value": c.get("value"),
-            "domain": c.get("domain"),
-            "path": c.get("path", "/"),
-            "httpOnly": c.get("httpOnly", False),
-            "secure": c.get("secure", False),
-            "expires": c.get("expirationDate", -1),
-        })
-    return cookies
-
 
 
 async def recuperer_texte(page, context, posts, url_page, fichier_posts):
@@ -233,7 +198,7 @@ async def liker_post(page, context, url_page):
 async def main():
     async with async_playwright() as p: 
         browser = await p.chromium.launch(        
-            headless=True,
+            headless=False,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
@@ -268,7 +233,7 @@ async def main():
                 nomDeMonCompte = compte.get("id_inchangeable")
                 
                 if not verifier_compte_disponible(heure_dernier_like, nomDeMonCompte):
-                    print(f"{nomDeMonCompte} : Patiente 1h)")
+                    print(f"{nomDeMonCompte} : Patiente 1h")
                     continue
                 
                 url_page = page_info.get('url')
@@ -287,7 +252,7 @@ async def main():
                     
                 # Charger les cookies AVANT d'ouvrir la page
                 context = await browser.new_context() #nouveau contexte pour chaque compte
-                cookies = load_cookies(fichier_cookie)
+                cookies = charger_cookies(fichier_cookie)
                 await context.add_cookies(cookies)
                 
                 page = await context.new_page()

@@ -1,10 +1,25 @@
-import json, asyncio, os, sys, msvcrt, time
+import json, asyncio, os, sys, msvcrt, time, random
 from playwright.async_api import async_playwright
 from outils_playwright import (connecter_gmail, sauvegarder_cookies, appliquer_stealth)
 
 MODE_SILENCIEUX = True
 PAUSE_MINUTES = 1
 
+
+
+async def appliquer_stealth(page):
+    await page.add_init_script(
+    """
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+    Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
+    Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
+
+async def apply_stealth(page):
+    await page.add_init_script(
+    """
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+    Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
+    Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
 
 
 # EXTRAIRE INFOS COMPTE
@@ -90,16 +105,17 @@ async def main():
             
             await preparer_storage_state(fichier)
             context = await browser.new_context(storage_state=fichier)
-            
+
+
             page = await context.new_page()
-            await appliquer_stealth(page)
+            await apply_stealth(page)
             
-            await verifier_message(context, email)
+            #await verifier_message(context, email)
             await verifier_commande(page, PAUSE_MINUTES)
             
             print("Patiente 10000s"); await asyncio.sleep(10000)
             print("\n✅ terminé")
-            #await sauvegarder_cookies(context, fichier)
+            await sauvegarder_cookies(context, fichier)
             await context.close()
 
         await context.close()

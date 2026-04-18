@@ -44,7 +44,7 @@ async def basculer_sur_la_page(page):
             
 async def connecter_gmail(context, email):
     page = await context.new_page() #acceder a gmail
-    await apply_stealth(page) # appliquer stealth
+    await appliquer_stealth(page) # appliquer stealth
     await page.goto("https://mail.google.com", timeout=0)  
     
     while True:
@@ -125,18 +125,6 @@ async def connecter_gmail(context, email):
             pass   
            
     
- 
- 
-# Stealth
-async def appliquer_stealth(page):
-    await page.add_init_script(
-    """
-    Object.defineProperty(navigator,'webdriver',{get:()=>undefined});
-    Object.defineProperty(navigator,'plugins',{get:()=>[1,2,3]});
-    Object.defineProperty(navigator,'languages',{get:()=>['fr-FR','fr']});
-    """
-    )
-
 
 # Charger cookies
 def charger_cookies(fichier):
@@ -177,11 +165,11 @@ def charger_cookies(fichier):
 async def sauvegarder_cookies(contexte, fichier):
     print("on sauvegarde")
     state = await contexte.storage_state()
-    with open(fichier,"w",encoding="utf-8") as f:
-        json.dump(state,f,indent=4,ensure_ascii=False)
+    
+    with open(fichier, "w", encoding="utf-8") as f:
+        json.dump(state, f, indent=4, ensure_ascii=False)
+        
     print("✅ cookies sauvegardés :", fichier)
-
-
 
 
 

@@ -94,16 +94,13 @@ async def main():
             print("Compte :", fichier)
             
             await preparer_storage_state(fichier)
-            
             context = await browser.new_context(storage_state=fichier)   
             
             page = await context.new_page()
             await appliquer_stealth(page)
             
             #await creer_page(page)            
-            
             await verifier_commande(page, PAUSE_MINUTES)
-            
             
             await sauvegarder_cookies(context, fichier)
             await context.close()
