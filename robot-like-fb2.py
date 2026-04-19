@@ -212,11 +212,11 @@ async def main():
         
         comptes = await charger_comptes("comptes-fb.json")   
         
-        #fichier_heure_dernier_like = "heure_dernier_like.json"
-        #heure_dernier_like = await charger_fichier(fichier_heure_dernier_like)
+        fichier_heure_dernier_like = "heure_dernier_like.json"
+        heure_dernier_like = await charger_fichier(fichier_heure_dernier_like)
         
         derniere_page = charger_derniere_page() 
-        debut = False
+        demarrer = False if derniere_page else True
         
         # Charger la liste de pages
         with open('pages-tout-pays.json', 'r', encoding='utf-8') as f:
@@ -226,13 +226,13 @@ async def main():
         #FILTRAGE AVANT
         comptes = [c for c in comptes if not c["fichier"].startswith("-")]
         pages_list = [p for p in pages_list if "url" in p]
-        cycle_pages = cycle(pages_list)
+        cycle_comptes = cycle(comptes)
         
         #patience_affichee = {}
         while True:
-            for compte in comptes:
-                page = next(cycle_pages); 
-                #if compte["fichier"].startswith("-"): continue #ignorer les comptes qui commencent par "-"
+            for page_info in pages_list:
+                compte = next(cycle_comptes); 
+                if compte["fichier"].startswith("-"): continue #ignorer les comptes qui commencent par "-"
                 fichier_cookie = compte.get("fichier")
                 nomDeMonCompte = compte.get("id_inchangeable")
                 
@@ -249,17 +249,19 @@ async def main():
                 #    continue
                     
     
-                url_page = page.get('url')
-                nom_page = page.get('name');
+                url_page = page_info.get('url')
+                name = page_info.get('name', 'Inconnu')
                 
-                #if not url_page: continue  #ignorer les zones page["name"] == derniere_page
+                #if not url_page: continue  #ignorer les zones
                 
-                if derniere_page:
-                    if derniere_page == nom_page: debut = True
-                    if not debut: continue
+                if not demarrer:
+                    if name == derniere_page:
+                        demarrer = True
+                    else:
+                        continue
                             
                 #print(f"Traitement de {name} : {url_page}")
-                print("✅", nomDeMonCompte); print(nom_page); print(url_page);
+                print("✅", nomDeMonCompte); print(name); print(url_page);
                     
                 # Charger les cookies AVANT d'ouvrir la page
                 context = await browser.new_context() #nouveau contexte pour chaque compte
@@ -273,11 +275,13 @@ async def main():
                 #heure_dernier_like[nomDeMonCompte] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
                 #await sauvegarder_fichier(fichier_heure_dernier_like, heure_dernier_like)
 
-                await sauvegarder_derniere_page(nom_page) # ✅ sauvegarde de la dernière page
+                await sauvegarder_derniere_page(name) # ✅ sauvegarde de la dernière page
                 await context.close() #fermer le contexte (ou la fenetre)
-                
-            if debut: print("✅ Patiente 1 heure"); await asyncio.sleep(3600 * 1)             
+            #await context.close() 
+            print("✅Patiente 2 minutes"); await asyncio.sleep(60 * 2)             
             
+        #await asyncio.sleep(10000) 
+        #await context.close()
 
 if __name__ == "__main__":
     asyncio.run(main())
