@@ -78,8 +78,8 @@ def verifier_compte_disponible(heure_dernier_like, nom_compte):
     
     
 
-# Posts commentés
-def post_deja_commente(posts, lien):
+# Posts liker
+def post_deja_liker(posts, lien):
     if not lien:
         return False
 
@@ -92,35 +92,25 @@ def ajouter_post(posts, fichier, lien):
         sauvegarder_json(fichier, posts)
 
 
+
 async def recuperer_texte(page, context, posts, url_page, fichier_posts):
     # RÉCUPÉRATION TEXTE POST (NOUVELLE MÉTHODE)
     try:        
         element = page.locator('[data-ad-rendering-role="story_message"]').first
         texte = await element.text_content()
         
-        # ICI on coupe à 500 caractères
-        identifiant_post = " ".join(texte.split())[:500]
-        #print(f"Texte : {identifiant_post[:80]}")
-
-        # Vérification déjà commenté
-        if posts and post_deja_commente(posts, identifiant_post):
-            #print(f"Déjà commenté")
-
-            #if context:
-            #    await page.close()
-            #    await context.close()
-
-            return True
+        # ICI on coupe à 500 caractères pour eviter les tres long texte dans mon fichier
+        identifiant_post = " ".join(texte.split())[:500] #print(f"Texte : {identifiant_post[:80]}")
+        
+        if posts and post_deja_liker(posts, identifiant_post): 
+            return "deja_liker" #print(f"Déjà liké") # Vérification déjà liké
 
         # Sauvegarde texte
         if posts is not None and fichier_posts:
-            ajouter_post(posts, fichier_posts, identifiant_post)
-            #print("Texte sauvegardé")
-
+            ajouter_post(posts, fichier_posts, identifiant_post) #print("Texte sauvegardé")
     except:
         pass
         #print("Impossible de récupérer le texte :", e)
-        #return False
         
     # RÉCUPÉRATION LIEN
     source_post = page.locator('[role="article"]').nth(0)
@@ -128,8 +118,7 @@ async def recuperer_texte(page, context, posts, url_page, fichier_posts):
     count_link = await link_locator.count()
 
     if count_link > 0:
-        post_link = await link_locator.first.get_attribute("href")
-        #print("lien trouvé :", post_link)
+        post_link = await link_locator.first.get_attribute("href") #print("lien trouvé :", post_link)
     else:
         post_link = None
     
@@ -141,24 +130,22 @@ async def post_recent(page, context, url_page):
     print("patiente 2s"); await asyncio.sleep(2)
     
     element = await page.query_selector("text=Ce contenu n’est pas disponible pour le moment")
-    if element:
-        print("❌ Compte inexistant"); return
-            
-        
+    if element: return "compte_inexistant" #print("Compte inexistant"); 
+    
+    
     fichier_posts = "posts_deja_commentes.json"
-    posts = charger_posts(fichier_posts)    
+    posts = charger_posts(fichier_posts)
         
-    stop = await recuperer_texte(page, context, posts, url_page, fichier_posts) # Vérifier si posts deja commentes
-    if stop:
-        print("❌ Déjà liké")
-        return
-                    
+    statut = await recuperer_texte(page, context, posts, url_page, fichier_posts) # Vérifier si posts deja commentes
+    if statut == "deja_liker": return "deja_liker" #print("Déjà liké"); 
+        
+        
     btn = page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first
     if await btn.count() > 0:    
         await btn.click()
         print("patiente 2s"); await asyncio.sleep(2); 
         
-    return False        
+
 
 
 async def liker_post(page, context, url_page):    
@@ -167,19 +154,22 @@ async def liker_post(page, context, url_page):
     statut = await verifier_blocage(page)
     if statut == "bloquer_selfie_video": print("⛔ bloqué selfie video"); return
     
+    
     btn = await page.query_selector("text=Tableau de bord")
     if btn:
         print("Connecté sur la page")
-        await post_recent(page, context, url_page)
+        
+        statut = await post_recent(page, context, url_page)
+        if statut == "compte_inexistant": print("❌ Compte inexistant"); return
+        if statut == "deja_liker": print("❌ Déjà liké"); return
     else:
         await basculer_sur_la_page(page)
-        await post_recent(page, context, url_page)
         
-        deja_like = await post_recent(page, context, url_page)
-        if deja_like:
-            return  # STOP COMPLET
-            
-            
+        statut = await post_recent(page, context, url_page)
+        if statut == "compte_inexistant": print("❌ Compte inexistant"); return
+        if statut == "deja_liker": print("❌ Déjà liké"); return
+        
+        
     temps_debut = time.monotonic()  # Enregistre le temps de début
     temps = 10
             
@@ -272,7 +262,7 @@ async def main():
                 await context.close() #fermer le contexte (ou la fenetre)
             #await context.close()   
             
-        #await asyncio.sleep(10000)
+        #await asyncio.sleep(10000) 
         #await context.close()
 
 if __name__ == "__main__":
