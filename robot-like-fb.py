@@ -1,7 +1,7 @@
 import json, asyncio, os, time
 from itertools import cycle
 from playwright.async_api import async_playwright 
-from outils_playwright import (basculer_sur_la_page, appliquer_stealth, charger_cookies)
+from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, charger_cookies)
 from datetime import datetime, timedelta
 
 url_fb = "https://fb.com"
@@ -122,7 +122,6 @@ async def recuperer_texte(page, context, posts, url_page, fichier_posts):
         #print("Impossible de récupérer le texte :", e)
         #return False
         
-        
     # RÉCUPÉRATION LIEN
     source_post = page.locator('[role="article"]').nth(0)
     link_locator = source_post.locator("a[href*='/posts/'], a[href*='/videos/']")
@@ -158,13 +157,16 @@ async def post_recent(page, context, url_page):
     if await btn.count() > 0:    
         await btn.click()
         print("patiente 2s"); await asyncio.sleep(2); 
-            
+        
+    return False        
 
 
 async def liker_post(page, context, url_page):    
     await page.goto(url_fb, timeout=0) 
-        
-    print("patiente 5s"); await asyncio.sleep(5)
+    
+    statut = await verifier_blocage(page)
+    if statut == "bloquer_selfie_video": print("⛔ bloqué selfie video"); return
+    
     btn = await page.query_selector("text=Tableau de bord")
     if btn:
         print("Connecté sur la page")
@@ -172,6 +174,10 @@ async def liker_post(page, context, url_page):
     else:
         await basculer_sur_la_page(page)
         await post_recent(page, context, url_page)
+        
+        deja_like = await post_recent(page, context, url_page)
+        if deja_like:
+            return  # STOP COMPLET
             
             
     temps_debut = time.monotonic()  # Enregistre le temps de début
@@ -264,9 +270,10 @@ async def main():
 
                 await sauvegarder_derniere_page(name) # ✅ sauvegarde de la dernière page
                 await context.close() #fermer le contexte (ou la fenetre)
-                
+            #await context.close()   
+            
         #await asyncio.sleep(10000)
-
+        #await context.close()
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -11,6 +11,14 @@ async def appliquer_stealth(page):
     Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
 
 
+async def verifier_blocage(page):
+    print("patiente 3s"); await asyncio.sleep(3)
+    btn = await page.query_selector("text=confirmez que vous êtes une personne réelle afin d’utiliser votre compte")
+    if btn:
+        #print("bloqué selfie video")
+        return "bloquer_selfie_video"
+    
+    
 async def basculer_sur_la_page(page):
     while True:
         print("patiente 2s"); await asyncio.sleep(2)
@@ -169,7 +177,7 @@ async def sauvegarder_cookies(contexte, fichier):
     with open(fichier, "w", encoding="utf-8") as f:
         json.dump(state, f, indent=4, ensure_ascii=False)
         
-    print("✅ cookies sauvegardés :", fichier)
+    print("cookies sauvegardés :", fichier)
 
 
 

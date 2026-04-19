@@ -410,7 +410,7 @@ async def main():
             fichier_cookie = compte["fichier"]
             email = compte["email"]
             nom = compte["id_inchangeable"]
-            print("Compte : ", nom);
+            print("✅ Compte : ", nom);
             
             #if compte.get("creer") == "Oui":
             #    continue  # skip si compte déjà créé

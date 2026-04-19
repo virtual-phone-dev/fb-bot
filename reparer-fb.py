@@ -105,7 +105,7 @@ async def main():
             await sauvegarder_cookies(context, fichier)
             await context.close()
 
-        await context.close()
+        #await context.close()
         print("\n✅ terminé")
 
 asyncio.run(main())

@@ -1,25 +1,21 @@
-import json, asyncio, os, sys, msvcrt, time, random
+import json, asyncio, os, sys, msvcrt, time
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail, sauvegarder_cookies, appliquer_stealth)
+from outils_playwright import (sauvegarder_cookies)
 
 MODE_SILENCIEUX = True
-PAUSE_MINUTES = 1
+PAUSE_MINUTES = 20
 
 
 
+# Stealth
 async def appliquer_stealth(page):
     await page.add_init_script(
     """
-    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-    Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
-    Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
-
-async def apply_stealth(page):
-    await page.add_init_script(
+    Object.defineProperty(navigator,'webdriver',{get:()=>undefined});
+    Object.defineProperty(navigator,'plugins',{get:()=>[1,2,3]});
+    Object.defineProperty(navigator,'languages',{get:()=>['fr-FR','fr']});
     """
-    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-    Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
-    Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
+    )
 
 
 # EXTRAIRE INFOS COMPTE
@@ -50,8 +46,8 @@ async def preparer_storage_state(fichier):
 
 # VERIFIER COMMANDE CONSOLE
 async def verifier_commande(page, duree_minutes):
-    await page.goto("https://www.facebook.com",timeout=0)   
-    secondes = duree_minutes * 60
+    await page.goto("https://business.facebook.com/latest/inbox/all/",timeout=0)   
+    secondes = duree_minutes * 1 #fois 1 seconde
     debut = time.time()
 
     while time.time() - debut < secondes:
@@ -79,11 +75,6 @@ async def verifier_commande(page, duree_minutes):
     
             
             
-async def verifier_message(context, email):
-    await connecter_gmail(context, email)
-    
-
-            
 async def main():
     comptes = json.load(open("comptes-fb.json", encoding="utf-8"))
 
@@ -101,24 +92,20 @@ async def main():
 
             print(f"\n===== {index+1}/{total} =====")
             print("Compte :", fichier)
-            email = compte["email"]; print("Email :", email);
             
             await preparer_storage_state(fichier)
-            context = await browser.new_context(storage_state=fichier)
-
-
-            page = await context.new_page()
-            await apply_stealth(page)
+            context = await browser.new_context(storage_state=fichier)   
             
-            #await verifier_message(context, email)
+            page = await context.new_page()
+            await appliquer_stealth(page)
+            
+            #await creer_page(page)            
             await verifier_commande(page, PAUSE_MINUTES)
             
-            print("Patiente 10000s"); await asyncio.sleep(10000)
-            print("\n✅ terminé")
             await sauvegarder_cookies(context, fichier)
             await context.close()
 
-        await context.close()
+        #await context.close()
         print("\n✅ terminé")
 
 asyncio.run(main())
