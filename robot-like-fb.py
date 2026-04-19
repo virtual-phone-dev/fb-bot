@@ -8,6 +8,25 @@ url_fb = "https://fb.com"
 
 
 
+async def verifier_compte_disponible(heure_dernier_like, nom_compte):
+    dernier_passage = heure_dernier_like.get(nom_compte)
+
+    if not dernier_passage:
+        return True
+
+    date_dernier_passage = datetime.fromisoformat(dernier_passage)
+    return datetime.now() - date_dernier_passage >= timedelta(hours=1)
+
+
+
+async def get_prochain_démarrage(dernier_passage_iso):
+    dernier_passage = datetime.fromisoformat(dernier_passage_iso)
+    prochain = dernier_passage + timedelta(hours=1)
+    return prochain.strftime("%Y-%m-%d %H:%M:%S")
+    
+    
+    
+
 async def charger_comptes(fichier_des_comptes):
     with open(fichier_des_comptes, "r", encoding="utf-8") as f:
         return json.load(f)
@@ -67,16 +86,6 @@ async def sauvegarder_fichier(fichier, data):
         json.dump(data, f, indent=4)
 
 
-def verifier_compte_disponible(heure_dernier_like, nom_compte):
-    dernier_passage = heure_dernier_like.get(nom_compte)
-
-    if not dernier_passage:
-        return True
-
-    date_dernier_passage = datetime.fromisoformat(dernier_passage)
-    return datetime.now() - date_dernier_passage >= timedelta(hours=1)
-    
-    
 
 # Posts liker
 def post_deja_liker(posts, lien):
@@ -221,6 +230,7 @@ async def main():
         pages_list = [p for p in pages_list if "url" in p]
         cycle_comptes = cycle(comptes)
         
+        patience_affichee = {}
         while True:
             for page_info in pages_list:
                 compte = next(cycle_comptes); 
@@ -228,10 +238,19 @@ async def main():
                 fichier_cookie = compte.get("fichier")
                 nomDeMonCompte = compte.get("id_inchangeable")
                 
-                if not verifier_compte_disponible(heure_dernier_like, nomDeMonCompte):
-                    print(f"{nomDeMonCompte} : Patiente 1h")
-                    continue
                 
+                if not await verifier_compte_disponible(heure_dernier_like, nomDeMonCompte):
+                    if not patience_affichee.get(nomDeMonCompte, False):
+                        dernier_passage = heure_dernier_like.get(nomDeMonCompte)
+                        if dernier_passage:
+                            date_next = await get_prochain_démarrage(dernier_passage)
+                            print(f"{nomDeMonCompte} : Prochain démarrage prévu le {date_next}")
+                        else:
+                            print(f"{nomDeMonCompte} : Patiente 1h")  # fallback
+                        patience_affichee[nomDeMonCompte] = True
+                    continue
+                    
+    
                 url_page = page_info.get('url')
                 name = page_info.get('name', 'Inconnu')
                 
