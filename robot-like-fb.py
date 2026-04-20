@@ -142,9 +142,9 @@ async def liker_post(page, context, url_page):
     statut = await verifier_blocage(page)
     if statut == "bloquer_selfie_video": print("⛔ bloqué selfie video"); return
     
-    
-    btn = await page.query_selector("text=Tableau de bord")
-    if btn:
+    btn = page.locator('a[aria-label="Espace Pubs"][role="link"]').first
+    if await btn.count() > 0:  
+        #print("Espace Pubs trouvé")
         print("Connecté sur la page")
         
         statut = await post_recent(page, context, url_page)

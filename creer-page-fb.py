@@ -87,7 +87,46 @@ async def verifier_commande(page, duree_minutes):
  # Ne pas afficher sur la Page , span
  # J’aime , span, aussi div , aria-label=J’aime (le bouton jaime du post)
 
- 
+async def fin_creation_page(page):  
+    await page.goto("https://www.facebook.com", timeout=0)
+    await basculer_sur_la_page(page)
+    
+    await acceder_page(page)   
+    print("reload"); await page.reload() # Actualiser la page
+    
+    await aimer_post(page)
+    await masquer_photo(page)
+    
+    
+    
+async def aimer_post(page):
+    print("Patiente 5s"); await asyncio.sleep(5); 
+    print("aimer_post")
+    
+    while True: 
+        btn = page.get_by_label("J’aime") 
+        if await btn.count() > 0:
+            await btn.click(); print("liké")
+            break
+    
+    
+async def masquer_photo(page):  
+    print("Patiente 10s"); await asyncio.sleep(10); 
+    print("masquer_photo")
+    
+    while True: 
+        btn = page.get_by_label("Actions pour cette publication") 
+        if await btn.count() > 0:
+            await btn.click()
+            break
+        
+    print("Patiente 2s"); await asyncio.sleep(2)
+    btn = page.locator('span:has-text("Ne pas afficher sur la Page")')
+    if await btn.count() > 0:
+        await btn.click(); print("masqué")
+        
+    
+    
 async def creer_page(page, context):  
     await page.goto("https://www.facebook.com/pages/creation/?ref_type=comet_home", timeout=0)
     #print("Patiente 1s"); await asyncio.sleep(1)
@@ -100,7 +139,7 @@ async def creer_page(page, context):
     btn = page.get_by_label("Catégorie (obligatoire)") 
     if await btn.count() > 0:
         await page.get_by_label("Catégorie (obligatoire)").fill("reli")    
-        print("Patiente 2s"); await asyncio.sleep(1)
+        print("Patiente 1s"); await asyncio.sleep(1)
         
         await page.evaluate("""
         const span = Array.from(document.querySelectorAll('span')).find(el => el.textContent.trim() === 'Centre religieux');
@@ -224,7 +263,7 @@ async def mettre_photo_couverture(page) :
 
 
 async def mettre_photo(page, context) :
-    await creer_page(page, context)
+    #await creer_page(page, context)
     
     btn = page.locator('div[aria-label*="Ajouter une photo de couverture"]').first
     if await btn.count() > 0:
@@ -239,11 +278,14 @@ async def mettre_photo(page, context) :
 
 
 async def acceder_page(page) :
+    #print("patiente 10s"); await asyncio.sleep(10) 
     while True:
-        print("patiente 2s"); await asyncio.sleep(2) 
-        btn = page.locator('a[aria-label*="Journal de"]').first
-        if await btn.count() > 0:
+        await asyncio.sleep(1)
+        btn = await page.query_selector("text=Richesse avec SATAN")
+        if btn:
             await btn.click()
+            print("patiente 1s"); await asyncio.sleep(1)  
+            break
             
         
 async def publier_post(page) :
@@ -312,7 +354,7 @@ async def publier_post(page) :
     } """)
     print("Patiente 5s"); await asyncio.sleep(5);
 
-    await acceder_page(page)
+    #await acceder_page(page)
     #await mettre_photo(page)
     
 
@@ -349,8 +391,9 @@ async def main():
             #await basculer_sur_la_page(page)
             #await acceder_page(page)
                 
-            await mettre_photo(page, context)
-            await publier_post(page)
+            #await mettre_photo(page, context)
+            #await publier_post(page)
+            await fin_creation_page(page)
                 
             await verifier_commande(page, PAUSE_MINUTES)
             
