@@ -25,7 +25,7 @@
             "value": "100050371094133",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1807952512.108452,
+            "expires": 1808157511.971712,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -65,7 +65,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777021468,
+            "expires": 1777226315,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -81,27 +81,66 @@
             "sameSite": "None"
         },
         {
-            "name": "xs",
-            "value": "46%3AmD6NFvMAOKLFFw%3A2%3A1771879347%3A-1%3A-1%3A%3AAcwTcoC7kwOGM4fjtAZPlgknmw9E0Jgv27XAevnh3g",
+            "name": "fr",
+            "value": "1hoALAdm7O7eIbQRm.AWcqaCy9GZbVH8C_IdPcJC9E1wJKQNLoygc7tXX3se9mRSbK5IE.Bp5RfI..AAA.0.0.Bp5RfI.AWdSyN4isWJ206tNLiI5GULyKxk",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1807952512.108815,
+            "expires": 1784397511.972016,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
-            "name": "fr",
-            "value": "1aCDJfO46MauwBB9l.AWcY5xYpJnKqQku76IZAvVRH7KrHv2ZXUld4QAze5iVdDdM-sVY.Bp4fcB..AAA.0.0.Bp4feX.AWf7gNxDKFoQsUJaLjQkH7cV1wU",
+            "name": "xs",
+            "value": "46%3AmD6NFvMAOKLFFw%3A2%3A1771879347%3A-1%3A-1%3A%3AAcyZ4ThnZE34pAwrrZqNOqfwBpggxuJDxQSrFAl3Wg",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1784192662.486254,
+            "expires": 1808157511.972137,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
+        },
+        {
+            "name": "alsfid",
+            "value": "{\"id\":\"fae845198\",\"timestamp\":1776621586541.8}",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1776621646.542723,
+            "httpOnly": false,
+            "secure": false,
+            "sameSite": "Lax"
         }
     ],
     "origins": [
+        {
+            "origin": "https://business.facebook.com",
+            "localStorage": [
+                {
+                    "name": "RSTData",
+                    "value": "{}"
+                },
+                {
+                    "name": "hb_timestamp",
+                    "value": "1776621545206"
+                },
+                {
+                    "name": "bizInboxComposer",
+                    "value": "{\"1101054776418846\":{\"user:100020531300339\":{\"message\":\"\"},\"user:61579205945092\":{\"message\":\"\"}}}"
+                },
+                {
+                    "name": "signal_flush_timestamp",
+                    "value": "1776621515327"
+                },
+                {
+                    "name": "Session",
+                    "value": "76h8h3:1776621621037"
+                },
+                {
+                    "name": "banzai:last_storage_flush",
+                    "value": "1776621514364"
+                }
+            ]
+        },
         {
             "origin": "https://www.facebook.com",
             "localStorage": [
@@ -166,8 +205,8 @@
                     "value": "du9fql:1776416666500"
                 },
                 {
-                    "name": "mutex_falco_queue_immediately^$100050371094133^#61570698896954^#^#hmac_ttl.1776416663.AR0BU5RPeECqR-sXceENxW5Eo13wvpbIZg9IqQz59RvNkeIk^$",
-                    "value": "du9fql:1776416666499"
+                    "name": "mutex_falco_queue_critical^$100050371094133^#61570698896954^#^#hmac_ttl.1776416508.AR2Qdgr2DahZlLPG5Pd0OsPedse7lhlIRvUeTLcMGwkiuaIE^$",
+                    "value": "du9fql:1776416666500"
                 },
                 {
                     "name": "bdz_playback_state",
@@ -178,8 +217,8 @@
                     "value": "1776416514074"
                 },
                 {
-                    "name": "mutex_falco_queue_critical^$100050371094133^#61570698896954^#^#hmac_ttl.1776416508.AR2Qdgr2DahZlLPG5Pd0OsPedse7lhlIRvUeTLcMGwkiuaIE^$",
-                    "value": "du9fql:1776416666500"
+                    "name": "mutex_falco_queue_immediately^$100050371094133^#61570698896954^#^#hmac_ttl.1776416663.AR0BU5RPeECqR-sXceENxW5Eo13wvpbIZg9IqQz59RvNkeIk^$",
+                    "value": "du9fql:1776416666499"
                 },
                 {
                     "name": "_oz_bandwidthAndTTFBSamples",
@@ -208,43 +247,6 @@
                 {
                     "name": "ps:100064684001853:9ae1cb6c-bee5-4e6b-8d6b-ed3a368cd9d1",
                     "value": "79ee916d-901e-4114-ad48-e822e3ac05c8:1776416514760"
-                }
-            ]
-        },
-        {
-            "origin": "https://business.facebook.com",
-            "localStorage": [
-                {
-                    "name": "RSTData",
-                    "value": "{}"
-                },
-                {
-                    "name": "falco_queue_log^$100050371094133^#100050371094133^#^#hmac_ttl.1776416537.AR0uN2ozZIGRLevi88lIGTyDeWpt8CJm5DPTcqcOB0vyshUV^$f423022752e013edc",
-                    "value": "{\"items\":[{\"name\":\"auto_logging_heartbeat_event\",\"policy\":{\"r\":1,\"s\":1},\"time\":1776416661607.1,\"extra\":\"{\\\"ad_account_id\\\":\\\"586489168700161\\\",\\\"app_session_id\\\":\\\"706007b952b7cdbf\\\",\\\"browser_session_id\\\":\\\"f788027cb\\\",\\\"flow_session_id\\\":\\\"f28fb451d\\\",\\\"business_id\\\":null,\\\"page_uri\\\":\\\"https://business.facebook.com/latest/inbox/all/?nav_ref=manage_page_ap_plus_inbox_message_button&asset_id=1101054776418846&business_id=\\\",\\\"tab\\\":\\\"Inbox\\\",\\\"tool\\\":\\\"MBS\\\",\\\"backing_user_type\\\":\\\"UNKNOWN\\\",\\\"metadata\\\":{\\\"web_session_id\\\":\\\"s68z98\\\",\\\"is_mma\\\":\\\"false\\\",\\\"flowlet_stack_size\\\":\\\"1\\\",\\\"is_login_as\\\":\\\"false\\\",\\\"heap_size_delta\\\":\\\"391028\\\",\\\"js_heap_size_limit\\\":\\\"2145386496\\\",\\\"used_js_heap_size\\\":\\\"87165133\\\",\\\"total_js_heap_size\\\":\\\"99919809\\\",\\\"client_time_performance_now_lag\\\":\\\"-0.300048828125\\\",\\\"client_time_date_now\\\":\\\"1776416659899\\\"},\\\"client_time\\\":1776416659899.3,\\\"event_index\\\":439,\\\"event_type\\\":\\\"heartbeat\\\",\\\"heartbeat_type\\\":\\\"SCHEDULED\\\",\\\"event_sampling_rate\\\":null}\",\"tags\":[1,384],\"sessionId\":\"1y5zzg:s68z98:vio3yt\",\"deviceId\":\"fd.ARuHxdBRO6SpyFDnDBbE2UdC2t_d2gnSHS1yAfY4cBuQoyIFU8ADK-w_rMDxwcw_3MCkW90ctJu2G-z8DlJXkB9O\",\"appVersion\":\"1037.554.587.0 (1037554587)\"},{\"name\":\"ods_web_batch\",\"policy\":{\"r\":1,\"s\":1},\"time\":1776416663991.6,\"extra\":\"{\\\"batch\\\":{\\\"3589\\\":{\\\"dgw_web_client\\\":{\\\"realtime.WebStreamAckManager.ack_expected\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"realtime.DGWPinger.reset\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"realtime.DGWPinger.reset.newtimeout\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"realtime.GroupedWebStream.ack_received\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"realtime.WebStreamAckManager.ack_received\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"realtime.GroupedWebStream.data_received\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"realtime.GroupedWebStream.ack_sent\\\":{\\\"n\\\":2,\\\"d\\\":null}}},\\\"4203\\\":{\\\"biz_inbox_page_gating\\\":{\\\"gk.1p_usability_h1_2026_page_launch.testExposeAttempt\\\":{\\\"n\\\":8,\\\"d\\\":null},\\\"gk.1p_usability_h1_2026_page_launch.testAlreadyExposed\\\":{\\\"n\\\":8,\\\"d\\\":null},\\\"gk.1p_usability_h1_2026_page_launch.getBoolAttempt\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"gk.1p_usability_h1_2026_page_launch.delivered\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"qe.usability_web_message_list_font_size_universe.controlExposeAttempt\\\":{\\\"n\\\":6,\\\"d\\\":null},\\\"qe.usability_web_message_list_font_size_universe.controlNotInExperiment\\\":{\\\"n\\\":6,\\\"d\\\":null},\\\"gk.1p_usability_h1_2025_page_holdout_v2.controlExposeAttempt\\\":{\\\"n\\\":6,\\\"d\\\":null},\\\"gk.1p_usability_h1_2025_page_holdout_v2.controlAlreadyExposed\\\":{\\\"n\\\":6,\\\"d\\\":null},\\\"gk.wa_in_inbox_expired_history_media_download.controlExposeAttempt\\\":{\\\"n\\\":6,\\\"d\\\":null},\\\"gk.wa_in_inbox_expired_history_media_download.controlAlreadyExposed\\\":{\\\"n\\\":6,\\\"d\\\":null},\\\"gk.biz_inbox_batch_image_preview_consumer.controlExposeAttempt\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"gk.biz_inbox_batch_image_preview_consumer.controlAlreadyExposed\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"gk.ubi_multi_admin_mvp_rollout.controlExposeAttempt\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"gk.ubi_multi_admin_mvp_rollout.controlAlreadyExposed\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"gk.bm_lo_max_tas_upb_milestone_2.testExposeAttempt\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"gk.bm_lo_max_tas_upb_milestone_2.testAlreadyExposed\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"qe.usability_web_message_list_font_size_universe.getBoolAttempt\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"qe.usability_web_message_list_font_size_universe.delivered\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"gk.1p_usability_h1_2025_page_holdout_v2.getBoolAttempt\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"gk.1p_usability_h1_2025_page_holdout_v2.delivered\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"gk.wa_in_inbox_expired_history_media_download.getBoolAttempt\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"gk.wa_in_inbox_expired_history_media_download.delivered\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"gk.biz_inbox_batch_image_preview_consumer.getBoolAttempt\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"gk.biz_inbox_batch_image_preview_consumer.delivered\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"gk.bm_lo_max_tas_upb_milestone_2.getBoolAttempt\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"gk.bm_lo_max_tas_upb_milestone_2.delivered\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"gk.ubi_multi_admin_mvp_rollout.getBoolAttempt\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"gk.ubi_multi_admin_mvp_rollout.delivered\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"7173\\\":{\\\"entities.ff_js_web.business_inbox_message_action_impression.514771569228061.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.auto_logging_hover_event.514771569228061.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.auto_logging_heartbeat_event.514771569228061.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":2,\\\"d\\\":null}}}}}\",\"tags\":[1,128],\"sessionId\":\"1y5zzg:s68z98:vio3yt\",\"deviceId\":\"fd.ARuHxdBRO6SpyFDnDBbE2UdC2t_d2gnSHS1yAfY4cBuQoyIFU8ADK-w_rMDxwcw_3MCkW90ctJu2G-z8DlJXkB9O\",\"appVersion\":\"1037.554.587.0 (1037554587)\"}],\"ts\":1776416662285.2}"
-                },
-                {
-                    "name": "hb_timestamp",
-                    "value": "1776416575758"
-                },
-                {
-                    "name": "bizInboxComposer",
-                    "value": "{\"1101054776418846\":{\"user:100020531300339\":{\"message\":\"\"}}}"
-                },
-                {
-                    "name": "signal_flush_timestamp",
-                    "value": "1776416545860"
-                },
-                {
-                    "name": "falco_queue_immediately^$100050371094133^#100050371094133^#^#hmac_ttl.1776416537.AR0uN2ozZIGRLevi88lIGTyDeWpt8CJm5DPTcqcOB0vyshUV^$f9fb4deb01a82e801",
-                    "value": "{\"items\":[{\"name\":\"auto_logging_heartbeat_event\",\"policy\":{\"r\":1,\"s\":1},\"time\":1776416663388.7998,\"extra\":\"{\\\"ad_account_id\\\":\\\"586489168700161\\\",\\\"app_session_id\\\":\\\"706007b952b7cdbf\\\",\\\"browser_session_id\\\":\\\"f788027cb\\\",\\\"flow_session_id\\\":\\\"f28fb451d\\\",\\\"business_id\\\":null,\\\"page_uri\\\":\\\"https://business.facebook.com/latest/inbox/all/?nav_ref=manage_page_ap_plus_inbox_message_button&asset_id=1101054776418846&business_id=\\\",\\\"tab\\\":\\\"Inbox\\\",\\\"tool\\\":\\\"MBS\\\",\\\"backing_user_type\\\":\\\"UNKNOWN\\\",\\\"metadata\\\":{\\\"web_session_id\\\":\\\"s68z98\\\",\\\"is_mma\\\":\\\"false\\\",\\\"flowlet_stack_size\\\":\\\"1\\\",\\\"is_login_as\\\":\\\"false\\\",\\\"heap_size_delta\\\":\\\"730212\\\",\\\"js_heap_size_limit\\\":\\\"2145386496\\\",\\\"used_js_heap_size\\\":\\\"87895345\\\",\\\"total_js_heap_size\\\":\\\"101530441\\\",\\\"client_time_performance_now_lag\\\":\\\"-0.10009765625\\\",\\\"client_time_date_now\\\":\\\"1776416661681\\\"},\\\"client_time\\\":1776416661680.9001,\\\"event_index\\\":444,\\\"event_type\\\":\\\"heartbeat\\\",\\\"heartbeat_type\\\":\\\"STOP\\\",\\\"event_sampling_rate\\\":null}\",\"tags\":[1,128],\"sessionId\":\"1y5zzg:s68z98:vio3yt\",\"deviceId\":\"fd.ARuHxdBRO6SpyFDnDBbE2UdC2t_d2gnSHS1yAfY4cBuQoyIFU8ADK-w_rMDxwcw_3MCkW90ctJu2G-z8DlJXkB9O\",\"appVersion\":\"1037.554.587.0 (1037554587)\"}],\"ts\":1776416661682.2}"
-                },
-                {
-                    "name": "Session",
-                    "value": "1y5zzg:1776416695669"
-                },
-                {
-                    "name": "banzai:last_storage_flush",
-                    "value": "1776416544289.4001"
                 }
             ]
         }

@@ -1,4 +1,4 @@
-import json, asyncio, os, time
+import json, asyncio, os, time, math
 from itertools import cycle
 from playwright.async_api import async_playwright 
 from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, charger_cookies)
@@ -8,28 +8,21 @@ url_fb = "https://fb.com"
 
 
 
-async def verifier_compte_disponible(heure_dernier_like, nom_compte):
-    dernier_passage = heure_dernier_like.get(nom_compte)
 
-    if not dernier_passage:
-        return True
-
-    date_dernier_passage = datetime.strptime(dernier_passage, "%d/%m/%Y %H:%M:%S")
-    return datetime.now() - date_dernier_passage >= timedelta(hours=1)
-
-
-async def get_prochain_démarrage(dernier_passage_str):
-    dernier_passage = datetime.strptime(dernier_passage_str, "%d/%m/%Y %H:%M:%S")
-    prochain = dernier_passage + timedelta(hours=1)
-    return prochain.strftime("%d/%m/%Y %H:%M:%S")
-    
-    
-
-async def charger_comptes(fichier_des_comptes):
-    with open(fichier_des_comptes, "r", encoding="utf-8") as f:
-        return json.load(f)
+async def charger_fichier(fichier):
+    try:
+        with open(fichier, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        return {}
         
-      
+
+async def sauvegarder_fichier(fichier, data):
+    with open(fichier, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
+        
+
+
 def charger_posts(fichier):
     if not os.path.exists(fichier):
         return []
@@ -70,18 +63,6 @@ def sauvegarder_json(fichier, data):
     with open(fichier,"w",encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
-
-
-async def charger_fichier(fichier):
-    if not os.path.exists(fichier):
-        return {}
-    with open(fichier, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
-async def sauvegarder_fichier(fichier, data):
-    with open(fichier, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4)
 
 
 
@@ -210,56 +191,32 @@ async def main():
             ],
         )        
         
-        comptes = await charger_comptes("comptes-fb.json")   
-        
-        #fichier_heure_dernier_like = "heure_dernier_like.json"
-        #heure_dernier_like = await charger_fichier(fichier_heure_dernier_like)
-        
+        pages_list = await charger_fichier("pages-tout-pays.json") # Charger la liste de pages
+        comptes = await charger_fichier("comptes-fb.json")   
         derniere_page = charger_derniere_page() 
         debut = False
-        
-        # Charger la liste de pages
-        with open('pages-tout-pays.json', 'r', encoding='utf-8') as f:
-            pages_list = json.load(f)
-            
-            
+
         #FILTRAGE AVANT
         comptes = [c for c in comptes if not c["fichier"].startswith("-")]
         pages_list = [p for p in pages_list if "url" in p]
         cycle_pages = cycle(pages_list)
         
-        #patience_affichee = {}
-        while True:
+        while True:                       
             for compte in comptes:
                 page = next(cycle_pages); 
-                #if compte["fichier"].startswith("-"): continue #ignorer les comptes qui commencent par "-"
                 fichier_cookie = compte.get("fichier")
                 nomDeMonCompte = compte.get("id_inchangeable")
-                
-                
-                #if not await verifier_compte_disponible(heure_dernier_like, nomDeMonCompte):
-                #    if not patience_affichee.get(nomDeMonCompte, False):
-                #        dernier_passage = heure_dernier_like.get(nomDeMonCompte)
-                #        if dernier_passage:
-                #            date_next = await get_prochain_démarrage(dernier_passage)
-                #            print(f"{nomDeMonCompte} : Prochain démarrage prévu le {date_next}")
-                #        else:
-                #            print(f"{nomDeMonCompte} : Patiente 1h")  # fallback
-                #        patience_affichee[nomDeMonCompte] = True
-                #    continue
-                    
-    
+
                 url_page = page.get('url')
-                nom_page = page.get('name');
+                name = page.get('name');
                 
-                #if not url_page: continue  #ignorer les zones page["name"] == derniere_page
+                #if not url_page: continue  #ignorer les zones
                 
                 if derniere_page:
-                    if derniere_page == nom_page: debut = True
+                    if derniere_page == name: debut = True
                     if not debut: continue
-                            
-                #print(f"Traitement de {name} : {url_page}")
-                print("✅", nomDeMonCompte); print(nom_page); print(url_page);
+                
+                print("✅", nomDeMonCompte); print(name); print(url_page);
                     
                 # Charger les cookies AVANT d'ouvrir la page
                 context = await browser.new_context() #nouveau contexte pour chaque compte
@@ -268,15 +225,13 @@ async def main():
                 
                 page = await context.new_page()
                 await appliquer_stealth(page)
-                
                 await liker_post(page, context, url_page)
-                #heure_dernier_like[nomDeMonCompte] = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-                #await sauvegarder_fichier(fichier_heure_dernier_like, heure_dernier_like)
-
-                await sauvegarder_derniere_page(nom_page) # ✅ sauvegarde de la dernière page
-                await context.close() #fermer le contexte (ou la fenetre)
                 
-            if debut: print("✅ Patiente 1 heure"); await asyncio.sleep(3600 * 1)             
+                await sauvegarder_derniere_page(name) # ✅ sauvegarde de la dernière page
+                await context.close() #fermer le contexte (ou la fenetre)
+
+            if debut: 
+                print("✅ Patiente 30 minutes"); await asyncio.sleep(60 * 30)
             
 
 if __name__ == "__main__":
