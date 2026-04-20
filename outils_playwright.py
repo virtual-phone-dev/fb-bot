@@ -185,10 +185,32 @@ async def sauvegarder_cookies(contexte, fichier):
     with open(fichier, "w", encoding="utf-8") as f:
         json.dump(state, f, indent=4, ensure_ascii=False)
         
-    print("cookies sauvegardés :", fichier)
+    print("cookies sauvegardés")
+    
+        
+
+async def sauvegarder_fichier(fichier, data):
+    with open(fichier, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
+           
+        
+async def charger_fichier(fichier):
+    try:
+        with open(fichier, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        return []
+        
+
+async def charger_fichier_d(fichier):
+    try:
+        with open(fichier, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        return {}
 
 
-
+        
 # Ouvrir Facebook
 async def ouvrir_facebook(contexte):
     page = await contexte.new_page()

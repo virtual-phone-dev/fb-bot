@@ -1,21 +1,12 @@
 import json, asyncio, os, time, math
 from itertools import cycle
 from playwright.async_api import async_playwright 
-from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, charger_cookies)
+from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, charger_cookies, charger_fichier)
 from datetime import datetime, timedelta
 
 url_fb = "https://fb.com"
 
 
-
-
-async def charger_fichier(fichier):
-    try:
-        with open(fichier, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except:
-        return {}
-        
 
 async def sauvegarder_fichier(fichier, data):
     with open(fichier, "w", encoding="utf-8") as f:
@@ -146,8 +137,18 @@ async def liker_post(page, context, url_page):
 
     statut = await post_recent(page, context, url_page)
     if statut == "compte_inexistant": print("❌ Compte inexistant"); return
-    if statut == "deja_liker": print("❌ Déjà liké"); return
+    if statut == "deja_liker": 
+        print("❌ Déjà liké"); 
         
+        page_30jours = await charger_json("page_30jours.json") # page_30jours (déja liker, on sauvegarde la page dans page_30jours
+        page_30jours.append(url_page)
+        await sauvegarder_fichier("page_30jours.json", page_30jours)
+        return
+    
+    page_active = await charger_json("page_active.json") # page_active (pas encore liker, on sauvegarde la page dans page_active
+    page_active.append(url_page)
+    await sauvegarder_fichier("page_active.json", page_active)
+
         
     temps_debut = time.monotonic()  # Enregistre le temps de début
     temps = 10

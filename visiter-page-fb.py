@@ -4,7 +4,7 @@ from playwright.async_api import async_playwright
 from outils_playwright import (basculer_sur_la_page, sauvegarder_cookies)
 
 MODE_SILENCIEUX = True
-PAUSE_MINUTES = 20
+PAUSE_MINUTES = 5
 
 
 
@@ -57,7 +57,7 @@ async def preparer_storage_state(fichier):
 # VERIFIER COMMANDE CONSOLE
 async def verifier_commande(page, duree_minutes):
     print("Écrivez..")
-    secondes = duree_minutes * 20
+    secondes = duree_minutes * 1
     debut = time.time()
 
     while time.time() - debut < secondes:

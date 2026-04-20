@@ -1,26 +1,11 @@
 import json, asyncio, os, time, math
 from itertools import cycle
 from playwright.async_api import async_playwright 
-from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, charger_cookies)
+from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, charger_cookies, charger_fichier, sauvegarder_fichier)
 from datetime import datetime, timedelta
 
 url_fb = "https://fb.com"
 
-
-
-
-async def charger_fichier(fichier):
-    try:
-        with open(fichier, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except:
-        return {}
-        
-
-async def sauvegarder_fichier(fichier, data):
-    with open(fichier, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
-        
 
 
 def charger_posts(fichier):
@@ -54,11 +39,6 @@ def charger_derniere_page():
         return None
         
 
-async def sauvegarder_derniere_page(name):
-    with open("derniere_page.json", "w", encoding="utf-8") as f:
-        json.dump({"name": name}, f, indent=4, ensure_ascii=False)
-  
-  
 def sauvegarder_json(fichier, data):
     with open(fichier,"w",encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
@@ -183,7 +163,9 @@ async def main():
         
         pages_list = await charger_fichier("pages-tout-pays.json") # Charger la liste de pages
         comptes = await charger_fichier("comptes-fb.json")   
-        derniere_page = charger_derniere_page() 
+        data_derniere_page = charger_fichier("derniere_page.json")
+        
+        derniere_page = data_derniere_page.get("name")
         debut = False
 
         #FILTRAGE AVANT
@@ -199,9 +181,8 @@ async def main():
 
                 url_page = page.get('url')
                 name = page.get('name');
-                
-                #if not url_page: continue  #ignorer les zones
-                
+                                
+                                
                 if derniere_page:
                     if derniere_page == name: debut = True
                     if not debut: continue
@@ -217,7 +198,7 @@ async def main():
                 await appliquer_stealth(page)
                 await liker_post(page, context, url_page)
                 
-                await sauvegarder_derniere_page(name) # ✅ sauvegarde de la dernière page
+                await sauvegarder_fichier("derniere_page.json", {"name": name}) # ✅ sauvegarde de la dernière page
                 await context.close() #fermer le contexte (ou la fenetre)
 
             if debut: 
