@@ -135,14 +135,15 @@ async def post_recent(page, context, url_page):
         
 
 
+
 async def liker_post(page, context, url_page):    
     await page.goto(url_fb, timeout=0) 
     
     statut = await verifier_blocage(page)
     if statut == "bloquer_selfie_video": print("⛔ bloqué selfie video"); return
-
+    
     await basculer_sur_la_page(page)
-        
+
     statut = await post_recent(page, context, url_page)
     if statut == "compte_inexistant": print("❌ Compte inexistant"); return
     if statut == "deja_liker": print("❌ Déjà liké"); return
@@ -172,7 +173,7 @@ async def liker_post(page, context, url_page):
 async def main():
     async with async_playwright() as p: 
         browser = await p.chromium.launch(        
-            headless=True,
+            headless=False,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",

@@ -20,33 +20,41 @@ async def verifier_blocage(page):
     
     
 async def basculer_sur_la_page(page):
-    while True:
-        print("patiente 2s"); await asyncio.sleep(2)
-        btn = page.get_by_label("Votre profil")
-        if await btn.count() > 0:
-            await page.evaluate("""
-            const btn = document.querySelector('div[aria-label="Votre profil"]');
-            if (btn) { btn.click(); } """)
-            break
-            
-    while True:
-        print("patiente 3s"); await asyncio.sleep(3)  
-        btn = page.get_by_label("Basculer sur")
-        if await btn.count() > 0:
-            await page.evaluate("""
-            const btn = document.querySelector('div[aria-label*="Basculer sur"]');
-            if (btn) { btn.click(); } """)
-            break
-                      
-    while True:   
-        try:
-            print("patiente 5s"); await asyncio.sleep(5)
-            btn = await page.query_selector("text=Quoi de neuf")
-            if btn:
-                print("Connecté sur la page")
+    
+    btn = page.locator('a[aria-label="Espace Pubs"][role="link"]').first
+    if await btn.count() > 0:  
+        #print("Espace Pubs trouvé")
+        print("Connecté sur la page")
+        
+    else:    
+        
+        while True:
+            print("patiente 2s"); await asyncio.sleep(2)
+            btn = page.get_by_label("Votre profil")
+            if await btn.count() > 0:
+                await page.evaluate("""
+                const btn = document.querySelector('div[aria-label="Votre profil"]');
+                if (btn) { btn.click(); } """)
                 break
-        except:
-            pass
+                
+        while True:
+            print("patiente 3s"); await asyncio.sleep(3)  
+            btn = page.get_by_label("Basculer sur")
+            if await btn.count() > 0:
+                await page.evaluate("""
+                const btn = document.querySelector('div[aria-label*="Basculer sur"]');
+                if (btn) { btn.click(); } """)
+                break
+                          
+        while True:   
+            try:
+                print("patiente 5s"); await asyncio.sleep(5)
+                btn = await page.query_selector("text=Quoi de neuf")
+                if btn:
+                    print("Connecté sur la page")
+                    break
+            except:
+                pass
             
             
             

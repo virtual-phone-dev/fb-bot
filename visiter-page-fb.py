@@ -357,7 +357,12 @@ async def publier_post(page) :
     #await acceder_page(page)
     #await mettre_photo(page)
     
-
+    
+async def visiter_page(page):  
+    await page.goto("https://www.facebook.com", timeout=0)
+    await basculer_sur_la_page(page)
+    await acceder_page(page)   
+    
 
 async def main():
     comptes = json.load(open("comptes-fb.json", encoding="utf-8"))
@@ -393,8 +398,10 @@ async def main():
                 
             #await mettre_photo(page, context)
             #await publier_post(page)
-            await fin_creation_page(page)
-                
+            #await fin_creation_page(page)
+            
+            await visiter_page(page)
+            
             await verifier_commande(page, PAUSE_MINUTES)
             
             await sauvegarder_cookies(context, fichier)
