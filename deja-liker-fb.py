@@ -1,17 +1,10 @@
 import json, asyncio, os, time, math
-from itertools import cycle
 from playwright.async_api import async_playwright 
-from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, charger_cookies, charger_fichier)
+from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, charger_cookies, charger_fichier, sauvegarder_fichier, sauvegarder_sur_meme_ligne)
 from datetime import datetime, timedelta
 
 url_fb = "https://fb.com"
 
-
-
-async def sauvegarder_fichier(fichier, data):
-    with open(fichier, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
-        
 
 
 def charger_posts(fichier):
@@ -31,25 +24,8 @@ async def save_cookies(context):
         json.dump(cookies, f, indent=4, ensure_ascii=False)
 
     print("cookies sauvegardé")
-    
 
 
-def charger_derniere_page():
-    if not os.path.exists("derniere_page.json"):
-        return None
-    try:
-        with open("derniere_page.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
-            return data.get("name")
-    except:
-        return None
-        
-
-async def sauvegarder_derniere_page(name):
-    with open("derniere_page.json", "w", encoding="utf-8") as f:
-        json.dump({"name": name}, f, indent=4, ensure_ascii=False)
-  
-  
 def sauvegarder_json(fichier, data):
     with open(fichier,"w",encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
@@ -85,8 +61,8 @@ async def recuperer_texte(page, context, posts, url_page, fichier_posts):
             return "deja_liker" #print(f"Déjà liké") # Vérification déjà liké
 
         # Sauvegarde texte
-        if posts is not None and fichier_posts:
-            ajouter_post(posts, fichier_posts, identifiant_post) #print("Texte sauvegardé")
+        #if posts is not None and fichier_posts:
+        #    ajouter_post(posts, fichier_posts, identifiant_post) #print("Texte sauvegardé")
     except:
         pass
         #print("Impossible de récupérer le texte :", e)
@@ -126,8 +102,7 @@ async def post_recent(page, context, url_page):
         
 
 
-
-async def liker_post(page, context, url_page):    
+async def liker_post(page, context, name, url_page):    
     await page.goto(url_fb, timeout=0) 
     
     statut = await verifier_blocage(page)
@@ -140,16 +115,19 @@ async def liker_post(page, context, url_page):
     if statut == "deja_liker": 
         print("❌ Déjà liké"); 
         
-        page_30jours = await charger_json("page_30jours.json") # page_30jours (déja liker, on sauvegarde la page dans page_30jours
-        page_30jours.append(url_page)
-        await sauvegarder_fichier("page_30jours.json", page_30jours)
+        page_30jours = await charger_fichier("page_30jours.json") # page_30jours (déja liker, on sauvegarde la page dans page_30jours
+        page_30jours.append({ "name": name, "url": url_page })
+        await sauvegarder_sur_meme_ligne("page_30jours.json", page_30jours)
         return
     
-    page_active = await charger_json("page_active.json") # page_active (pas encore liker, on sauvegarde la page dans page_active
-    page_active.append(url_page)
-    await sauvegarder_fichier("page_active.json", page_active)
+    print("+ Pas encore liké"); 
+    page_active = await charger_fichier("page_active.json") # page_active (pas encore liker, on sauvegarde la page dans page_active
+    page_active.append({ "name": name, "url": url_page })
+    await sauvegarder_sur_meme_ligne("page_active.json", page_active)
 
-        
+
+
+async def suite_liker_post():    
     temps_debut = time.monotonic()  # Enregistre le temps de début
     temps = 10
             
@@ -174,7 +152,7 @@ async def liker_post(page, context, url_page):
 async def main():
     async with async_playwright() as p: 
         browser = await p.chromium.launch(        
-            headless=False,
+            headless=True,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
@@ -184,46 +162,46 @@ async def main():
         )        
         
         pages_list = await charger_fichier("pages-tout-pays.json") # Charger la liste de pages
+        #pages_list = await charger_fichier("page_active.json") 
         comptes = await charger_fichier("comptes-fb.json")   
-        derniere_page = charger_derniere_page() 
+        derniere_page = (await charger_fichier("derniere_page_pdj.json")).get("name") # derniere_page_pdj = derniere_page_pour_deja_liker
         debut = False
 
         #FILTRAGE AVANT
         comptes = [c for c in comptes if not c["fichier"].startswith("-")]
         pages_list = [p for p in pages_list if "url" in p]
-        cycle_pages = cycle(pages_list)
         
-        while True:                       
+        while True:                  
             for compte in comptes:
-                page = next(cycle_pages); 
-                fichier_cookie = compte.get("fichier")
-                nomDeMonCompte = compte.get("id_inchangeable")
+                for page in pages_list:
+                    fichier_cookie = compte.get("fichier")
+                    nomDeMonCompte = compte.get("id_inchangeable")
 
-                url_page = page.get('url')
-                name = page.get('name');
-                
-                #if not url_page: continue  #ignorer les zones
-                
-                if derniere_page:
-                    if derniere_page == name: debut = True
-                    if not debut: continue
-                
-                print("✅", nomDeMonCompte); print(name); print(url_page);
+                    url_page = page.get('url')
+                    name = page.get('name');
                     
-                # Charger les cookies AVANT d'ouvrir la page
-                context = await browser.new_context() #nouveau contexte pour chaque compte
-                cookies = charger_cookies(fichier_cookie)
-                await context.add_cookies(cookies)
-                
-                page = await context.new_page()
-                await appliquer_stealth(page)
-                await liker_post(page, context, url_page)
-                
-                await sauvegarder_derniere_page(name) # ✅ sauvegarde de la dernière page
-                await context.close() #fermer le contexte (ou la fenetre)
+                    #if not url_page: continue  #ignorer les zones
+                    
+                    if derniere_page:
+                        if derniere_page == name: debut = True
+                        if not debut: continue
+                    
+                    print("✅", nomDeMonCompte); print(name); print(url_page);
+                        
+                    # Charger les cookies AVANT d'ouvrir la page
+                    context = await browser.new_context() #nouveau contexte pour chaque compte
+                    cookies = charger_cookies(fichier_cookie)
+                    await context.add_cookies(cookies)
+                    
+                    page = await context.new_page()
+                    await appliquer_stealth(page)
+                    await liker_post(page, context, name, url_page)
+                    
+                    await sauvegarder_fichier("derniere_page_pdj.json", {"name": name}) # ✅ sauvegarde de la dernière page
+                    await context.close() #fermer le contexte (ou la fenetre)
 
-            if debut: 
-                print("✅ Patiente 30 minutes"); await asyncio.sleep(60 * 30)
+                #if debut: 
+                #    print("✅ Patiente 30 minutes"); await asyncio.sleep(60 * 30)
             
 
 if __name__ == "__main__":

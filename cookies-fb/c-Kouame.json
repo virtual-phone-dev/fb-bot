@@ -25,7 +25,7 @@
             "value": "100029155272922",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808219078.569438,
+            "expires": 1808287153.880778,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -45,7 +45,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777287879,
+            "expires": 1777355959,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -62,26 +62,65 @@
         },
         {
             "name": "fr",
-            "value": "1LgZGCfctu8kPIwTN.AWfmkamR5SP2AV7GIWkNJWCaEOBCtQRcIv5tM8oJ2e3Lt6R6wgU.Bp5ghH..AAA.0.0.Bp5ghH.AWeokBhLzb9JTZAalcgYfRi5sXk",
+            "value": "1mTUaulVn4cZHg6S2.AWfxMye4xRiT5YdEUTGDipOiXxJt7cPD8ae6dcAWs8SC4koVN1Y.Bp5xIw..AAA.0.0.Bp5xIw.AWeC0MDGUel7s51fDKsNgtnNSHo",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1784459078.569615,
+            "expires": 1784527153.880964,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "15%3AYWkQmGOgKWV3cA%3A2%3A1772131067%3A-1%3A-1%3A%3AAcx-EC7i3F3-Cy-Eqya3mPXXQxERt_AB_VHD2bkE7cM",
+            "value": "15%3AYWkQmGOgKWV3cA%3A2%3A1772131067%3A-1%3A-1%3A%3AAcywWDVpW9_WpB6l4XplFqpTX3sPjV_hwVa35GZzjSc",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808219078.569779,
+            "expires": 1808287153.881118,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
+        },
+        {
+            "name": "alsfid",
+            "value": "{\"id\":\"ff70d475a\",\"timestamp\":1776751162346.5}",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1776751223.106183,
+            "httpOnly": false,
+            "secure": false,
+            "sameSite": "Lax"
         }
     ],
     "origins": [
+        {
+            "origin": "https://business.facebook.com",
+            "localStorage": [
+                {
+                    "name": "RSTData",
+                    "value": "{}"
+                },
+                {
+                    "name": "hb_timestamp",
+                    "value": "1776751159427"
+                },
+                {
+                    "name": "signal_flush_timestamp",
+                    "value": "1776751159930"
+                },
+                {
+                    "name": "Session",
+                    "value": "6laibo:1776751198390"
+                },
+                {
+                    "name": "mutex_banzai",
+                    "value": "7ddtic:1776751153201"
+                },
+                {
+                    "name": "banzai:last_storage_flush",
+                    "value": "1776714268277.1"
+                }
+            ]
+        },
         {
             "origin": "https://www.facebook.com",
             "localStorage": [

@@ -25,7 +25,7 @@
             "value": "100000629757077",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808218606.994848,
+            "expires": 1808287448.135971,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -41,21 +41,11 @@
             "sameSite": "None"
         },
         {
-            "name": "xs",
-            "value": "3%3A7S6VwrqtNSk2Qg%3A2%3A1771921544%3A-1%3A-1%3A%3AAcwg_IA_aOkGLJmoaXvTT1XdQmHbBNYhJyZrpWiz6Q",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1808218606.995162,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
             "name": "wd",
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777288049,
+            "expires": 1777356251,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -71,40 +61,89 @@
             "sameSite": "None"
         },
         {
-            "name": "fr",
-            "value": "1oYpZciu9EL2wb5XP.AWeCj9iYRZS0TEWMmfjUV3WNOPsS9gQ4XiCCN1hZRo_5XM_C-g4.Bp5gZw..AAA.0.0.Bp5gju.AWedBiSs3qLAwRBpzsFZDXlQqus",
+            "name": "ps_l",
+            "value": "1",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1784459245.289617,
+            "expires": 1811274444.062323,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "ps_n",
+            "value": "1",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1811274444.062886,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
+        },
+        {
+            "name": "fr",
+            "value": "1XXfGp1HkdeNbBm6d.AWfvf2mFFPlnuf6Hn_urgdaOQmINsRP1EZmUFJZmYqwBrq4ev2g.Bp5xNX..AAA.0.0.Bp5xNX.AWc438nHLcVjRija_jGgSRYHB_Y",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1784527448.136462,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "xs",
+            "value": "3%3A7S6VwrqtNSk2Qg%3A2%3A1771921544%3A-1%3A-1%3A%3AAcyEeiNcjLIpDJyBf4rU2YWy3omL873qA5ePNPih7A",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1808287448.136623,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "alsfid",
+            "value": "{\"id\":\"fc171ecf7\",\"timestamp\":1776751456303.2998}",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1776751516.310269,
+            "httpOnly": false,
+            "secure": false,
+            "sameSite": "Lax"
         }
     ],
     "origins": [
         {
-            "origin": "https://www.facebook.com",
+            "origin": "https://business.facebook.com",
             "localStorage": [
                 {
-                    "name": "CacheStorageVersion",
-                    "value": "3b"
+                    "name": "RSTData",
+                    "value": "{}"
+                },
+                {
+                    "name": "hb_timestamp",
+                    "value": "1776751451874"
+                },
+                {
+                    "name": "signal_flush_timestamp",
+                    "value": "1776751452060"
                 },
                 {
                     "name": "Session",
-                    "value": "xf8i3b:1776683287209"
+                    "value": "381o39:1776751490221"
                 },
                 {
-                    "name": "_oz_bandwidthEstimate",
-                    "value": "10000000"
+                    "name": "mutex_banzai",
+                    "value": "ab3u8y:1776751447979"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1776682608726.1"
-                },
-                {
-                    "name": "ps:61572119207005:892027d7-65eb-4db1-aba7-770900f595f7",
-                    "value": "a9248f51-8b2e-4491-a63a-4bdd516ac7f6:1776683251706"
-                },
+                    "value": "1776714451433"
+                }
+            ]
+        },
+        {
+            "origin": "https://www.facebook.com",
+            "localStorage": [
                 {
                     "name": "screen_time_period_logging_facebook",
                     "value": "{\"actorId\":\"61572119207005\",\"currentIntervalLastTick\":1776683253,\"currentIntervalStart\":1776683248,\"initRemoteAgg\":{\"timestamp\":-1,\"today_s\":0},\"intervals\":[{\"end\":1776682673,\"start\":1776682618}],\"lastCallbackAttempt\":1776683248,\"localStorageId\":\"43557944\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
@@ -126,6 +165,10 @@
                     "value": "1776682608840"
                 },
                 {
+                    "name": "CacheStorageVersion",
+                    "value": "3b"
+                },
+                {
                     "name": "_oz_bandwidthAndTTFBSamples",
                     "value": "{\"b\":[],\"t\":[]}"
                 },
@@ -138,8 +181,24 @@
                     "value": "1776682610118"
                 },
                 {
+                    "name": "Session",
+                    "value": "xf8i3b:1776683287209"
+                },
+                {
                     "name": "ps:61572119207005:9adfaa57-d56e-4a72-a5ed-fa9590d31156",
                     "value": "5de280c8-1c5b-40b6-8c22-9a6b110324d0:1776682669510"
+                },
+                {
+                    "name": "_oz_bandwidthEstimate",
+                    "value": "10000000"
+                },
+                {
+                    "name": "banzai:last_storage_flush",
+                    "value": "1776682608726.1"
+                },
+                {
+                    "name": "ps:61572119207005:892027d7-65eb-4db1-aba7-770900f595f7",
+                    "value": "a9248f51-8b2e-4491-a63a-4bdd516ac7f6:1776683251706"
                 }
             ]
         }

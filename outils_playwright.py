@@ -184,11 +184,20 @@ async def sauvegarder_cookies(contexte, fichier):
     
     with open(fichier, "w", encoding="utf-8") as f:
         json.dump(state, f, indent=4, ensure_ascii=False)
-        
     print("cookies sauvegardés")
     
-        
 
+async def sauvegarder_sur_meme_ligne(fichier, data):
+    with open(fichier, "w", encoding="utf-8") as f:
+        f.write("[\n")
+        for i, item in enumerate(data):
+            json_line = json.dumps(item, ensure_ascii=False, separators=(',', ':'))
+            if i > 0:
+                f.write(",\n")
+            f.write(f"  {json_line}")
+        f.write("\n]")
+        
+        
 async def sauvegarder_fichier(fichier, data):
     with open(fichier, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)

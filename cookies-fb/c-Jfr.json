@@ -25,7 +25,7 @@
             "value": "100007670940489",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808219063.255475,
+            "expires": 1808287112.571194,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -65,7 +65,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777287863,
+            "expires": 1777355917,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -82,26 +82,69 @@
         },
         {
             "name": "fr",
-            "value": "1ZhphrYfKlCXTMpIe.AWeah3Uu6H12p8e5GY7bnH_i_G9GcKV9Z3vNIf-iJHfwG5cy8l4.Bp5gg4..AAA.0.0.Bp5gg4.AWdNHLCx0uBpGbPGJjcFxfhatms",
+            "value": "14B2a4ahjITc3mB44.AWe1eGaZiLYJWVBAO-Vm6IMOmdzU5iW3XQHvUO3GkqFM2L-vUso.Bp5xIH..AAA.0.0.Bp5xIH.AWccHE07pYKGWV4doxe_K9uF6oc",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1784459063.255748,
+            "expires": 1784527112.576799,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "43%3ASSaTguzgHff8UQ%3A2%3A1772130710%3A-1%3A-1%3A%3AAczS926BngB9jvA1YGfG1IDX-pZcdSViq0SqHaW4Rw",
+            "value": "43%3ASSaTguzgHff8UQ%3A2%3A1772130710%3A-1%3A-1%3A%3AAcyRPQmjoSGckxVXOBeuKA0DRmobnAhijcntDXR0-zk",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808219063.255873,
+            "expires": 1808287112.577057,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
+        },
+        {
+            "name": "alsfid",
+            "value": "{\"id\":\"fdeeb080c\",\"timestamp\":1776751119464.4}",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1776751179.662737,
+            "httpOnly": false,
+            "secure": false,
+            "sameSite": "Lax"
         }
     ],
     "origins": [
+        {
+            "origin": "https://business.facebook.com",
+            "localStorage": [
+                {
+                    "name": "RSTData",
+                    "value": "{}"
+                },
+                {
+                    "name": "hb_timestamp",
+                    "value": "1776751117963"
+                },
+                {
+                    "name": "CacheStorageVersion",
+                    "value": "3b"
+                },
+                {
+                    "name": "signal_flush_timestamp",
+                    "value": "1776751118009"
+                },
+                {
+                    "name": "Session",
+                    "value": "z9iurp:1776751157345"
+                },
+                {
+                    "name": "MqttGlobalStreamCounter:count-updated",
+                    "value": "{\"__t\":1776751113417,\"__v\":[\"{\\\"key\\\":\\\"dab8e37a-481d-4ab2-8bb6-b199a8f0636e\\\",\\\"event\\\":\\\"UPDATE\\\",\\\"value\\\":{\\\"totalConnectionStreams\\\":1}}\"]}"
+                },
+                {
+                    "name": "banzai:last_storage_flush",
+                    "value": "1776714245842.7"
+                }
+            ]
+        },
         {
             "origin": "https://www.facebook.com",
             "localStorage": [

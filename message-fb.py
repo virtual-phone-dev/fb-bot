@@ -3,7 +3,7 @@ from playwright.async_api import async_playwright
 from outils_playwright import (sauvegarder_cookies)
 
 MODE_SILENCIEUX = True
-PAUSE_MINUTES = 20
+PAUSE_MINUTES = 10
 
 
 

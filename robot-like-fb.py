@@ -161,11 +161,12 @@ async def main():
             ],
         )        
         
-        pages_list = await charger_fichier("pages-tout-pays.json") # Charger la liste de pages
+        pages_list = await charger_fichier("page_active.json") # Charger la liste de pages
         comptes = await charger_fichier("comptes-fb.json")   
-        data_derniere_page = charger_fichier("derniere_page.json")
+        #derniere_page = (await charger_fichier("derniere_page.json")).get("name")        
         
-        derniere_page = data_derniere_page.get("name")
+        data = await charger_fichier("derniere_page.json")
+        derniere_page = data.get("name")
         debut = False
 
         #FILTRAGE AVANT
@@ -204,6 +205,7 @@ async def main():
             if debut: 
                 print("✅ Patiente 30 minutes"); await asyncio.sleep(60 * 30)
             
-
+            
+        
 if __name__ == "__main__":
     asyncio.run(main())

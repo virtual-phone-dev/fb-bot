@@ -55,7 +55,7 @@
             "value": "100003700607536",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808157649.892621,
+            "expires": 1808292714.0977,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -65,7 +65,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777226453,
+            "expires": 1777362326,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -81,37 +81,100 @@
             "sameSite": "None"
         },
         {
-            "name": "fr",
-            "value": "1MLDuHLenpN4CmI0W.AWcu9_EI4mRobxjqDZifatNTW_Bx4J_A7-XrGdYogBnspjFQZss.Bp5RhS..AAA.0.0.Bp5RhS.AWfcy6MwRJzSIdrpnfnWVZVqMxs",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1784397649.892784,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
             "name": "xs",
-            "value": "20%3A1HWCBHixnNJnsA%3A2%3A1771922762%3A-1%3A-1%3A%3AAcyrkfh5m8CFWEpav5LZdD1R9ieC0NtwykwZ7s1HdQ",
+            "value": "20%3A1HWCBHixnNJnsA%3A2%3A1771922762%3A-1%3A-1%3A%3AAcz2IMic5j34iCWGBPkelH6rDdUQC4JPWbsGZ4pmILo",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808157649.892922,
+            "expires": 1808292714.098176,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
-            "name": "alsfid",
-            "value": "{\"id\":\"f65acd773\",\"timestamp\":1776621685269.7002}",
+            "name": "fr",
+            "value": "1imWguo7lCkyZdDHA..Bp5yfp..AAA.0.0.Bp5ysL.AWdS4Zlz-GnX33C3qgHYRy1di0s",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1776621745.269977,
-            "httpOnly": false,
-            "secure": false,
-            "sameSite": "Lax"
+            "expires": 1784533516.620944,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
         }
     ],
     "origins": [
+        {
+            "origin": "https://www.facebook.com",
+            "localStorage": [
+                {
+                    "name": "armadillo_msgr_data_loss_stats",
+                    "value": "{}"
+                },
+                {
+                    "name": "ps:61573315785623:85d8de22-3a41-4094-b640-a29cd912023f",
+                    "value": "2995bdad-4628-4f62-9008-bf90bf735f93:1776757470295"
+                },
+                {
+                    "name": "Session",
+                    "value": "wbtp2m:1776757675097"
+                },
+                {
+                    "name": "ps:61573315785623:69f1d64c-380b-4d83-90a0-1b0f22bb9163",
+                    "value": "312d1956-dbc6-4277-b37d-0a9be14c91ed:1776757606347"
+                },
+                {
+                    "name": "_oz_bandwidthEstimate",
+                    "value": "9450000"
+                },
+                {
+                    "name": "banzai:last_storage_flush",
+                    "value": "1776756714711.0999"
+                },
+                {
+                    "name": "mutex_falco_queue_immediately^$100003700607536^#61573315785623^#^#hmac_ttl.1776757515.AR0JxYJedOJtWqnZawhR-EXfZBVN-LogBC3NScSC6JQBBZ59^$",
+                    "value": "0zmnhr:1776757523896"
+                },
+                {
+                    "name": "screen_time_period_logging_facebook",
+                    "value": "{\"actorId\":\"61573315785623\",\"currentIntervalLastTick\":1776757644,\"currentIntervalStart\":1776757524,\"initRemoteAgg\":{\"timestamp\":1776410322,\"today_s\":0},\"intervals\":[{\"end\":1776380504,\"start\":1776380232},{\"end\":1776418862,\"start\":1776418796},{\"end\":1776756728,\"start\":1776756714},{\"end\":1776757472,\"start\":1776757461}],\"lastCallbackAttempt\":1776757461,\"localStorageId\":\"44384009\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                },
+                {
+                    "name": "last_headload_time",
+                    "value": "1776757524765"
+                },
+                {
+                    "name": "RSTData",
+                    "value": "{}"
+                },
+                {
+                    "name": "mutex_falco_queue_critical^$100003700607536^#61573315785623^#^#hmac_ttl.1776757515.AR0JxYJedOJtWqnZawhR-EXfZBVN-LogBC3NScSC6JQBBZ59^$",
+                    "value": "0zmnhr:1776757523897"
+                },
+                {
+                    "name": "bdz_playback_state",
+                    "value": "{\"session_key\":\"mnu0oazp\",\"buffer_length\":60}"
+                },
+                {
+                    "name": "hb_timestamp",
+                    "value": "1776756717870"
+                },
+                {
+                    "name": "ares_last_signal_flush",
+                    "value": "1775892723109"
+                },
+                {
+                    "name": "mutex_falco_queue_log^$100003700607536^#61573315785623^#^#hmac_ttl.1776757515.AR0JxYJedOJtWqnZawhR-EXfZBVN-LogBC3NScSC6JQBBZ59^$",
+                    "value": "0zmnhr:1776757523894"
+                },
+                {
+                    "name": "signal_flush_timestamp",
+                    "value": "1776756717988"
+                },
+                {
+                    "name": "ps:61573315785623:7fc07c0b-1727-4302-9550-3d74c5924bae",
+                    "value": "7031b6ba-9391-42eb-8737-d756782fbe20:1776756725685"
+                }
+            ]
+        },
         {
             "origin": "https://business.facebook.com",
             "localStorage": [
@@ -125,7 +188,7 @@
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1776621683139"
+                    "value": "1776751065216"
                 },
                 {
                     "name": "BizInboxIGDUpsellDismissCountKey1043024702235019",
@@ -137,104 +200,15 @@
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1776621653226"
+                    "value": "1776751065536"
                 },
                 {
                     "name": "Session",
-                    "value": "cwor5d:1776621719614"
+                    "value": "qe3h6g:1776751103269"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1776621651957.4001"
-                }
-            ]
-        },
-        {
-            "origin": "https://www.facebook.com",
-            "localStorage": [
-                {
-                    "name": "armadillo_msgr_data_loss_stats",
-                    "value": "{}"
-                },
-                {
-                    "name": "mutex_falco_queue_immediately^$100003700607536^#61573315785623^#^#hmac_ttl.1776418784.AR0m428Yyty4n0ekM0jKvV_RCJC3bC79isw0lgV7ooDWlaN0^$",
-                    "value": "qrmwdr:1776418791936"
-                },
-                {
-                    "name": "mutex_falco_queue_log^$100003700607536^#61573315785623^#^#hmac_ttl.1776418784.AR0m428Yyty4n0ekM0jKvV_RCJC3bC79isw0lgV7ooDWlaN0^$",
-                    "value": "qrmwdr:1776418791935"
-                },
-                {
-                    "name": "mutex_falco_queue_immediately^$100003700607536^#100003700607536^#^#hmac_ttl.1776380106.AR24G8vV4Xx0k8MrnjezpyrikeeA0iSQn4Q6xz5cE4IdBbMS^$",
-                    "value": "qrmwdr:1776418791936"
-                },
-                {
-                    "name": "Session",
-                    "value": "vos23y:1776418893083"
-                },
-                {
-                    "name": "_oz_bandwidthEstimate",
-                    "value": "9450000"
-                },
-                {
-                    "name": "banzai:last_storage_flush",
-                    "value": "1776380110985.3"
-                },
-                {
-                    "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"61573315785623\",\"currentIntervalLastTick\":1776418862,\"currentIntervalStart\":1776418796,\"initRemoteAgg\":{\"timestamp\":1776410322,\"today_s\":69},\"intervals\":[{\"end\":1776380504,\"start\":1776380232}],\"lastCallbackAttempt\":1776418796,\"localStorageId\":\"64661316\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
-                },
-                {
-                    "name": "mutex_falco_queue_critical^$100003700607536^#61573315785623^#^#hmac_ttl.1776418784.AR0m428Yyty4n0ekM0jKvV_RCJC3bC79isw0lgV7ooDWlaN0^$",
-                    "value": "qrmwdr:1776418791936"
-                },
-                {
-                    "name": "last_headload_time",
-                    "value": "1776418793096"
-                },
-                {
-                    "name": "RSTData",
-                    "value": "{}"
-                },
-                {
-                    "name": "falco_queue_log^$100003700607536^#100003700607536^#^#hmac_ttl.1776380106.AR24G8vV4Xx0k8MrnjezpyrikeeA0iSQn4Q6xz5cE4IdBbMS^$f1a7e19143c86f7c7",
-                    "value": "{\"items\":[{\"name\":\"story_card_timespent\",\"policy\":{\"r\":1},\"time\":1776380229311.55,\"extra\":\"{\\\"card_id\\\":\\\"UzpfSVNDOjkyNjIzOTExNjcxNDkxMg==\\\",\\\"media_id\\\":\\\"1307270137947273\\\",\\\"media_index\\\":3,\\\"media_type\\\":\\\"video\\\",\\\"merlin_direct_processing_enabled\\\":false,\\\"nav_attribution_id_v2\\\":\\\"StoriesCometSuspenseRoot.react,comet.stories.viewer,unexpected,1776380140155,66834,,,;CometHomeRoot.react,comet.home,via_cold_start,1776380108936,650618,4748854339,,\\\",\\\"seen_state_triggered\\\":null,\\\"source\\\":\\\"story_tray\\\",\\\"story_owner\\\":\\\"100044256768168\\\",\\\"story_owner_type\\\":\\\"followee\\\",\\\"thread_id\\\":\\\"926239116714912\\\",\\\"timespent\\\":8281,\\\"timespent_unit\\\":\\\"ms\\\",\\\"tofu_tray_session_id\\\":\\\"\\\",\\\"tray_session_id\\\":\\\"825bf8d0-95f1-43f0-85ed-5cebfff8932f\\\",\\\"viewer_session_id\\\":\\\"2edff0fd-11e1-45bb-bacf-e427525668de\\\"}\",\"tags\":[1,128],\"sessionId\":\"7nb758:vc2e15:y94gkj\",\"deviceId\":\"fd.ARsI0OXNi2ljeXXwsmex5dXeipDS4gcqB5_3rLVzpwRHInwJKt9RIJysnaFcj7qidfVej3GwyWJAXsB9fcbc1-zG\",\"appVersion\":\"1037.500.327.0 (1037500327)\"},{\"name\":\"close_story\",\"policy\":{\"r\":1},\"time\":1776380229314.55,\"extra\":\"{\\\"media_index\\\":\\\"3\\\",\\\"source\\\":\\\"story_tray\\\",\\\"thread_id\\\":\\\"UzpfSVNDOjkyNjIzOTExNjcxNDkxMg==\\\",\\\"tracking_string\\\":\\\"{\\\\\\\"request_id\\\\\\\":\\\\\\\"9aecf6e6-6e7f-40d6-8018-40e9b9dfa080\\\\\\\",\\\\\\\"bucket_id\\\\\\\":\\\\\\\"176463360505555\\\\\\\",\\\\\\\"owner_id\\\\\\\":\\\\\\\"100044256768168\\\\\\\",\\\\\\\"scored_time\\\\\\\":0,\\\\\\\"ranker_join_key\\\\\\\":\\\\\\\"9aecf6e6-6e7f-40d6-8018-40e9b9dfa080\\\\\\\",\\\\\\\"raas_position\\\\\\\":45,\\\\\\\"raas_newly_scored_position\\\\\\\":45,\\\\\\\"random_rate\\\\\\\":0,\\\\\\\"usecase_id\\\\\\\":\\\\\\\"1\\\\\\\",\\\\\\\"is_suggested\\\\\\\":false,\\\\\\\"viewstate_token\\\\\\\":\\\\\\\"{\\\\\\\\\\\\\\\"shardManagerScope\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"atg\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"snapshotId\\\\\\\\\\\\\\\":5500502273923074718,\\\\\\\\\\\\\\\"versionId\\\\\\\\\\\\\\\":0,\\\\\\\\\\\\\\\"creationTime\\\\\\\\\\\\\\\":1776380106}\\\\\\\"}\\\",\\\"tray_session_id\\\":\\\"825bf8d0-95f1-43f0-85ed-5cebfff8932f\\\",\\\"viewer_session_id\\\":\\\"2edff0fd-11e1-45bb-bacf-e427525668de\\\",\\\"gesture\\\":\\\"back_button_exit\\\"}\",\"tags\":[1,128],\"sessionId\":\"7nb758:vc2e15:y94gkj\",\"deviceId\":\"fd.ARsI0OXNi2ljeXXwsmex5dXeipDS4gcqB5_3rLVzpwRHInwJKt9RIJysnaFcj7qidfVej3GwyWJAXsB9fcbc1-zG\",\"appVersion\":\"1037.500.327.0 (1037500327)\"},{\"name\":\"video_player_www\",\"policy\":{\"r\":1},\"time\":1776380231080.45,\"extra\":\"{\\\"attribution_id\\\":\\\"{\\\\\\\"0\\\\\\\":{\\\\\\\"bookmark_id\\\\\\\":\\\\\\\"4748854339\\\\\\\",\\\\\\\"bookmark_type_name\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"session\\\\\\\":\\\\\\\"7nb758:s50154:y94gkj\\\\\\\",\\\\\\\"subsession\\\\\\\":1,\\\\\\\"tap_point\\\\\\\":\\\\\\\"via_cold_start\\\\\\\",\\\\\\\"timestamp\\\\\\\":1776380108936,\\\\\\\"trace_policy\\\\\\\":\\\\\\\"comet.home\\\\\\\"}}\\\",\\\"attribution_id_v2\\\":\\\"StoriesCometSuspenseRoot.react,comet.stories.viewer,unexpected,1776380140155,66834,,,;CometHomeRoot.react,comet.home,via_cold_start,1776380108936,650618,4748854339,,\\\",\\\"attribution_id_v2_root\\\":\\\"CometHomeRoot.react:comet.home\\\",\\\"audio_representation_id\\\":\\\"1236406352009583a\\\",\\\"autoplay_eligible\\\":false,\\\"autoplay_failure_reasons\\\":\\\"[\\\\\\\"unknown\\\\\\\"]\\\",\\\"autoplay_setting\\\":\\\"default_autoplay\\\",\\\"available_qualities\\\":6,\\\"broadcaster_origin\\\":null,\\\"browser_tab_id\\\":\\\"60063e1b\\\",\\\"client_latency_setting\\\":\\\"normal\\\",\\\"current_playback_speed\\\":1,\\\"current_viewability_percentage\\\":100,\\\"dash_perf_logging_enabled\\\":false,\\\"data_connection_quality\\\":\\\"GOOD\\\",\\\"debug_reason\\\":\\\"unloaded\\\",\\\"dropped_frame_count\\\":14,\\\"error_user_info\\\":\\\"{\\\\\\\"is_document_hidden\\\\\\\":true}\\\",\\\"event_name\\\":\\\"paused\\\",\\\"event_seq_num\\\":6,\\\"fb_manifest_identifier\\\":null,\\\"frame_events\\\":null,\\\"interrupt_count\\\":null,\\\"interrupt_time\\\":0,\\\"is_abr_enabled\\\":true,\\\"is_fbms\\\":false,\\\"is_live_preview\\\":false,\\\"is_live_video_rewound\\\":false,\\\"is_mixed_codec_manifest\\\":false,\\\"is_pip\\\":false,\\\"is_predictive_playback\\\":false,\\\"is_sound_on\\\":true,\\\"is_stalling\\\":false,\\\"is_templated_manifest\\\":false,\\\"last_viewability_percentage\\\":100,\\\"live_trace_stream_id\\\":null,\\\"live_trace_stream_type\\\":null,\\\"mpd_validation_errors\\\":null,\\\"network_connected\\\":true,\\\"offset_ms\\\":null,\\\"playback_caption_format\\\":null,\\\"playback_caption_locale\\\":null,\\\"playback_duration\\\":60,\\\"playback_is_broadcast\\\":false,\\\"playback_is_drm\\\":false,\\\"playback_is_live_streaming\\\":false,\\\"player_format\\\":\\\"inline\\\",\\\"player_instance_key\\\":\\\"id-vpuid-ffd6e9659d94b05e6\\\",\\\"player_state\\\":\\\"playing\\\",\\\"player_suborigin\\\":\\\"story_viewer_live_video_view\\\",\\\"player_version\\\":\\\"comet_nextgendash\\\",\\\"projection\\\":null,\\\"representation_id\\\":\\\"725147890619407v\\\",\\\"routeTracePolicy\\\":\\\"comet.stories.viewer\\\",\\\"seq_num\\\":4,\\\"source\\\":\\\"story_viewer_live_video_view\\\",\\\"stall_count\\\":0,\\\"stall_count_200_ms\\\":0,\\\"stall_time\\\":0,\\\"streaming_format\\\":\\\"dash\\\",\\\"time_ms\\\":1776380229715,\\\"total_frame_count\\\":293,\\\"tracking_data_encrypted\\\":\\\"\\\",\\\"tracking_nodes\\\":\\\"F-R\\\",\\\"v2_heart_beat\\\":null,\\\"video_bandwidth\\\":9450000,\\\"video_buffer_end_position\\\":32.021722,\\\"video_id\\\":\\\"1307270137947273\\\",\\\"video_last_start_time_position\\\":0,\\\"video_play_reason\\\":\\\"user_initiated\\\",\\\"video_player_height\\\":640,\\\"video_player_width\\\":360,\\\"video_time_position\\\":9.613318,\\\"vpts\\\":1776380229715.9,\\\"web_client_revision\\\":1037500327}\",\"tags\":[1,128],\"sessionId\":\"7nb758:vc2e15:y94gkj\",\"deviceId\":\"fd.ARsI0OXNi2ljeXXwsmex5dXeipDS4gcqB5_3rLVzpwRHInwJKt9RIJysnaFcj7qidfVej3GwyWJAXsB9fcbc1-zG\",\"appVersion\":\"1037.500.327.0 (1037500327)\"},{\"name\":\"media_playback_compound\",\"policy\":{\"r\":1},\"time\":1776380231080.85,\"extra\":\"{\\\"events\\\":[{\\\"client_time_ms\\\":\\\"1776380219981\\\",\\\"event_name\\\":\\\"started_playing\\\",\\\"media_time_ms\\\":\\\"0\\\",\\\"player_instance_id\\\":\\\"1328865628\\\",\\\"player_instance_key\\\":\\\"id-vpuid-ffd6e9659d94b05e6\\\",\\\"video_client_duration\\\":\\\"60000\\\",\\\"start_state\\\":\\\"started\\\"},{\\\"client_time_ms\\\":\\\"1776380219981\\\",\\\"event_name\\\":\\\"tags_changed\\\",\\\"media_time_ms\\\":\\\"0\\\",\\\"player_instance_id\\\":\\\"1328865628\\\",\\\"player_instance_key\\\":\\\"id-vpuid-ffd6e9659d94b05e6\\\",\\\"video_client_duration\\\":\\\"60000\\\",\\\"tag_metadata\\\":{\\\"attribution_id_v2\\\":\\\"StoriesCometSuspenseRoot.react,comet.stories.viewer,unexpected,1776380140155,66834,,,;CometHomeRoot.react,comet.home,via_cold_start,1776380108936,650618,4748854339,,\\\",\\\"audio_representation_id\\\":\\\"1236406352009583a\\\",\\\"autoplay_eligible\\\":true,\\\"autoplay_failure_reasons\\\":\\\"[\\\\\\\"all_page_organic_allowed\\\\\\\"]\\\",\\\"autoplay_setting\\\":\\\"default_autoplay\\\",\\\"available_qualities_count\\\":\\\"6\\\",\\\"caption_state\\\":\\\"off\\\",\\\"client_latency_setting\\\":\\\"normal\\\",\\\"current_viewability\\\":\\\"100\\\",\\\"dash_manifest_identifier\\\":null,\\\"data_connection_quality\\\":\\\"good\\\",\\\"dropped_frame_count\\\":\\\"0\\\",\\\"is_abr_enabled\\\":true,\\\"is_fbms\\\":false,\\\"is_live_video_rewound\\\":false,\\\"is_mixed_codec_manifest\\\":false,\\\"is_predictive_playback\\\":false,\\\"playback_speed\\\":0,\\\"player_format\\\":\\\"inline\\\",\\\"player_sound_on\\\":false,\\\"streaming_format\\\":\\\"dash\\\",\\\"total_frame_count\\\":\\\"4\\\",\\\"video_bandwidth\\\":9450000,\\\"video_play_reason\\\":2,\\\"video_representation_id\\\":\\\"725147890619407v\\\",\\\"view_height\\\":\\\"640\\\",\\\"view_width\\\":\\\"360\\\",\\\"web_client_revision\\\":\\\"1037500327\\\"}},{\\\"client_time_ms\\\":\\\"1776380219987\\\",\\\"event_name\\\":\\\"tags_changed\\\",\\\"media_time_ms\\\":\\\"0\\\",\\\"player_instance_id\\\":\\\"1328865628\\\",\\\"player_instance_key\\\":\\\"id-vpuid-ffd6e9659d94b05e6\\\",\\\"video_client_duration\\\":\\\"60000\\\",\\\"tag_metadata\\\":{\\\"playback_speed\\\":1,\\\"total_frame_count\\\":\\\"4\\\"}},{\\\"client_time_ms\\\":\\\"1776380219994\\\",\\\"event_name\\\":\\\"tags_changed\\\",\\\"media_time_ms\\\":\\\"4\\\",\\\"player_instance_id\\\":\\\"1328865628\\\",\\\"player_instance_key\\\":\\\"id-vpuid-ffd6e9659d94b05e6\\\",\\\"video_client_duration\\\":\\\"60000\\\",\\\"tag_metadata\\\":{\\\"player_sound_on\\\":true}},{\\\"client_time_ms\\\":\\\"1776380229715\\\",\\\"event_name\\\":\\\"tags_changed\\\",\\\"media_time_ms\\\":\\\"9613\\\",\\\"player_instance_id\\\":\\\"1328865628\\\",\\\"player_instance_key\\\":\\\"id-vpuid-ffd6e9659d94b05e6\\\",\\\"video_client_duration\\\":\\\"60000\\\",\\\"tag_metadata\\\":{\\\"attribution_id_v2\\\":\\\"StoriesCometSuspenseRoot.react,comet.stories.viewer,unexpected,1776380140155,66834,,,;CometHomeRoot.react,comet.home,via_cold_start,1776380108936,650618,4748854339,,\\\",\\\"audio_representation_id\\\":\\\"1236406352009583a\\\",\\\"autoplay_eligible\\\":true,\\\"autoplay_failure_reasons\\\":\\\"[\\\\\\\"all_page_organic_allowed\\\\\\\"]\\\",\\\"autoplay_setting\\\":\\\"default_autoplay\\\",\\\"available_qualities_count\\\":\\\"6\\\",\\\"caption_state\\\":\\\"off\\\",\\\"client_latency_setting\\\":\\\"normal\\\",\\\"current_viewability\\\":\\\"100\\\",\\\"dash_manifest_identifier\\\":null,\\\"data_connection_quality\\\":\\\"good\\\",\\\"dropped_frame_count\\\":\\\"14\\\",\\\"is_abr_enabled\\\":true,\\\"is_fbms\\\":false,\\\"is_live_video_rewound\\\":false,\\\"is_mixed_codec_manifest\\\":false,\\\"is_predictive_playback\\\":false,\\\"playback_speed\\\":1,\\\"player_format\\\":\\\"inline\\\",\\\"player_sound_on\\\":true,\\\"streaming_format\\\":\\\"dash\\\",\\\"total_frame_count\\\":\\\"293\\\",\\\"video_bandwidth\\\":9450000,\\\"video_play_reason\\\":2,\\\"video_representation_id\\\":\\\"725147890619407v\\\",\\\"view_height\\\":\\\"640\\\",\\\"view_width\\\":\\\"360\\\"}},{\\\"client_time_ms\\\":\\\"1776380229715\\\",\\\"event_name\\\":\\\"paused\\\",\\\"media_time_ms\\\":\\\"9613\\\",\\\"player_instance_id\\\":\\\"1328865628\\\",\\\"player_instance_key\\\":\\\"id-vpuid-ffd6e9659d94b05e6\\\",\\\"video_client_duration\\\":\\\"60000\\\"}],\\\"required_metadata\\\":{\\\"current_watching_module\\\":\\\"\\\",\\\"is_live_streaming\\\":false,\\\"media_id\\\":\\\"1307270137947273\\\",\\\"nav_chain\\\":\\\"StoriesCometSuspenseRoot.react,comet.stories.viewer,unexpected,1776380140155,66834,,,;CometHomeRoot.react,comet.home,via_cold_start,1776380108936,650618,4748854339,,\\\",\\\"player_format\\\":\\\"inline\\\",\\\"player_suborigin\\\":\\\"story_viewer_live_video_view\\\",\\\"player_version\\\":\\\"comet_nextgendash\\\",\\\"sessionizer_nav_chain\\\":\\\"CometHomeRoot.react:comet.home\\\",\\\"tracking_data_encrypted\\\":\\\"\\\",\\\"tracking_type\\\":\\\"organic\\\",\\\"video_play_reason\\\":2,\\\"browser_tab_id\\\":\\\"60063e1b\\\"}}\",\"tags\":[1,128],\"sessionId\":\"7nb758:vc2e15:y94gkj\",\"deviceId\":\"fd.ARsI0OXNi2ljeXXwsmex5dXeipDS4gcqB5_3rLVzpwRHInwJKt9RIJysnaFcj7qidfVej3GwyWJAXsB9fcbc1-zG\",\"appVersion\":\"1037.500.327.0 (1037500327)\"},{\"name\":\"video_player_www\",\"policy\":{\"r\":1},\"time\":1776380231085.75,\"extra\":\"{\\\"attribution_id\\\":\\\"{\\\\\\\"0\\\\\\\":{\\\\\\\"bookmark_id\\\\\\\":\\\\\\\"4748854339\\\\\\\",\\\\\\\"bookmark_type_name\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"session\\\\\\\":\\\\\\\"7nb758:s50154:y94gkj\\\\\\\",\\\\\\\"subsession\\\\\\\":1,\\\\\\\"tap_point\\\\\\\":\\\\\\\"via_cold_start\\\\\\\",\\\\\\\"timestamp\\\\\\\":1776380108936,\\\\\\\"trace_policy\\\\\\\":\\\\\\\"comet.home\\\\\\\"}}\\\",\\\"attribution_id_v2\\\":\\\"StoriesCometSuspenseRoot.react,comet.stories.viewer,unexpected,1776380140155,66834,,,;CometHomeRoot.react,comet.home,via_cold_start,1776380108936,650618,4748854339,,\\\",\\\"attribution_id_v2_root\\\":\\\"CometHomeRoot.react:comet.home\\\",\\\"audio_representation_id\\\":null,\\\"autoplay_eligible\\\":false,\\\"autoplay_failure_reasons\\\":\\\"[\\\\\\\"unknown\\\\\\\"]\\\",\\\"autoplay_setting\\\":\\\"default_autoplay\\\",\\\"available_qualities\\\":0,\\\"broadcaster_origin\\\":null,\\\"browser_tab_id\\\":\\\"60063e1b\\\",\\\"client_latency_setting\\\":\\\"normal\\\",\\\"current_playback_speed\\\":1,\\\"current_viewability_percentage\\\":100,\\\"dash_perf_logging_enabled\\\":false,\\\"data_connection_quality\\\":\\\"GOOD\\\",\\\"dropped_frame_count\\\":0,\\\"event_name\\\":\\\"representation_ended\\\",\\\"event_seq_num\\\":7,\\\"fb_manifest_identifier\\\":null,\\\"frame_events\\\":null,\\\"interrupt_count\\\":null,\\\"interrupt_time\\\":0,\\\"is_abr_enabled\\\":true,\\\"is_fbms\\\":false,\\\"is_live_preview\\\":false,\\\"is_live_video_rewound\\\":false,\\\"is_mixed_codec_manifest\\\":null,\\\"is_pip\\\":false,\\\"is_predictive_playback\\\":false,\\\"is_sound_on\\\":true,\\\"is_stalling\\\":false,\\\"is_templated_manifest\\\":false,\\\"last_viewability_percentage\\\":100,\\\"live_trace_stream_id\\\":null,\\\"live_trace_stream_type\\\":null,\\\"mpd_validation_errors\\\":null,\\\"network_connected\\\":true,\\\"offset_ms\\\":null,\\\"playback_caption_format\\\":null,\\\"playback_caption_locale\\\":null,\\\"playback_duration\\\":0,\\\"playback_is_broadcast\\\":false,\\\"playback_is_drm\\\":false,\\\"playback_is_live_streaming\\\":false,\\\"player_format\\\":\\\"inline\\\",\\\"player_instance_key\\\":\\\"id-vpuid-ffd6e9659d94b05e6\\\",\\\"player_state\\\":\\\"playing\\\",\\\"player_suborigin\\\":\\\"story_viewer_live_video_view\\\",\\\"player_version\\\":\\\"comet_nextgendash\\\",\\\"projection\\\":null,\\\"routeTracePolicy\\\":\\\"comet.stories.viewer\\\",\\\"seq_num\\\":5,\\\"source\\\":\\\"story_viewer_live_video_view\\\",\\\"stall_count\\\":0,\\\"stall_count_200_ms\\\":0,\\\"stall_time\\\":0,\\\"streaming_format\\\":\\\"dash\\\",\\\"time_ms\\\":1776380229721,\\\"total_frame_count\\\":0,\\\"tracking_data_encrypted\\\":\\\"\\\",\\\"tracking_nodes\\\":\\\"F-R\\\",\\\"v2_heart_beat\\\":null,\\\"video_bandwidth\\\":9450000,\\\"video_buffer_end_position\\\":0,\\\"video_id\\\":\\\"1307270137947273\\\",\\\"video_last_start_time_position\\\":null,\\\"video_play_reason\\\":\\\"user_initiated\\\",\\\"video_player_height\\\":640,\\\"video_player_width\\\":360,\\\"video_time_position\\\":0,\\\"vpts\\\":1776380229720.9,\\\"web_client_revision\\\":1037500327}\",\"tags\":[1,128],\"sessionId\":\"7nb758:vc2e15:y94gkj\",\"deviceId\":\"fd.ARsI0OXNi2ljeXXwsmex5dXeipDS4gcqB5_3rLVzpwRHInwJKt9RIJysnaFcj7qidfVej3GwyWJAXsB9fcbc1-zG\",\"appVersion\":\"1037.500.327.0 (1037500327)\"},{\"name\":\"video_player_www\",\"policy\":{\"r\":1},\"time\":1776380231086.25,\"extra\":\"{\\\"attribution_id\\\":\\\"{\\\\\\\"0\\\\\\\":{\\\\\\\"bookmark_id\\\\\\\":\\\\\\\"4748854339\\\\\\\",\\\\\\\"bookmark_type_name\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"session\\\\\\\":\\\\\\\"7nb758:s50154:y94gkj\\\\\\\",\\\\\\\"subsession\\\\\\\":1,\\\\\\\"tap_point\\\\\\\":\\\\\\\"via_cold_start\\\\\\\",\\\\\\\"timestamp\\\\\\\":1776380108936,\\\\\\\"trace_policy\\\\\\\":\\\\\\\"comet.home\\\\\\\"}}\\\",\\\"attribution_id_v2\\\":\\\"StoriesCometSuspenseRoot.react,comet.stories.viewer,unexpected,1776380140155,66834,,,;CometHomeRoot.react,comet.home,via_cold_start,1776380108936,650618,4748854339,,\\\",\\\"attribution_id_v2_root\\\":\\\"CometHomeRoot.react:comet.home\\\",\\\"audio_representation_id\\\":\\\"1236406352009583a\\\",\\\"autoplay_eligible\\\":false,\\\"autoplay_failure_reasons\\\":\\\"[\\\\\\\"unknown\\\\\\\"]\\\",\\\"autoplay_setting\\\":\\\"default_autoplay\\\",\\\"available_qualities\\\":0,\\\"broadcaster_origin\\\":null,\\\"browser_tab_id\\\":\\\"60063e1b\\\",\\\"client_latency_setting\\\":\\\"normal\\\",\\\"current_playback_speed\\\":1,\\\"current_viewability_percentage\\\":100,\\\"dash_perf_logging_enabled\\\":false,\\\"data_connection_quality\\\":\\\"GOOD\\\",\\\"dropped_frame_count\\\":0,\\\"event_name\\\":\\\"representation_ended\\\",\\\"event_seq_num\\\":8,\\\"fb_manifest_identifier\\\":null,\\\"frame_events\\\":null,\\\"interrupt_count\\\":null,\\\"interrupt_time\\\":0,\\\"is_abr_enabled\\\":true,\\\"is_fbms\\\":false,\\\"is_live_preview\\\":false,\\\"is_live_video_rewound\\\":false,\\\"is_mixed_codec_manifest\\\":null,\\\"is_pip\\\":false,\\\"is_predictive_playback\\\":false,\\\"is_sound_on\\\":true,\\\"is_stalling\\\":false,\\\"is_templated_manifest\\\":false,\\\"last_viewability_percentage\\\":100,\\\"live_trace_stream_id\\\":null,\\\"live_trace_stream_type\\\":null,\\\"mpd_validation_errors\\\":null,\\\"network_connected\\\":true,\\\"next_representation_id\\\":null,\\\"offset_ms\\\":null,\\\"playback_caption_format\\\":null,\\\"playback_caption_locale\\\":null,\\\"playback_duration\\\":0,\\\"playback_is_broadcast\\\":false,\\\"playback_is_drm\\\":false,\\\"playback_is_live_streaming\\\":false,\\\"player_format\\\":\\\"inline\\\",\\\"player_instance_key\\\":\\\"id-vpuid-ffd6e9659d94b05e6\\\",\\\"player_state\\\":\\\"playing\\\",\\\"player_suborigin\\\":\\\"story_viewer_live_video_view\\\",\\\"player_version\\\":\\\"comet_nextgendash\\\",\\\"projection\\\":null,\\\"representation_id\\\":null,\\\"routeTracePolicy\\\":\\\"comet.stories.viewer\\\",\\\"seq_num\\\":6,\\\"source\\\":\\\"story_viewer_live_video_view\\\",\\\"stall_count\\\":0,\\\"stall_count_200_ms\\\":0,\\\"stall_time\\\":0,\\\"streaming_format\\\":\\\"dash\\\",\\\"time_ms\\\":1776380229721,\\\"total_frame_count\\\":0,\\\"tracking_data_encrypted\\\":\\\"\\\",\\\"tracking_nodes\\\":\\\"F-R\\\",\\\"v2_heart_beat\\\":null,\\\"video_bandwidth\\\":9450000,\\\"video_buffer_end_position\\\":0,\\\"video_id\\\":\\\"1307270137947273\\\",\\\"video_last_start_time_position\\\":0,\\\"video_play_reason\\\":\\\"user_initiated\\\",\\\"video_player_height\\\":640,\\\"video_player_width\\\":360,\\\"video_time_position\\\":0,\\\"vpts\\\":1776380229721.1,\\\"web_client_revision\\\":1037500327}\",\"tags\":[1,128],\"sessionId\":\"7nb758:vc2e15:y94gkj\",\"deviceId\":\"fd.ARsI0OXNi2ljeXXwsmex5dXeipDS4gcqB5_3rLVzpwRHInwJKt9RIJysnaFcj7qidfVej3GwyWJAXsB9fcbc1-zG\",\"appVersion\":\"1037.500.327.0 (1037500327)\"}],\"ts\":1776380229722.7}"
-                },
-                {
-                    "name": "mutex_falco_queue_critical^$100003700607536^#100003700607536^#^#hmac_ttl.1776380106.AR24G8vV4Xx0k8MrnjezpyrikeeA0iSQn4Q6xz5cE4IdBbMS^$",
-                    "value": "qrmwdr:1776418791936"
-                },
-                {
-                    "name": "bdz_playback_state",
-                    "value": "{\"session_key\":\"mnnsiuhd\",\"buffer_length\":60}"
-                },
-                {
-                    "name": "hb_timestamp",
-                    "value": "1776418824064"
-                },
-                {
-                    "name": "_oz_bandwidthAndTTFBSamples",
-                    "value": "{\"b\":[],\"t\":[]}"
-                },
-                {
-                    "name": "ares_last_signal_flush",
-                    "value": "1775516234449"
-                },
-                {
-                    "name": "mutex_falco_queue_log^$100003700607536^#100003700607536^#^#hmac_ttl.1776380106.AR24G8vV4Xx0k8MrnjezpyrikeeA0iSQn4Q6xz5cE4IdBbMS^$",
-                    "value": "qrmwdr:1776418791935"
-                },
-                {
-                    "name": "signal_flush_timestamp",
-                    "value": "1776418794605"
-                },
-                {
-                    "name": "falco_queue_critical^$100003700607536^#100003700607536^#^#hmac_ttl.1776380106.AR24G8vV4Xx0k8MrnjezpyrikeeA0iSQn4Q6xz5cE4IdBbMS^$fd44771e6d8944f01",
-                    "value": "{\"items\":[{\"name\":\"ods_web_batch\",\"policy\":{\"r\":1,\"s\":1},\"time\":1776380231071.95,\"extra\":\"{\\\"batch\\\":{\\\"2079\\\":{\\\"comet_video_player\\\":{\\\"NextgendashPrefetchCache.miss\\\":{\\\"n\\\":6,\\\"d\\\":null}}},\\\"3185\\\":{\\\"armadillo_worker_runtime\\\":{\\\"backend_clearWorkerEBStateDBOnLogout_start\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"route_start\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"maw_bridge\\\":{\\\"fireAndForget.backend.clearWorkerEBStateDBOnLogout.ui.2220391788200892\\\":{\\\"n\\\":2,\\\"d\\\":null}}},\\\"3589\\\":{\\\"dgw_web_client\\\":{\\\"realtime.WebStreamAckManager.ack_expected\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"realtime.DGWPinger.reset\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"realtime.DGWPinger.reset.newtimeout\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"realtime.GroupedWebStream.ack_received\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"realtime.WebStreamAckManager.ack_received\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"realtime.GroupedWebStream.data_received\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"realtime.GroupedWebStream.ack_sent\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"7173\\\":{\\\"entities.ff_js_web.perf.2220391788200892.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log_immediately\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.story_card_timespent.2220391788200892.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.close_story.2220391788200892.1037.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null}}}}}\",\"tags\":[1,128],\"sessionId\":\"7nb758:vc2e15:y94gkj\",\"deviceId\":\"fd.ARsI0OXNi2ljeXXwsmex5dXeipDS4gcqB5_3rLVzpwRHInwJKt9RIJysnaFcj7qidfVej3GwyWJAXsB9fcbc1-zG\",\"appVersion\":\"1037.500.327.0 (1037500327)\"}],\"ts\":1776380229708.6}"
-                },
-                {
-                    "name": "falco_queue_immediately^$100003700607536^#100003700607536^#^#hmac_ttl.1776380106.AR24G8vV4Xx0k8MrnjezpyrikeeA0iSQn4Q6xz5cE4IdBbMS^$f1dbf846026264d8f",
-                    "value": "{\"items\":[{\"name\":\"perf\",\"policy\":{\"r\":1,\"s\":1},\"time\":1776380229231.85,\"extra\":\"{\\\"marker_id\\\":30618615,\\\"action_id\\\":2,\\\"instance_id\\\":7,\\\"sample_rate\\\":1,\\\"method\\\":\\\"random_sampling\\\",\\\"duration_ns\\\":\\\"410900146\\\",\\\"points\\\":[{\\\"name\\\":\\\"HeroTrace_end\\\",\\\"timeSinceStart\\\":\\\"408\\\"},{\\\"name\\\":\\\"visuallyComplete\\\",\\\"timeSinceStart\\\":\\\"409\\\"},{\\\"name\\\":\\\"vcWithoutImage\\\",\\\"timeSinceStart\\\":\\\"409\\\"},{\\\"name\\\":\\\"logVC\\\",\\\"timeSinceStart\\\":\\\"409\\\"}],\\\"metadata\\\":{\\\"application_analytics\\\":{\\\"time_since_qpl_module_init\\\":119047.2001953125},\\\"memory_stats\\\":{\\\"total_mem\\\":4294967296},\\\"network_stats\\\":{\\\"downlink_megabits\\\":9.45,\\\"network_subtype\\\":\\\"4g\\\",\\\"rtt_ms\\\":150},\\\"sitedata_info\\\":{\\\"client_push_phase\\\":\\\"C3\\\",\\\"client_revision\\\":1037500327,\\\"server_revision\\\":1037500327},\\\"locale_info\\\":{\\\"locale\\\":\\\"fr_FR\\\",\\\"isRTL\\\":0}},\\\"marker_type\\\":1,\\\"flags\\\":1,\\\"annotations\\\":{\\\"tracePolicy\\\":\\\"comet.app\\\",\\\"origin_trace_policy\\\":\\\"comet.stories.viewer\\\",\\\"originating_user_id\\\":\\\"100003700607536\\\",\\\"origin\\\":\\\"voice_switcher\\\",\\\"originating_surface\\\":\\\"voice_switcher\\\",\\\"landing_trace_policy\\\":\\\"comet.stories.viewer\\\",\\\"target_profile_id\\\":\\\"61573315785623\\\",\\\"websession_id\\\":\\\"7nb758\\\",\\\"brsid\\\":\\\"7629494462250517782\\\",\\\"referrer\\\":\\\"comet.stories.viewer\\\",\\\"interactionId\\\":\\\"5ae6207f-2f15-43b6-8c71-85bea9dda3bb\\\",\\\"interactionClass\\\":\\\"responsive\\\",\\\"pkg_cohort\\\":\\\"HCSV2:comet_pkg\\\",\\\"clientRevision\\\":\\\"1037500327\\\",\\\"serverRevision\\\":\\\"1037500327\\\",\\\"pushPhase\\\":\\\"C3\\\",\\\"loomRefId\\\":\\\"5d2a5401-958b-4936-9e70-c912a0d542e3_1\\\"},\\\"annotations_int\\\":{\\\"numReactCommit\\\":\\\"0\\\",\\\"revisit\\\":\\\"1\\\",\\\"instance_revisit\\\":\\\"0\\\",\\\"sessionOfflineStatusCount\\\":\\\"0\\\",\\\"is_switching_to_main_profile\\\":\\\"1\\\",\\\"startTimestamp\\\":\\\"1776380227457\\\",\\\"usedJSHeapSizeStart\\\":\\\"97202273\\\",\\\"usedJSHeapSizeEnd\\\":\\\"96746339\\\",\\\"JSTotalHeapSize\\\":\\\"109843487\\\",\\\"JSHeapSizeLimit\\\":\\\"2145386496\\\",\\\"JSDeviceMemory\\\":\\\"4294967296\\\",\\\"hidden\\\":\\\"0\\\",\\\"navStartOffset\\\":\\\"122868\\\",\\\"incompleteLockCount\\\":\\\"1\\\",\\\"mutationRootCount\\\":\\\"0\\\",\\\"mutatedElementCount\\\":\\\"0\\\",\\\"visualChangeRecordCount\\\":\\\"0\\\",\\\"paintedElementCount\\\":\\\"0\\\",\\\"height\\\":\\\"720\\\",\\\"width\\\":\\\"1280\\\",\\\"scrollY\\\":\\\"0\\\",\\\"finalScrollY\\\":\\\"0\\\",\\\"initialScrollY\\\":\\\"0\\\",\\\"js_cacheCount\\\":\\\"0\\\",\\\"js_cacheRate\\\":\\\"0\\\",\\\"js_encodedBodySize\\\":\\\"662\\\",\\\"js_decodedBodySize\\\":\\\"1615\\\",\\\"js_totalCount\\\":\\\"1\\\",\\\"js_transferSize\\\":\\\"962\\\",\\\"css_cacheCount\\\":\\\"0\\\",\\\"css_cacheRate\\\":\\\"0\\\",\\\"css_encodedBodySize\\\":\\\"0\\\",\\\"css_decodedBodySize\\\":\\\"0\\\",\\\"css_totalCount\\\":\\\"0\\\",\\\"css_transferSize\\\":\\\"0\\\",\\\"img_cacheCount\\\":\\\"0\\\",\\\"img_cacheRate\\\":\\\"0\\\",\\\"img_encodedBodySize\\\":\\\"0\\\",\\\"img_decodedBodySize\\\":\\\"0\\\",\\\"img_totalCount\\\":\\\"0\\\",\\\"img_transferSize\\\":\\\"0\\\",\\\"translations_cacheCount\\\":\\\"0\\\",\\\"translations_cacheRate\\\":\\\"0\\\",\\\"translations_encodedBodySize\\\":\\\"0\\\",\\\"translations_decodedBodySize\\\":\\\"0\\\",\\\"translations_totalCount\\\":\\\"0\\\",\\\"translations_transferSize\\\":\\\"0\\\",\\\"cssBgElementCount\\\":\\\"0\\\",\\\"cssBgTimingCount\\\":\\\"0\\\"},\\\"annotations_double\\\":{\\\"devicePixelRatio\\\":1,\\\"vcCalculationOverhead\\\":0.10000002384185791,\\\"mutationProcessingOverhead\\\":0,\\\"cssBgScanOverhead\\\":0,\\\"CLS\\\":0.0008428814697933103,\\\"vcMetaDataLoggingLatency\\\":0.5,\\\"vcTotalLoggingOverhead\\\":0.6000000238418579},\\\"annotations_bool\\\":{\\\"is_mobile\\\":false},\\\"annotations_string_array\\\":{\\\"CometTags\\\":[\\\"comet_aa_coinflip:true\\\",\\\"comet_preloader_deferred_threads:1\\\",\\\"comet_preloader_display_threads:13\\\",\\\"lastServerTagFlushed\\\",\\\"logged_in\\\",\\\"should_use_bt_safe_js\\\"],\\\"loomProviders\\\":[\\\"InteractionTracing\\\",\\\"QPL\\\",\\\"ResourceTiming\\\",\\\"VisualCompletion\\\"],\\\"incompleteLocks\\\":[\\\"InteractionTracing\\\"]},\\\"config_type\\\":\\\"prod\\\"}\",\"tags\":[1,384],\"sessionId\":\"7nb758:s50154:y94gkj\",\"deviceId\":\"fd.ARsI0OXNi2ljeXXwsmex5dXeipDS4gcqB5_3rLVzpwRHInwJKt9RIJysnaFcj7qidfVej3GwyWJAXsB9fcbc1-zG\",\"appVersion\":\"1037.500.327.0 (1037500327)\",\"logImmediate\":true},{\"name\":\"web_time_spent_navigation\",\"policy\":{\"r\":1},\"time\":1776380231094.95,\"extra\":\"{\\\"cause\\\":\\\"unload\\\",\\\"custom_data_json\\\":\\\"{\\\\\\\"source_pa\\\\\\\":\\\\\\\"{\\\\\\\\\\\\\\\"0\\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\\"bookmark_id\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"4748854339\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"bookmark_type_name\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"session\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"7nb758:s50154:y94gkj\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"subsession\\\\\\\\\\\\\\\":1,\\\\\\\\\\\\\\\"tap_point\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"via_cold_start\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"timestamp\\\\\\\\\\\\\\\":1776380108936,\\\\\\\\\\\\\\\"trace_policy\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"comet.home\\\\\\\\\\\\\\\"}}\\\\\\\",\\\\\\\"source_pav2\\\\\\\":\\\\\\\"StoriesCometSuspenseRoot.react,comet.stories.viewer,unexpected,1776380140155,66834,,,;CometHomeRoot.react,comet.home,via_cold_start,1776380108936,650618,4748854339,,\\\\\\\",\\\\\\\"source_uri\\\\\\\":\\\\\\\"/stories/176463360505555/UzpfSVNDOjc5NjAxNDA1MzI1OTM5Nw==/?bucket_count=9&source=story_tray\\\\\\\",\\\\\\\"source_visitation_id\\\\\\\":\\\\\\\"comet.home:y94gkj:1:1776380108.877\\\\\\\"}\\\",\\\"sid_raw\\\":\\\"7nb758:vc2e15:y94gkj\\\",\\\"source_path\\\":\\\"comet.stories.viewer\\\"}\",\"tags\":[1,128],\"sessionId\":\"7nb758:vc2e15:y94gkj\",\"deviceId\":\"fd.ARsI0OXNi2ljeXXwsmex5dXeipDS4gcqB5_3rLVzpwRHInwJKt9RIJysnaFcj7qidfVej3GwyWJAXsB9fcbc1-zG\",\"appVersion\":\"1037.500.327.0 (1037500327)\"},{\"name\":\"web_time_spent_bit_array\",\"policy\":{\"r\":1},\"time\":1776380231095.6501,\"extra\":\"{\\\"sid_raw\\\":\\\"7nb758:s50154:y94gkj\\\",\\\"start_endpoint\\\":\\\"comet.stories.viewer\\\",\\\"start_event\\\":\\\"mousemove\\\",\\\"start_time\\\":1776380205,\\\"tos_array\\\":[8146947,0],\\\"tos_cum\\\":26,\\\"tos_id\\\":\\\"y94gkj\\\",\\\"tos_len\\\":25,\\\"tos_seq\\\":2}\",\"tags\":[1,128],\"sessionId\":\"7nb758:vc2e15:y94gkj\",\"deviceId\":\"fd.ARsI0OXNi2ljeXXwsmex5dXeipDS4gcqB5_3rLVzpwRHInwJKt9RIJysnaFcj7qidfVej3GwyWJAXsB9fcbc1-zG\",\"appVersion\":\"1037.500.327.0 (1037500327)\"}],\"ts\":1776380229732.3}"
+                    "value": "1776725816589.2002"
                 }
             ]
         }
