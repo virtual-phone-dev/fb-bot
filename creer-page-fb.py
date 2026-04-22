@@ -95,7 +95,7 @@ async def fin_creation_page(page):
     print("reload"); await page.reload() # Actualiser la page
     
     await aimer_post(page)
-    await masquer_photo(page)
+    #await masquer_photo(page)
     
     
     
@@ -272,6 +272,7 @@ async def mettre_photo(page, context) :
     else:           
         await page.goto("https://www.facebook.com", timeout=0)
         await basculer_sur_la_page(page)
+        await page.wait_for_load_state('networkidle')  # Attendre que la page soit prête
         await acceder_page(page)
         await mettre_photo_couverture(page)
         await mettre_photo_profil(page)
@@ -391,8 +392,8 @@ async def main():
             #await basculer_sur_la_page(page)
             #await acceder_page(page)
                 
-            #await mettre_photo(page, context)
-            #await publier_post(page)
+            await mettre_photo(page, context)
+            await publier_post(page)
             await fin_creation_page(page)
                 
             await verifier_commande(page, PAUSE_MINUTES)
