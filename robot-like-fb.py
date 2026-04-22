@@ -152,7 +152,7 @@ async def liker_post(page, context, url_page):
 async def main():
     async with async_playwright() as p: 
         browser = await p.chromium.launch(        
-            headless=True,
+            headless=False,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
@@ -160,7 +160,7 @@ async def main():
                 "--disable-web-security",
             ],
         )        
-        
+
         pages_list = await charger_fichier("page_active.json") # Charger la liste de pages
         comptes = await charger_fichier("comptes-fb.json")   
         #derniere_page = (await charger_fichier("derniere_page.json")).get("name")        
@@ -174,14 +174,16 @@ async def main():
         pages_list = [p for p in pages_list if "url" in p]
         cycle_pages = cycle(pages_list)
         
-        while True:                       
+        while True:             
+            #print(" cc");
             for compte in comptes:
+                #print(" dd");
                 page = next(cycle_pages); 
                 fichier_cookie = compte.get("fichier")
                 nomDeMonCompte = compte.get("id_inchangeable")
 
                 url_page = page.get('url')
-                name = page.get('name');
+                name = page.get('name'); #print("name : ", name); print(url_page);
                                 
                                 
                 if derniere_page:
@@ -202,8 +204,8 @@ async def main():
                 await sauvegarder_fichier("derniere_page.json", {"name": name}) # ✅ sauvegarde de la dernière page
                 await context.close() #fermer le contexte (ou la fenetre)
 
-            if debut: 
-                print("✅ Patiente 30 minutes"); await asyncio.sleep(60 * 30)
+            #if debut: 
+            #    print("✅ Patiente 30 minutes"); await asyncio.sleep(60 * 30)
             
             
         

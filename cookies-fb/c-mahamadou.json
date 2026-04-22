@@ -25,7 +25,7 @@
             "value": "100049501965903",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808292748.222929,
+            "expires": 1808370866.494789,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -65,38 +65,28 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777361551,
+            "expires": 1777439850,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
+        },
+        {
+            "name": "xs",
+            "value": "33%3As5vtqdbP9Eik8w%3A2%3A1773099614%3A-1%3A-1%3A%3AAcx1R7EV2iA9PEJhfDGG6YNqm2fTBzag5ldkS4mddC8",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1808370866.495304,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
         },
         {
             "name": "i_user",
             "value": "61572560261632",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1807956811.709161,
+            "expires": 1808371045.089801,
             "httpOnly": false,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
-            "name": "fr",
-            "value": "1wgmcpuJWE5MaZ6pd.AWekYHk75yqEpqCWIAeyi9kX9yTtaiA_xJZGfAATjv4AW_ynDBM.Bp5ygL..AAA.0.0.Bp5ygL.AWd6wmRaamjxgKyJaszNDQK8RdY",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1784532748.223262,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
-            "name": "xs",
-            "value": "33%3As5vtqdbP9Eik8w%3A2%3A1773099614%3A-1%3A-1%3A%3AAcx0Mgz0m-vHs-1T55YYaA5zlqsDMpOG6Ejh9UF7IdY",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1808292748.223418,
-            "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         }
@@ -106,12 +96,8 @@
             "origin": "https://www.facebook.com",
             "localStorage": [
                 {
-                    "name": "ps:61572560261632:3c59296b-bece-4718-bd68-7b85a0693d39",
-                    "value": "69319211-0ccb-4c5f-96aa-9b2537732614:1776756850544"
-                },
-                {
-                    "name": "mutex_falco_queue_log^$100049501965903^#61572560261632^#^#hmac_ttl.1776756735.AR2rW2DBF-iBV9GE6gIAvNx-2Zt9mN6caSKD5LJbn64LC46r^$",
-                    "value": "trnl6y:1776756746729"
+                    "name": "armadillo_msgr_data_loss_stats",
+                    "value": "{}"
                 },
                 {
                     "name": "CacheStorageVersion",
@@ -119,11 +105,7 @@
                 },
                 {
                     "name": "Session",
-                    "value": "qmngd3:1776756887111"
-                },
-                {
-                    "name": "mutex_falco_queue_immediately^$100049501965903^#61572560261632^#^#hmac_ttl.1776756735.AR2rW2DBF-iBV9GE6gIAvNx-2Zt9mN6caSKD5LJbn64LC46r^$",
-                    "value": "trnl6y:1776756746729"
+                    "value": "fc3f4k:1776835102253"
                 },
                 {
                     "name": "_oz_bandwidthEstimate",
@@ -131,31 +113,23 @@
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1776756750467.5"
+                    "value": "1776803002039.2"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"61572560261632\",\"currentIntervalLastTick\":1776756862,\"currentIntervalStart\":1776756747,\"initRemoteAgg\":{\"timestamp\":1776545285,\"today_s\":0},\"intervals\":[{\"end\":1776421715,\"start\":1776421098}],\"lastCallbackAttempt\":1776756747,\"localStorageId\":\"15643427\",\"syncedL24HS\":-1,\"syncedTodayS\":512,\"lastSyncTimeStamp\":1776421418}"
-                },
-                {
-                    "name": "last_headload_time",
-                    "value": "1776756746977"
+                    "value": "{\"actorId\":\"61572560261632\",\"currentIntervalLastTick\":1776835067,\"currentIntervalStart\":1776835048,\"initRemoteAgg\":{\"timestamp\":1776545285,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1776835048,\"localStorageId\":\"2651868\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
                 },
                 {
                     "name": "RSTData",
                     "value": "{}"
                 },
                 {
-                    "name": "mutex_falco_queue_critical^$100049501965903^#61572560261632^#^#hmac_ttl.1776756735.AR2rW2DBF-iBV9GE6gIAvNx-2Zt9mN6caSKD5LJbn64LC46r^$",
-                    "value": "trnl6y:1776756746730"
+                    "name": "hb_timestamp",
+                    "value": "1776834896897"
                 },
                 {
                     "name": "bdz_playback_state",
-                    "value": "{\"session_key\":\"mnogon8m\",\"buffer_length\":60}"
-                },
-                {
-                    "name": "hb_timestamp",
-                    "value": "1776756782131"
+                    "value": "{\"session_key\":\"mnvbb54l\",\"buffer_length\":60}"
                 },
                 {
                     "name": "_oz_bandwidthAndTTFBSamples",
@@ -163,15 +137,11 @@
                 },
                 {
                     "name": "ares_last_signal_flush",
-                    "value": "1775556815782"
+                    "value": "1775971050933"
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1776756752229"
-                },
-                {
-                    "name": "ps:61572560261632:1cc65a2d-e044-49c9-a5c8-5a0989dac6cf",
-                    "value": "34f87160-12fd-4ac7-aacd-e2564c6ea2fb:1776421693100"
+                    "value": "1776834866996"
                 }
             ]
         },

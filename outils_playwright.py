@@ -19,6 +19,20 @@ async def verifier_blocage(page):
         return "bloquer_selfie_video"
     
     
+async def reparer_fb(page):
+    btn = await page.query_selector("text=confirmez qu’il s’agit de votre compte pour le déverrouiller")
+    if btn:
+        print("bloqué - confirmez...")
+        #print("patiente 2 minutes"); await asyncio.sleep(60*2)
+        
+        while True:
+            print("patiente 2s"); await asyncio.sleep(2)
+            btn = page.get_by_label("Votre profil")
+            if await btn.count() > 0:
+                return "connecté_déblocage_réussi"
+
+        
+        
 async def basculer_sur_la_page(page):
     
     btn = page.locator('a[aria-label="Espace Pubs"][role="link"]').first
@@ -62,6 +76,10 @@ async def connecter_gmail(context, email):
     page = await context.new_page() #acceder a gmail
     await appliquer_stealth(page) # appliquer stealth
     await page.goto("https://mail.google.com", timeout=0)  
+    
+    btn = page.locator('div[role="button"]:has-text("Nouveau message")')
+    if await btn.count() > 0:
+        return
     
     while True:
         print("patiente 2s"); await asyncio.sleep(2)

@@ -8,9 +8,9 @@ PAUSE_MINUTES = 20
 
 
 
-phrase = """Lien du site internet pour rejoindre le Club du Diable
+phrase = """Lien du site internet pour rejoindre la Secte de SATAN
 
-Sur le site internet, créer votre compte et envoyer un message au Club de la Richesse, et vous aller recevoir 500.000 dollars après avoir signé votre pacte avec le Seigneur Lucifer
+Sur le site internet, créer votre compte et envoyer un message à la Secte de SATAN, et vous aller recevoir 500.000 dollars après avoir signé votre pacte avec le Seigneur Lucifer
 
 https://florinato105.onrender.com"""
 
@@ -133,7 +133,7 @@ async def creer_page(page, context):
         
     btn = page.locator('span:has-text("Nom de la Page (obligatoire)")')
     if await btn.count() > 0:
-        await btn.fill("Richesse avec SATAN")
+        await btn.fill("Secte de SATAN")
         
         
     btn = page.get_by_label("Catégorie (obligatoire)") 
@@ -281,7 +281,7 @@ async def acceder_page(page) :
     #print("patiente 10s"); await asyncio.sleep(10) 
     while True:
         await asyncio.sleep(1)
-        btn = await page.query_selector("text=Richesse avec SATAN")
+        btn = await page.query_selector("text=Secte de SATAN")
         if btn:
             await btn.click()
             print("patiente 1s"); await asyncio.sleep(1)  

@@ -1,6 +1,6 @@
 import json, asyncio, time, msvcrt
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies, basculer_sur_la_page)
+from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies, basculer_sur_la_page, reparer_fb)
 
 url_post = "https://www.threads.com/@les_luxueux_du_congo/post/DW6jd9cjM2P"
 PAUSE_MINUTES = 1
@@ -368,17 +368,31 @@ async def creer_compte_insta(page, context, compte, fichier_des_comptes, email, 
 
 
 
-async def verifier_message_fb(page):
+async def connexion_fb(page, email, mot_de_passe):
+    await page.get_by_label("E-mail ou numéro de mobile").fill(email)
+    await page.fill('input[name="pass"]', mot_de_passe)
+        
+    btn = page.get_by_label("Se connecter")
+    if await btn.count() > 0:                                               
+        await btn.click()
+            
+
+async def verifier_message_fb(page, email, mot_de_passe):
     #print(f"Création du compte : {nom_complet}")
     await page.goto("https://fb.com", timeout=0) #acceder a fb
+
+    statut = await reparer_fb(page)
+    if statut == "connecté_déblocage_réussi": print("connecté (déblocage réussi)"); return
     
-    print("patiente 5s"); await asyncio.sleep(5)
+    
+    print("patiente 2s"); await asyncio.sleep(2)
     btn = await page.query_selector("text=Tableau de bord")
     if btn:
         print("Connecté sur la page")
     else:
-        await basculer_sur_la_page(page)
-    
+        print("Non Connecté")
+        await connexion_fb(page, email, mot_de_passe)
+        
     
     
 async def main():
@@ -409,6 +423,7 @@ async def main():
                 
             fichier_cookie = compte["fichier"]
             email = compte["email"]
+            mot_de_passe = compte["mot_de_passe"]
             nom = compte["id_inchangeable"]
             print("✅ Compte : ", nom);
             
@@ -423,13 +438,12 @@ async def main():
         
             #nom_complet = compte["nom_complet"]
             #nom_profil = compte["nom_profil"]
-            #mot_de_passe = compte["mot_de_passe"]
-
+            
             page = await context.new_page()
             await apply_stealth(page)
             
             #await connecter_gmail(context, email)
-            await verifier_message_fb(page);
+            await verifier_message_fb(page, email, mot_de_passe);
             
             await verifier_commande(page, PAUSE_MINUTES)
             await sauvegarder_cookies(context, fichier_cookie)
