@@ -1,8 +1,9 @@
 import json, asyncio
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail)
+from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies)
 
-url_post = "https://www.threads.com/@les_luxueux_du_congo/post/DW6jd9cjM2P"
+
+url_post = "https://www.instagram.com/p/DXee8RFDYgB/"
 
 
 
@@ -62,27 +63,6 @@ async def apply_stealth(page):
     Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
     Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
     Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
-
-
-        
-def load_cookies(fichier_des_comptes):
-    with open(fichier_des_comptes, "r", encoding="utf-8") as f:
-        raw_cookies = json.load(f)
-
-    cookies = []
-    for c in raw_cookies:
-        cookies.append(
-            {
-                "name": c.get("name"),
-                "value": c.get("value"),
-                "domain": c.get("domain"),
-                "path": c.get("path", "/"),
-                "httpOnly": c.get("httpOnly", False),
-                "secure": c.get("secure", False),
-                "expires": c.get("expirationDate", -1),
-            }
-        )
-    return cookies
 
 
 
@@ -293,59 +273,8 @@ async def mettre_photo_profil_insta(page, nom_profil):
         count += 1
     await patiente_photo_profil_insta_ajouter(page)   
     
-    
+         
 
-async def patiente_compte_insta_connecter(page, context):
-    while True:
-        try:
-            # bouton 1
-            btn = page.get_by_role("button", name="Enregistrer les identifiants")
-            if await btn.is_visible():
-                print("Enregistrer trouvé ✅")
-                await btn.click()
-                break
-
-            # bouton 2
-            btn = page.get_by_role("button", name="Plus tard")
-            if await btn.is_visible():
-                print("Plus tard trouvé ✅")
-                await btn.click()
-                break
-
-            # bouton 3
-            btn = page.get_by_label("Accueil")
-            if await btn.is_visible():
-                print("Accueil trouvé ✅")
-                break
-        except:
-            pass
-
-        # attendre seulement si rien trouvé
-        print("patiente 5s")
-        await asyncio.sleep(5)
-        
-    #await save_cookies(context)           
-    
-            
-
-async def connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil):
-    await page.get_by_label("Numéro de mobile, nom de profil ou adresse e-mail").fill(email)
-    await page.get_by_label("Mot de passe").fill(mot_de_passe)
-    await page.locator('div[aria-label="Se connecter"]').click()
-    
-    print("patiente 10s")
-    await asyncio.sleep(10)
-    
-    await patiente_compte_insta_connecter(page, context)
-    await marquer_creer(compte, fichier_des_comptes)
-    await mettre_photo_profil_insta(page, nom_profil)
-    
-    #page2 = await context.new_page()
-    #await apply_stealth(page2)
-    #await page2.goto("https://threads.com", timeout=0)
-    
-    #await creer_compte_threads(page2)  
-    
     
             
 async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe):
@@ -380,6 +309,68 @@ async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_com
 
 
 
+async def patiente_compte_insta_connecter(page, context):
+    while True:
+        try:
+            # bouton 1
+            btn = page.get_by_role("button", name="Enregistrer les identifiants")
+            if await btn.is_visible():
+                print("Enregistrer trouvé ✅")
+                await btn.click()
+                break
+
+            # bouton 2
+            btn = page.get_by_role("button", name="Plus tard")
+            if await btn.is_visible():
+                print("Plus tard trouvé ✅")
+                await btn.click()
+                break
+
+            # bouton 3
+            btn = page.get_by_label("Accueil")
+            if await btn.is_visible():
+                print("Accueil trouvé ✅")
+                break
+        except:
+            pass
+
+        # attendre seulement si rien trouvé
+        print("patiente 5s")
+        await asyncio.sleep(5)
+        
+    #await save_cookies(context)           
+ 
+ 
+async def connexion_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil):
+    await page.goto(f"https://www.instagram.com", timeout=0)
+    
+    btn = page.get_by_label("Accueil")
+    if not await btn.is_visible():
+        #print("Accueil non trouvé")
+    
+        await page.get_by_label("Numéro de mobile, nom de profil ou adresse e-mail").fill(email)
+        await page.get_by_label("Mot de passe").fill(mot_de_passe)
+        await page.locator('div[aria-label="Se connecter"]').click()
+        print("patiente 10s"); await asyncio.sleep(10)
+        
+    await patiente_compte_insta_connecter(page, context)
+    
+    #await marquer_creer(compte, fichier_des_comptes)
+    #await mettre_photo_profil_insta(page, nom_profil)
+    
+    #page2 = await context.new_page()
+    #await apply_stealth(page2)
+    #await page2.goto("https://threads.com", timeout=0)
+    
+    #await creer_compte_threads(page2)  
+    
+    
+async def liker(page):
+    await page.wait_for_load_state("domcontentloaded")
+    await page.goto(url_post, timeout=0)
+    print("patiente 10s"); await asyncio.sleep(10)
+
+
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
@@ -394,17 +385,15 @@ async def main():
 
         #context = await browser.new_context()
         
-        fichier_des_comptes = "comptes-th.json"
+        fichier_des_comptes = "comptes-insta.json"
         comptes = await charger_comptes(fichier_des_comptes)
-
-        # Charger les cookies AVANT d'ouvrir la page
-        #cookies = load_cookies(fichier_des_comptes)
-        #await context.add_cookies(cookies)
 
         #page = await context.new_page() # nouvel onglet
         #await apply_stealth(page)
         
         for compte in comptes:
+            fichier_cookie = compte["fichier"]
+            
             if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
                 continue
                 
@@ -412,9 +401,12 @@ async def main():
             #    continue  # skip si compte déjà créé
             
             context = await browser.new_context() #nouveau contexte pour chaque compte
+            
+            cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
+            await context.add_cookies(cookies)
         
             nom_complet = compte["nom_complet"]
-            #nom_profil = compte["nom_profil"]
+            nom_profil = compte["nom_profil"]
             email = compte["email"]
             mot_de_passe = compte["mot_de_passe"]
             
@@ -431,8 +423,9 @@ async def main():
             #break
             
             #await reparer_th(page, context, nom_complet, email, mot_de_passe)
-            await connexion_th(page, email, mot_de_passe)
-            
+            await connexion_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
+            await liker(page)
+            await sauvegarder_cookies(context, fichier_cookie)
             
             await context.close() #fermer le contexte (ou la fenetre)
         print("patiente 10000s"); await asyncio.sleep(10000)

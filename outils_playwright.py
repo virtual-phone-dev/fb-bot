@@ -198,11 +198,19 @@ def charger_cookies(fichier):
 # Sauvegarder cookies
 async def sauvegarder_cookies(contexte, fichier):
     print("on sauvegarde")
+
+    # ✅ créer le dossier si il n'existe pas
+    dossier = os.path.dirname(fichier)
+    if dossier:
+        os.makedirs(dossier, exist_ok=True)
+
     state = await contexte.storage_state()
     
     with open(fichier, "w", encoding="utf-8") as f:
         json.dump(state, f, indent=4, ensure_ascii=False)
-    print("cookies sauvegardés")
+
+    print(f"cookies sauvegardés")
+    
     
 
 async def sauvegarder_sur_meme_ligne(fichier, data):

@@ -2,7 +2,7 @@ import json, asyncio
 from playwright.async_api import async_playwright
 from outils_playwright import (connecter_gmail)
 
-url_post = "https://www.threads.com/@les_luxueux_du_congo/post/DW6jd9cjM2P"
+url_post = "https://www.threads.com/@ntlantlamasemola/post/DXfVkzyjW4-"
 
 
 
@@ -377,9 +377,14 @@ async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_com
     await patiente_compte_insta_connecter(page, context)
     await marquer_creer(compte, fichier_des_comptes) # marquer comme créé
     await mettre_photo_profil_insta(page, nom_profil)
+    
 
 
-
+async def liker(page):
+    await page.goto(url_post, timeout=0)
+    print("patiente 10000s"); await asyncio.sleep(10000)
+    
+    
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
@@ -423,8 +428,6 @@ async def main():
             page = await context.new_page()
             await apply_stealth(page)
             #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
-
-            #await page.goto("https://www.instagram.com", timeout=0)
             #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
             
             #await commenter_th(page, email, mot_de_passe)
@@ -432,6 +435,7 @@ async def main():
             
             #await reparer_th(page, context, nom_complet, email, mot_de_passe)
             await connexion_th(page, email, mot_de_passe)
+            await liker(page)
             
             
             await context.close() #fermer le contexte (ou la fenetre)
