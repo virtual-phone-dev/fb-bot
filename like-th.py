@@ -1,6 +1,6 @@
 import json, asyncio
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail)
+from outils_playwright import (connecter_gmail, sauvegarder_cookies, charger_cookies)
 
 url_post = "https://www.threads.com/@ntlantlamasemola/post/DXfVkzyjW4-"
 
@@ -410,6 +410,8 @@ async def main():
         #await apply_stealth(page)
         
         for compte in comptes:
+            fichier_cookie = compte["fichier"]
+            
             if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
                 continue
                 
@@ -417,6 +419,9 @@ async def main():
             #    continue  # skip si compte déjà créé
             
             context = await browser.new_context() #nouveau contexte pour chaque compte
+            
+            cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
+            await context.add_cookies(cookies)
         
             nom_complet = compte["nom_complet"]
             #nom_profil = compte["nom_profil"]
@@ -436,6 +441,7 @@ async def main():
             #await reparer_th(page, context, nom_complet, email, mot_de_passe)
             await connexion_th(page, email, mot_de_passe)
             await liker(page)
+            await sauvegarder_cookies(context, fichier_cookie)
             
             
             await context.close() #fermer le contexte (ou la fenetre)
