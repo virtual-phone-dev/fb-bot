@@ -30,8 +30,35 @@ async def visiter(browser, compte, url, comments, posts, blacklist, page_name=No
 
 
 
-async def connexion_bs(page):
+async def verifier_blocage_bs(page):
+    btn = await page.query_selector("text=Votre compte a été suspendu")
+    if btn:
+        return "compte_desactiver"
+        
+        
+async def connexion_bs(page, email, mot_de_passe):
     await page.goto("https://bsky.app/", timeout=0)
+    await page.wait_for_load_state("domcontentloaded")
+
+    while True:
+        btn = page.locator('span:has-text("Connexion")')
+        if await btn.count() > 0:
+            await btn.click()
+            break
+            
+    await page.get_by_label("Pseudo ou e-mail").fill(email)
+    await page.fill('input[data-testid="loginPasswordInput"]', mot_de_passe);
+    #await page.fill('input[aria-label="Mot de passe"]', 'votre_mot_de_passe');
+    
+    print("patiente 1s"); await asyncio.sleep(1)
+    await page.click('button[data-testid="loginNextButton"]');
+
+    print("patiente 10s"); await asyncio.sleep(10)
+    statut = await verifier_blocage_bs(page)
+    if statut == "compte_desactiver": print("⛔ Compte désactiver"); return
+    
+    #print("patiente 10000s"); await asyncio.sleep(10000)
+    
     
     
 async def liker(page):
@@ -55,16 +82,16 @@ async def main():
             
             #nom_complet = compte["nom_complet"]
             #nom_profil = compte["nom_profil"]
-            #email = compte["email"]
-            #mot_de_passe = compte["mot_de_passe"]
+            email = compte["email"]
+            mot_de_passe = compte["mot_de_passe"]
             
             print(fichier_cookie);
 
             page = await context.new_page()
             await appliquer_stealth(page)
             
-            await connexion_bs(page)
-            await liker(page)
+            await connexion_bs(page, email, mot_de_passe)
+            #await liker(page)
 
 asyncio.run(main())
 
