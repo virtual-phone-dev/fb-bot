@@ -547,6 +547,46 @@ Tu-viens-me-rejoindre-sous-la-douche
 
 
 
+SCÉNARIO SIMPLE
+🏦 Départ
+
+Point RDC :
+
+350 000 FCFA cash physique
+
+👉 Il t’envoie ça = c’est son “fonds de départ”
+
+🔴 Étape 1 : RETRAIT
+
+Un créateur retire 50 000 :
+
+le point donne 50 000 cash réel
+son stock devient : 300 000
+
+👉 Il a “perdu du cash temporairement”
+
+🟢 Étape 2 : DÉPÔT (cash-in)
+
+Un utilisateur vient recharger 50 000 :
+il donne 50 000 cash au point
+le point remet 50 000 dans le système
+👉 stock redevient : 350 000
+
+
+
+stock 100000fcfa
+retrait 250000 , nouveau stock 75000
+depot 25000 , nouveau stock 100000fcfa
+si il epuise les 100000fcfa sans retrait, alors là il va m'envoyer à nouveau 100000fcfa pour recharger son stock
+
+300000
+stock 300000
+stock recuperation 0
+benefice izocash 25000
+
+r200000
+d200000
+
 
 const links = document.querySelectorAll('.x78zum5.x1q0g3np.x1a02dak.x1qughib a');
 
@@ -716,6 +756,145 @@ console.log(bio);
 
 
 
+
+
+
+1
+Salut Enfant de la Richesse, voici les informations pour rejoindre le Club de la Richesse :
+
+Lien du site internet pour rejoindre le Club de la Richesse
+
+Sur le site internet, créer votre compte et envoyer un message au Club de la Richesse, et vous aller recevoir 5000 dollars après avoir signé votre pacte avec le Seigneur Lucifer
+
+https://florinato105.onrender.com
+
+
+
+
+
+Salut Enfant de la Richesse, suivez les instructions ci-dessous :
+
+Lien du site internet pour rejoindre le Club du Diable 
+
+Sur le site internet, créer votre compte et envoyer un message au Club de la Richesse, et vous aller recevoir 5000 dollars après avoir signé votre pacte avec le Seigneur Lucifer
+
+https://florinato105.onrender.com
+
+
+
+
+
+
+
+
+
+6
+Vous avez été sélectionné pour recevoir un téléphone et un ordinateur portable. Cliquez ici pour réclamer https://florinato105.onrender.com
+
+
+5
+Vous avez été sélectionné pour recevoir un voyage gratuit pour le Canada. Cliquez ici pour réclamer https://florinato105.onrender.com
+
+
+8
+Prêt d’argent disponible. Cliquez ici pour en bénéficier https://florinato105.onrender.com
+
+
+1
+Prêt d’argent disponible. Cliquez ici pour recevoir un Prêt d'argent https://florinato105.onrender.com
+
+
+Prêt d’argent disponible. Viens sur le site internet recevoir un Prêt d'argent
+
+
+
+
+wat
+
+
+cliquer sur le bouton " S'inscrire "
+
+const bouton = Array.from(document.querySelectorAll('span')).find(btn => btn.innerText.includes("Importer une photo"));
+if (bouton) {
+  bouton.click();
+}
+
+
+cliquer sur le bouton " S'enregistrer avec un courriel "
+
+const bouton = Array.from(document.querySelectorAll('button')).find(btn => btn.innerText.includes("S'enregistrer avec un courriel"));
+if (bouton) {
+  bouton.click();
+}
+
+
+
+// Sélectionner l'Année
+const selectYear = document.querySelector('select#year');
+
+if (selectYear) {
+  // Définir l'année à 2000
+  selectYear.value = "2000";
+
+  // Optionnel : déclencher l'événement change si nécessaire
+  selectYear.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
+
+
+// Sélectionner le jour
+const selectDay = document.querySelector('select#day');
+
+if (selectDay) {
+  // Définir le jour à 1
+  selectDay.value = "01";
+
+  // Déclencher l'événement change si nécessaire
+  selectDay.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
+
+// Sélectionner le "Mois"
+const selectMonth = document.querySelector('select#month');
+
+if (selectMonth) {
+  // Définir le mois à "01" pour janvier
+  selectMonth.value = "01";
+
+  // Déclencher l'événement change si nécessaire
+  selectMonth.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
+
+
+cliquer sur la checkbox
+
+const checkbox = document.querySelector('input#policy-consent');
+if (checkbox) {
+  checkbox.click();
+}
+
+
+
+
+
+
+gmail , cliquer sur le bouton envoyer
+
+const sendDiv = document.querySelector('div[aria-label="Envoyer ‪(Ctrl-Enter)‬"]');
+if (sendDiv) {
+  sendDiv.click();
+}
+
+
+
+.fill("shvqqq@gmail.com")
+    await page.get_by_label("Mot de passe").fill("Diel2019@#")
+    await page.get_by_label("Nom complet").fill("Natalie Hayes")
+	
+	
+	
+	
 On ne peut pas prêcher l’espérance à quelqu’un qui te voit vivre mieux grâce à son sacrifice.
 
 
@@ -732,21 +911,6 @@ Ils quittent l’institution, pas forcément la spiritualité.
 
 tu hésites entre manger et te soigner.
 tu dors mal
-
-
-
-
-
-
-
-
-
-
-
-Si tu aimes t'amuser, viens sur ce site tu vas voir les femmes qui enlèvent leurs slip 
-
-
-bb viens éjaculer. Rejoins-moi sur Florinato https://florinato121.vercel.app/video
 
 
 

@@ -1,7 +1,7 @@
 import asyncio
 from itertools import cycle;
 from playwright.async_api import async_playwright
-from outils_playwright import (creer_context, creer_page, aller, envoyer_commentaire_bs, charger_json, post_deja_commente, est_blacklist, ajouter_blacklist, sauvegarder_json)
+from outils_playwright import (creer_context, creer_page, aller, appliquer_stealth, charger_cookies, charger_fichier)
 
 FICHIER_POSTS = "sauvegarde-bs/posts_commentes.json"
 FICHIER_BLACKLIST = "sauvegarde-bs/blacklist.json"
@@ -29,6 +29,11 @@ async def visiter(browser, compte, url, comments, posts, blacklist, page_name=No
     await contexte.close()
 
 
+
+async def connexion_bs(page):
+    await page.goto("https://bsky.app/", timeout=0)
+    
+    
 async def liker(page):
     await page.goto(url_post, timeout=0)
     print("patiente 10000s"); await asyncio.sleep(10000)
@@ -36,44 +41,30 @@ async def liker(page):
     
 
 async def main():
-    comptes = charger_json("accounts-bs.json", [])
-    pages = charger_json("pages-tout-pays-bs.json", [])
-    comments = charger_json("phrases-travail.json", [])
-    posts = charger_json(FICHIER_POSTS, [])
-    blacklist = charger_json(FICHIER_BLACKLIST, {})
-    
-    # pour choisir la zone ou demarrer
-    index_zone = charger_json("index_zone_bs.json", {})
-    start_zone = index_zone.get("start_zone")
-
-    start_index = 0
-    if start_zone:
-        for i, item in enumerate(pages):
-            if item.get("zone") == start_zone:
-                start_index = i + 1
-                print("Démarrage à partir de la zone :", start_zone)
-                break
-    
-    # filtre comptes actifs
-    comptes = [c for c in comptes if not c["fichier"].startswith("-")]
-
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False, args=["--disable-blink-features=AutomationControlled"])
-        cycle_comptes = cycle(comptes)
+        browser = await p.chromium.launch(headless=False, args=["--disable-blink-features=AutomationControlled"])    
+        comptes = await charger_fichier("comptes-bs.json")
+        comptes = [c for c in comptes if not c["fichier"].startswith("-")]        
         
-        while True:
-            for page in pages[start_index:]:
-                
-                # SI C’EST UNE ZONE → ON SAUVEGARDE
-                if "zone" in page:
-                    print("Nouvelle zone détectée :", page["zone"])
-                    sauvegarder_json("index_zone_bs.json", {"start_zone": page["zone"]})
-                    continue
-        
-                if "url" not in page:
-                    continue
-                #await visiter(browser, next(cycle_comptes), page["url"], comments, posts, blacklist, page.get("name"))
-                await liker(page)
+        for compte in comptes:
+            
+            fichier_cookie = compte["fichier"]
+            context = await browser.new_context() #nouveau contexte pour chaque compte
+            cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
+            await context.add_cookies(cookies)
+            
+            #nom_complet = compte["nom_complet"]
+            #nom_profil = compte["nom_profil"]
+            #email = compte["email"]
+            #mot_de_passe = compte["mot_de_passe"]
+            
+            print(fichier_cookie);
+
+            page = await context.new_page()
+            await appliquer_stealth(page)
+            
+            await connexion_bs(page)
+            await liker(page)
 
 asyncio.run(main())
 
