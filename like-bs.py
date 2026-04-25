@@ -67,49 +67,84 @@ async def connexion_bs(page, email, mot_de_passe):
     
     
     
-async def liker(page):
-    await page.goto(url_post, timeout=0)
+async def liker(page, url_page):
+    await page.goto(url_page, timeout=0)
     print("patiente 5s"); await asyncio.sleep(5)
+    
+    fichier_posts = "posts_deja_liker_bs.json"
+    posts = charger_fichier(fichier_posts)
+    
+    statut = await recuperer_texte_bs(page, posts, fichier_posts) # Vérifier si posts deja liker
+    if statut == "deja_liker": return #print("Déjà liké"); 
+    print("patiente 10000s"); await asyncio.sleep(10000)
+    
     
     element = await page.query_selector('div[data-testid="contentHider-post"]') # 🔹 trouver le premier post
     if element:
         await page.evaluate(""" const posts = document.querySelectorAll('div[data-testid="contentHider-post"]');
         if (posts.length > 0) { posts[0].click(); } """)
     
-    # Cibler tous les boutons "J'aime" et cliquer dessus
-    #await page.eval_on_selector_all('button[data-testid="likeBtn"]', 'buttons => buttons.forEach(b => b.click())')
+    
+    print("patiente 3s"); await asyncio.sleep(3)  
+    
+    await page.eval_on_selector_all('button[data-testid="likeBtn"]', 'buttons => buttons.forEach(b => b.click())') # Cibler tous les boutons "J'aime" et cliquer dessus
     print("patiente 4s"); await asyncio.sleep(4)    
+    
     
 
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=False, args=["--disable-blink-features=AutomationControlled"])    
         comptes = await charger_fichier("comptes-bs.json")
-        comptes = [c for c in comptes if not c["fichier"].startswith("-")]        
-        
-        for compte in comptes:
-            fichier_cookie = compte["fichier"]
-            
-            context = await browser.new_context() #nouveau contexte pour chaque compte
-            
-            cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
-            await context.add_cookies(cookies)
-            
-            #nom_complet = compte["nom_complet"]
-            #nom_profil = compte["nom_profil"]
-            email = compte["email"]
-            mot_de_passe = compte["mot_de_passe"]
-            
-            print(fichier_cookie);
+        comptes = [c for c in comptes if not c["fichier"].startswith("-")]      
 
-            page = await context.new_page()
-            await appliquer_stealth(page)
-            
-            await connexion_bs(page, email, mot_de_passe)
-            await liker(page)
-            await sauvegarder_cookies(context, fichier_cookie)
-            
-            await context.close()
+        pages_list = await charger_fichier("page_active_bs.json") # Charger la liste de pages
+        pages_list = [p for p in pages_list if "url" in p]
+        cycle_pages = cycle(pages_list)
+        
+        data = await charger_fichier("derniere_page_bs.json")
+        derniere_page = data.get("name")
+        debut = False
+        
+        while True: 
+            for compte in comptes:
+                fichier_cookie = compte["fichier"]
+                
+                page = next(cycle_pages); 
+                fichier_cookie = compte.get("fichier")
+                nomDeMonCompte = compte.get("nom")
+
+                url_page = page.get('url')
+                name = page.get('name'); #print("name : ", name); print(url_page);
+                                
+                                
+                if derniere_page:
+                    if derniere_page == name: debut = True
+                    if not debut: continue
+                
+                print("✅", nomDeMonCompte); print(name); print(url_page);
+                
+                context = await browser.new_context() #nouveau contexte pour chaque compte
+                
+                cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
+                await context.add_cookies(cookies)
+                
+                #nom_complet = compte["nom_complet"]
+                #nom_profil = compte["nom_profil"]
+                email = compte["email"]
+                mot_de_passe = compte["mot_de_passe"]
+                
+                print(fichier_cookie);
+
+                page = await context.new_page()
+                await appliquer_stealth(page)
+                
+                await connexion_bs(page, email, mot_de_passe)
+                await liker(page, url_page)
+                
+                await sauvegarder_fichier("derniere_page_bs.json", {"name": name}) # ✅ sauvegarde de la dernière page
+                await sauvegarder_cookies(context, fichier_cookie)
+                await context.close()
 
 asyncio.run(main())
 

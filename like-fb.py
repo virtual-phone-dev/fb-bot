@@ -1,8 +1,9 @@
 import json, asyncio, os, time, math
 from itertools import cycle
 from playwright.async_api import async_playwright 
-from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, charger_cookies, charger_fichier, sauvegarder_fichier)
 from datetime import datetime, timedelta
+from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, charger_cookies, charger_fichier, sauvegarder_fichier, sauvegarder_json, 
+post_deja_liker, ajouter_post)
 
 url_fb = "https://fb.com"
 
@@ -39,29 +40,8 @@ def charger_derniere_page():
         return None
         
 
-def sauvegarder_json(fichier, data):
-    with open(fichier,"w",encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
 
-
-
-
-# Posts liker
-def post_deja_liker(posts, lien):
-    if not lien:
-        return False
-
-    return lien in posts
-    
-           
-def ajouter_post(posts, fichier, lien):
-    if lien not in posts:
-        posts.append(lien)
-        sauvegarder_json(fichier, posts)
-
-
-
-async def recuperer_texte(page, context, posts, url_page, fichier_posts):
+async def recuperer_texte(page, posts, url_page, fichier_posts):
     # RÉCUPÉRATION TEXTE POST (NOUVELLE MÉTHODE)
     try:        
         element = page.locator('[data-ad-rendering-role="story_message"]').first
@@ -77,8 +57,8 @@ async def recuperer_texte(page, context, posts, url_page, fichier_posts):
         if posts is not None and fichier_posts:
             ajouter_post(posts, fichier_posts, identifiant_post) #print("Texte sauvegardé")
     except:
-        pass
-        #print("Impossible de récupérer le texte :", e)
+        pass #print("Impossible de récupérer le texte :", e)
+        
         
     # RÉCUPÉRATION LIEN
     source_post = page.locator('[role="article"]').nth(0)
@@ -92,7 +72,7 @@ async def recuperer_texte(page, context, posts, url_page, fichier_posts):
     
       
       
-async def post_recent(page, context, url_page):
+async def post_recent(page, url_page):
     print("patiente 4s"); await asyncio.sleep(4)
     await page.goto(url_page, timeout=0) 
     print("patiente 2s"); await asyncio.sleep(2)
@@ -104,7 +84,7 @@ async def post_recent(page, context, url_page):
     fichier_posts = "posts_deja_commentes.json"
     posts = charger_posts(fichier_posts)
         
-    statut = await recuperer_texte(page, context, posts, url_page, fichier_posts) # Vérifier si posts deja commentes
+    statut = await recuperer_texte(page, posts, url_page, fichier_posts) # Vérifier si posts deja commentes
     if statut == "deja_liker": return "deja_liker" #print("Déjà liké"); 
         
         
@@ -115,7 +95,7 @@ async def post_recent(page, context, url_page):
         
 
 
-async def liker_post(page, context, url_page):    
+async def liker_post(page, url_page):    
     await page.goto(url_fb, timeout=0) 
     
     statut = await verifier_blocage(page)
@@ -123,7 +103,7 @@ async def liker_post(page, context, url_page):
 
     await basculer_sur_la_page(page)
         
-    statut = await post_recent(page, context, url_page)
+    statut = await post_recent(page, url_page)
     if statut == "compte_inexistant": print("❌ Compte inexistant"); return
     if statut == "deja_liker": print("❌ Déjà liké"); return
         
@@ -199,7 +179,7 @@ async def main():
                 
                 page = await context.new_page()
                 await appliquer_stealth(page)
-                await liker_post(page, context, url_page)
+                await liker_post(page, url_page)
                 
                 await sauvegarder_fichier("derniere_page.json", {"name": name}) # ✅ sauvegarde de la dernière page
                 await context.close() #fermer le contexte (ou la fenetre)

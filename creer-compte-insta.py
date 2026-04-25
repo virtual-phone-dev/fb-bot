@@ -2,7 +2,7 @@ import json, asyncio
 from playwright.async_api import async_playwright
 from outils_playwright import (connecter_gmail)
 
-url_post = "https://www.threads.com/@les_luxueux_du_congo/post/DW6jd9cjM2P"
+url_post = "https://www.threads.com/@les_luxueux_du_congo/"
 
 
 
@@ -427,14 +427,15 @@ async def main():
             #await page.goto("https://www.instagram.com", timeout=0)
             #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
             
-            #await commenter_th(page, email, mot_de_passe)
+            await commenter_th(page, email, mot_de_passe)
+            print("patiente 10000s"); await asyncio.sleep(10000)
             #break
             
             #await reparer_th(page, context, nom_complet, email, mot_de_passe)
-            await connexion_th(page, email, mot_de_passe)
+            #await connexion_th(page, email, mot_de_passe)
             
             
-            await context.close() #fermer le contexte (ou la fenetre)
+            #await context.close() #fermer le contexte (ou la fenetre)
         print("patiente 10000s"); await asyncio.sleep(10000)
 
 

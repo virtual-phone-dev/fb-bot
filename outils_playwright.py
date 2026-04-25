@@ -158,8 +158,86 @@ async def connecter_gmail(context, email):
         except:
             pass   
            
-    
 
+
+def sauvegarder_json(fichier, data):
+    with open(fichier,"w",encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+
+# Posts liker
+def post_deja_liker(posts, lien):
+    if not lien:
+        return False
+
+    return lien in posts
+    
+           
+def ajouter_post(posts, fichier, lien):
+    if lien not in posts:
+        posts.append(lien)
+        sauvegarder_json(fichier, posts)
+        
+        
+async def recuperer_texte_th(page, posts, fichier_posts):
+    # RÉCUPÉRATION TEXTE POST (NOUVELLE MÉTHODE)
+    try:        
+        element = page.locator('[data-pressable-container="true"]').first
+        texte = await element.text_content()
+        
+        # ICI on coupe à 500 caractères pour eviter les tres long texte dans mon fichier
+        identifiant_post = " ".join(texte.split())[:500] #print(f"Texte : {identifiant_post[:80]}")
+        
+        if posts and post_deja_liker(posts, identifiant_post): 
+            return "deja_liker"; print(f"Déjà liké") # Vérification déjà liké
+
+        # Sauvegarde texte
+        if posts is not None and fichier_posts:
+            ajouter_post(posts, fichier_posts, identifiant_post) #print("Texte sauvegardé")
+    except:
+        pass #print("Impossible de récupérer le texte :", e)
+
+
+async def recuperer_texte_bs(page, posts, fichier_posts):
+    # RÉCUPÉRATION TEXTE POST (NOUVELLE MÉTHODE)
+    try:        
+        element = page.locator('div[data-testid="contentHider-post"]').first
+        texte = await element.text_content()
+        
+        # ICI on coupe à 500 caractères pour eviter les tres long texte dans mon fichier
+        identifiant_post = " ".join(texte.split())[:500] #print(f"Texte : {identifiant_post[:80]}")
+        
+        if posts and post_deja_liker(posts, identifiant_post): 
+            return "deja_liker"; print(f"Déjà liké") # Vérification déjà liké
+
+        # Sauvegarde texte
+        if posts is not None and fichier_posts:
+            ajouter_post(posts, fichier_posts, identifiant_post) #print("Texte sauvegardé")
+    except:
+        pass #print("Impossible de récupérer le texte :", e)
+                       
+
+
+async def recuperer_texte_insta(page, posts, fichier_posts):
+    # RÉCUPÉRATION TEXTE POST (NOUVELLE MÉTHODE)
+    try:        
+        element = page.locator('[data-pressable-container="true"]').first
+        texte = await element.text_content()
+        
+        # ICI on coupe à 500 caractères pour eviter les tres long texte dans mon fichier
+        identifiant_post = " ".join(texte.split())[:500] #print(f"Texte : {identifiant_post[:80]}")
+        
+        if posts and post_deja_liker(posts, identifiant_post): 
+            return "deja_liker"; print(f"Déjà liké") # Vérification déjà liké
+
+        # Sauvegarde texte
+        if posts is not None and fichier_posts:
+            ajouter_post(posts, fichier_posts, identifiant_post) #print("Texte sauvegardé")
+    except:
+        pass #print("Impossible de récupérer le texte :", e)           
+         
+         
+         
 # Charger cookies
 def charger_cookies(fichier):
     if not os.path.exists(fichier):
@@ -245,6 +323,12 @@ async def charger_fichier_d(fichier):
         return {}
 
 
+def charger_posts(fichier):
+    if not os.path.exists(fichier):
+        return []
+    with open(fichier, "r", encoding="utf-8") as f:
+        return json.load(f)
+        
         
 # Ouvrir Facebook
 async def ouvrir_facebook(contexte):

@@ -341,7 +341,7 @@ async def patiente_compte_insta_connecter(page, context):
     #await save_cookies(context)           
  
  
-async def connexion_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil):
+async def connexion_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe):
     await page.goto(f"https://www.instagram.com", timeout=0)
     
     btn = page.get_by_label("Accueil")
@@ -365,11 +365,17 @@ async def connexion_insta(page, context, compte, fichier_des_comptes, email, mot
     #await creer_compte_threads(page2)  
     
     
-async def liker(page):
+async def liker(page, url_page):
     await page.wait_for_load_state("domcontentloaded")
-    await page.goto(url_post, timeout=0)
+    await page.goto(url_page, timeout=0)
     print("patiente 10s"); await asyncio.sleep(10)
-
+    
+    #fichier_posts = "posts_deja_liker_th.json"
+    #posts = charger_fichier(fichier_posts)
+    
+    #statut = await recuperer_texte_th(page, posts, fichier_posts) # Vérifier si posts deja liker
+    #if statut == "deja_liker": return #print("Déjà liké"); 
+    print("patiente 10000s"); await asyncio.sleep(10000)
 
 async def main():
     async with async_playwright() as p:
@@ -383,52 +389,71 @@ async def main():
             ],
         )
 
-        #context = await browser.new_context()
-        
         fichier_des_comptes = "comptes-insta.json"
         comptes = await charger_comptes(fichier_des_comptes)
-
-        #page = await context.new_page() # nouvel onglet
-        #await apply_stealth(page)
         
-        for compte in comptes:
-            fichier_cookie = compte["fichier"]
-            
-            if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
-                continue
+        pages_list = await charger_fichier("page_active_insta.json") # Charger la liste de pages
+        pages_list = [p for p in pages_list if "url" in p]
+        cycle_pages = cycle(pages_list)
+        
+        data = await charger_fichier("derniere_page_insta.json")
+        derniere_page = data.get("name")
+        debut = False
+
+        while True: 
+            for compte in comptes:
+                fichier_cookie = compte["fichier"]
                 
-            #if compte.get("creer") == "Oui":
-            #    continue  # skip si compte déjà créé
-            
-            context = await browser.new_context() #nouveau contexte pour chaque compte
-            
-            cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
-            await context.add_cookies(cookies)
-        
-            nom_complet = compte["nom_complet"]
-            nom_profil = compte["nom_profil"]
-            email = compte["email"]
-            mot_de_passe = compte["mot_de_passe"]
-            
-            print(nom_complet);
+                if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
+                    continue
+                    
+                #if compte.get("creer") == "Oui":
+                #    continue  # skip si compte déjà créé
+                
+                page = next(cycle_pages); 
+                fichier_cookie = compte.get("fichier")
+                nomDeMonCompte = compte.get("nom_complet")
 
-            page = await context.new_page()
-            await apply_stealth(page)
-            #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
+                url_page = page.get('url')
+                name = page.get('name'); #print("name : ", name); print(url_page);
+                                
+                                
+                if derniere_page:
+                    if derniere_page == name: debut = True
+                    if not debut: continue
+                
+                print("✅", nomDeMonCompte); print(name); print(url_page);
+                
+                context = await browser.new_context() #nouveau contexte pour chaque compte
+                
+                cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
+                await context.add_cookies(cookies)
+            
+                #nom_complet = compte["nom_complet"]
+                #nom_profil = compte["nom_profil"]
+                email = compte["email"]
+                mot_de_passe = compte["mot_de_passe"]
+                
+                #print(nom_complet);
 
-            #await page.goto("https://www.instagram.com", timeout=0)
-            #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
-            
-            #await commenter_th(page, email, mot_de_passe)
-            #break
-            
-            #await reparer_th(page, context, nom_complet, email, mot_de_passe)
-            await connexion_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
-            await liker(page)
-            await sauvegarder_cookies(context, fichier_cookie)
-            
-            await context.close() #fermer le contexte (ou la fenetre)
-        print("patiente 10000s"); await asyncio.sleep(10000)
+                page = await context.new_page()
+                await apply_stealth(page)
+                #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
+
+                #await page.goto("https://www.instagram.com", timeout=0)
+                #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
+                
+                #await commenter_th(page, email, mot_de_passe)
+                #break
+                
+                #await reparer_th(page, context, nom_complet, email, mot_de_passe)
+                await connexion_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe)
+                await liker(page, url_page)
+                
+                await sauvegarder_fichier("derniere_page_insta.json", {"name": name}) # ✅ sauvegarde de la dernière page
+                await sauvegarder_cookies(context, fichier_cookie)
+                await context.close() 
+            print("patiente 10000s"); await asyncio.sleep(10000)
 
 
 if __name__ == "__main__":

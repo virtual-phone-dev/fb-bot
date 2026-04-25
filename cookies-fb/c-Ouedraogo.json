@@ -35,7 +35,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777546357,
+            "expires": 1777664524,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -65,7 +65,7 @@
             "value": "100010717868046",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808477554.558077,
+            "expires": 1808595722.57347,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -102,30 +102,30 @@
         },
         {
             "name": "fr",
-            "value": "1DywNpIfD06De59JA.AWfPAunawWOBjo2SFwG0E7jzbQ4BTN-YjzrKjLhsvG0FXw9RTa0.Bp6fny..AAA.0.0.Bp6fny.AWcSDUB_d-n36hH-EomIKhFysZo",
+            "value": "1cFGuxMW2FkVEyGDy.AWf1jR7BdJQhQPsCAW5pX1CHt071qN0Zlmbe_q1fOpeo6wwewp8.Bp68eM..AAA.0.0.Bp68eM.AWeakIwjkscouKMeSE--m1Ft8LU",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1784717554.558479,
+            "expires": 1784835722.573699,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "7%3AWm5XQVlQ8JHBgQ%3A2%3A1776838467%3A-1%3A-1%3A%3AAcyWdNsvSlShsaSAQl6etQMOwWkBzsQ3JpK4RukR9g",
+            "value": "7%3AWm5XQVlQ8JHBgQ%3A2%3A1776838467%3A-1%3A-1%3A%3AAcyCbL1Vfy1315b9Tz4YnNQpqYa-BddrTURZi7VFKg",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808477554.558625,
+            "expires": 1808595722.573846,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "alsfid",
-            "value": "{\"id\":\"f75bddb78\",\"timestamp\":1776941556948.2002}",
+            "value": "{\"id\":\"ffcbca42e\",\"timestamp\":1777059725987.2}",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1776941616.953609,
+            "expires": 1777059785.987458,
             "httpOnly": false,
             "secure": false,
             "sameSite": "Lax"
@@ -136,24 +136,36 @@
             "origin": "https://business.facebook.com",
             "localStorage": [
                 {
-                    "name": "signal_flush_timestamp",
-                    "value": "1776941557335"
-                },
-                {
                     "name": "RSTData",
                     "value": "{}"
                 },
                 {
-                    "name": "Session",
-                    "value": "zavyjb:1776941598452"
+                    "name": "hb_timestamp",
+                    "value": "1777059724821"
                 },
                 {
-                    "name": "hb_timestamp",
-                    "value": "1776941557301"
+                    "name": "signal_flush_timestamp",
+                    "value": "1777059724914"
+                },
+                {
+                    "name": "mutex_falco_queue_critical^$100010717868046^#100010717868046^#^#hmac_ttl.1777059718.AR0s0lpXIvOfLi1m1uvO-hrDfo5FJENchdUV9f0tEMyXCnKn^$",
+                    "value": "xa95km:1777059722552"
+                },
+                {
+                    "name": "Session",
+                    "value": "kdtzux:1777059761238"
+                },
+                {
+                    "name": "mutex_falco_queue_immediately^$100010717868046^#100010717868046^#^#hmac_ttl.1777059718.AR0s0lpXIvOfLi1m1uvO-hrDfo5FJENchdUV9f0tEMyXCnKn^$",
+                    "value": "xa95km:1777059722552"
+                },
+                {
+                    "name": "mutex_falco_queue_log^$100010717868046^#100010717868046^#^#hmac_ttl.1777059718.AR0s0lpXIvOfLi1m1uvO-hrDfo5FJENchdUV9f0tEMyXCnKn^$",
+                    "value": "xa95km:1777059722552"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1776941556950.5"
+                    "value": "1777059723995.5"
                 }
             ]
         },
