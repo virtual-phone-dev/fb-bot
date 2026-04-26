@@ -1,7 +1,7 @@
 import asyncio
 from itertools import cycle;
 from playwright.async_api import async_playwright
-from outils_playwright import (creer_context, creer_page, aller, appliquer_stealth, charger_cookies, charger_fichier, sauvegarder_cookies)
+from outils_playwright import (creer_context, creer_page, aller, appliquer_stealth, charger_cookies, charger_fichier, sauvegarder_fichier, sauvegarder_cookies)
 
 FICHIER_POSTS = "sauvegarde-bs/posts_commentes.json"
 FICHIER_BLACKLIST = "sauvegarde-bs/blacklist.json"
@@ -72,7 +72,7 @@ async def liker(page, url_page):
     print("patiente 5s"); await asyncio.sleep(5)
     
     fichier_posts = "posts_deja_liker_bs.json"
-    posts = charger_fichier(fichier_posts)
+    posts = await charger_fichier(fichier_posts)
     
     statut = await recuperer_texte_bs(page, posts, fichier_posts) # Vérifier si posts deja liker
     if statut == "deja_liker": return #print("Déjà liké"); 
@@ -102,11 +102,14 @@ async def main():
         pages_list = [p for p in pages_list if "url" in p]
         cycle_pages = cycle(pages_list)
         
-        data = await charger_fichier("derniere_page_bs.json")
+        fichier_derniere_page = "derniere_page_bs.json"
+        data = await charger_fichier_d(fichier_derniere_page)
         derniere_page = data.get("name")
+
         debut = False
         
-        while True: 
+        count = 0
+        while count < 3: 
             for compte in comptes:
                 fichier_cookie = compte["fichier"]
                 
@@ -142,9 +145,11 @@ async def main():
                 await connexion_bs(page, email, mot_de_passe)
                 await liker(page, url_page)
                 
-                await sauvegarder_fichier("derniere_page_bs.json", {"name": name}) # ✅ sauvegarde de la dernière page
+                await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
                 await sauvegarder_cookies(context, fichier_cookie)
                 await context.close()
-
+            count += 1
+            
+            
 asyncio.run(main())
 

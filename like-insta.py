@@ -1,6 +1,7 @@
 import json, asyncio
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies)
+from itertools import cycle
+from outils_playwright import (connecter_gmail, charger_cookies, charger_fichier, sauvegarder_fichier, sauvegarder_cookies)
 
 
 url_post = "https://www.instagram.com/p/DXee8RFDYgB/"
@@ -371,7 +372,7 @@ async def liker(page, url_page):
     print("patiente 10s"); await asyncio.sleep(10)
     
     #fichier_posts = "posts_deja_liker_th.json"
-    #posts = charger_fichier(fichier_posts)
+    #posts = await charger_fichier(fichier_posts)
     
     #statut = await recuperer_texte_th(page, posts, fichier_posts) # Vérifier si posts deja liker
     #if statut == "deja_liker": return #print("Déjà liké"); 
@@ -396,11 +397,14 @@ async def main():
         pages_list = [p for p in pages_list if "url" in p]
         cycle_pages = cycle(pages_list)
         
-        data = await charger_fichier("derniere_page_insta.json")
+        fichier_derniere_page = "derniere_page_insta.json"
+        data = await charger_fichier_d(fichier_derniere_page)
         derniere_page = data.get("name")
+
         debut = False
 
-        while True: 
+        count = 0
+        while count < 3: 
             for compte in comptes:
                 fichier_cookie = compte["fichier"]
                 
@@ -450,10 +454,11 @@ async def main():
                 await connexion_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe)
                 await liker(page, url_page)
                 
-                await sauvegarder_fichier("derniere_page_insta.json", {"name": name}) # ✅ sauvegarde de la dernière page
+                await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
                 await sauvegarder_cookies(context, fichier_cookie)
                 await context.close() 
-            print("patiente 10000s"); await asyncio.sleep(10000)
+            #print("patiente 10000s"); await asyncio.sleep(10000)
+            count += 1
 
 
 if __name__ == "__main__":

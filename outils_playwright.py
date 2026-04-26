@@ -183,14 +183,24 @@ async def recuperer_texte_th(page, posts, fichier_posts):
     # RÉCUPÉRATION TEXTE POST (NOUVELLE MÉTHODE)
     try:        
         element = page.locator('[data-pressable-container="true"]').first
-        texte = await element.text_content()
+        texte = await element.inner_text()
+        
+        if texte:
+            lignes = texte.split("\n")
+            if len(lignes) >= 3:
+                texte_post = lignes[2].strip()
+            else:
+                texte_post = ""
+
+            identifiant_post = texte_post[:500]    
         
         # ICI on coupe à 500 caractères pour eviter les tres long texte dans mon fichier
-        identifiant_post = " ".join(texte.split())[:500] #print(f"Texte : {identifiant_post[:80]}")
-        
-        if posts and post_deja_liker(posts, identifiant_post): 
-            return "deja_liker"; print(f"Déjà liké") # Vérification déjà liké
+        #identifiant_post = " ".join(texte.split())[:500] #print(f"Texte : {identifiant_post[:80]}")
 
+        if posts and post_deja_liker(posts, identifiant_post): 
+            print(f"Déjà liké"); return "deja_liker" # Vérification déjà liké
+        print("cc ")
+        
         # Sauvegarde texte
         if posts is not None and fichier_posts:
             ajouter_post(posts, fichier_posts, identifiant_post) #print("Texte sauvegardé")
@@ -274,11 +284,8 @@ def charger_cookies(fichier):
     
     
 # Sauvegarder cookies
-async def sauvegarder_cookies(contexte, fichier):
-    print("on sauvegarde")
-
-    # ✅ créer le dossier si il n'existe pas
-    dossier = os.path.dirname(fichier)
+async def sauvegarder_cookies(contexte, fichier):    
+    dossier = os.path.dirname(fichier) #créer le dossier si il n'existe pas
     if dossier:
         os.makedirs(dossier, exist_ok=True)
 
@@ -303,6 +310,10 @@ async def sauvegarder_sur_meme_ligne(fichier, data):
         
         
 async def sauvegarder_fichier(fichier, data):
+    dossier = os.path.dirname(fichier) #si jai besoin du dossier, et que ca existe pas, il va creer ca
+    if dossier:
+        os.makedirs(dossier, exist_ok=True)
+        
     with open(fichier, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
            

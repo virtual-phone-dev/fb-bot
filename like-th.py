@@ -1,8 +1,9 @@
 import json, asyncio
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail, sauvegarder_cookies, charger_cookies, recuperer_texte_th)
+from itertools import cycle
+from outils_playwright import (connecter_gmail, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, charger_fichier_d, recuperer_texte_th)
 
-url_post = "https://www.threads.com/@laurene_mba"
+#url_post = "https://www.threads.com/@laurene_mba"
 
 
 
@@ -332,61 +333,88 @@ async def verifier_blocage_th(page):
         
         
         
-async def connexion_th(page, email, mot_de_passe):
-    try:
-        await page.goto("https://www.threads.com/login", timeout=0)
-    except:
-        print("recharge la page")
-        await page.goto("https://www.threads.com/login", timeout=0)
-        
-    while True:
-        input_box = page.get_by_placeholder("Nom de profil, numéro de mobile ou e-mail")
-        if await input_box.count() > 0:            
-            await input_box.fill(email)
-            break
-            
-    while True:
-        input_box = page.get_by_placeholder("Mot de passe")
-        if await input_box.count() > 0:            
-            await input_box.fill(mot_de_passe)
-            break
-            
-    while True:       
-        print("patiente 1s"); await asyncio.sleep(1)            
-        element = await page.query_selector("text=Se connecter")
-        if element:
-            await element.click()
-            break
-        else:
-            print("L'élément 'Se connecter' n'existe pas.")             
-   
-            
-    while True:    
-        try:
-            statut = await verifier_blocage_th(page)
-            if statut == "compte_désactiver": print("⛔ Compte désactiver"); return
+async def connexion_th(page, url_page, email, mot_de_passe):
+    await page.goto("https://www.threads.com/login", timeout=0)
+    #await page.wait_for_load_state("domcontentloaded")
+    print("patiente 5s"); await asyncio.sleep(5)
     
-            print("patiente 2s"); await asyncio.sleep(2)   
-            element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
-            if element:
-                await page.goto(url_post, timeout=0)
-                break
-        except:
-            pass  
-
-    element = await page.query_selector("text=Continuer avec Instagram")
+    #try:
+    #    await page.goto("https://www.threads.com/login", timeout=0)
+    #except:
+    #    print("recharge la page")
+    #    await page.goto("https://www.threads.com/login", timeout=0)
+        
+    
+    #element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
+    element = await page.query_selector('text=Quoi de neuf')
     if element:
-        print("Continuer avec insta");
-        #await creer_compte_threads(page)
+        print("Connecté")
+        await page.goto(url_page, timeout=0)
+        await page.wait_for_load_state("domcontentloaded")
+    else:
+        print("Non Connecté")
+        while True:
+            input_box = page.get_by_placeholder("Nom de profil, numéro de mobile ou e-mail")
+            if await input_box.count() > 0:            
+                await input_box.fill(email)
+                break
+                
+        while True:
+            input_box = page.get_by_placeholder("Mot de passe")
+            if await input_box.count() > 0:            
+                await input_box.fill(mot_de_passe)
+                break
+                
+                
+        while True:       
+            print("patiente 1s"); await asyncio.sleep(1)            
+            element = await page.query_selector("text=Se connecter")
+            if element:
+                await element.click()
+                break
+            else:
+                print("L'élément 'Se connecter' n'existe pas.")             
+   
+        while True:    
+            try:
+                statut = await verifier_blocage_th(page)
+                if statut == "compte_désactiver": print("⛔ Compte désactiver"); return
+        
+                print("patiente 2s"); await asyncio.sleep(2)   
+                element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
+                if element:
+                    await page.goto(url_page, timeout=0)
+                    await page.wait_for_load_state("domcontentloaded")
+                    break
+            except:
+                pass  
+
+        element = await page.query_selector("text=Continuer avec Instagram")
+        if element:
+            print("Continuer avec insta");
+            #await creer_compte_threads(page)
 
 
-            
-async def liker(page, url_page):
-    await page.goto(url_page, timeout=0)
-    await page.wait_for_load_state("domcontentloaded")
+async def liker(page, url_page, email, mot_de_passe):
+    #await page.goto(url_page, timeout=0)
+    #await page.wait_for_load_state("domcontentloaded")
+    
+    await connexion_th(page, url_page, email, mot_de_passe)
     
     fichier_posts = "posts_deja_liker_th.json"
-    posts = charger_fichier(fichier_posts)
+    posts = await charger_fichier(fichier_posts)
+    
+    statut = await recuperer_texte_th(page, posts, fichier_posts) # Vérifier si posts deja liker
+    if statut == "deja_liker": return #print("Déjà liké"); 
+    #print("patiente 10000s"); await asyncio.sleep(10000)
+    
+    
+async def likerr(page):
+    #await page.goto(url_page, timeout=0)
+    #await page.wait_for_load_state("domcontentloaded")
+    
+    fichier_posts = "posts_deja_liker_th.json"
+    posts = await charger_fichier(fichier_posts)
     
     statut = await recuperer_texte_th(page, posts, fichier_posts) # Vérifier si posts deja liker
     if statut == "deja_liker": return #print("Déjà liké"); 
@@ -431,11 +459,14 @@ async def main():
         pages_list = [p for p in pages_list if "url" in p]
         cycle_pages = cycle(pages_list)
         
-        data = await charger_fichier("derniere_page_th.json")
+        fichier_derniere_page = "derniere_page_th.json"
+        data = await charger_fichier_d(fichier_derniere_page)
         derniere_page = data.get("name")
+
         debut = False
         
-        while True: 
+        count = 0
+        while count < 3: 
             for compte in comptes:
                 fichier_cookie = compte["fichier"]
                 
@@ -480,14 +511,16 @@ async def main():
                 #break
                 
                 #await reparer_th(page, context, nom_complet, email, mot_de_passe)
-                await connexion_th(page, email, mot_de_passe)
-                await liker(page, url_page)
+                #await connexion_th(page, url_page, email, mot_de_passe)
+                await liker(page, url_page, email, mot_de_passe)
                 
-                await sauvegarder_fichier("derniere_page_th.json", {"name": name}) # ✅ sauvegarde de la dernière page
+                await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
                 await sauvegarder_cookies(context, fichier_cookie)
+                
+                #print("patiente 10000s"); await asyncio.sleep(10000)
                 await context.close()
-            print("patiente 10000s"); await asyncio.sleep(10000)
 
+            count += 1
 
 if __name__ == "__main__":
     asyncio.run(main())

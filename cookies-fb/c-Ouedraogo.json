@@ -35,7 +35,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777664524,
+            "expires": 1777734972,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -65,7 +65,7 @@
             "value": "100010717868046",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808595722.57347,
+            "expires": 1808666170.774703,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -102,30 +102,30 @@
         },
         {
             "name": "fr",
-            "value": "1cFGuxMW2FkVEyGDy.AWf1jR7BdJQhQPsCAW5pX1CHt071qN0Zlmbe_q1fOpeo6wwewp8.Bp68eM..AAA.0.0.Bp68eM.AWeakIwjkscouKMeSE--m1Ft8LU",
+            "value": "19I4rfO7YJFPmEZLT.AWcL5pKIUEq5Cw9RI1iQqdj2uNE_w7FQZe1l66dQks03-CRBcwc.Bp7Nq8..AAA.0.0.Bp7Nq8.AWcKfOAOcBFlnWiDYTMZ_Bh0Sxs",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1784835722.573699,
+            "expires": 1784906170.775095,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "7%3AWm5XQVlQ8JHBgQ%3A2%3A1776838467%3A-1%3A-1%3A%3AAcyCbL1Vfy1315b9Tz4YnNQpqYa-BddrTURZi7VFKg",
+            "value": "7%3AWm5XQVlQ8JHBgQ%3A2%3A1776838467%3A-1%3A-1%3A%3AAcz0zRhoh-e9cAVNADQCeyc5hDtR_UYTA4KtiXo83A",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808595722.573846,
+            "expires": 1808666170.775281,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "alsfid",
-            "value": "{\"id\":\"ffcbca42e\",\"timestamp\":1777059725987.2}",
+            "value": "{\"id\":\"ff183b806\",\"timestamp\":1777130172235.5}",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777059785.987458,
+            "expires": 1777130232.29587,
             "httpOnly": false,
             "secure": false,
             "sameSite": "Lax"
@@ -136,36 +136,28 @@
             "origin": "https://business.facebook.com",
             "localStorage": [
                 {
+                    "name": "signal_flush_timestamp",
+                    "value": "1777130173125"
+                },
+                {
                     "name": "RSTData",
                     "value": "{}"
                 },
                 {
-                    "name": "hb_timestamp",
-                    "value": "1777059724821"
-                },
-                {
-                    "name": "signal_flush_timestamp",
-                    "value": "1777059724914"
-                },
-                {
-                    "name": "mutex_falco_queue_critical^$100010717868046^#100010717868046^#^#hmac_ttl.1777059718.AR0s0lpXIvOfLi1m1uvO-hrDfo5FJENchdUV9f0tEMyXCnKn^$",
-                    "value": "xa95km:1777059722552"
-                },
-                {
                     "name": "Session",
-                    "value": "kdtzux:1777059761238"
+                    "value": "ix2b3g:1777130209640"
                 },
                 {
-                    "name": "mutex_falco_queue_immediately^$100010717868046^#100010717868046^#^#hmac_ttl.1777059718.AR0s0lpXIvOfLi1m1uvO-hrDfo5FJENchdUV9f0tEMyXCnKn^$",
-                    "value": "xa95km:1777059722552"
+                    "name": "hb_timestamp",
+                    "value": "1777130173002"
                 },
                 {
-                    "name": "mutex_falco_queue_log^$100010717868046^#100010717868046^#^#hmac_ttl.1777059718.AR0s0lpXIvOfLi1m1uvO-hrDfo5FJENchdUV9f0tEMyXCnKn^$",
-                    "value": "xa95km:1777059722552"
+                    "name": "mutex_banzai",
+                    "value": "ofxh3o:1777130174053"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1777059723995.5"
+                    "value": "1777130172245.4001"
                 }
             ]
         },

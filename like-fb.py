@@ -143,10 +143,12 @@ async def main():
 
         pages_list = await charger_fichier("page_active.json") # Charger la liste de pages
         comptes = await charger_fichier("comptes-fb.json")   
-        #derniere_page = (await charger_fichier("derniere_page.json")).get("name")        
-        
-        data = await charger_fichier("derniere_page.json")
+        #derniere_page = (await charger_fichier("derniere_page.json")).get("name")    
+
+        fichier_derniere_page = "derniere_page_fb.json"
+        data = await charger_fichier_d(fichier_derniere_page)
         derniere_page = data.get("name")
+        
         debut = False
 
         #FILTRAGE AVANT
@@ -154,7 +156,8 @@ async def main():
         pages_list = [p for p in pages_list if "url" in p]
         cycle_pages = cycle(pages_list)
         
-        while True:             
+        count = 0
+        while count < 3:             
             #print(" cc");
             for compte in comptes:
                 #print(" dd");
@@ -181,12 +184,13 @@ async def main():
                 await appliquer_stealth(page)
                 await liker_post(page, url_page)
                 
-                await sauvegarder_fichier("derniere_page.json", {"name": name}) # ✅ sauvegarde de la dernière page
+                await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
                 await context.close() #fermer le contexte (ou la fenetre)
 
             #if debut: 
             #    print("✅ Patiente 30 minutes"); await asyncio.sleep(60 * 30)
             
+            count += 1
             
         
 if __name__ == "__main__":
