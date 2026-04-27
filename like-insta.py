@@ -1,7 +1,7 @@
 import json, asyncio
 from playwright.async_api import async_playwright
 from itertools import cycle
-from outils_playwright import (connecter_gmail, charger_cookies, charger_fichier, sauvegarder_fichier, sauvegarder_cookies)
+from outils_playwright import (connecter_gmail, sauvegarder_cookies, charger_cookies, charger_fichier_d, charger_fichier, sauvegarder_fichier, recuperer_texte_insta)
 
 
 url_post = "https://www.instagram.com/p/DXee8RFDYgB/"
@@ -365,18 +365,70 @@ async def connexion_insta(page, context, compte, fichier_des_comptes, email, mot
     
     #await creer_compte_threads(page2)  
     
-    
+
+
 async def liker(page, url_page):
-    await page.wait_for_load_state("domcontentloaded")
+    #await page.wait_for_load_state("domcontentloaded")
     await page.goto(url_page, timeout=0)
-    print("patiente 10s"); await asyncio.sleep(10)
+    await page.wait_for_load_state("domcontentloaded")
+    #print("patiente 10s"); await asyncio.sleep(10)
+    while True:
+        print("patiente 1s"); await asyncio.sleep(1)
+        post = page.locator('a[href*="/p/"], a[href*="/reel/"]').first
+        if await post.count() > 0:
+            await page.evaluate(""" const posts = document.querySelectorAll('a[href*="/p/"], a[href*="/reel/"]');
+            for (let i = 0; i < posts.length; i++) {
+              const post = posts[i];
+              const text = post.innerText || post.textContent;
+              console.log(text)
+              if (!text.toLowerCase().includes("épinglé")) { post.click(); break; } } """); print("Post cliqué");
+            break
     
+    print("patiente 5s"); await asyncio.sleep(5)
+    fichier_posts = "posts_deja_liker_insta.json"
+    posts = await charger_fichier(fichier_posts)
+    
+    while True:
+        print("patiente 1s"); await asyncio.sleep(1)
+        element = page.locator('h1')
+        if await element.count() > 0:
+            print("h1 trouvé"); break
+            
+    statut = await recuperer_texte_insta(page, posts, fichier_posts) # Vérifier si posts deja liker
+    if statut == "deja_liker": return #print("Déjà liké"); 
+
+
+    
+async def likerr(page, url_page):
+    #await page.wait_for_load_state("domcontentloaded")
+    await page.goto(url_page, timeout=0)
+    #print("patiente 10s"); await asyncio.sleep(10)
+    while True:
+        print("patiente 1s"); await asyncio.sleep(1)
+        post = page.locator('a[href*="/p/"], a[href*="/reel/"]').first
+        if await post.count() > 0:
+            await page.evaluate(""" const posts = document.querySelectorAll('a[href*="/p/"], a[href*="/reel/"]');
+            for (let i = 0; i < posts.length; i++) {
+              const post = posts[i];
+              const text = post.innerText || post.textContent;
+              if (!text.toLowerCase().includes("épinglé")) { post.click(); break; } } """); print("Post cliqué");
+            break
+            
     #fichier_posts = "posts_deja_liker_th.json"
     #posts = await charger_fichier(fichier_posts)
     
     #statut = await recuperer_texte_th(page, posts, fichier_posts) # Vérifier si posts deja liker
     #if statut == "deja_liker": return #print("Déjà liké"); 
-    print("patiente 10000s"); await asyncio.sleep(10000)
+    
+    print("patiente 5s"); await asyncio.sleep(5)
+    
+    await page.evaluate(""" const likeIcons = document.querySelectorAll('svg[aria-label="J’aime"]');
+    likeIcons.forEach(icon => {
+      const event = new MouseEvent('click', { view: window, bubbles: true, cancelable: true }); // Crée un événement clic
+      icon.dispatchEvent(event); // Déclenche l'événement sur l'icône
+    }); """)
+
+
 
 async def main():
     async with async_playwright() as p:
@@ -455,9 +507,8 @@ async def main():
                 await liker(page, url_page)
                 
                 await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
-                await sauvegarder_cookies(context, fichier_cookie)
+                await sauvegarder_cookies(context, fichier_cookie); #print("patiente 10000s"); await asyncio.sleep(10000)
                 await context.close() 
-            #print("patiente 10000s"); await asyncio.sleep(10000)
             count += 1
 
 

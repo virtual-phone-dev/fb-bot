@@ -35,7 +35,7 @@
             "value": "lKDaNywZWyicwCWOAMav5EhKbClr63LU",
             "domain": ".threads.com",
             "path": "/",
-            "expires": 1811751049.789969,
+            "expires": 1811752841.338988,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -55,7 +55,7 @@
             "value": "38843314256",
             "domain": ".threads.com",
             "path": "/",
-            "expires": 1784967049.790313,
+            "expires": 1784968841.339278,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -89,16 +89,6 @@
             "httpOnly": true,
             "secure": true,
             "sameSite": "Lax"
-        },
-        {
-            "name": "rur",
-            "value": "\"RVA\\05438843314256\\0541808727051:01fe9aceeeb8b02335c266c1c48333cb1139dc5681280be30958f8f70016455da34e7cb5\"",
-            "domain": ".threads.com",
-            "path": "/",
-            "expires": -1,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "Lax"
         }
     ],
     "origins": [
@@ -106,20 +96,28 @@
             "origin": "https://www.threads.com",
             "localStorage": [
                 {
+                    "name": "hb_timestamp",
+                    "value": "1777192828051"
+                },
+                {
+                    "name": "_oz_bandwidthAndTTFBSamples",
+                    "value": "{\"b\":[],\"t\":[]}"
+                },
+                {
                     "name": "signal_flush_timestamp",
-                    "value": "1777191041830"
+                    "value": "1777192828074"
                 },
                 {
                     "name": "Session",
-                    "value": "evcd7d:1777191083759"
+                    "value": "tojxbw:1777192870755"
                 },
                 {
-                    "name": "hb_timestamp",
-                    "value": "1777191041811"
+                    "name": "_oz_bandwidthEstimate",
+                    "value": "1350000"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1777191042610.6"
+                    "value": "1777192828806.8"
                 }
             ]
         }

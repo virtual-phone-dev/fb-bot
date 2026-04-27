@@ -199,13 +199,13 @@ async def recuperer_texte_th(page, posts, fichier_posts):
 
         if posts and post_deja_liker(posts, identifiant_post): 
             print(f"Déjà liké"); return "deja_liker" # Vérification déjà liké
-        print("cc ")
         
         # Sauvegarde texte
         if posts is not None and fichier_posts:
             ajouter_post(posts, fichier_posts, identifiant_post) #print("Texte sauvegardé")
     except:
         pass #print("Impossible de récupérer le texte :", e)
+
 
 
 async def recuperer_texte_bs(page, posts, fichier_posts):
@@ -218,7 +218,7 @@ async def recuperer_texte_bs(page, posts, fichier_posts):
         identifiant_post = " ".join(texte.split())[:500] #print(f"Texte : {identifiant_post[:80]}")
         
         if posts and post_deja_liker(posts, identifiant_post): 
-            return "deja_liker"; print(f"Déjà liké") # Vérification déjà liké
+            print(f"Déjà liké"); return "deja_liker" # Vérification déjà liké
 
         # Sauvegarde texte
         if posts is not None and fichier_posts:
@@ -228,18 +228,31 @@ async def recuperer_texte_bs(page, posts, fichier_posts):
                        
 
 
+#const h1 = document.querySelector('h1[dir="auto"]'); // ou 'h1' si tu veux le premier h1
+#const text = h1.innerText; // ou h1.textContent
+#console.log(text);
+
 async def recuperer_texte_insta(page, posts, fichier_posts):
     # RÉCUPÉRATION TEXTE POST (NOUVELLE MÉTHODE)
     try:        
-        element = page.locator('[data-pressable-container="true"]').first
-        texte = await element.text_content()
-        
+        element = page.locator('h1').first
+        if await element.count() > 0:
+            texte = await page.evaluate(""" () => {
+            const h1s = document.querySelectorAll('h1[dir="auto"]');
+            for (let i = 0; i < h1s.length; i++) {
+                const text = h1s[i].innerText;
+                if (text.includes(" ")) { console.log(text); return text; break; }
+            } } """);
+            
+            
+            #texte = await element.text_content()
+            print(f"texte trouvé:", texte);
+            
         # ICI on coupe à 500 caractères pour eviter les tres long texte dans mon fichier
         identifiant_post = " ".join(texte.split())[:500] #print(f"Texte : {identifiant_post[:80]}")
-        
         if posts and post_deja_liker(posts, identifiant_post): 
-            return "deja_liker"; print(f"Déjà liké") # Vérification déjà liké
-
+            print(f"Déjà liké"); return "deja_liker" # Vérification déjà liké
+        
         # Sauvegarde texte
         if posts is not None and fichier_posts:
             ajouter_post(posts, fichier_posts, identifiant_post) #print("Texte sauvegardé")

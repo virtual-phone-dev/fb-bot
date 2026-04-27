@@ -674,6 +674,9 @@ links.forEach(link => {
 
 cliquer sur le bouton Message
 
+const messageButton = document.querySelectorAll('span');
+console.log(messageButton);
+
 const messageButton = document.querySelector('div[aria-label="Message"]');
 if (messageButton) {
   messageButton.click();

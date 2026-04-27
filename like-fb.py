@@ -2,8 +2,8 @@ import json, asyncio, os, time, math
 from itertools import cycle
 from playwright.async_api import async_playwright 
 from datetime import datetime, timedelta
-from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, charger_cookies, charger_fichier, sauvegarder_fichier, sauvegarder_json, 
-post_deja_liker, ajouter_post)
+from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, 
+charger_cookies, charger_fichier, charger_fichier_d, sauvegarder_fichier, sauvegarder_json, post_deja_liker, ajouter_post)
 
 url_fb = "https://fb.com"
 
@@ -132,7 +132,7 @@ async def liker_post(page, url_page):
 async def main():
     async with async_playwright() as p: 
         browser = await p.chromium.launch(        
-            headless=False,
+            headless=True,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",

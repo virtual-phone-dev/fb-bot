@@ -35,7 +35,7 @@
             "value": "d4XKXWvA1aObF6vetUk8OFbJkkwLjM1U",
             "domain": ".threads.com",
             "path": "/",
-            "expires": 1811751095.027954,
+            "expires": 1811752753.391438,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -55,7 +55,7 @@
             "value": "39102055063",
             "domain": ".threads.com",
             "path": "/",
-            "expires": 1784967095.028752,
+            "expires": 1784968753.391705,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -75,7 +75,7 @@
             "value": "1",
             "domain": ".threads.com",
             "path": "/",
-            "expires": 1811751085.564518,
+            "expires": -1,
             "httpOnly": true,
             "secure": true,
             "sameSite": "Lax"
@@ -85,10 +85,10 @@
             "value": "1",
             "domain": ".threads.com",
             "path": "/",
-            "expires": 1811751085.565094,
+            "expires": -1,
             "httpOnly": true,
             "secure": true,
-            "sameSite": "None"
+            "sameSite": "Lax"
         }
     ],
     "origins": [
@@ -96,52 +96,28 @@
             "origin": "https://www.threads.com",
             "localStorage": [
                 {
-                    "name": "mutex_falco_queue_log^$^#^#17841439091917756^#hmac_ttl.1777191087.AR3Omvn7CwlOVpePZotFF0Gmvuxwky4C8pAxX3BzLuxUpkvl^$",
-                    "value": "ftub4w:1777191098324"
-                },
-                {
-                    "name": "mutex_falco_queue_immediately^$^#^#17841439091917756^#hmac_ttl.1777191098.AR1SR0bpDppwFh4mWSYkVMIbHvDIQvcfiXP5N-j3CzsUkF7v^$",
-                    "value": "ftub4w:1777191098324"
-                },
-                {
-                    "name": "mutex_falco_queue_log^$^#^#17841439091917756^#hmac_ttl.1777191098.AR1SR0bpDppwFh4mWSYkVMIbHvDIQvcfiXP5N-j3CzsUkF7v^$",
-                    "value": "ftub4w:1777191098324"
-                },
-                {
                     "name": "hb_timestamp",
-                    "value": "1777191090329"
+                    "value": "1777192737384"
+                },
+                {
+                    "name": "_oz_bandwidthAndTTFBSamples",
+                    "value": "{\"b\":[],\"t\":[]}"
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1777191090354"
-                },
-                {
-                    "name": "falco_queue_log^$^#^#17841439091917756^#hmac_ttl.1777191087.AR3Omvn7CwlOVpePZotFF0Gmvuxwky4C8pAxX3BzLuxUpkvl^$f649fe111cef92465",
-                    "value": "{\"items\":[{\"name\":\"instagram_organic_vpvd_imp\",\"policy\":{\"r\":1},\"time\":1777191097285.25,\"extra\":\"{\\\"client_sub_impression\\\":false,\\\"has_community_champion_badge\\\":false,\\\"is_author_thread\\\":false,\\\"is_liked_by_root_author_badge_shown\\\":false,\\\"m_ix\\\":\\\"0\\\",\\\"max_duration_ms\\\":2010,\\\"media_id\\\":\\\"3883224047786937075\\\",\\\"module_name\\\":\\\"ig_text_feed_timeline\\\",\\\"nav_chain\\\":\\\"BarcelonaHomeRoot:ig_text_feed_timeline:1:via_cold_start\\\",\\\"pigeon_reserved_keyword_module\\\":\\\"ig_text_feed_timeline\\\",\\\"ranking_info_token\\\":\\\"GCA2M2ZiM2ViOWNlOWI0N2RhOTYwOGZhZGNmOWU3ZDZjOCWwvf4GFZiuBxbqou6eDRgTMzg4MzIyNDA0Nzc4NjkzNzA3NSgDbGRjAA==\\\",\\\"repost_id\\\":null,\\\"search_context\\\":null,\\\"sum_duration_ms\\\":2010,\\\"xmt\\\":null}\",\"tags\":[1,128],\"sessionId\":\"mu4ecr:iwx7d8:93vckf\",\"deviceId\":\"A61A9C36-F909-4A64-BA5C-622D5944EB8F\",\"appVersion\":\"1038.168.287.0 (1038168287)\"},{\"name\":\"instagram_organic_vpvd_imp\",\"policy\":{\"r\":1},\"time\":1777191097285.75,\"extra\":\"{\\\"client_sub_impression\\\":false,\\\"has_community_champion_badge\\\":false,\\\"is_author_thread\\\":false,\\\"is_liked_by_root_author_badge_shown\\\":false,\\\"m_ix\\\":\\\"1\\\",\\\"max_duration_ms\\\":2011,\\\"media_id\\\":\\\"3883453320631449145\\\",\\\"module_name\\\":\\\"ig_text_feed_timeline\\\",\\\"nav_chain\\\":\\\"BarcelonaHomeRoot:ig_text_feed_timeline:1:via_cold_start\\\",\\\"pigeon_reserved_keyword_module\\\":\\\"ig_text_feed_timeline\\\",\\\"ranking_info_token\\\":\\\"GCA2M2ZiM2ViOWNlOWI0N2RhOTYwOGZhZGNmOWU3ZDZjOCWwvf4GJuqi7p4NGBMzODgzNDUzMzIwNjMxNDQ5MTQ1KANsZGMA\\\",\\\"repost_id\\\":null,\\\"search_context\\\":null,\\\"sum_duration_ms\\\":2011,\\\"xmt\\\":null}\",\"tags\":[1,128],\"sessionId\":\"mu4ecr:iwx7d8:93vckf\",\"deviceId\":\"A61A9C36-F909-4A64-BA5C-622D5944EB8F\",\"appVersion\":\"1038.168.287.0 (1038168287)\"},{\"name\":\"instagram_organic_vpvd_imp\",\"policy\":{\"r\":1},\"time\":1777191097285.9497,\"extra\":\"{\\\"client_sub_impression\\\":false,\\\"has_community_champion_badge\\\":false,\\\"is_author_thread\\\":false,\\\"is_liked_by_root_author_badge_shown\\\":false,\\\"m_ix\\\":\\\"2\\\",\\\"max_duration_ms\\\":2011,\\\"media_id\\\":\\\"3883484309534211906\\\",\\\"module_name\\\":\\\"ig_text_feed_timeline\\\",\\\"nav_chain\\\":\\\"BarcelonaHomeRoot:ig_text_feed_timeline:1:via_cold_start\\\",\\\"pigeon_reserved_keyword_module\\\":\\\"ig_text_feed_timeline\\\",\\\"ranking_info_token\\\":\\\"GCA2M2ZiM2ViOWNlOWI0N2RhOTYwOGZhZGNmOWU3ZDZjOCWwvf4GJuqi7p4NGBMzODgzNDg0MzA5NTM0MjExOTA2KANsZGMA\\\",\\\"repost_id\\\":null,\\\"search_context\\\":null,\\\"sum_duration_ms\\\":2011,\\\"xmt\\\":null}\",\"tags\":[1,128],\"sessionId\":\"mu4ecr:iwx7d8:93vckf\",\"deviceId\":\"A61A9C36-F909-4A64-BA5C-622D5944EB8F\",\"appVersion\":\"1038.168.287.0 (1038168287)\"},{\"name\":\"ods_web_batch\",\"policy\":{\"r\":1,\"s\":1},\"time\":1777191097677.75,\"extra\":\"{\\\"batch\\\":{\\\"1678\\\":{\\\"www_client_navigations\\\":{\\\"NAVIGATE\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"3589\\\":{\\\"dgw_web_client\\\":{\\\"lightspeed.WebSocketTransport.stream_group_establishment_pending\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"lightspeed.WebSocketTransport.stream_group_establishment_success\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"lightspeed.DGWPinger.reset.newtimeout\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"lightspeed.WebSocketTransport.stream_establishment_pending\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"lightspeed.WebStreamAckManager.ack_expected\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"lightspeed.DGWPinger.reset\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"lightspeed.WebSocketTransport.stream_establishment_success\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"lightspeed.GroupedWebStream.ack_received\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"lightspeed.WebStreamAckManager.ack_received\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"lightspeed.GroupedWebStream.data_received\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"lightspeed.GroupedWebStream.ack_sent\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"5588\\\":{\\\"instagram\\\":{\\\"web.barcelona.screen_time.upload.attempt\\\":{\\\"n\\\":5,\\\"d\\\":null},\\\"web.barcelona.screen_time.upload.attempt.legacy\\\":{\\\"n\\\":5,\\\"d\\\":null},\\\"web.barcelona.screen_time.upload.skipped_no_data\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"web.barcelona.screen_time.feedback_loop_iteration\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"web.barcelona.screen_time.feedback_loop_iteration.legacy\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"web.barcelona.screen_time.upload.mutation_no_enforcement\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"web.barcelona.screen_time.mutation.attempt\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"web.barcelona.screen_time.mutation.success\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"web.barcelona.post.ufi.dynamic_counts.batched.fetch\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"7173\\\":{\\\"entities.ff_js_web.web_time_spent_navigation.238260118697367.1038.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.banzai.log_immediately\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.banzai.log_immediately.upload_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.threads_web_page_view.238260118697367.1038.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.banzai.log.upload_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.jstl_migration.238260118697367.1038.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.banzai.log.upload_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.web_perf_device_info_log.238260118697367.1038.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.banzai.log.upload_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.bd_pdc_signals.238260118697367.1038.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.upload_method.banzai.log_critical\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.banzai.log_critical.upload_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.banzai.log.upload_processing\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.perf.238260118697367.1038.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.upload_method.banzai.log_immediately\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.banzai.log_immediately.upload_processing\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":2,\\\"d\\\":null}},\\\"entities.ff_js_web.threads_feed_tab_impression.238260118697367.1038.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.banzai.log.upload_processing\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":2,\\\"d\\\":null}},\\\"entities.ff_js_web.ig_time_spent_action.238260118697367.1038.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.banzai.log.upload_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.instagram_organic_impression.238260118697367.1038.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"event.info.banzai.log.upload_processing\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":3,\\\"d\\\":null}},\\\"entities.ff_js_web.instagram_organic_vpvd_imp.238260118697367.1038.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":3,\\\"d\\\":null}}},\\\"9819\\\":{\\\"wmi.init\\\":{\\\"start\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"success\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"wmi_startup\\\":{\\\"start\\\":{\\\"n\\\":1,\\\"d\\\":null}}}}}\",\"tags\":[1,128],\"sessionId\":\"mu4ecr:iwx7d8:93vckf\",\"deviceId\":\"A61A9C36-F909-4A64-BA5C-622D5944EB8F\",\"appVersion\":\"1038.168.287.0 (1038168287)\"}],\"ts\":1777191095894.9}"
+                    "value": "1777192737411"
                 },
                 {
                     "name": "Session",
-                    "value": "mu4ecr:1777191132273"
+                    "value": "gzi0h7:1777192783669"
                 },
                 {
-                    "name": "mutex_falco_queue_immediately^$^#^#17841439091917756^#hmac_ttl.1777191087.AR3Omvn7CwlOVpePZotFF0Gmvuxwky4C8pAxX3BzLuxUpkvl^$",
-                    "value": "ftub4w:1777191098324"
-                },
-                {
-                    "name": "mutex_falco_queue_critical^$^#^#17841439091917756^#hmac_ttl.1777191098.AR1SR0bpDppwFh4mWSYkVMIbHvDIQvcfiXP5N-j3CzsUkF7v^$",
-                    "value": "ftub4w:1777191098325"
-                },
-                {
-                    "name": "mutex_banzai",
-                    "value": "ftub4w:1777191098621"
+                    "name": "_oz_bandwidthEstimate",
+                    "value": "1400000"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1777191091101.4"
-                },
-                {
-                    "name": "falco_queue_immediately^$^#^#17841439091917756^#hmac_ttl.1777191087.AR3Omvn7CwlOVpePZotFF0Gmvuxwky4C8pAxX3BzLuxUpkvl^$f8faa190b4b7ff05d",
-                    "value": "{\"items\":[{\"name\":\"web_time_spent_navigation\",\"policy\":{\"r\":1},\"time\":1777191097764.85,\"extra\":\"{\\\"cause\\\":\\\"unload\\\",\\\"custom_data_json\\\":\\\"{\\\\\\\"source_pa\\\\\\\":\\\\\\\"{}\\\\\\\",\\\\\\\"source_pav2\\\\\\\":\\\\\\\"\\\\\\\",\\\\\\\"source_uri\\\\\\\":\\\\\\\"/\\\\\\\",\\\\\\\"source_imp_id\\\\\\\":\\\\\\\"0B9WR6prAzPKu5bsm\\\\\\\",\\\\\\\"source_visitation_id\\\\\\\":\\\\\\\"barcelona.feedPage:93vckf:1:1777191089.376\\\\\\\"}\\\",\\\"sid_raw\\\":\\\"mu4ecr:iwx7d8:93vckf\\\",\\\"source_path\\\":\\\"barcelona.feedPage\\\"}\",\"tags\":[1,128],\"sessionId\":\"mu4ecr:iwx7d8:93vckf\",\"deviceId\":\"A61A9C36-F909-4A64-BA5C-622D5944EB8F\",\"appVersion\":\"1038.168.287.0 (1038168287)\"},{\"name\":\"web_time_spent_bit_array\",\"policy\":{\"r\":1},\"time\":1777191097765.25,\"extra\":\"{\\\"sid_raw\\\":\\\"mu4ecr:iwx7d8:93vckf\\\",\\\"start_endpoint\\\":\\\"barcelona.feedPage\\\",\\\"start_event\\\":\\\"init\\\",\\\"start_time\\\":1777191089,\\\"tos_array\\\":[1,0],\\\"tos_cum\\\":1,\\\"tos_id\\\":\\\"93vckf\\\",\\\"tos_len\\\":7,\\\"tos_seq\\\":0}\",\"tags\":[1,128],\"sessionId\":\"mu4ecr:iwx7d8:93vckf\",\"deviceId\":\"A61A9C36-F909-4A64-BA5C-622D5944EB8F\",\"appVersion\":\"1038.168.287.0 (1038168287)\"}],\"ts\":1777191095982}"
+                    "value": "1777192737772.4001"
                 }
             ]
         }

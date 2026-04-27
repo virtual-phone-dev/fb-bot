@@ -1,7 +1,8 @@
 import asyncio
 from itertools import cycle;
 from playwright.async_api import async_playwright
-from outils_playwright import (creer_context, creer_page, aller, appliquer_stealth, charger_cookies, charger_fichier, sauvegarder_fichier, sauvegarder_cookies)
+from outils_playwright import (creer_context, creer_page, aller, appliquer_stealth, recuperer_texte_bs,
+sauvegarder_cookies, charger_cookies, charger_fichier_d, charger_fichier, sauvegarder_fichier)
 
 FICHIER_POSTS = "sauvegarde-bs/posts_commentes.json"
 FICHIER_BLACKLIST = "sauvegarde-bs/blacklist.json"
@@ -66,8 +67,19 @@ async def connexion_bs(page, email, mot_de_passe):
     #print("patiente 10000s"); await asyncio.sleep(10000)
     
     
-    
 async def liker(page, url_page):
+    await page.goto(url_page, timeout=0)
+    print("patiente 5s"); await asyncio.sleep(5)
+    
+    fichier_posts = "posts_deja_liker_bs.json"
+    posts = await charger_fichier(fichier_posts)
+    
+    statut = await recuperer_texte_bs(page, posts, fichier_posts) # Vérifier si posts deja liker
+    if statut == "deja_liker": return #print("Déjà liké"); 
+
+
+    
+async def likerr(page, url_page):
     await page.goto(url_page, timeout=0)
     print("patiente 5s"); await asyncio.sleep(5)
     
@@ -120,11 +132,10 @@ async def main():
                 url_page = page.get('url')
                 name = page.get('name'); #print("name : ", name); print(url_page);
                                 
-                                
                 if derniere_page:
                     if derniere_page == name: debut = True
                     if not debut: continue
-                
+
                 print("✅", nomDeMonCompte); print(name); print(url_page);
                 
                 context = await browser.new_context() #nouveau contexte pour chaque compte
@@ -137,7 +148,7 @@ async def main():
                 email = compte["email"]
                 mot_de_passe = compte["mot_de_passe"]
                 
-                print(fichier_cookie);
+                #print(fichier_cookie);
 
                 page = await context.new_page()
                 await appliquer_stealth(page)
@@ -146,10 +157,9 @@ async def main():
                 await liker(page, url_page)
                 
                 await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
-                await sauvegarder_cookies(context, fichier_cookie)
+                await sauvegarder_cookies(context, fichier_cookie); #print("patiente 10000s"); await asyncio.sleep(10000)
                 await context.close()
             count += 1
-            
             
 asyncio.run(main())
 
