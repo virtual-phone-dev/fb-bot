@@ -463,8 +463,6 @@ async def envoyer_message(page, url_page):
         print("Patiente 1s"); await asyncio.sleep(1)
         message_box = page.locator('div[aria-label*="Écrire"]').first
         if await message_box.count() > 0:
-            #phrase = random.choice(phrases)
-            #await message_box.click()        
             await message_box.fill(texte)        
                 
             print("Patiente 1s"); await asyncio.sleep(1)

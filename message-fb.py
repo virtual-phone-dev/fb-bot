@@ -2,7 +2,6 @@ import json, asyncio, os, sys, msvcrt, time
 from playwright.async_api import async_playwright
 from outils_playwright import (sauvegarder_cookies)
 
-MODE_SILENCIEUX = True
 PAUSE_MINUTES = 10
 
 
@@ -17,17 +16,6 @@ async def appliquer_stealth(page):
     """
     )
 
-
-# EXTRAIRE INFOS COMPTE
-async def extraire_fichier(compte):
-    if isinstance(compte, str):
-        fichier = compte
-    else:
-        fichier = compte["fichier"]
-
-    ignore = fichier.startswith("-")
-    return fichier.lstrip("-"), ignore
-    
 
 
 async def preparer_storage_state(fichier):
@@ -71,30 +59,26 @@ async def verifier_commande(page, duree_minutes):
                         break
 
         await asyncio.sleep(0.2)
-    print("suivant automatique")
+    #print("suivant automatique")
     
             
             
 async def main():
-    comptes = json.load(open("comptes-fb.json", encoding="utf-8"))
-
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=False)
+        
+        comptes = json.load(open("comptes-fb.json", encoding="utf-8"))
+        #comptes = [c for c in comptes if c.get("message_speciale") == "1"]
         total = len(comptes)
 
         for index, compte in enumerate(comptes):
-            fichier, ignore = await extraire_fichier(compte)
-
-            if ignore:
-                if not MODE_SILENCIEUX:
-                    print("ignoré :", fichier)
-                continue
+            fichier_cookie = compte["fichier"]
 
             print(f"\n===== {index+1}/{total} =====")
-            print("Compte :", fichier)
+            print("Compte :", fichier_cookie)
             
-            await preparer_storage_state(fichier)
-            context = await browser.new_context(storage_state=fichier)   
+            await preparer_storage_state(fichier_cookie)
+            context = await browser.new_context(storage_state=fichier_cookie)   
             
             page = await context.new_page()
             await appliquer_stealth(page)
@@ -102,7 +86,7 @@ async def main():
             #await creer_page(page)            
             await verifier_commande(page, PAUSE_MINUTES)
             
-            await sauvegarder_cookies(context, fichier)
+            await sauvegarder_cookies(context, fichier_cookie)
             await context.close()
 
         #await context.close()

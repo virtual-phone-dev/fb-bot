@@ -1,7 +1,8 @@
 import json, asyncio, os, time, math
 from playwright.async_api import async_playwright 
-from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, charger_cookies, charger_fichier, sauvegarder_fichier, sauvegarder_sur_meme_ligne)
 from datetime import datetime, timedelta
+from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, verifier_commande,
+charger_cookies, charger_fichier, sauvegarder_fichier, sauvegarder_sur_meme_ligne)
 
 url_fb = "https://fb.com"
 
@@ -103,7 +104,6 @@ async def post_recent(page, context, url_page):
 
 
 async def liker_post(page, context, name, url_page):    
-    await page.goto(url_fb, timeout=0) 
     
     statut = await verifier_blocage(page)
     if statut == "bloquer_selfie_video": print("⛔ bloqué selfie video"); return
@@ -121,34 +121,47 @@ async def liker_post(page, context, name, url_page):
         return
     
     print("+ Pas encore liké"); 
-    page_active = await charger_fichier("page_active.json") # page_active (pas encore liker, on sauvegarde la page dans page_active
-    page_active.append({ "name": name, "url": url_page })
-    await sauvegarder_sur_meme_ligne("page_active.json", page_active)
+    #page_active = await charger_fichier("page_active.json") # page_active (pas encore liker, on sauvegarde la page dans page_active
+    #page_active.append({ "name": name, "url": url_page })
+    #await sauvegarder_sur_meme_ligne("page_active.json", page_active)
+    await compter_commentaire(page, name, url_page)
 
 
-
-async def suite_liker_post():    
+async def compter_commentaire(page, name, url_page):   
+    #print("patiente 5s"); await asyncio.sleep(5);
+    
     temps_debut = time.monotonic()  # Enregistre le temps de début
-    temps = 10
-            
+    temps = 5
+    
     while True:
-        # Vérifie si le temps écoulé dépasse 30 secondes
+        # Vérifie si le temps écoulé dépasse 10 secondes
         temps_ecouler = time.monotonic() - temps_debut
         if temps_ecouler > temps:
             print("Temps écoulé, arrêt")
             break
-                
-        btn = page.get_by_label("J’aime")
-        if await btn.count() > 0:                                               
+            
+        btn = page.locator('div[role="button"]:has-text("Répondre")')
+        if await btn.count() > 0:  
             await page.evaluate("""
             const buttons = document.querySelectorAll('div[aria-label="J’aime"]');
             for (let i = 0; i < Math.min(20, buttons.length); i++) {
               buttons[i].scrollIntoView({ behavior: "smooth", block: "center" });
-              buttons[i].click();
             } """)
+        
+            count = await btn.count()
+            print("Nombre de boutons Répondre :", count) 
+
+            if count > 5:
+                print("arrêt → Plus de 5 commentaires")
+                
+                #print("+ Pas encore liké"); 
+                page_active = await charger_fichier("page_active.json") #on sauvegarde les pages (Pas encore liker), qui ont plus de 5 commentaires 
+                page_active.append({ "name": name, "url": url_page })
+                await sauvegarder_sur_meme_ligne("page_active.json", page_active)
+                break
             
     
-    
+     
 async def main():
     async with async_playwright() as p: 
         browser = await p.chromium.launch(        
@@ -162,7 +175,6 @@ async def main():
         )        
         
         pages_list = await charger_fichier("pages-tout-pays.json") # Charger la liste de pages
-        #pages_list = await charger_fichier("page_active.json") 
         comptes = await charger_fichier("comptes-fb.json")   
         derniere_page = (await charger_fichier("derniere_page_pdj.json")).get("name") # derniere_page_pdj = derniere_page_pour_deja_liker
         debut = False
@@ -173,14 +185,21 @@ async def main():
         
         while True:                  
             for compte in comptes:
-                for page in pages_list:
-                    fichier_cookie = compte.get("fichier")
-                    nomDeMonCompte = compte.get("id_inchangeable")
-
-                    url_page = page.get('url')
-                    name = page.get('name');
+                fichier_cookie = compte.get("fichier")
+                nomDeMonCompte = compte.get("id_inchangeable")
                     
-                    #if not url_page: continue  #ignorer les zones
+                # Charger les cookies AVANT d'ouvrir la page
+                context = await browser.new_context() #nouveau contexte pour chaque compte
+                cookies = charger_cookies(fichier_cookie)
+                await context.add_cookies(cookies)
+                    
+                page = await context.new_page()
+                await appliquer_stealth(page)
+                await page.goto(url_fb, timeout=0) 
+                
+                for une_page in pages_list:
+                    url_page = une_page.get('url')
+                    name = une_page.get('name');
                     
                     if derniere_page:
                         if derniere_page == name: debut = True
@@ -188,17 +207,11 @@ async def main():
                     
                     print("✅", nomDeMonCompte); print(name); print(url_page);
                         
-                    # Charger les cookies AVANT d'ouvrir la page
-                    context = await browser.new_context() #nouveau contexte pour chaque compte
-                    cookies = charger_cookies(fichier_cookie)
-                    await context.add_cookies(cookies)
-                    
-                    page = await context.new_page()
-                    await appliquer_stealth(page)
                     await liker_post(page, context, name, url_page)
+                    await sauvegarder_fichier("derniere_page_pdj.json", {"name": name}) # sauvegarde de la dernière page
+                    #await verifier_commande(page, duree_pause=10); #print("patiente 10000s"); await asyncio.sleep(10000)
                     
-                    await sauvegarder_fichier("derniere_page_pdj.json", {"name": name}) # ✅ sauvegarde de la dernière page
-                    await context.close() #fermer le contexte (ou la fenetre)
+                await context.close() #fermer le contexte (ou la fenetre)
 
                 #if debut: 
                 #    print("✅ Patiente 30 minutes"); await asyncio.sleep(60 * 30)

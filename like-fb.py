@@ -117,15 +117,19 @@ async def liker_post(page, url_page):
         if temps_ecouler > temps:
             print("Temps écoulé, arrêt")
             break
-                
-        btn = page.get_by_label("J’aime")
-        if await btn.count() > 0:                                               
+        
+        btn = page.locator('div[role="button"]:has-text("Répondre")')
+        count = await btn.count()
+        print("Nombre de boutons Répondre :", count) 
+
+        if count > 5:
+            print("on like → Plus de 5 commentaires")
             await page.evaluate("""
             const buttons = document.querySelectorAll('div[aria-label="J’aime"]');
             for (let i = 0; i < Math.min(20, buttons.length); i++) {
               buttons[i].scrollIntoView({ behavior: "smooth", block: "center" });
               buttons[i].click();
-            } """)
+            } """)            
             
     
     

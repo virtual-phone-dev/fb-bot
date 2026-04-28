@@ -38,7 +38,7 @@ async def verifier_commande(page, duree_pause):
                         break
 
         await asyncio.sleep(0.2)
-    print("suivant automatique")
+    #print("suivant automatique")
     
     
 async def verifier_blocage(page):
