@@ -1,10 +1,8 @@
-import json, asyncio, time, msvcrt
+import json, asyncio
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies, basculer_sur_la_page, reparer_fb)
-
-url_post = "https://www.threads.com/@les_luxueux_du_congo/post/DW6jd9cjM2P"
-PAUSE_MINUTES = 1
-
+from itertools import cycle
+from outils_playwright import (connecter_gmail, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, charger_fichier_d, recuperer_texte_th,
+verifier_commande, basculer_sur_le_compte)
 
 texte = """Dis à tes abonnés qui t'envoient des messages, de t'envoyer un message sur Florinato, c'est là-bas tu vas causer avec eux.
 Et sur Florinato tu vas les facturer 200fcfa pour chaque message envoyer, ou encore tu pourras fixer n'importe quel prix que tu veux.
@@ -12,36 +10,6 @@ Et sur Florinato tu vas les facturer 200fcfa pour chaque message envoyer, ou enc
 Si ça t'intéresse, sur Florinato, envoie un message à CAISIP.
 https://florinato105.onrender.com """
 
-
-
-# VERIFIER COMMANDE CONSOLE
-async def verifier_commande(page, duree_minutes):
-    print("Écrivez..")
-    secondes = duree_minutes * 60
-    debut = time.time()
-
-    while time.time() - debut < secondes:
-        if msvcrt.kbhit():
-            cmd = input().strip().lower()
-
-            # passer au compte suivant immédiatement
-            if cmd == "+":
-                print("compte suivant")
-                return
-
-            # pause
-            if cmd in ["stop", "-"]:
-                print("PAUSE")
-
-                while True:
-                    cmd = input("Tape + pour continuer : ").strip()
-                    if cmd == "+":
-                        print("reprise")
-                        debut = time.time()
-                        break
-
-        await asyncio.sleep(0.2)
-    print("suivant automatique")
 
 
 
@@ -102,11 +70,31 @@ async def apply_stealth(page):
     Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
 
 
+        
+def load_cookies(fichier_des_comptes):
+    with open(fichier_des_comptes, "r", encoding="utf-8") as f:
+        raw_cookies = json.load(f)
+
+    cookies = []
+    for c in raw_cookies:
+        cookies.append(
+            {
+                "name": c.get("name"),
+                "value": c.get("value"),
+                "domain": c.get("domain"),
+                "path": c.get("path", "/"),
+                "httpOnly": c.get("httpOnly", False),
+                "secure": c.get("secure", False),
+                "expires": c.get("expirationDate", -1),
+            }
+        )
+    return cookies
+
 
 
 async def reparer_th(page, context, nom_complet, email, mot_de_passe):
     print(f"reparer {nom_complet}")
-    await connecter_th_byLogin(page, email, mot_de_passe)
+    await connexion_th(page, email, mot_de_passe)
     
     count = 0
     while count < 3:       
@@ -118,44 +106,6 @@ async def reparer_th(page, context, nom_complet, email, mot_de_passe):
         count += 1
 
             
-            
-async def connecter_th_byLogin(page, email, mot_de_passe):
-    try:
-        await page.goto("https://www.threads.com/login", timeout=0)
-    except:
-        print("recharge la page")
-        await page.goto("https://www.threads.com/login", timeout=0)
-        
-    while True:
-        input_box = page.get_by_placeholder("Nom de profil, numéro de mobile ou e-mail")
-        if await input_box.count() > 0:            
-            await input_box.fill(email)
-            break
-            
-    while True:
-        input_box = page.get_by_placeholder("Mot de passe")
-        if await input_box.count() > 0:            
-            await input_box.fill(mot_de_passe)
-            break
-            
-    while True:       
-        print("patiente 1s"); await asyncio.sleep(1)            
-        element = await page.query_selector("text=Se connecter")
-        if element:
-            await element.click()
-            break
-        else:
-            print("L'élément 'Se connecter' n'existe pas.")             
-    
-    while True:    
-        try:
-            print("patiente 2s"); await asyncio.sleep(2)   
-            element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
-            if element:
-                await page.goto(url_post, timeout=0)
-                break
-        except:
-            pass  
 
 
 
@@ -168,7 +118,7 @@ async def ecrire_commentaire_th(page):
                 
  
 async def commenter_th(page, email, mot_de_passe):        
-    await connecter_th_byLogin(page, email, mot_de_passe)
+    await connexion_th(page, email, mot_de_passe)
     
     while True:
         try:
@@ -342,17 +292,16 @@ async def connecter_compte_insta(page, context, compte, fichier_des_comptes, ema
     
     
             
-async def creer_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe):
-#async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe):
-    #print(f"Création du compte : {nom_complet}")
+async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe):
+    print(f"Création du compte : {nom_complet}")
           
     await connecter_gmail(context, email)
     await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0) #acceder a instagram
 
     await page.get_by_label("Numéro de mobile ou adresse e-mail").fill(email)
     await page.get_by_label("Mot de passe").fill(mot_de_passe)
-    #await page.get_by_label("Nom complet").fill(nom_complet)
-    #await page.get_by_label("Nom de profil").fill(nom_profil)
+    await page.get_by_label("Nom complet").fill(nom_complet)
+    await page.get_by_label("Nom de profil").fill(nom_profil)
     
     # selectionner le jour
     await page.evaluate(''' [...document.querySelectorAll("div, span")].find(el => el.textContent.trim() === "Jour").click(); ''')
@@ -372,72 +321,161 @@ async def creer_compte_insta(page, context, compte, fichier_des_comptes, email, 
     await patiente_compte_insta_connecter(page, context)
     await marquer_creer(compte, fichier_des_comptes) # marquer comme créé
     await mettre_photo_profil_insta(page, nom_profil)
+    
 
-
-
-async def connexion_fb(page, email, mot_de_passe):
-    await page.get_by_label("E-mail ou numéro de mobile").fill(email)
-    await page.fill('input[name="pass"]', mot_de_passe)
-        
-    btn = page.get_by_label("Se connecter")
-    if await btn.count() > 0:                                               
-        await btn.click()
             
-
-async def verifier_message_fb(page, email, mot_de_passe):
-    #print(f"Création du compte : {nom_complet}")
-    await page.goto("https://fb.com", timeout=0) #acceder a fb
-
-    statut = await reparer_fb(page)
-    if statut == "connecté_déblocage_réussi": print("connecté (déblocage réussi)"); return
+async def verifier_blocage_th(page):
+    #print("patiente 1s"); await asyncio.sleep(1)  
+    #element = await page.query_selector('span[aria-label="Confirmez que vous êtes bien une personne réelle"]')    
+    element = await page.query_selector("text=Confirmez que vous êtes une personne réelle")
+    if element:
+        return "compte_désactiver"
+        
+        
+    element = await page.query_selector("text=Confirmez que vous êtes bien une personne réelle")
+    if element:
+        return "compte_désactiver"
+        
+        
+        
+async def connexion_th(page, url_page, email, mot_de_passe):
+    await page.goto("https://www.threads.com/login", timeout=0)
+    #await page.wait_for_load_state("domcontentloaded")
+    print("patiente 5s"); await asyncio.sleep(5)
     
+    #try:
+    #    await page.goto("https://www.threads.com/login", timeout=0)
+    #except:
+    #    print("recharge la page")
+    #    await page.goto("https://www.threads.com/login", timeout=0)
+        
     
-    print("patiente 2s"); await asyncio.sleep(2)
-    btn = await page.query_selector("text=Tableau de bord")
-    if btn:
-        print("Connecté sur la page")
+    #element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
+    element = await page.query_selector('text=Quoi de neuf')
+    if element:
+        print("Connecté")
+        await page.goto(url_page, timeout=0)
+        await page.wait_for_load_state("domcontentloaded")
     else:
         print("Non Connecté")
-        await connexion_fb(page, email, mot_de_passe)
+        while True:
+            input_box = page.get_by_placeholder("Nom de profil, numéro de mobile ou e-mail")
+            if await input_box.count() > 0:            
+                await input_box.fill(email)
+                break
+                
+        while True:
+            input_box = page.get_by_placeholder("Mot de passe")
+            if await input_box.count() > 0:            
+                await input_box.fill(mot_de_passe)
+                break
+                
+                
+        while True:       
+            print("patiente 1s"); await asyncio.sleep(1)            
+            element = await page.query_selector("text=Se connecter")
+            if element:
+                await element.click()
+                break
+            else:
+                print("L'élément 'Se connecter' n'existe pas.")             
+   
+        while True:    
+            try:
+                statut = await verifier_blocage_th(page)
+                if statut == "compte_désactiver": print("⛔ Compte désactiver"); return
         
+                print("patiente 2s"); await asyncio.sleep(2)   
+                element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
+                if element:
+                    await page.goto(url_page, timeout=0)
+                    await page.wait_for_load_state("domcontentloaded")
+                    break
+            except:
+                pass  
+
+        element = await page.query_selector("text=Continuer avec Instagram")
+        if element:
+            print("Continuer avec insta");
+            #await creer_compte_threads(page)
+
+
+async def liker(page, url_page, email, mot_de_passe):
+    #await page.goto(url_page, timeout=0)
+    #await page.wait_for_load_state("domcontentloaded")
+    
+    await connexion_th(page, url_page, email, mot_de_passe)
+    
+    fichier_posts = "posts_deja_liker_th.json"
+    posts = await charger_fichier(fichier_posts)
+    
+    statut = await recuperer_texte_th(page, posts, fichier_posts) # Vérifier si posts deja liker
+    if statut == "deja_liker": return #print("Déjà liké"); 
+    #print("patiente 10000s"); await asyncio.sleep(10000)
     
     
-async def envoyer_email(page):
-    btn = await page.query_selector("text=Nouveau message")
-    if btn:
-        await btn.click()
+async def likerr(page):
+    #await page.goto(url_page, timeout=0)
+    #await page.wait_for_load_state("domcontentloaded")
+    
+    fichier_posts = "posts_deja_liker_th.json"
+    posts = await charger_fichier(fichier_posts)
+    
+    statut = await recuperer_texte_th(page, posts, fichier_posts) # Vérifier si posts deja liker
+    if statut == "deja_liker": return #print("Déjà liké"); 
+    print("patiente 10000s"); await asyncio.sleep(10000)
+    
+    
+    while True:
+        element = await page.query_selector('[data-pressable-container="true"]') # cliquer sur le premier élément avec cet attribut
+        if element:            
+            await page.evaluate(""" const element = document.querySelector('[data-pressable-container="true"]');
+            if (element) { element.click(); } """)
+            break
+    
     print("patiente 3s"); await asyncio.sleep(3)
     
-    #await page.fill('input[aria-label="Destinataires"]', 'Ton texte ici')
-    await page.locator('input[aria-label="Destinataires"]').fill("gillesilluminati@gmail.com")
-    await page.locator('input[aria-label="Objet"]').fill("Invitation, Avril 2026.")
+    await page.evaluate(""" const likeIcons = document.querySelectorAll('svg[aria-label="J’aime"]');
+    likeIcons.forEach(icon => {
+      const event = new MouseEvent('click', { view: window, bubbles: true, cancelable: true }); // Crée un événement clic
+      icon.dispatchEvent(event); // Déclenche l'événement sur l'icône
+    }); """)
+    
+    print("patiente 10000s"); await asyncio.sleep(10000)
+    
+    
+    
+async def envoyer_message(page, url_page):
+    await page.goto(url_page, timeout=0)
+    await basculer_sur_le_compte(page, url_page)
+    
+    #await page.wait_for_load_state("domcontentloaded")
+    #print("patiente 5s"); await asyncio.sleep(5)
 
-    await page.click('div[aria-label="Corps du message"]') #on clique dabord avant d'écrire pour activer la zone de texte, car l'input est en mode contenteditable="true"
-    await page.keyboard.type(texte)
+    btn_message = page.get_by_label("Message").first
+    if await btn_message.count() > 0:
+        await page.evaluate("""
+        const messageButton = document.querySelector('div[aria-label="Message"]'); // cliquer sur le bouton Message, une popup s'ouvre alors , pour ecrire le message
+        if (messageButton) { messageButton.click(); } """)
     
-    print("patiente 2s"); await asyncio.sleep(2)
-    # Cliquer sur le bouton Envoyer
-    await page.get_by_role("button", name="Envoyer").click()
+    print("Patiente 2s"); await asyncio.sleep(2);
+    while True:
+        print("Patiente 1s"); await asyncio.sleep(1)
+        message_box = page.locator('div[aria-label*="Écrire"]').first
+        if await message_box.count() > 0:
+            #phrase = random.choice(phrases)
+            #await message_box.click()        
+            await message_box.fill(texte)        
+                
+            print("Patiente 1s"); await asyncio.sleep(1)
+            await page.keyboard.press("Enter")
 
-    
-        
-        
-async def envoyer_emaill(page):
-    
-    #while True:
-    print("patiente 1s"); await asyncio.sleep(1)
-        #btn = page.locator('div[role="button"]:has-text("Nouveau message")')
-    #await page.get_by_role("button", name="Nouveau message").click()
-    await page.evaluate(""" 
-    const buttons = document.querySelectorAll('[role="button"]');
-    for (const button of buttons) {
-        if (button.innerText.trim() === "Nouveau message") { button.click(); break; } } """)
-    
-
-    print("btn cliqué")
+            print("✅ Message envoyé :", texte);
+            print("Patiente 7s"); await asyncio.sleep(7)
+            break
     
     
-        
+    
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
@@ -450,59 +488,76 @@ async def main():
             ],
         )
 
-        #context = await browser.new_context()
-        
-        #fichier_des_comptes = "comptes-insta-th.json"
-        fichier_des_comptes = "comptes-gmail.json"
+        fichier_des_comptes = "comptes-fb.json"
         comptes = await charger_comptes(fichier_des_comptes)
-
-        #page = await context.new_page() # nouvel onglet
-        #await apply_stealth(page)
         
-        for compte in comptes:
-            
-            if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
-                continue
+        pages_list = await charger_fichier("pages_contacter.json") # Charger la liste de pages
+        pages_list = [p for p in pages_list if "url" in p]
+        cycle_pages = cycle(pages_list)
+        
+        fichier_derniere_page = "derniere_page_contacter.json"
+        data = await charger_fichier_d(fichier_derniere_page)
+        derniere_page = data.get("name")
+
+        debut = False
+        
+        count = 0
+        while count < 3: 
+            for compte in comptes:
+                fichier_cookie = compte["fichier"]
                 
-            fichier_cookie = compte["fichier"]
-            email = compte["email"]
-            mot_de_passe = compte["mot_de_passe"]
-            nom = compte["id_inchangeable"]
-            print("✅ Compte : ", nom);
-            
-            #if compte.get("creer") == "Oui":
-            #    continue  # skip si compte déjà créé
-            
-            context = await browser.new_context() #nouveau contexte pour chaque compte
-            
-            # Charger les cookies AVANT d'ouvrir la page
-            cookies = charger_cookies(fichier_cookie)
-            await context.add_cookies(cookies)
-        
-            #nom_complet = compte["nom_complet"]
-            #nom_profil = compte["nom_profil"]
-            
-            page = await context.new_page()
-            await apply_stealth(page)
-            
-            await connecter_gmail(page, email)
-            await envoyer_email(page)
-            #await verifier_message_fb(page, email, mot_de_passe);
-            
-            #await verifier_commande(page, PAUSE_MINUTES)
-            await sauvegarder_cookies(context, fichier_cookie)
-            #await creer_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe)
+                if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
+                    continue
+                    
+                #if compte.get("creer") == "Oui":
+                #    continue  # skip si compte déjà créé
+                
+                page = next(cycle_pages); 
+                fichier_cookie = compte.get("fichier")
+                nomDeMonCompte = compte.get("id_inchangeable")
 
-            #await page.goto("https://www.instagram.com", timeout=0)
-            #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
+                url_page = page.get('url')
+                name = page.get('name'); #print("name : ", name); print(url_page);
+                                
+                                
+                if derniere_page:
+                    if derniere_page == name: debut = True
+                    if not debut: continue
+                
+                print("✅", nomDeMonCompte); print(name); print(url_page);
+                
+                context = await browser.new_context() #nouveau contexte pour chaque compte
+                
+                cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
+                await context.add_cookies(cookies)
             
-            #await commenter_th(page, email, mot_de_passe)
-            #break
-            
-            #await reparer_th(page, context, nom_complet, email, mot_de_passe)
-            
-            print("patiente 10000s"); await asyncio.sleep(10000)
-            await context.close() #fermer le contexte (ou la fenetre)
+                #nom_complet = compte["nom_complet"]
+                #nom_profil = compte["nom_profil"]
+                #email = compte["email"]
+                #mot_de_passe = compte["mot_de_passe"]
+                
+                #print(nom_complet);
+
+                page = await context.new_page()
+                await apply_stealth(page)
+                #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
+                #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
+                
+                #await commenter_th(page, email, mot_de_passe)
+                #break
+                
+                #await reparer_th(page, context, nom_complet, email, mot_de_passe)
+                #await connexion_th(page, url_page, email, mot_de_passe)
+                #await liker(page, url_page, email, mot_de_passe)
+                await envoyer_message(page, url_page); #print("patiente 10000s"); await asyncio.sleep(10000)
+                
+                #await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
+                #await sauvegarder_cookies(context, fichier_cookie)
+                
+                await verifier_commande(page, duree_pause=10); 
+                await context.close()
+
+            count += 1
 
 if __name__ == "__main__":
     asyncio.run(main())

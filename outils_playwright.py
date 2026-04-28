@@ -1,4 +1,4 @@
-import json, os, asyncio, random, sqlite3
+import json, os, asyncio, random, sqlite3, msvcrt, time
 
 mot_de_passe_gmail = "diel2019"
 
@@ -11,6 +11,36 @@ async def appliquer_stealth(page):
     Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
 
 
+# VERIFIER COMMANDE CONSOLE
+async def verifier_commande(page, duree_pause):
+    print("Écrivez..")
+    secondes = duree_pause * 1 # duree_pause x nbre_secondes
+    debut = time.time()
+
+    while time.time() - debut < secondes:
+        if msvcrt.kbhit():
+            cmd = input().strip().lower()
+
+            # passer au compte suivant immédiatement
+            if cmd == "+":
+                print("compte suivant")
+                return
+
+            # pause
+            if cmd in ["stop", "-"]:
+                print("PAUSE")
+
+                while True:
+                    cmd = input("Tape + pour continuer : ").strip()
+                    if cmd == "+":
+                        print("reprise")
+                        debut = time.time()
+                        break
+
+        await asyncio.sleep(0.2)
+    print("suivant automatique")
+    
+    
 async def verifier_blocage(page):
     print("patiente 3s"); await asyncio.sleep(3)
     btn = await page.query_selector("text=confirmez que vous êtes une personne réelle afin d’utiliser votre compte")
@@ -33,6 +63,39 @@ async def reparer_fb(page):
 
         
         
+async def basculer_sur_le_compte(page, url_page):
+    btn = page.locator('a[aria-label="Espace Pubs"][role="link"]').first
+    if await btn.count() > 0:  
+        print("Connecté sur la page") #print("Espace Pubs trouvé")
+      
+        while True:
+            print("patiente 2s"); await asyncio.sleep(2)
+            btn = page.get_by_label("Votre profil")
+            if await btn.count() > 0:
+                await page.evaluate("""
+                const btn = document.querySelector('div[aria-label="Votre profil"]');
+                if (btn) { btn.click(); } """)
+                break
+                
+        while True:
+            print("patiente 3s"); await asyncio.sleep(3)  
+            btn = page.get_by_label("Basculer sur")
+            if await btn.count() > 0:
+                await page.evaluate("""
+                const btn = document.querySelector('div[aria-label*="Basculer sur"]');
+                if (btn) { btn.click(); } """)
+                break
+                
+        print("patiente 5s"); await asyncio.sleep(5)  
+        element = await page.query_selector("text=Richesse avec SATAN")
+        if not element:
+            await page.goto(url_page, timeout=0)
+            
+    else:
+        print("Connecté sur le compte")
+    
+    
+    
 async def basculer_sur_la_page(page):
     
     btn = page.locator('a[aria-label="Espace Pubs"][role="link"]').first
@@ -72,9 +135,10 @@ async def basculer_sur_la_page(page):
             
             
             
-async def connecter_gmail(context, email):
-    page = await context.new_page() #acceder a gmail
-    await appliquer_stealth(page) # appliquer stealth
+#async def connecter_gmail(context, email):
+async def connecter_gmail(page, email):
+    #page = await context.new_page() #acceder a gmail
+    #await appliquer_stealth(page) # appliquer stealth
     await page.goto("https://mail.google.com", timeout=0)  
     
     btn = page.locator('div[role="button"]:has-text("Nouveau message")')
