@@ -120,10 +120,10 @@ async def liker_post(page, url_page):
         
         btn = page.locator('div[role="button"]:has-text("Répondre")')
         count = await btn.count()
-        print("Nombre de boutons Répondre :", count) 
+        #print("Nombre de boutons Répondre :", count) 
 
         if count > 5:
-            print("on like → Plus de 5 commentaires")
+            #print("on like → Plus de 5 commentaires")
             await page.evaluate("""
             const buttons = document.querySelectorAll('div[aria-label="J’aime"]');
             for (let i = 0; i < Math.min(20, buttons.length); i++) {
@@ -136,7 +136,7 @@ async def liker_post(page, url_page):
 async def main():
     async with async_playwright() as p: 
         browser = await p.chromium.launch(        
-            headless=False,
+            headless=True,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
@@ -161,41 +161,40 @@ async def main():
         cycle_pages = cycle(pages_list)
         
         count = 0
-        while count < 3:             
-            #print(" cc");
+        while count < 2:   
             for compte in comptes:
-                #print(" dd");
                 page = next(cycle_pages); 
                 fichier_cookie = compte.get("fichier")
                 nomDeMonCompte = compte.get("id_inchangeable")
+                
+                index = pages_list.index(page)
+                next_index = index + 1
+                print("index ", index); print("next_index ", next_index);
 
                 url_page = page.get('url')
                 name = page.get('name'); #print("name : ", name); print(url_page);
-                                
-                                
+                    
                 if derniere_page:
                     if derniere_page == name: debut = True
                     if not debut: continue
-                
                 print("✅", nomDeMonCompte); print(name); print(url_page);
-                    
+                        
                 # Charger les cookies AVANT d'ouvrir la page
                 context = await browser.new_context() #nouveau contexte pour chaque compte
                 cookies = charger_cookies(fichier_cookie)
                 await context.add_cookies(cookies)
-                
+                    
                 page = await context.new_page()
                 await appliquer_stealth(page)
-                await liker_post(page, url_page)
-                
-                await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
+                await liker_post(page, url_page)                
+                                
+                if next_index < len(pages_list):
+                    await sauvegarder_fichier(fichier_derniere_page, {"name": pages_list[next_index]["name"]})
+                                                   
+                #await sauvegarder_fichier(fichier_derniere_page, { "name": next_page.get("name") }) # ✅ sauvegarde de la dernière page
                 await context.close() #fermer le contexte (ou la fenetre)
-
-            #if debut: 
-            #    print("✅ Patiente 30 minutes"); await asyncio.sleep(60 * 30)
-            
             count += 1
-            
+
         
 if __name__ == "__main__":
     asyncio.run(main())

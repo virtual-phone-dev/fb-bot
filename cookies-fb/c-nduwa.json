@@ -25,7 +25,7 @@
             "value": "100034763449347",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808879892.520339,
+            "expires": 1809039524.066589,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -45,7 +45,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777950031,
+            "expires": 1778108330,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -82,30 +82,30 @@
         },
         {
             "name": "fr",
-            "value": "1QhAHIrWWDmmER2Zk.AWeBmNp7zYo4YD7RGIgCZuFDYsjf7x17UEW9yXjrRN3hGH6fkNw.Bp8B2V..AAA.0.0.Bp8B2V.AWdRUSZu79IyyVnvRV88i3j73N8",
+            "value": "1mzRvglePSXJTvmAv.AWc-tHQlxW-6PGffGvgcKDm7Sj7TH3CIaxIAx_0u5sYl00DNQGs.Bp8o0j..AAA.0.0.Bp8o0j.AWcoA5zspa7pkm_QGJAcPhpk7xc",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1785119892.52222,
+            "expires": 1785279524.067015,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "7%3AQHsPAzIrxxvBjw%3A2%3A1773094201%3A-1%3A-1%3A%3AAcwC46cz3wTSHBpjZYpNb9RNHYOt5Y1K3o2OrSa1FKI",
+            "value": "7%3AQHsPAzIrxxvBjw%3A2%3A1773094201%3A-1%3A-1%3A%3AAcwyr4U6RnuikSaxLH7YN7GIatx2hfUCYN4QpmYFbQw",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808879892.52242,
+            "expires": 1809039524.067166,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "alsfid",
-            "value": "{\"id\":\"f69a26a28\",\"timestamp\":1777345297375.3}",
+            "value": "{\"id\":\"f87acb482\",\"timestamp\":1777503528193.8}",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777345357.375561,
+            "expires": 1777503588.194333,
             "httpOnly": false,
             "secure": false,
             "sameSite": "Lax"
@@ -120,8 +120,20 @@
                     "value": "{}"
                 },
                 {
+                    "name": "mutex_falco_queue_log^$100034763449347^#100034763449347^#^#hmac_ttl.1777503517.AR07mn962l8NOundaBdPydi1f6Q_PP2JvRjuuwnu1MfLPO_S^$",
+                    "value": "0971kd:1777503524318"
+                },
+                {
+                    "name": "mutex_falco_queue_immediately^$100034763449347^#100034763449347^#^#hmac_ttl.1777503517.AR07mn962l8NOundaBdPydi1f6Q_PP2JvRjuuwnu1MfLPO_S^$",
+                    "value": "0971kd:1777503524318"
+                },
+                {
+                    "name": "mutex_falco_queue_critical^$100034763449347^#100034763449347^#^#hmac_ttl.1777503517.AR07mn962l8NOundaBdPydi1f6Q_PP2JvRjuuwnu1MfLPO_S^$",
+                    "value": "0971kd:1777503524318"
+                },
+                {
                     "name": "hb_timestamp",
-                    "value": "1777343896812"
+                    "value": "1777503530521"
                 },
                 {
                     "name": "CacheStorageVersion",
@@ -129,19 +141,19 @@
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1777343896860"
+                    "value": "1777503530572"
                 },
                 {
                     "name": "Session",
-                    "value": "8xwvu6:1777345331871"
+                    "value": "4dezl4:1777503562279"
                 },
                 {
-                    "name": "mutex_banzai",
-                    "value": "4mptew:1777345227575"
+                    "name": "MqttGlobalStreamCounter:count-updated",
+                    "value": "{\"__t\":1777503524620,\"__v\":[\"{\\\"key\\\":\\\"b789fd0f-6d8e-4d2c-92e6-0c71f0d57201\\\",\\\"event\\\":\\\"UPDATE\\\",\\\"value\\\":{\\\"totalConnectionStreams\\\":1}}\"]}"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1777343895191.3"
+                    "value": "1777503528478.4001"
                 }
             ]
         },

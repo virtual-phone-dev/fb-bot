@@ -25,7 +25,7 @@
             "value": "100007670940489",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808880118.641906,
+            "expires": 1809039657.096118,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -65,7 +65,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777948921,
+            "expires": 1778108464,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -82,30 +82,30 @@
         },
         {
             "name": "fr",
-            "value": "1fgkddvCpE7bSdUfy.AWcqEEe_7AUdfEZLiNVepk3UIMgvid_BVfr727UaAmIVXmkRlwg.Bp8B53..AAA.0.0.Bp8B53.AWcR1AbpoosDIKFzzJHOshzhUgk",
+            "value": "1CG4U1X7ZmNV5pFpg.AWdca5aS-C7SZL0OZEVMjVcwTaZetqV5tg08pu14TDprKU5GFKo.Bp8o2o..AAA.0.0.Bp8o2o.AWeN1Xjn90S4_M42mDnyeLGdzAg",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1785120118.642171,
+            "expires": 1785279657.096304,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "43%3ASSaTguzgHff8UQ%3A2%3A1772130710%3A-1%3A-1%3A%3AAcx7Q2jTDXgCUEVvHDwnlQcuE88clLw2oM-oOwSMlKs",
+            "value": "43%3ASSaTguzgHff8UQ%3A2%3A1772130710%3A-1%3A-1%3A%3AAcx83czlT2mZyKrVO1N_-fOHF6ml9zKvMqN_k4K0kII",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1808880118.642337,
+            "expires": 1809039657.096435,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "alsfid",
-            "value": "{\"id\":\"fcc66defc\",\"timestamp\":1777344121595.8}",
+            "value": "{\"id\":\"ffff27622\",\"timestamp\":1777503659659.8}",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777344181.632157,
+            "expires": 1777503720.710426,
             "httpOnly": false,
             "secure": false,
             "sameSite": "Lax"
@@ -121,27 +121,39 @@
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1777344121688"
+                    "value": "1777503664176"
                 },
                 {
                     "name": "CacheStorageVersion",
                     "value": "3b"
                 },
                 {
+                    "name": "mutex_falco_queue_log^$100007670940489^#100007670940489^#^#hmac_ttl.1777503650.AR0DRzPa1mEKobF7HjfYVDP0U_wi58zdfPANjpMFF-oDafU4^$",
+                    "value": "5dllox:1777503656782"
+                },
+                {
+                    "name": "mutex_falco_queue_immediately^$100007670940489^#100007670940489^#^#hmac_ttl.1777503650.AR0DRzPa1mEKobF7HjfYVDP0U_wi58zdfPANjpMFF-oDafU4^$",
+                    "value": "5dllox:1777503656782"
+                },
+                {
                     "name": "signal_flush_timestamp",
-                    "value": "1777344121728"
+                    "value": "1777503664260"
+                },
+                {
+                    "name": "mutex_falco_queue_critical^$100007670940489^#100007670940489^#^#hmac_ttl.1777503650.AR0DRzPa1mEKobF7HjfYVDP0U_wi58zdfPANjpMFF-oDafU4^$",
+                    "value": "5dllox:1777503656782"
                 },
                 {
                     "name": "Session",
-                    "value": "aml44q:1777344157565"
+                    "value": "pk1x3h:1777503704044"
                 },
                 {
                     "name": "MqttGlobalStreamCounter:count-updated",
-                    "value": "{\"__t\":1777344119066,\"__v\":[\"{\\\"key\\\":\\\"274b47a1-b4bc-4750-859e-94caf5dd8f03\\\",\\\"event\\\":\\\"UPDATE\\\",\\\"value\\\":{\\\"totalConnectionStreams\\\":1}}\"]}"
+                    "value": "{\"__t\":1777503658454,\"__v\":[\"{\\\"key\\\":\\\"416c2a3f-82f0-43a8-9e9f-d267a46bcd7e\\\",\\\"event\\\":\\\"UPDATE\\\",\\\"value\\\":{\\\"totalConnectionStreams\\\":1}}\"]}"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1777344121090.4"
+                    "value": "1777503659665.3"
                 }
             ]
         },
