@@ -61,6 +61,30 @@ async def reparer_fb(page):
             if await btn.count() > 0:
                 return "connecté_déblocage_réussi"
 
+
+async def acceder_pagee(page) :
+    #print("patiente 10s"); await asyncio.sleep(10) 
+    while True:
+        await asyncio.sleep(1)
+        btn = await page.query_selector("text=Richesse avec SATAN")
+        if btn:
+            await btn.click()
+            print("patiente 1s"); await asyncio.sleep(1)  
+            break
+            
+            
+async def acceder_page(page):
+    textes = ["Richesse avec SATAN", "Secte de SATAN"]
+
+    while True:
+        await asyncio.sleep(1)
+
+        for t in textes:
+            btn = await page.query_selector(f"text={t}")
+            if btn:
+                await btn.click()  #print(f"trouvé et cliqué : {t}")
+                await asyncio.sleep(1)
+                return       
         
         
 async def basculer_sur_le_compte(page, url_page):
@@ -417,7 +441,13 @@ def charger_posts(fichier):
     with open(fichier, "r", encoding="utf-8") as f:
         return json.load(f)
         
-        
+
+async def ajouter_dans_fichier(fichier, data):
+    contenu = await charger_fichier(fichier) # liste de contenus
+    contenu.append(data) # nouveau contenu, il ajoute le nouveau contenu dans la liste de contenus
+    await sauvegarder_fichier(fichier, contenu)
+
+    
 # Ouvrir Facebook
 async def ouvrir_facebook(contexte):
     page = await contexte.new_page()

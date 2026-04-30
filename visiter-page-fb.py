@@ -1,18 +1,18 @@
 import json, asyncio, os, sys, msvcrt, time
 import outils_playwright as outils
 from playwright.async_api import async_playwright
-from outils_playwright import (basculer_sur_la_page, sauvegarder_cookies)
+from outils_playwright import (basculer_sur_la_page, sauvegarder_cookies, acceder_page)
 
 MODE_SILENCIEUX = True
 PAUSE_MINUTES = 5
 
 
 
-phrase = """Lien du site internet pour rejoindre le Club du Diable
+phrase = """Fils de la Lumière,
 
-Sur le site internet, créer votre compte et envoyer un message au Club de la Richesse, et vous aller recevoir 500.000 dollars après avoir signé votre pacte avec le Seigneur Lucifer
-
-https://florinato105.onrender.com"""
+Pour rejoindre Richesse avec SATAN,
+Viens sur notre site internet, crée ton compte et envoie un message à Richesse avec SATAN, et tu vas recevoir 500.000 dollars après avoir signé ton pacte avec le Seigneur Lucifer
+https://florinato105.onrender.com """
 
 
 
@@ -275,17 +275,7 @@ async def mettre_photo(page, context) :
         await acceder_page(page)
         await mettre_photo_couverture(page)
         await mettre_photo_profil(page)
-
-
-async def acceder_page(page) :
-    #print("patiente 10s"); await asyncio.sleep(10) 
-    while True:
-        await asyncio.sleep(1)
-        btn = await page.query_selector("text=Richesse avec SATAN")
-        if btn:
-            await btn.click()
-            print("patiente 1s"); await asyncio.sleep(1)  
-            break
+        
             
         
 async def publier_post(page) :

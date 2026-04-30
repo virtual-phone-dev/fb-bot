@@ -15,10 +15,30 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1778108664,
+            "expires": 1778175876,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
+        },
+        {
+            "name": "ps_l",
+            "value": "1",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1812131074.870387,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "ps_n",
+            "value": "1",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1812131074.870755,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
         }
     ],
     "origins": [
@@ -27,11 +47,11 @@
             "localStorage": [
                 {
                     "name": "Session",
-                    "value": "0uyso3:1777503899172"
+                    "value": "woporr:1777571110883"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1777503865208.7998"
+                    "value": "1777571076954.8"
                 }
             ]
         }

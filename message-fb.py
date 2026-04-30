@@ -68,7 +68,9 @@ async def main():
         browser = await p.chromium.launch(headless=False)
         
         comptes = json.load(open("comptes-fb.json", encoding="utf-8"))
-        #comptes = [c for c in comptes if c.get("message_speciale") == "1"]
+        #comptes = [c for c in comptes if c.get("message_speciale") == "1"] # message_speciale
+        comptes = [c for c in comptes if not str(c.get("fichier", "")).strip().startswith("-")] # ignorer les comptes qui commencent par -
+        
         total = len(comptes)
 
         for index, compte in enumerate(comptes):
