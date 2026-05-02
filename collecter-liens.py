@@ -240,14 +240,12 @@ async def collecter_liens(page, context):
     await basculer_sur_le_compte(page)
     
     while True:
-        print("patiente 5s"); await asyncio.sleep(5)
+        print("patiente 1s"); await asyncio.sleep(1)
         input_box = page.get_by_placeholder("Rechercher sur Facebook")
         if await input_box.count() > 0:            
-            await input_box.fill("aicha kamoise")
+            await input_box.fill("bangui")
             await input_box.press("Enter")
-            break
-                
-    while True:
+
         print("patiente 2s"); await asyncio.sleep(2)
         btn = page.get_by_label("Publications récentes")
         if await btn.count() > 0:                                               
