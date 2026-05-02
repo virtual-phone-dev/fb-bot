@@ -229,12 +229,12 @@ async def recuperer_lien(page, context):
                 
                 await new_page.close()
 
-        # Scroll pour charger plus de contenu
+        # Scroll pour charger plus de contenu 
         await page.evaluate("window.scrollBy(0, document.body.scrollHeight)")
         print("patiente 1s"); await asyncio.sleep(1)
         
-    
-    
+    # djibouti barcelonais madrilene france maroc algerie tunisie kigali rwanda n'djamena paris suisse belgique genève bruxelles monaco fally ipupa
+    # martinique guyane tahiti polynésie haiti guadeloupe kinshasa
 async def collecter_liens(page, context):
     await page.goto("https://fb.com", timeout=0)
     await basculer_sur_le_compte(page)
@@ -243,7 +243,7 @@ async def collecter_liens(page, context):
         print("patiente 1s"); await asyncio.sleep(1)
         input_box = page.get_by_placeholder("Rechercher sur Facebook")
         if await input_box.count() > 0:            
-            await input_box.fill("bangui")
+            await input_box.fill("barcelonais")
             await input_box.press("Enter")
 
         print("patiente 2s"); await asyncio.sleep(2)
