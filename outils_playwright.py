@@ -10,7 +10,21 @@ async def appliquer_stealth(page):
     Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
     Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
 
-
+# en cas d'erreur, jutiliserai des parties de ce code
+async def nom_page(page, url):
+    while True:
+        try:
+            print("patiente 5s"); await asyncio.sleep(5)
+            name = await page.locator("h1").first.text_content() # recuperer nom_page
+            name = name.strip() if name else None
+            print(" ss")
+            await ajouter_dans_fichier("pages_collecter.json", {"page": url, "nom": name}, "page", url) # sauvegarder la page trouvé
+            print("tt ")
+            print("nom_page : ", name); return name
+        except Exception as e:
+            print("cc.."); print("❌ erreur :"); print(e)
+            
+            
 # VERIFIER COMMANDE CONSOLE
 async def verifier_commande(page, duree_pause):
     print("Écrivez..")
@@ -247,6 +261,12 @@ async def connecter_gmail(page, email):
             pass   
            
 
+async def post_recent(page):
+    btn = page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first
+    if await btn.count() > 0:    
+        await btn.click()
+        print("patiente 2s"); await asyncio.sleep(2); 
+
 
 def sauvegarder_json(fichier, data):
     with open(fichier,"w",encoding="utf-8") as f:
@@ -403,7 +423,7 @@ async def sauvegarder_sur_meme_ligne(fichier, data):
     with open(fichier, "w", encoding="utf-8") as f:
         f.write("[\n")
         for i, item in enumerate(data):
-            json_line = json.dumps(item, ensure_ascii=False, separators=(',', ':'))
+            json_line = json.dumps(item, ensure_ascii=False, separators=(', ', ':'))
             if i > 0:
                 f.write(",\n")
             f.write(f"  {json_line}")
@@ -442,10 +462,29 @@ def charger_posts(fichier):
         return json.load(f)
         
 
-async def ajouter_dans_fichier(fichier, data):
-    contenu = await charger_fichier(fichier) # liste de contenus
+async def ajouter_dans_fichier(fichier, data, cle_db, cle):
+    contenu = await charger_fichier(fichier) or [] # liste de contenus
+    
+    for p in contenu:
+        if p.get(cle_db) == cle: print("existe déjà, non enregistrer"); return  
+        
     contenu.append(data) # nouveau contenu, il ajoute le nouveau contenu dans la liste de contenus
-    await sauvegarder_fichier(fichier, contenu)
+    await sauvegarder_sur_meme_ligne(fichier, contenu)
+    #await sauvegarder_fichier(fichier, contenu)
+
+
+async def mettre_a_jour(fichier, data, cle_db, cle):
+    contenus = await charger_fichier(fichier)
+
+    for p in contenus:
+        #if p.get("page") == url:
+        if p.get(cle_db) == cle:
+            p.update(data)
+            #p[champ] = valeur_champ
+            #p["verfierEmail"] = 1
+            break
+
+    await sauvegarder_sur_meme_ligne(fichier, contenus)
 
     
 # Ouvrir Facebook

@@ -160,24 +160,41 @@ async def main():
         pages_list = [p for p in pages_list if "url" in p]
         cycle_pages = cycle(pages_list)
         
+        # BOUCLE POUR TROUVER LA PAGE
+        if derniere_page:
+            while True:
+                page = next(cycle_pages)
+                name = page.get("name")
+                
+                if derniere_page == name: debut = True; break
+                if not debut: continue
+        
         count = 0
         while count < 2:   
+            
+            count += 1
             for compte in comptes:
+                
                 page = next(cycle_pages); 
                 fichier_cookie = compte.get("fichier")
-                nomDeMonCompte = compte.get("id_inchangeable")
+                nomDeMonCompte = compte.get("id_inchangeable");             
                 
                 index = pages_list.index(page)
                 next_index = index + 1
-                print("index ", index); print("next_index ", next_index);
+                #print("index ", index); print("next_index ", next_index);
 
                 url_page = page.get('url')
                 name = page.get('name'); #print("name : ", name); print(url_page);
                     
-                if derniere_page:
-                    if derniere_page == name: debut = True
-                    if not debut: continue
-                print("✅", nomDeMonCompte); print(name); print(url_page);
+                #if derniere_page:
+                #    if derniere_page == name: debut = True
+                #    if not debut: continue
+                print("✅", nomDeMonCompte); 
+                
+                if count == 1: print("1er")
+                else: print(f"{count}e")
+                
+                print(name); print(url_page);
                         
                 # Charger les cookies AVANT d'ouvrir la page
                 context = await browser.new_context() #nouveau contexte pour chaque compte
@@ -193,7 +210,7 @@ async def main():
                                                    
                 #await sauvegarder_fichier(fichier_derniere_page, { "name": next_page.get("name") }) # ✅ sauvegarde de la dernière page
                 await context.close() #fermer le contexte (ou la fenetre)
-            count += 1
+            #count += 1
 
         
 if __name__ == "__main__":

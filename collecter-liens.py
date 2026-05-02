@@ -1,10 +1,8 @@
-import json, asyncio
+import json, asyncio, msvcrt, time, unicodedata
 from playwright.async_api import async_playwright
 from itertools import cycle
-from outils_playwright import (connecter_gmail, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, charger_fichier_d, ajouter_dans_fichier)
-
-#url_post = "https://www.threads.com/@laurene_mba"
-
+from outils_playwright import (connecter_gmail, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, charger_fichier_d, ajouter_dans_fichier,
+mettre_a_jour, post_recent)
 
 
 
@@ -65,21 +63,99 @@ async def apply_stealth(page):
     Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
 
 
+async def basculer_sur_le_compte(page):
+    btn = page.locator('a[aria-label="Espace Pubs"][role="link"]').first
+    if await btn.count() > 0:  
+        print("Connecté sur la page") #print("Espace Pubs trouvé")
+      
+        while True:
+            print("patiente 2s"); await asyncio.sleep(2)
+            btn = page.get_by_label("Votre profil")
+            if await btn.count() > 0:
+                await page.evaluate("""
+                const btn = document.querySelector('div[aria-label="Votre profil"]');
+                if (btn) { btn.click(); } """)
+                break
+                
+        while True:
+            print("patiente 3s"); await asyncio.sleep(3)  
+            btn = page.get_by_label("Basculer sur")
+            if await btn.count() > 0:
+                await page.evaluate("""
+                const btn = document.querySelector('div[aria-label*="Basculer sur"]');
+                if (btn) { btn.click(); } """)
+                break
+                
+        print("patiente 5s"); await asyncio.sleep(5)  
+        #element = await page.query_selector("text=Richesse avec SATAN")
+        #if not element:
+        #    await page.goto(url_page, timeout=0)
+            
+    else:
+        print("Connecté sur le compte")
     
- 
+    
+    
+async def compter_commentaire(page, nom, url):   
+    #print("patiente 5s"); await asyncio.sleep(5);
+    
+    temps_debut = time.monotonic()  # Enregistre le temps de début
+    temps = 5
+    
+    while True:
+        # Vérifie si le temps écoulé dépasse 10 secondes
+        temps_ecouler = time.monotonic() - temps_debut
+        if temps_ecouler > temps:
+            print("Temps écoulé, arrêt")
+            break
+            
+        btn = page.locator('div[role="button"]:has-text("Répondre")')
+        if await btn.count() > 0:  
+            await page.evaluate("""
+            const buttons = document.querySelectorAll('div[aria-label="J’aime"]');
+            for (let i = 0; i < Math.min(20, buttons.length); i++) {
+              buttons[i].scrollIntoView({ behavior: "smooth", block: "center" });
+            } """)
+        
+            count = await btn.count()
+            print("Nombre de boutons Répondre :", count) 
+
+            if count > 10:
+                print("arrêt → Plus de 10 commentaires")
+                
+                #print("+ Pas encore liké"); 
+                #page_active = await charger_fichier("page_active.json") #on sauvegarde les pages (Pas encore liker), qui ont plus de 5 commentaires 
+                #page_active.append({ "name": name, "url": url_page })
+                #await sauvegarder_sur_meme_ligne("page_active.json", page_active)
+                
+                
+                await ajouter_dans_fichier("page_active2.json", { "page_active": url, "nom": nom }, "page_active", url)
+                
+                if "Compte vérifié" in nom:
+                    print("✅ Compte vérifié")
+                else:
+                    print("Non vérifié")
+                    await email(page, nom, url)
+                    await message(page, nom, url)
+                    
+                break
+    
+        
+        
 async def verifier_btn_amis(page):
     btn = await page.query_selector('a[href*="/friends"]')
     if btn:
         print("👥 bouton amis trouvé")
     
     
-async def nom_page(page):
+async def nom_page(page, url):
     name = await page.locator("h1").first.text_content() # recuperer nom_page
     name = name.strip() if name else None
+    await ajouter_dans_fichier("pages_collecter.json", {"page": url, "nom": name}, "page", url) # sauvegarder la page trouvé
     print("nom_page : ", name); return name
             
             
-async def email(page, nom_page):           
+async def email(page, nom_page, url):           
     element = await page.query_selector('[href^="mailto:"]') # recuperer email
     
     email = None
@@ -87,15 +163,17 @@ async def email(page, nom_page):
         href = await element.get_attribute("href")
         if href:
             email = href.replace("mailto:", "").strip()
-            await ajouter_dans_fichier("emails_collecter.json", { "email": email, "nom": nom_page })
+            await ajouter_dans_fichier("emails_collecter.json", {"email": email, "nom": nom_page}, "email", email)
 
     print("email :", email)
+    await mettre_a_jour("pages_collecter.json", {"verfierEmail": 1}, "page", url)
     
     
-async def message(page):
+async def message(page, nom, url):
     message_btn = await page.query_selector('div[aria-label="Message"]') # verifier si ya le btn message sur la page
     if message_btn:
         print("📩 message disponible")
+        await ajouter_dans_fichier("page_messages_collecter.json", {"message": url, "nom": nom}, "message", url)
     else:
         print("❌ pas de message")
         
@@ -104,11 +182,8 @@ async def message(page):
 async def recuperer_lien(page, context):
     seen = set()
     
-    blacklist = [
-        "/posts/", "/videos/", "/groups/", "sharer", "login", "privacy",
-        "/photo/", "/61", "/pages", "/hashtag", "afad/", "groupslanding/",
-        "notifications", "ad_campaign", "/professional_dashboard", "/reel",
-        "/onthisday", "/saved", "/ad_center", "/permalink.php", "/latest",
+    blacklist = [ "/posts/", "/videos/", "/groups/", "sharer", "login", "privacy", "/photo/", "/61", "/pages", "/hashtag", "afad/", "groupslanding/",
+        "notifications", "ad_campaign", "/professional_dashboard", "/reel", "l.facebook.com", "/onthisday", "/saved", "/ad_center", "/permalink.php", "/latest",
         "/friends_likes", "/photos", "/about", "/mentions", "/followers", "following"
     ]
 
@@ -117,38 +192,41 @@ async def recuperer_lien(page, context):
         print(f"Trouvé {len(links)} liens")
 
         for link in links:
-            href = await link.get_attribute("href")
+            url = await link.get_attribute("href")
             
-            if "profile.php" in href:
-                href = href.split("&")[0]
+            if "profile.php" in url:
+                url = url.split("&")[0]
             else:
-                href = href.split("?")[0]
+                url = url.split("?")[0]
             
             
-            if not href: continue 
-            if href in seen: continue # Skip déjà vus            
+            if not url: continue 
+            if url in seen: continue # Skip déjà vus            
             
-            if "-" in href or "%" in href: continue
-            if any(x in href for x in blacklist): continue # Skip blacklist
+            if "-" in url or "%" in url: continue
+            if any(x in url for x in blacklist): continue # Skip blacklist
             
 
-            seen.add(href)
-            print("Ouverture :", href)
+            seen.add(url)
+            print("Ouverture :", url)
             
             try:
                 new_page = await context.new_page()
-                await new_page.goto(href)
+                await new_page.goto(url)
                 print("patiente 2s"); await asyncio.sleep(2)
                 
-                nom = await nom_page(new_page)
-                await email(new_page, nom)
-                await message(new_page)
+                nom = await nom_page(new_page, url);
+                #await badge(new_page, nom, url)
+                
                 await verifier_btn_amis(new_page)
+                await post_recent(new_page)
+                await compter_commentaire(new_page, nom, url)
                 
                 print("patiente 1s"); await asyncio.sleep(1)
                 await new_page.close()
-            except:
-                print("cc..");
+            except Exception as e:
+                print("cc.."); #print("❌ erreur :"); print(e)
+                
                 await new_page.close()
 
         # Scroll pour charger plus de contenu
@@ -159,13 +237,13 @@ async def recuperer_lien(page, context):
     
 async def collecter_liens(page, context):
     await page.goto("https://fb.com", timeout=0)
-    #await page.wait_for_load_state("domcontentloaded")
+    await basculer_sur_le_compte(page)
     
     while True:
-        print("patiente 1s"); await asyncio.sleep(1)
+        print("patiente 5s"); await asyncio.sleep(5)
         input_box = page.get_by_placeholder("Rechercher sur Facebook")
         if await input_box.count() > 0:            
-            await input_box.fill("Fally ipupa")
+            await input_box.fill("aicha kamoise")
             await input_box.press("Enter")
             break
                 

@@ -1,7 +1,7 @@
 import json, asyncio, os, time, math
 from playwright.async_api import async_playwright 
 from datetime import datetime, timedelta
-from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, verifier_commande,
+from outils_playwright import (basculer_sur_la_page, verifier_blocage, appliquer_stealth, verifier_commande, ajouter_dans_fichier,
 charger_cookies, charger_fichier, sauvegarder_fichier, sauvegarder_sur_meme_ligne)
 
 url_fb = "https://fb.com"
@@ -151,16 +151,17 @@ async def compter_commentaire(page, name, url_page):
             count = await btn.count()
             print("Nombre de boutons Répondre :", count) 
 
-            if count > 5:
-                print("arrêt → Plus de 5 commentaires")
+            if count > 10:
+                print("arrêt → Plus de 10 commentaires") #on sauvegarde les pages (Pas encore liker), qui ont plus de 10 commentaires 
                 
                 #print("+ Pas encore liké"); 
-                page_active = await charger_fichier("page_active.json") #on sauvegarde les pages (Pas encore liker), qui ont plus de 5 commentaires 
-                page_active.append({ "name": name, "url": url_page })
-                await sauvegarder_sur_meme_ligne("page_active.json", page_active)
+                #page_active = await charger_fichier("page_active.json") 
+                #page_active.append({ "name": name, "url": url_page })
+                #await sauvegarder_sur_meme_ligne("page_active.json", page_active)
+                
+                await ajouter_dans_fichier("page_active.json", { "name": name, "url": url_page }, "url", url_page)
                 break
-            
-    
+
      
 async def main():
     async with async_playwright() as p: 
