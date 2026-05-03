@@ -233,8 +233,8 @@ async def recuperer_lien(page, context):
         await page.evaluate("window.scrollBy(0, document.body.scrollHeight)")
         print("patiente 1s"); await asyncio.sleep(1)
         
-    # djibouti barcelonais madrilene france maroc algerie tunisie kigali rwanda n'djamena paris suisse belgique genève bruxelles monaco fally ipupa
-    # martinique guyane tahiti polynésie haiti guadeloupe kinshasa
+    # djibouti barcelonais madrilene france maroc casablanca marrakech algerie tunisie kigali rwanda n'djamena paris suisse belgique genève bruxelles monaco fally ipupa
+    # martinique guyane tahiti polynésie haiti guadeloupe kinshasa senegal dakar cote d'ivoire abidjan les chroniques
 async def collecter_liens(page, context):
     await page.goto("https://fb.com", timeout=0)
     await basculer_sur_le_compte(page)
@@ -243,7 +243,7 @@ async def collecter_liens(page, context):
         print("patiente 1s"); await asyncio.sleep(1)
         input_box = page.get_by_placeholder("Rechercher sur Facebook")
         if await input_box.count() > 0:            
-            await input_box.fill("barcelonais")
+            await input_box.fill("monaco")
             await input_box.press("Enter")
 
         print("patiente 2s"); await asyncio.sleep(2)
@@ -259,7 +259,7 @@ async def collecter_liens(page, context):
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
-            headless=False,
+            headless=True,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
