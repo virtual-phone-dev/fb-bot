@@ -177,9 +177,10 @@ async def message(page, nom, url):
     else:
         print("❌ pas de message")
         
-        
-    
+
+
 async def recuperer_lien(page, context):
+    debut = time.monotonic()
     seen = set()
     
     blacklist = [ "/posts/", "/videos/", "/groups/", "sharer", "login", "privacy", "/photo/", "/61", "/pages", "/hashtag", "afad/", "groupslanding/",
@@ -188,6 +189,9 @@ async def recuperer_lien(page, context):
     ]
 
     while True:
+        if time.monotonic() - debut > 60: print("⏹️ Fin des 1 minutes"); break # stop après 3 minutes  
+        #contenu = await charger_fichier("pages_collecter.json") or [] 
+        
         links = await page.query_selector_all('[data-ad-rendering-role="profile_name"] a[href]')
         print(f"Trouvé {len(links)} liens")
 
@@ -206,6 +210,16 @@ async def recuperer_lien(page, context):
             if "-" in url or "%" in url: continue
             if any(x in url for x in blacklist): continue # Skip blacklist
             
+            contenu = await charger_fichier("pages_collecter.json") or []
+            
+            url_existe_deja = False 
+            for p in contenu: # verifier si url existe deja dans db
+                if p.get("page") == url: 
+                    print("url existe déjà, non enregistrer"); 
+                    url_existe_deja = True; 
+                    break 
+            
+            if url_existe_deja: continue  # si url_existe_deja=True, on passe à l'url suivante
 
             seen.add(url)
             print("Ouverture :", url)
@@ -233,33 +247,49 @@ async def recuperer_lien(page, context):
         await page.evaluate("window.scrollBy(0, document.body.scrollHeight)")
         print("patiente 1s"); await asyncio.sleep(1)
         
-    # djibouti barcelonais madrilene france maroc casablanca marrakech algerie tunisie kigali rwanda n'djamena paris suisse belgique genève bruxelles monaco fally ipupa
+        
+    # djibouti barcelonais madrilene Real Madrid france maroc casablanca marrakech algerie tunisie kigali rwanda n'djamena paris suisse belgique genève bruxelles monaco fally ipupa
     # martinique guyane tahiti polynésie haiti guadeloupe kinshasa senegal dakar cote d'ivoire abidjan les chroniques
 async def collecter_liens(page, context):
     await page.goto("https://fb.com", timeout=0)
     await basculer_sur_le_compte(page)
     
-    while True:
-        print("patiente 1s"); await asyncio.sleep(1)
-        input_box = page.get_by_placeholder("Rechercher sur Facebook")
-        if await input_box.count() > 0:            
-            await input_box.fill("monaco")
-            await input_box.press("Enter")
-
-        print("patiente 2s"); await asyncio.sleep(2)
-        btn = page.get_by_label("Publications récentes")
-        if await btn.count() > 0:                                               
-            await btn.click()
-            break
+    mots_cles = [ "dakar", "belgique", "senegal",
+    "djibouti", "barcelonais", "madrilene", "france", "maroc",
+    "casablanca", "marrakech", "algerie", "tunisie",
+    "kigali", "rwanda", "ndjamena", "paris", "suisse",
+    "geneve", "bruxelles", "monaco",
+    "fally ipupa", "martinique", "guyane", "tahiti",
+    "polynesie", "haiti", "guadeloupe", "kinshasa",
+    "cote d'ivoire", "abidjan"
+    ]
     
-    await recuperer_lien(page, context)
+    while True:
+        for mot in mots_cles:
+            print(f"🔍 Recherche : {mot}")
+            
+        
+            while True:
+                print("patiente 1s"); await asyncio.sleep(1)
+                input_box = page.get_by_placeholder("Rechercher sur Facebook")
+                if await input_box.count() > 0:                 
+                    await input_box.fill(mot)
+                    await input_box.press("Enter")
+
+                print("patiente 2s"); await asyncio.sleep(2)
+                btn = page.get_by_label("Publications récentes")
+                if await btn.count() > 0:                                               
+                    await btn.click()
+                    break
+        
+            await recuperer_lien(page, context)
     
     
     
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
-            headless=True,
+            headless=False,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
