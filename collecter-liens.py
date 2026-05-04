@@ -142,12 +142,6 @@ async def compter_commentaire(page, nom, url):
     
         
         
-async def verifier_btn_amis(page):
-    btn = await page.query_selector('a[href*="/friends"]')
-    if btn:
-        print("👥 bouton amis trouvé")
-    
-    
 async def nom_page(page, url):
     name = await page.locator("h1").first.text_content() # recuperer nom_page
     name = name.strip() if name else None
@@ -161,11 +155,14 @@ async def email(page, nom_page, url):
     email = None
     if element:
         href = await element.get_attribute("href")
+        
         if href:
             email = href.replace("mailto:", "").strip()
-            await ajouter_dans_fichier("emails_collecter.json", {"email": email, "nom": nom_page}, "email", email)
-
-    print("email :", email)
+            
+            if email.endswith("gmail.com"):
+                print("email :", email)
+                await ajouter_dans_fichier("emails_collecter.json", {"email": email, "nom": nom_page}, "email", email)
+    
     await mettre_a_jour("pages_collecter.json", {"verfierEmail": 1}, "page", url)
     
     
@@ -189,107 +186,127 @@ async def recuperer_lien(page, context):
     ]
 
     while True:
-        if time.monotonic() - debut > 60: print("⏹️ Fin des 1 minutes"); break # stop après 3 minutes  
-        #contenu = await charger_fichier("pages_collecter.json") or [] 
-        
-        links = await page.query_selector_all('[data-ad-rendering-role="profile_name"] a[href]')
-        print(f"Trouvé {len(links)} liens")
+        try:
+            if time.monotonic() - debut > 60: print("⏹️ Fin des 1 minutes"); break # stop après 3 minutes  
+            
+            links = await page.query_selector_all('[data-ad-rendering-role="profile_name"] a[href]')
+            print(f"Trouvé {len(links)} liens")
 
-        for link in links:
-            url = await link.get_attribute("href")
-            
-            if "profile.php" in url:
-                url = url.split("&")[0]
-            else:
-                url = url.split("?")[0]
-            
-            
-            if not url: continue 
-            if url in seen: continue # Skip déjà vus            
-            
-            if "-" in url or "%" in url: continue
-            if any(x in url for x in blacklist): continue # Skip blacklist
-            
-            contenu = await charger_fichier("pages_collecter.json") or []
-            
-            url_existe_deja = False 
-            for p in contenu: # verifier si url existe deja dans db
-                if p.get("page") == url: 
-                    print("url existe déjà, non enregistrer"); 
-                    url_existe_deja = True; 
-                    break 
-            
-            if url_existe_deja: continue  # si url_existe_deja=True, on passe à l'url suivante
+            for link in links:
+                url = await link.get_attribute("href")
+                
+                if "profile.php" in url:
+                    url = url.split("&")[0]
+                else:
+                    url = url.split("?")[0]
+                
+                
+                if not url: continue 
+                if url in seen: continue # Skip déjà vus            
+                
+                if "-" in url or "%" in url: continue
+                if any(x in url for x in blacklist): continue # Skip blacklist
+                
+                contenu = await charger_fichier("pages_collecter.json") or []
+                
+                url_existe_deja = False 
+                for p in contenu: # verifier si url existe deja dans db
+                    if p.get("page") == url: 
+                        print("url existe déjà, non enregistrer"); 
+                        url_existe_deja = True; 
+                        break 
+                
+                if url_existe_deja: continue  # si url_existe_deja=True, on passe à l'url suivante
 
-            seen.add(url)
-            print("Ouverture :", url)
-            
-            try:
-                new_page = await context.new_page()
-                await new_page.goto(url)
-                print("patiente 2s"); await asyncio.sleep(2)
+                seen.add(url)
+                print("Ouverture :", url)
                 
-                nom = await nom_page(new_page, url);
-                #await badge(new_page, nom, url)
-                
-                await verifier_btn_amis(new_page)
-                await post_recent(new_page)
-                await compter_commentaire(new_page, nom, url)
-                
-                print("patiente 1s"); await asyncio.sleep(1)
-                await new_page.close()
-            except Exception as e:
-                print("cc.."); #print("❌ erreur :"); print(e)
-                
-                await new_page.close()
+                try:
+                    new_page = await context.new_page()
+                    await new_page.goto(url)
+                    print("patiente 2s"); await asyncio.sleep(2)
+                    
+                    
+                    btn_ami = await new_page.query_selector('a[href*="/friends"]')
+                    if not btn_ami:
+                        nom = await nom_page(new_page, url);
+                        await post_recent(new_page)
+                        await compter_commentaire(new_page, nom, url)
+                        print("patiente 1s"); await asyncio.sleep(1)
+                        
+                    await new_page.close()
+                except Exception as e:
+                    print("cc.."); #print("❌erreur :"); print(e)
+                    await new_page.close()
 
-        # Scroll pour charger plus de contenu 
-        await page.evaluate("window.scrollBy(0, document.body.scrollHeight)")
-        print("patiente 1s"); await asyncio.sleep(1)
+            # Scroll pour charger plus de contenu 
+            await page.evaluate("window.scrollBy(0, document.body.scrollHeight)")
+            print("patiente 1s"); await asyncio.sleep(1)
+            
+        except Exception as e:
+            print("..erreur"); print(e)
         
         
-    # djibouti barcelonais madrilene Real Madrid france maroc casablanca marrakech algerie tunisie kigali rwanda n'djamena paris suisse belgique genève bruxelles monaco fally ipupa
-    # martinique guyane tahiti polynésie haiti guadeloupe kinshasa senegal dakar cote d'ivoire abidjan les chroniques
+async def verifier_dernier_mot():
+    fichier_mot_debut = "mot_debut.json" # dernier_mot_cle.json
+    mot_debut = (await charger_fichier_d(fichier_mot_debut)).get("mot_cle")
+    
+    fichier_mot = "mot_cles.json"
+    mots = await charger_fichier(fichier_mot) # Charger la liste de mots cles
+    
+    if mot_debut:
+        # Si un dernier mot est enregistré, trouver son index
+        for mot in mots:
+            if mot == mot_debut:
+                mot_debut = mot
+                break
+                
+    return mots, mot_debut, fichier_mot_debut
+
+
 async def collecter_liens(page, context):
     await page.goto("https://fb.com", timeout=0)
     await basculer_sur_le_compte(page)
+    mots, mot_debut, fichier_mot_debut = await verifier_dernier_mot()
+    print(f"mot_debut : {mot_debut}")
     
-    mots_cles = [ "dakar", "belgique", "senegal",
-    "djibouti", "barcelonais", "madrilene", "france", "maroc",
-    "casablanca", "marrakech", "algerie", "tunisie",
-    "kigali", "rwanda", "ndjamena", "paris", "suisse",
-    "geneve", "bruxelles", "monaco",
-    "fally ipupa", "martinique", "guyane", "tahiti",
-    "polynesie", "haiti", "guadeloupe", "kinshasa",
-    "cote d'ivoire", "abidjan"
-    ]
     
     while True:
-        for mot in mots_cles:
+        start_index = 0
+        if mot_debut:
+            if mot_debut in mots:
+                start_index = mots.index(mot_debut) # Trouver l'index du mot de début
+                
+        for i in range(start_index, len(mots)):
+            mot = mots[i]
+            mot_suivant = mots[i+1]
             print(f"🔍 Recherche : {mot}")
-            
         
             while True:
-                print("patiente 1s"); await asyncio.sleep(1)
-                input_box = page.get_by_placeholder("Rechercher sur Facebook")
-                if await input_box.count() > 0:                 
-                    await input_box.fill(mot)
-                    await input_box.press("Enter")
+                try:
+                    print("patiente 1s"); await asyncio.sleep(1)
+                    input_box = page.get_by_placeholder("Rechercher sur Facebook")
+                    if await input_box.count() > 0:                 
+                        await input_box.fill(mot)
+                        await input_box.press("Enter")
 
-                print("patiente 2s"); await asyncio.sleep(2)
-                btn = page.get_by_label("Publications récentes")
-                if await btn.count() > 0:                                               
-                    await btn.click()
-                    break
+                    print("patiente 2s"); await asyncio.sleep(2)
+                    btn = page.get_by_label("Publications récentes")
+                    if await btn.count() > 0:                                               
+                        await btn.click()
+                        break
+                except Exception as e:
+                    print("..erreur"); print(e)
         
             await recuperer_lien(page, context)
+            await sauvegarder_fichier(fichier_mot_debut, { "mot_cle": mot_suivant })
     
     
     
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
-            headless=False,
+            headless=True,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
@@ -300,39 +317,16 @@ async def main():
 
         fichier_des_comptes = "comptes-fb.json"
         comptes = await charger_comptes(fichier_des_comptes)
-        
-        #pages_list = await charger_fichier("page_active_fb.json") # Charger la liste de pages
-        #pages_list = [p for p in pages_list if "url" in p]
-        #cycle_pages = cycle(pages_list)
-        
-        #fichier_derniere_page = "derniere_page_fb.json"
-        #data = await charger_fichier_d(fichier_derniere_page)
-        #derniere_page = data.get("name")
-
-        #debut = False
+        comptes = [c for c in comptes if c.get("message") == "1"] # message_speciale
+        comptes = [c for c in comptes if not str(c.get("fichier", "")).strip().startswith("-")] # ignorer les comptes qui commencent par -
         
         count = 0
         while count < 2: 
             for compte in comptes:
-                fichier_cookie = compte["fichier"]
-                
-                if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
-                    continue
-                    
-                #if compte.get("creer") == "Oui":
-                #    continue  # skip si compte déjà créé
-                
-                #page = next(cycle_pages); 
+                #fichier_cookie = compte["fichier"]
                 fichier_cookie = compte.get("fichier")
                 nomDeMonCompte = compte.get("id_inchangeable")
 
-                #url_page = page.get('url')
-                #name = page.get('name'); #print("name : ", name); print(url_page);
-                                
-                                
-                #if derniere_page:
-                #    if derniere_page == name: debut = True
-                #    if not debut: continue
                 
                 print("✅", nomDeMonCompte); #print(name); print(url_page);
                 
@@ -340,18 +334,12 @@ async def main():
                 
                 cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
                 await context.add_cookies(cookies)
-            
-                #nom_complet = compte["nom_complet"]
-                #nom_profil = compte["nom_profil"]
-                #email = compte["email"]
-                #mot_de_passe = compte["mot_de_passe"]
-                
-                #print(nom_complet);
 
                 page = await context.new_page()
                 await apply_stealth(page)
                 
                 await collecter_liens(page, context)
+                
                 #await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
                 #await sauvegarder_cookies(context, fichier_cookie)
                 
