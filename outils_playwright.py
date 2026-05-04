@@ -473,7 +473,7 @@ def charger_posts(fichier):
 async def ajouter_dans_fichier(fichier, data, cle_db, cle, trier):
     contenu = await charger_fichier(fichier) or [] # liste de contenus
     for p in contenu:
-        if p.get(cle_db) == cle: print("existe déjà, non enregistrer"); return  
+        if p.get(cle_db) == cle: print("existe déjà"); return  
         
     contenu.append(data) # nouveau contenu, il ajoute le nouveau contenu dans la liste de contenus
     if trier:

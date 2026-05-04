@@ -1,8 +1,9 @@
 import json, asyncio
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail)
+from outils_playwright import (connecter_gmail, charger_fichier, ajouter_dans_fichier)
 
 url_post = "https://www.threads.com/@les_luxueux_du_congo/"
+mot_de_passe = "Diel2019@#"
 
 
 
@@ -346,12 +347,11 @@ async def connecter_compte_insta(page, context, compte, fichier_des_comptes, ema
     
     #await creer_compte_threads(page2)  
     
-    
             
-async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe):
+async def creer_compte_insta1(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe):
     print(f"Création du compte : {nom_complet}")
           
-    await connecter_gmail(context, email)
+    #await connecter_gmail(context, email)
     await page.goto("https://www.instagram.com/accounts/emailsignup/?next=", timeout=0) #acceder a instagram
 
     await page.get_by_label("Numéro de mobile ou adresse e-mail").fill(email)
@@ -379,6 +379,18 @@ async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_com
     await mettre_photo_profil_insta(page, nom_profil)
 
 
+async def creer_compte_insta(email, nom, fichier_cookie):
+    fichier_insta = "mes_comptes_insta.json"
+    
+    print(email);
+    print(mot_de_passe);
+    print(nom);
+    print(fichier_cookie);
+    await ajouter_dans_fichier(fichier_insta, {"fichier": fichier_cookie, "email": email, "mot_de_passe": mot_de_passe}, "email", email, "email")
+    
+    resultat = await charger_fichier(fichier_insta)
+    print(f"{len(resultat)} comptes instagram")
+
 
 async def main():
     async with async_playwright() as p:
@@ -394,8 +406,8 @@ async def main():
 
         #context = await browser.new_context()
         
-        fichier_des_comptes = "comptes-th.json"
-        comptes = await charger_comptes(fichier_des_comptes)
+        fichier_emails = "mes_emails.json"
+        emails = await charger_comptes(fichier_emails)
 
         # Charger les cookies AVANT d'ouvrir la page
         #cookies = load_cookies(fichier_des_comptes)
@@ -404,31 +416,39 @@ async def main():
         #page = await context.new_page() # nouvel onglet
         #await apply_stealth(page)
         
-        for compte in comptes:
-            if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
-                continue
-                
-            #if compte.get("creer") == "Oui":
-            #    continue  # skip si compte déjà créé
-            
-            context = await browser.new_context() #nouveau contexte pour chaque compte
+        compteur = 1
         
-            nom_complet = compte["nom_complet"]
-            #nom_profil = compte["nom_profil"]
-            email = compte["email"]
-            mot_de_passe = compte["mot_de_passe"]
+        for mail in emails:
+        #    if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
+        #        continue
+                
+                
+            #context = await browser.new_context() #nouveau contexte pour chaque compte
+            email = mail.get("email")
+            nom = f"Richesse avec SATAN {compteur}" 
+            fichier_cookie = f"cookies-insta/Richesse{compteur}.json" 
             
-            print(nom_complet);
+            #nom_complet = compte["nom_complet"]
+            #nom_profil = compte["nom_profil"]
+            #email = compte["email"]
+            #mot_de_passe = compte["mot_de_passe"]
+            
+            #print(email);
 
-            page = await context.new_page()
-            await apply_stealth(page)
-            await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
+            #page = await context.new_page()
+            #await apply_stealth(page)        
+            #await connecter_gmail(context, email)
+            
+            
+            await creer_compte_insta(email, nom, fichier_cookie)
+            #print("patiente 10000s"); await asyncio.sleep(10000)
+            compteur += 1
 
             #await page.goto("https://www.instagram.com", timeout=0)
             #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
             
             #await commenter_th(page, email, mot_de_passe)
-            print("patiente 10000s"); await asyncio.sleep(10000)
+        #print("patiente 10000s"); await asyncio.sleep(10000)
             #break
             
             #await reparer_th(page, context, nom_complet, email, mot_de_passe)
@@ -436,7 +456,6 @@ async def main():
             
             
             #await context.close() #fermer le contexte (ou la fenetre)
-        print("patiente 10000s"); await asyncio.sleep(10000)
 
 
 if __name__ == "__main__":
