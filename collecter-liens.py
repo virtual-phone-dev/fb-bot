@@ -268,7 +268,7 @@ async def collecter_liens(page, context):
     await page.goto("https://fb.com", timeout=0)
     await basculer_sur_le_compte(page)
     mots, mot_debut, fichier_mot_debut = await verifier_dernier_mot()
-    print(f"mot_debut : {mot_debut}")
+    #print(f"mot_debut : {mot_debut}")
     
     
     while True:
