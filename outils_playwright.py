@@ -455,6 +455,14 @@ async def charger_fichier_d(fichier):
         return {}
 
 
+async def charger_fichier_t(fichier):
+    try:
+        with open(fichier, "r", encoding="utf-8") as f:
+            return [ligne.strip() for ligne in f if ligne.strip()]  # strip pour ignorer les espaces, et les lignes saut de lignes
+    except:
+        return ""
+        
+        
 def charger_posts(fichier):
     if not os.path.exists(fichier):
         return []
@@ -462,15 +470,17 @@ def charger_posts(fichier):
         return json.load(f)
         
 
-async def ajouter_dans_fichier(fichier, data, cle_db, cle):
+async def ajouter_dans_fichier(fichier, data, cle_db, cle, trier):
     contenu = await charger_fichier(fichier) or [] # liste de contenus
-    
     for p in contenu:
         if p.get(cle_db) == cle: print("existe déjà, non enregistrer"); return  
         
     contenu.append(data) # nouveau contenu, il ajoute le nouveau contenu dans la liste de contenus
+    if trier:
+        contenu.sort(key=lambda x: x.get(trier, "").lower()) # tri ALPHABÉTIQUE
+        
     await sauvegarder_sur_meme_ligne(fichier, contenu)
-    #await sauvegarder_fichier(fichier, contenu)
+
 
 
 async def mettre_a_jour(fichier, data, cle_db, cle):

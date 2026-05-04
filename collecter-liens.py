@@ -279,7 +279,9 @@ async def collecter_liens(page, context):
                 
         for i in range(start_index, len(mots)):
             mot = mots[i]
-            mot_suivant = mots[i+1]
+
+            if i+1 < len(mots): mot_suivant = mots[i+1]
+            else: mot_suivant = ""
             print(f"🔍 Recherche : {mot}")
         
             while True:
