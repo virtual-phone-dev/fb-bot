@@ -317,7 +317,7 @@ async def main():
             ],
         )
 
-        fichier_des_comptes = "comptes-fb.json"
+        fichier_des_comptes = "mes_comptes_fb.json"
         comptes = await charger_comptes(fichier_des_comptes)
         comptes = [c for c in comptes if c.get("message") == "1"] # message_speciale
         comptes = [c for c in comptes if not str(c.get("fichier", "")).strip().startswith("-")] # ignorer les comptes qui commencent par -

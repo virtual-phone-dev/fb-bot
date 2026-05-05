@@ -146,7 +146,7 @@ async def main():
         )        
 
         pages_list = await charger_fichier("page_active.json") # Charger la liste de pages
-        comptes = await charger_fichier("comptes-fb.json")   
+        comptes = await charger_fichier("mes_comptes_fb.json")   
         #derniere_page = (await charger_fichier("derniere_page.json")).get("name")    
 
         fichier_derniere_page = "derniere_page_fb.json"

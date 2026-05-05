@@ -379,16 +379,39 @@ async def creer_compte_insta1(page, context, compte, fichier_des_comptes, nom_co
     await mettre_photo_profil_insta(page, nom_profil)
 
 
-async def creer_compte_insta(email, nom, fichier_cookie):
-    fichier_insta = "mes_comptes_insta.json"
+async def creer_compte_th(email, nom, fichier_cookie):
+    fichier_th = "mes_comptes_th.json"
     
     print(email);
     print(mot_de_passe);
     print(nom);
     print(fichier_cookie);
-    await ajouter_dans_fichier(fichier_insta, {"fichier": fichier_cookie, "email": email, "mot_de_passe": mot_de_passe}, "email", email, "email")
+    await ajouter_dans_fichier(fichier_th, {"fichier": fichier_cookie, "email": email, "mot_de_passe": mot_de_passe}, "email", email, "email")
     
-    resultat = await charger_fichier(fichier_insta)
+    resultat = await charger_fichier(fichier_th)
+    print(f"{len(resultat)} comptes threads")
+    
+    
+async def creer_compte_bs(email, nom, fichier_cookie):
+    fichier_bs = "mes_comptes_bs.json"
+    
+    print(email);
+    print(mot_de_passe);
+    print(nom);
+    print(fichier_cookie);
+    await ajouter_dans_fichier(fichier_bs, {"fichier": fichier_cookie, "email": email, "mot_de_passe": mot_de_passe}, "email", email, "email")
+    
+    resultat = await charger_fichier(fichier_bs)
+    print(f"{len(resultat)} comptes blue sky")
+    
+    
+async def creer_compte_insta(email, nom, nom_profil, fichier_cookie):
+    fichier_insta = "mes_comptes_insta.json"
+    
+    print(fichier_cookie);
+    await ajouter_dans_fichier(fichier_insta, {"fichier": fichier_cookie, "email": email, "mot_de_passe": mot_de_passe, "nom_profil": nom_profil, "nom_complet": nom}, "email", email, "email")
+    
+    resultat = await charger_fichier(fichier_insta) 
     print(f"{len(resultat)} comptes instagram")
 
 
@@ -425,8 +448,12 @@ async def main():
                 
             #context = await browser.new_context() #nouveau contexte pour chaque compte
             email = mail.get("email")
-            nom = f"Richesse avec SATAN {compteur}" 
-            fichier_cookie = f"cookies-insta/Richesse{compteur}.json" 
+            nom_profil = f"richesse.avec.satan{compteur}" 
+            nom = "Richesse avec SATAN" 
+            
+            fichier_cookie_insta = f"cookies-insta/Richesse{compteur}.json" 
+            fichier_cookie_th = f"cookies-th/Richesse{compteur}.json" 
+            fichier_cookie_bs = f"cookies-bs/Richesse{compteur}.json" 
             
             #nom_complet = compte["nom_complet"]
             #nom_profil = compte["nom_profil"]
@@ -440,7 +467,9 @@ async def main():
             #await connecter_gmail(context, email)
             
             
-            await creer_compte_insta(email, nom, fichier_cookie)
+            await creer_compte_insta(email, nom, nom_profil, fichier_cookie_insta)
+            await creer_compte_th(email, nom, fichier_cookie_th)
+            await creer_compte_bs(email, nom, fichier_cookie_bs)
             #print("patiente 10000s"); await asyncio.sleep(10000)
             compteur += 1
 
