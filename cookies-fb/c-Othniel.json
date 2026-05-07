@@ -565,7 +565,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1778556475,
+            "expires": 1778580253,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -645,7 +645,7 @@
             "value": "100012883906666",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1809487670.899487,
+            "expires": 1809511334.24214,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -691,37 +691,100 @@
             "sameSite": "None"
         },
         {
-            "name": "fr",
-            "value": "11iflczKR15nZFiz6.AWfN6VkACB8d3pWcIOT8xl31AKxo1Rsdon1HXVe43G50qNZZXuI.Bp-WO2..AAA.0.0.Bp-WO2.AWd-xAVPbFNCOufWSLO0DZXXiXI",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1785727670.89966,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
             "name": "xs",
-            "value": "32%3Al0i7ZW-RQZ_sbg%3A2%3A1776847101%3A-1%3A-1%3A%3AAcx3MLl-YFd14kxiF3H2kSOmygOBZrMn4e4XqvHCGoo",
+            "value": "32%3Al0i7ZW-RQZ_sbg%3A2%3A1776847101%3A-1%3A-1%3A%3AAczK7hMVOuN7HTh-selcgFK0_tRqTvopxouZmPp2uIA",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1809487670.899766,
+            "expires": 1809511334.242431,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
-            "name": "alsfid",
-            "value": "{\"id\":\"f82d0b663\",\"timestamp\":1777951674704.3}",
+            "name": "fr",
+            "value": "1Am2WucygepB7TqqU.AWejGoiUxcn0FiIupzlgG2tillEHuN7Uf_LXcQjF3-p2np2DTz8.Bp-cAn..AAA.0.0.Bp-cCY.AWc556sZCJdnkw5BDQkGiV61D-Q",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1777951734.704502,
-            "httpOnly": false,
-            "secure": false,
-            "sameSite": "Lax"
+            "expires": 1785751446.918553,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
         }
     ],
     "origins": [
+        {
+            "origin": "https://www.facebook.com",
+            "localStorage": [
+                {
+                    "name": "mutex_falco_queue_critical^$100012883906666^#61560793911624^#^#hmac_ttl.1777975448.AR2NQbdgyv0cn-21kgN7D8QVqInic_vfNHD3Br6cVA7iZ_Sf^$",
+                    "value": "fbb21u:1777975449775"
+                },
+                {
+                    "name": "mutex_falco_queue_log^$100012883906666^#61560793911624^#^#hmac_ttl.1777975448.AR2NQbdgyv0cn-21kgN7D8QVqInic_vfNHD3Br6cVA7iZ_Sf^$",
+                    "value": "fbb21u:1777975449775"
+                },
+                {
+                    "name": "CacheStorageVersion",
+                    "value": "3b"
+                },
+                {
+                    "name": "ps:61560793911624:6dbd763b-a50c-4fc6-bf20-a87f32bf610a",
+                    "value": "5c4522f3-23d1-43b7-9861-3f1a14c8cb56:1777573681733"
+                },
+                {
+                    "name": "Session",
+                    "value": "jyq1ck:1777975493480"
+                },
+                {
+                    "name": "mutex_banzai",
+                    "value": "fbb21u:1777975452457"
+                },
+                {
+                    "name": "_oz_bandwidthEstimate",
+                    "value": "10000000"
+                },
+                {
+                    "name": "banzai:last_storage_flush",
+                    "value": "1777975336946.9"
+                },
+                {
+                    "name": "screen_time_period_logging_facebook",
+                    "value": "{\"actorId\":\"61560793911624\",\"currentIntervalLastTick\":1777975459,\"currentIntervalStart\":1777975450,\"initRemoteAgg\":{\"timestamp\":1776871462,\"today_s\":0},\"intervals\":[{\"end\":1777573686,\"start\":1777573676},{\"end\":1777975345,\"start\":1777975334}],\"lastCallbackAttempt\":1777975334,\"localStorageId\":\"25257103\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                },
+                {
+                    "name": "last_headload_time",
+                    "value": "1777975450409"
+                },
+                {
+                    "name": "RSTData",
+                    "value": "{}"
+                },
+                {
+                    "name": "bdz_playback_state",
+                    "value": "{\"session_key\":\"mo7j2iw9\",\"buffer_length\":60}"
+                },
+                {
+                    "name": "hb_timestamp",
+                    "value": "1777975337532"
+                },
+                {
+                    "name": "_oz_bandwidthAndTTFBSamples",
+                    "value": "{\"b\":[],\"t\":[]}"
+                },
+                {
+                    "name": "ares_last_signal_flush",
+                    "value": "1776709679913"
+                },
+                {
+                    "name": "signal_flush_timestamp",
+                    "value": "1777975337687"
+                },
+                {
+                    "name": "mutex_falco_queue_immediately^$100012883906666^#61560793911624^#^#hmac_ttl.1777975448.AR2NQbdgyv0cn-21kgN7D8QVqInic_vfNHD3Br6cVA7iZ_Sf^$",
+                    "value": "fbb21u:1777975449775"
+                }
+            ]
+        },
         {
             "origin": "https://business.facebook.com",
             "localStorage": [
@@ -744,63 +807,6 @@
                 {
                     "name": "banzai:last_storage_flush",
                     "value": "1777951676076.5"
-                }
-            ]
-        },
-        {
-            "origin": "https://www.facebook.com",
-            "localStorage": [
-                {
-                    "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"61560793911624\",\"currentIntervalLastTick\":1777573686,\"currentIntervalStart\":1777573676,\"initRemoteAgg\":{\"timestamp\":1776871462,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1777573676,\"localStorageId\":\"27503480\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
-                },
-                {
-                    "name": "last_headload_time",
-                    "value": "1777573676237"
-                },
-                {
-                    "name": "RSTData",
-                    "value": "{}"
-                },
-                {
-                    "name": "bdz_playback_state",
-                    "value": "{\"session_key\":\"mo7j2iw9\",\"buffer_length\":60}"
-                },
-                {
-                    "name": "hb_timestamp",
-                    "value": "1777573657857"
-                },
-                {
-                    "name": "CacheStorageVersion",
-                    "value": "3b"
-                },
-                {
-                    "name": "_oz_bandwidthAndTTFBSamples",
-                    "value": "{\"b\":[],\"t\":[]}"
-                },
-                {
-                    "name": "ares_last_signal_flush",
-                    "value": "1776709679913"
-                },
-                {
-                    "name": "ps:61560793911624:6dbd763b-a50c-4fc6-bf20-a87f32bf610a",
-                    "value": "5c4522f3-23d1-43b7-9861-3f1a14c8cb56:1777573681733"
-                },
-                {
-                    "name": "signal_flush_timestamp",
-                    "value": "1777573658695"
-                },
-                {
-                    "name": "Session",
-                    "value": "l9q3rd:1777573717803"
-                },
-                {
-                    "name": "_oz_bandwidthEstimate",
-                    "value": "10000000"
-                },
-                {
-                    "name": "banzai:last_storage_flush",
-                    "value": "1777573656489.4001"
                 }
             ]
         }

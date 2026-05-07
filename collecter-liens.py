@@ -2,7 +2,7 @@ import json, asyncio, msvcrt, time, unicodedata
 from playwright.async_api import async_playwright
 from itertools import cycle
 from outils_playwright import (connecter_gmail, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, charger_fichier_d, ajouter_dans_fichier,
-mettre_a_jour, post_recent)
+mettre_a_jour, post_recent, verifier_blocage2)
 
 
 
@@ -200,9 +200,12 @@ async def recuperer_lien(page, context):
                 else:
                     url = url.split("?")[0]
                 
-                
+                #print("aa ")
                 if not url: continue 
-                if url in seen: continue # Skip déjà vus            
+                #print("bb ")
+                if url in seen: continue # Skip déjà vus 
+                #print("cc ")
+                print(url)
                 
                 if "-" in url or "%" in url: continue
                 if any(x in url for x in blacklist): continue # Skip blacklist
@@ -212,23 +215,26 @@ async def recuperer_lien(page, context):
                 url_existe_deja = False 
                 for p in contenu: # verifier si url existe deja dans db
                     if p.get("page") == url: 
-                        print("url existe déjà, non enregistrer"); 
-                        url_existe_deja = True; 
+                        print("url existe déjà")
+                        url_existe_deja = True
+                        #print("ee ")
                         break 
-                
+                #print("ff ")
                 if url_existe_deja: continue  # si url_existe_deja=True, on passe à l'url suivante
-
+                #print("gg ")
                 seen.add(url)
                 print("Ouverture :", url)
                 
                 try:
+                    #print(" hh")
                     new_page = await context.new_page()
                     await new_page.goto(url)
-                    print("patiente 2s"); await asyncio.sleep(2)
-                    
-                    
+                    #print(" ii")
+                                        
                     btn_ami = await new_page.query_selector('a[href*="/friends"]')
-                    if not btn_ami:
+                    if btn_ami: print("ami");
+                    else:
+                        #print("patiente 2s"); await asyncio.sleep(2)
                         nom = await nom_page(new_page, url);
                         await post_recent(new_page)
                         await compter_commentaire(new_page, nom, url)
@@ -236,7 +242,7 @@ async def recuperer_lien(page, context):
                         
                     await new_page.close()
                 except Exception as e:
-                    print("cc.."); #print("❌erreur :"); print(e)
+                    print("cc.."); print(e)
                     await new_page.close()
 
             # Scroll pour charger plus de contenu 
@@ -266,12 +272,15 @@ async def verifier_dernier_mot():
 
 async def collecter_liens(page, context):
     await page.goto("https://fb.com", timeout=0)
+    await verifier_blocage2(page)
     await basculer_sur_le_compte(page)
-    mots, mot_debut, fichier_mot_debut = await verifier_dernier_mot()
+   
     #print(f"mot_debut : {mot_debut}")
     
     
     while True:
+        mots, mot_debut, fichier_mot_debut = await verifier_dernier_mot()
+         
         start_index = 0
         if mot_debut:
             if mot_debut in mots:
@@ -349,6 +358,7 @@ async def main():
                 await context.close()
 
             count += 1
+
 
 if __name__ == "__main__":
     asyncio.run(main())

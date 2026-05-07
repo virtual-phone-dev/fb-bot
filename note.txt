@@ -1,6 +1,11 @@
 
 
 
+On récolte ce que l'on sème, si tu n'aimes pas ce que tu récolte, change ta semence
+
+
+
+
 il n'y a rien pour rien, viens sacrifier ton doigt comme sacrifice pour avoir la richesse. Envoi un message si tu es prêt à avoir la Richesse.
 
 Maitre Gueye
@@ -674,8 +679,9 @@ links.forEach(link => {
 
 cliquer sur le bouton Message
 
-const messageButton = document.querySelectorAll('span');
+const messageButton = document.querySelectorAll('[span*="Ami(e)s"]');
 console.log(messageButton);
+
 
 const messageButton = document.querySelector('div[aria-label="Message"]');
 if (messageButton) {
@@ -686,7 +692,9 @@ if (messageButton) {
 
 cliquer sur le post le plus recent
 
-const posts = document.querySelectorAll('div[data-testid="contentHider-post"]');
+const posts = document.querySelectorAll('div[data-ad-preview="message"]');
+console.log(posts);
+
 if (posts.length > 0) {
   posts[0].click();
 }
@@ -709,7 +717,7 @@ if (boutonPublier) {
 
 
 regarde ca , et si je veux cibler ceux que role="button"
-const element = document.querySelector('[data-ad-rendering-role="story_message"]');
+const element = document.querySelector('[data-ad-preview="message"]');
 console.log(element.innerText); // lecture
 
 
@@ -751,8 +759,8 @@ buttons.forEach(btn => {
 
 obtenir le code html dans la console
 
-const bio = [...document.querySelectorAll('label')]
-  .find(el => el.innerText.includes("Bio"));
+const bio = [...document.querySelectorAll('span')]
+  .find(el => el.innerText.includes("Ami(e)s"));
 
 console.log(bio);
 
@@ -891,11 +899,21 @@ if (sendDiv) {
 
 
 
-.fill("shvqqq@gmail.com")
-    await page.get_by_label("Mot de passe").fill("Diel2019@#")
-    await page.get_by_label("Nom complet").fill("Natalie Hayes")
-	
-	
+const element = [...document.querySelectorAll('div[data-ad-preview="message"]')]
+  .find(el => el.innerText.includes("Fally"));
+  
+console.log(element);
+
+if (element) { element.click(); }
+
+
+const buttons = document.querySelectorAll('[data-ad-preview="message"]');
+for (const button of buttons) {
+    if (button.innerText.trim() === "Fally") {
+        button.click();
+        break;
+    }
+}
 	
 	
 On ne peut pas prêcher l’espérance à quelqu’un qui te voit vivre mieux grâce à son sacrifice.
@@ -1059,12 +1077,12 @@ MTN
 
 
 
-sécurité 5%
+sécurité 20%
 Transport 15%
-santé 30%
-autre chose 5%
+santé 25%
+autre chose 3%
 
-agriculture 40%
-Fond de l'unité 5%
+agriculture 35%
+Fond de l'unité 2%
 
 

@@ -11,7 +11,7 @@ async def txt_vers_json():
     for email in emails:
         if email:  
             nom = email.split("@")[0]
-            fichier = f"cookies-gmail/c-{nom}.json" 
+            fichier = f"cookies-gmail/{nom}.json" 
 
             await ajouter_dans_fichier(fichier_sortie, { "fichier": fichier, "email": email, "nom": nom }, "email", email, "nom")
     

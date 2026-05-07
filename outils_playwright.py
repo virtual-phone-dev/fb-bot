@@ -55,6 +55,26 @@ async def verifier_commande(page, duree_pause):
     #print("suivant automatique")
     
     
+async def verifier_blocage2(page):
+    count = 0
+    while count < 3:
+        element = await page.query_selector("text=Continuer")
+        if element:
+            await element.click()
+            break
+        print("patiente 2s"); await asyncio.sleep(2)
+        count += 1
+
+    count = 0
+    while count < 3:
+        element = await page.query_selector("text=Ignorer")
+        if element:
+            await element.click()
+            break
+        print("patiente 3s"); await asyncio.sleep(3)
+        count += 1
+        
+        
 async def verifier_blocage(page):
     print("patiente 3s"); await asyncio.sleep(3)
     btn = await page.query_selector("text=confirmez que vous êtes une personne réelle afin d’utiliser votre compte")
@@ -76,7 +96,25 @@ async def reparer_fb(page):
                 return "connecté_déblocage_réussi"
 
 
-async def acceder_pagee(page) :
+async def trouver_element_debut(fichier_elements, fichier_element_debut, cle):
+    #fichier_element_debut = "mot_debut.json" # dernier_mot_cle.json
+    #element_debut = (await charger_fichier_d(fichier_element_debut)).get("mot_cle")
+    element_debut = (await charger_fichier_d(fichier_element_debut)).get(cle)
+    
+    #fichier_elements = "mot_cles.json"
+    elements = await charger_fichier(fichier_elements) # Charger la liste de mots cles
+    
+    if element_debut:
+        # Si un dernier element est enregistré, trouver son index
+        for element_db in elements:
+            if element_db == element_debut:
+                element_debut = element_db
+                break
+                
+    return elements, element_debut
+    
+    
+async def acceder_pagee(page):
     #print("patiente 10s"); await asyncio.sleep(10) 
     while True:
         await asyncio.sleep(1)
@@ -470,10 +508,10 @@ def charger_posts(fichier):
         return json.load(f)
         
 
-async def ajouter_dans_fichier(fichier, data, cle_db, cle, trier):
+async def ajouter_dans_fichier(fichier, data, cle_db, cle, trier=None):
     contenu = await charger_fichier(fichier) or [] # liste de contenus
     for p in contenu:
-        if p.get(cle_db) == cle: print("existe déjà"); return  
+        if p.get(cle_db) == cle: print("existe déjà, non enregistrer"); return  
         
     contenu.append(data) # nouveau contenu, il ajoute le nouveau contenu dans la liste de contenus
     if trier:

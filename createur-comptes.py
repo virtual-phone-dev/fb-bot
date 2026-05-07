@@ -450,6 +450,7 @@ async def main():
             email = mail.get("email")
             nom_profil = f"richesse.avec.satan{compteur}" 
             nom = "Richesse avec SATAN" 
+            nom_anglais = "Wealth with Satan" 
             
             fichier_cookie_insta = f"cookies-insta/Richesse{compteur}.json" 
             fichier_cookie_th = f"cookies-th/Richesse{compteur}.json" 
@@ -469,7 +470,7 @@ async def main():
             
             await creer_compte_insta(email, nom, nom_profil, fichier_cookie_insta)
             await creer_compte_th(email, nom, fichier_cookie_th)
-            await creer_compte_bs(email, nom, fichier_cookie_bs)
+            await creer_compte_bs(email, nom_anglais, fichier_cookie_bs)
             #print("patiente 10000s"); await asyncio.sleep(10000)
             compteur += 1
 
