@@ -270,9 +270,9 @@ async def verifier_dernier_mot():
     return mots, mot_debut, fichier_mot_debut
 
 
-async def collecter_liens(page, context):
+async def collecter_liens(context, page, fichier):
     await page.goto("https://fb.com", timeout=0)
-    await verifier_blocage2(page)
+    await verifier_blocage2(context, page, fichier)
     await basculer_sur_le_compte(page)
    
     #print(f"mot_debut : {mot_debut}")
@@ -349,7 +349,7 @@ async def main():
                 page = await context.new_page()
                 await apply_stealth(page)
                 
-                await collecter_liens(page, context)
+                await collecter_liens(context, page, fichier_cookie)
                 
                 #await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
                 #await sauvegarder_cookies(context, fichier_cookie)

@@ -55,24 +55,23 @@ async def verifier_commande(page, duree_pause):
     #print("suivant automatique")
     
     
-async def verifier_blocage2(page):
-    count = 0
-    while count < 3:
+async def verifier_blocage2(context, page, fichier):
+    while True:
         element = await page.query_selector("text=Continuer")
         if element:
             await element.click()
-            break
-        print("patiente 2s"); await asyncio.sleep(2)
-        count += 1
 
-    count = 0
-    while count < 3:
         element = await page.query_selector("text=Ignorer")
         if element:
             await element.click()
+            
+        input_box = page.get_by_placeholder("Rechercher sur Facebook")
+        if await input_box.count() > 0: 
+            await sauvegarder_cookies(context, fichier);
             break
-        print("patiente 3s"); await asyncio.sleep(3)
-        count += 1
+            
+        print("patiente 2s"); await asyncio.sleep(2)
+    
         
         
 async def verifier_blocage(page):
@@ -113,7 +112,8 @@ async def trouver_element_debut(fichier_elements, fichier_element_debut, cle):
                 
     return elements, element_debut
     
-    
+
+                
 async def acceder_pagee(page):
     #print("patiente 10s"); await asyncio.sleep(10) 
     while True:

@@ -5,7 +5,8 @@ from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_coo
 basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour)
 
 PAUSE_MINUTES = 1
-
+format_date = "%d-%m-%Y"
+#format_date = "%Y-%m-%d"
 
 texte = """Dis à tes abonnés de regarder leur vidéos préférées sur Florinato. 
 On paye 100 dollars pour 1000 inscriptions, 1000 personnes qui vont s'inscrire avec ton lien, et tu pourras suivre les statistiques des inscriptions sur ton compte Florinato.
@@ -100,11 +101,34 @@ async def envoyer_email(page, email):
 
 
 
+async def tour_suivant(fichier_email_debut, emails, compte_emails, email_suivant, tour, index):
+    if tour+1 > len(compte_emails):
+        print(f"mes_emails {len(compte_emails)}");
+        print("tout_mes_comptes_gmail_utiliser");
+        return "tout_mes_comptes_gmail_utiliser"
+    else:    
+        if index+1 > len(emails): 
+            index = 0
+                    
+            mail_s = emails[index]
+            email_suivant = mail_s["email"] #print("index e", index); 
+            print("email_suivant : ", email_suivant)  
+            print("✅ Tous les emails ont été utilisés")
+            nbre = len(emails); print(f"{nbre} emails parmis les emails collectés") #break
+        else:
+            mail_s = emails[index]
+            email_suivant = mail_s["email"] #print("index e", index); 
+            print("email_suivant : ", email_suivant)  
+                            
+        data = {"email": email_suivant}
+        await sauvegarder_fichier(fichier_email_debut, data)
+                
+
 async def verifier_date_recontacte(mail):
-    if "recontacte" not in mail: return True
+    if "recontacter" not in mail: return True 
     
     try:
-        date_recontacte = datetime.strptime(mail["recontacte"], "%Y-%m-%d")
+        date_recontacte = datetime.strptime(mail["recontacter"], format_date)
     except:
         return True
         
@@ -112,53 +136,52 @@ async def verifier_date_recontacte(mail):
 
 
 
-async def marquer_contact(fichier, email_cible):
+async def marquer_contact(fichier, cle_db, cle, jours_recontact=1):
     data = await charger_fichier(fichier) or []
 
     aujourd_hui = datetime.now()
-    relance = aujourd_hui + timedelta(days=60)
+    relance = aujourd_hui + timedelta(days=jours_recontact)
     
-    trouver = False
+    #trouver = False
     
     data_update = {
-        "contacter": aujourd_hui.strftime("%Y-%m-%d"),
-        "recontacter": relance.strftime("%Y-%m-%d")
+        "contacter": aujourd_hui.strftime(format_date),
+        "recontacter": relance.strftime(format_date)
     }
+    
+    await mettre_a_jour(fichier, data_update, cle_db, cle)
 
-    for e in data:
-        if e.get("email") == email_cible:
-            e["contacter"] = aujourd_hui.strftime("%Y-%m-%d")
-            e["recontacter"] = relance.strftime("%Y-%m-%d")
-            trouver = True
-            break
+    #for e in data:
+    #    if e.get("email") == email_cible:
+    #        e["contacter"] = aujourd_hui.strftime(format_date)
+    #        e["recontacter"] = relance.strftime(format_date)
+    #        trouver = True
+    #        break
 
-    if trouver: 
-        print("email trouvé ", email_cible)
-        await mettre_a_jour(fichier, data_update, "email", email_cible)
-    else: 
-        print("❌ email non trouvé ", email_cible)
-        #await ajouter_dans_fichier(fichier, data, "email", email_cible, "nom")
+    #if trouver: 
+    #    print("email trouvé ", email_cible)
+    #    await mettre_a_jour(fichier, data_update, "email", email_cible)
+    #else: 
+    #    print("❌ email non trouvé ", email_cible)
+    #    await ajouter_dans_fichier(fichier, data, "email", email_cible, "nom")
     
     
-    
+        
 async def verifier_nouveau_element(fichier1, fichier2):
     emails_collecter = await charger_fichier(fichier1) # Charger le fichier emails_collecter.json et emails_collecter2.json
     emails_collecter2 = await charger_fichier(fichier2)
     
-    # Vérifier si de nouveaux emails sont dans emails_collecter.json
     nouveaux_emails = []
-    for email in emails_collecter:
-        if email not in emails_collecter2:
-            nouveaux_emails.append(email)
+    for element in emails_collecter: # Vérifier si de nouveaux emails sont dans emails_collecter.json
+        if not any(element.get("email") == e.get("email") for e in emails_collecter2): #any sert a lire le resultat
+            nouveaux_emails.append(element)
     
-    # Si on a de nouveaux emails, les ajouter à emails_collecter2
-    if nouveaux_emails:
+    if nouveaux_emails: # Si on a de nouveaux emails, les ajouter à emails_collecter2
         emails_collecter2.extend(nouveaux_emails)
-        #await sauvegarder_sur_meme_ligne(fichier2, emails_collecter2) # Sauvegarder la nouvelle liste dans emails_collecter2.json
-    
-    # Charger la liste d'emails à partir de emails_collecter2.json
-    #emails = emails_collecter2
+        await sauvegarder_sur_meme_ligne(fichier2, emails_collecter2) # Sauvegarder la nouvelle liste dans emails_collecter2.json
+
     return emails_collecter2
+    
     
         
 async def main():
@@ -176,14 +199,19 @@ async def main():
         fichier1 = "emails_collecter.json"
         fichier2 = "emails_collecter2.json"
         emails = await verifier_nouveau_element(fichier1, fichier2) # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
+        emails = [e for e in emails if await verifier_date_recontacte(e)]
         
         fichier3 = "mes_emails.json"
         fichier4 = "mes_emails2.json"
         compte_emails = await verifier_nouveau_element(fichier3, fichier4) 
-        
+        compte_emails = [c for c in compte_emails if await verifier_date_recontacte(c)]
         
         fichier_email_debut = "email_debut.json"
         email_debut = (await charger_fichier_d(fichier_email_debut)).get("email")
+        
+        get = len(compte_emails)
+        print("get", get) 
+        print("patiente 10s"); await asyncio.sleep(10); 
                 
         #emails = [e for e in emails if not str(e.get("fichier", "")).strip().startswith("-")]
         #emails = await trouver_element_debut(fichier_email_debut, "email")
@@ -200,56 +228,49 @@ async def main():
                    
         index = next((i for i, mail in enumerate(emails) if mail["email"] == email_debut), 0) # next() prend le premier résultat trouvé, si un email correspond → retourne son index, sinon → retourne 0 (valeur par défaut) 
         email_suivant = None
+        emails_deja_contacter = set()
+        #comptes_deja_utiliser = set()
         tour = 0
         
-        for compte_email in compte_emails: 
-            tour += 1; #print("tour ", tour)
+        for compte_email in compte_emails:             
+            tour += 1
+            print("index a", index) 
             
+            if index+1 > len(emails): 
+            #if index == 0:
+                print("aucun email a contacter, car tous ont deja été contacter", index); break
+            
+            print("index c", index) 
             mail = emails[index]
             email = mail["email"]
             nom = mail["nom"]
-                                
             mon_email = compte_email.get("email")
+            
+            if email in emails_deja_contacter: continue
             
             #if not await verifier_date_recontacte(mail): continue
             #if await verifier_date_recontacte(mail):
-            #    print("peut contacter ")
+                #print("peut contacter :", email)
+            print("Contacté :", email)
+            await marquer_contact(fichier2, "email", email, jours_recontact=60)
+            emails_deja_contacter.add(email)
             #else:
-            #    print("ne peut pas contacter ")
-                
-            await marquer_contact(fichier2, email)
+            #    continue
+            
+            await marquer_contact(fichier4, "email", mon_email) #sauvegarde date recontacte de mon compte_email
+            #comptes_deja_utiliser.add(email)
             
             print("✅ mon_compte : ", mon_email)
             print("email : ", email)            
-            
             print("index d", index) 
             index += 1
             
-            if tour+1 > len(compte_emails):
-                print(f"mes_emails {len(compte_emails)}");
-                break
-            else:    
-                if index+1 > len(emails): 
-                    index = 0
-                    
-                    mail_s = emails[index]
-                    email_suivant = mail_s["email"] #print("index e", index); 
-                    print("email_suivant : ", email_suivant)  
-                    print("✅ Tous les emails ont été utilisés")
-                    nbre = len(emails); print(f"{nbre} emails parmis les emails collectés") #break
-                else:
-                    mail_s = emails[index]
-                    email_suivant = mail_s["email"] #print("index e", index); 
-                    print("email_suivant : ", email_suivant)  
-                            
-            data = {"email": email_suivant}
-            await sauvegarder_fichier(fichier_email_debut, data)
-                
+            statut = await tour_suivant(fichier_email_debut, emails, compte_emails, email_suivant, tour, index)
+            if statut == "tout_mes_comptes_gmail_utiliser": break
+            
                 #context = await browser.new_context() #nouveau contexte pour chaque compte
-                
                 #cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
                 #await context.add_cookies(cookies)
-                
                 #page = await context.new_page()
                 #await apply_stealth(page)
                 
