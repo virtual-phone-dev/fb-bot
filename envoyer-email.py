@@ -8,14 +8,20 @@ PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
 #format_date = "%Y-%m-%d"
 
-texte = """Dis à tes abonnés de regarder leur vidéos préférées sur Florinato. 
-On paye 100 dollars pour 1000 inscriptions, 1000 personnes qui vont s'inscrire avec ton lien, et tu pourras suivre les statistiques des inscriptions sur ton compte Florinato.
-Et si jamais tu crées ton compte Florinato, n'oublie pas d'envoyer un message à CAISIP (sur Florinato).
+texte = """Salut,
+Dis à tes abonnés de venir s'inscrire sur Florinato et si tu obtiens 1000 inscriptions avec ton lien tu seras payer 100 dollars. 
+ils vont s'inscrire pour regarder des vidéos sur Florinato. 
+Si ça t'intéresse, viens sur Florinato, et n'oublie pas d'envoyer un message à CAISIP.
 
-Si ça t'intéresse, voilà ton lien de Partenaire, tu publies ça sur ta page, en disant à tes abonnés de regarder leur vidéos préférées sur Florinato.
+voilà ton lien d'inscription, publies ça sur ta page, en disant à tes abonnés de s'inscrire sur Florinato pour regarder des vidéos.
 https://florinato105.onrender.com """
 
+
 objet = "Invitation, Mai 2026"
+
+
+# https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&dsh=S939896141%3A1778232595583163&emr=1&flowEntry=ServiceLogin&flowName=GlifWebSignIn&followup=https%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F0%2F&ifkv=AWa2PatcW4P1ELI77QxDxLqpNZLL0DITFR40AgjDsO35l31vTWNlWMcnvbpJYfKMVZIIqO0XSN1P9A&osid=1&service=mail
+
 
 
 
@@ -209,9 +215,9 @@ async def main():
         fichier_email_debut = "email_debut.json"
         email_debut = (await charger_fichier_d(fichier_email_debut)).get("email")
         
-        get = len(compte_emails)
-        print("get", get) 
-        print("patiente 10s"); await asyncio.sleep(10); 
+        #get = len(compte_emails)
+        #print("get", get) 
+        #print("patiente 10s"); await asyncio.sleep(10); 
                 
         #emails = [e for e in emails if not str(e.get("fichier", "")).strip().startswith("-")]
         #emails = await trouver_element_debut(fichier_email_debut, "email")
@@ -244,9 +250,19 @@ async def main():
             mail = emails[index]
             email = mail["email"]
             nom = mail["nom"]
+            fichier_cookie = compte_email.get("fichier")
             mon_email = compte_email.get("email")
             
             if email in emails_deja_contacter: continue
+            
+            context = await browser.new_context() #nouveau contexte pour chaque compte
+            cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
+            await context.add_cookies(cookies)
+            
+            page = await context.new_page()
+            await apply_stealth(page)
+            await connecter_gmail(page, mon_email)
+            await envoyer_email(page, email)
             
             #if not await verifier_date_recontacte(mail): continue
             #if await verifier_date_recontacte(mail):

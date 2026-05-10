@@ -222,6 +222,11 @@ async def connecter_gmail(page, email):
         return
     
     while True:
+        #print("patiente 5s"); await asyncio.sleep(5)
+        btn = await page.query_selector("text=Sélectionnez un compte")
+        if btn:
+            print("Sélectionnez un compte")
+                    
         print("patiente 2s"); await asyncio.sleep(2)
         btn = page.get_by_label("Adresse e-mail ou téléphone")
         if await btn.count() > 0:
