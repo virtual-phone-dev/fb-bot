@@ -205,7 +205,7 @@ async def recuperer_lien(page, context):
                 #print("bb ")
                 if url in seen: continue # Skip déjà vus 
                 #print("cc ")
-                print(url)
+                #print(url)
                 
                 if "-" in url or "%" in url: continue
                 if any(x in url for x in blacklist): continue # Skip blacklist
@@ -232,7 +232,10 @@ async def recuperer_lien(page, context):
                     #print(" ii")
                                         
                     btn_ami = await new_page.query_selector('a[href*="/friends"]')
-                    if btn_ami: print("ami");
+                    if btn_ami: 
+                        print("ami");
+                        await nom_page(new_page, url) #sauvegarder le lien du compte ami
+                        await mettre_a_jour("pages_collecter.json", {"ami": 1}, "page", url) #mettre_a_jour le lien du compte ami
                     else:
                         #print("patiente 2s"); await asyncio.sleep(2)
                         nom = await nom_page(new_page, url);
@@ -242,7 +245,7 @@ async def recuperer_lien(page, context):
                         
                     await new_page.close()
                 except Exception as e:
-                    print("cc.."); print(e)
+                    print("cc.."); #print(e) #en general, ici l'erreur cest quand ca a trop charger la page longtemps
                     await new_page.close()
 
             # Scroll pour charger plus de contenu 
@@ -250,7 +253,7 @@ async def recuperer_lien(page, context):
             print("patiente 1s"); await asyncio.sleep(1)
             
         except Exception as e:
-            print("..erreur"); print(e)
+            print("..erreur"); #print(e)
         
         
 async def verifier_dernier_mot():
@@ -307,7 +310,7 @@ async def collecter_liens(context, page, fichier):
                         await btn.click()
                         break
                 except Exception as e:
-                    print("..erreur"); print(e)
+                    print("..erreur"); #print(e) #en general, ici l'erreur cest quand ca essai de cliquer sur: Publications récentes, et ca rate parfois, et quand ca rate il scrolle juste et prend les pages avec post recent/et non recent
         
             await recuperer_lien(page, context)
             await sauvegarder_fichier(fichier_mot_debut, { "mot_cle": mot_suivant })
@@ -317,7 +320,7 @@ async def collecter_liens(context, page, fichier):
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
-            headless=True,
+            headless=False,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
