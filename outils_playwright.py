@@ -1,6 +1,8 @@
 import json, os, asyncio, random, sqlite3, msvcrt, time
 
 mot_de_passe_gmail = "diel2019"
+email_recuperation = "kilendodingha@gmail.com"
+
 
 
 async def appliquer_stealth(page):
@@ -22,7 +24,7 @@ async def nom_page(page, url):
             print("tt ")
             print("nom_page : ", name); return name
         except Exception as e:
-            print("cc.."); print("❌ erreur :"); print(e)
+            print("..erreur"); print(e)
             
             
 # VERIFIER COMMANDE CONSOLE
@@ -57,20 +59,23 @@ async def verifier_commande(page, duree_pause):
     
 async def verifier_blocage2(context, page, fichier):
     while True:
-        element = await page.query_selector("text=Continuer")
-        if element:
-            await element.click()
+        try:
+            element = await page.query_selector("text=Continuer")
+            if element:
+                await element.click()
 
-        element = await page.query_selector("text=Ignorer")
-        if element:
-            await element.click()
-            
-        input_box = page.get_by_placeholder("Rechercher sur Facebook")
-        if await input_box.count() > 0: 
-            await sauvegarder_cookies(context, fichier);
-            break
-            
-        print("patiente 2s"); await asyncio.sleep(2)
+            element = await page.query_selector("text=Ignorer")
+            if element:
+                await element.click()
+                
+            input_box = page.get_by_placeholder("Rechercher sur Facebook")
+            if await input_box.count() > 0: 
+                await sauvegarder_cookies(context, fichier);
+                break
+                
+            print("patiente 2s"); await asyncio.sleep(2)
+        except:
+            pass
     
         
         
@@ -212,20 +217,27 @@ async def basculer_sur_la_page(page):
             
             
 #async def connecter_gmail(context, email):
-async def connecter_gmail(page, email):
+async def connecter_gmail(context, fichier_cookie, page, email):
     #page = await context.new_page() #acceder a gmail
     #await appliquer_stealth(page) # appliquer stealth
     await page.goto("https://mail.google.com", timeout=0)  
+    
     
     btn = page.locator('div[role="button"]:has-text("Nouveau message")')
     if await btn.count() > 0:
         return
     
     while True:
-        #print("patiente 5s"); await asyncio.sleep(5)
-        btn = await page.query_selector("text=Sélectionnez un compte")
-        if btn:
-            print("Sélectionnez un compte")
+        btn = page.locator('text="Utiliser un autre compte"')
+        if await btn.count() > 0:
+            print("Déconnecter, aller sur la page de connexion")
+            await btn.click()
+            
+        #print("patiente 1s"); await asyncio.sleep(1)
+        #btn = await page.query_selector("text=Utiliser un autre compte")
+        #if btn:
+        #    print("Déconnecter, aller sur la page de connexion")
+        #    await btn.click()
                     
         print("patiente 2s"); await asyncio.sleep(2)
         btn = page.get_by_label("Adresse e-mail ou téléphone")
@@ -233,25 +245,50 @@ async def connecter_gmail(page, email):
             await page.get_by_label("Adresse e-mail ou téléphone").fill(email)
             await btn.click()
             await page.get_by_role("button", name="Suivant").click()
-            break
+            #break
     
-    while True:
+    #while True:
         print("patiente 4s"); await asyncio.sleep(4)
         btn = page.get_by_label("Saisissez votre mot de passe")
         if await btn.count() > 0:
             await page.get_by_label("Saisissez votre mot de passe").fill(mot_de_passe_gmail)
             await page.get_by_role("button", name="Suivant").click()
-            break
+            #break
+        
+        try:
+            print("patiente 2s"); await asyncio.sleep(2);         
+            element = page.locator('input[type="email"]')
+            if await element.count() > 0:
+                await element.fill(email_recuperation)    
+        except:
+            pass 
             
-    
-    while True:    
+    #while True:    
         #print("patiente 1s"); await asyncio.sleep(1)
         try:
-            btn = page.get_by_label("Ignorer")
-            if await btn.count() > 0:
-                await btn.click()
+            print("patiente 2s a"); await asyncio.sleep(2); 
+            textes = ["Enregistrer", "Save"]
+            for t in textes:
+
+                btn = page.get_by_label(f"{t}")
+                if await btn.count() > 0:
+                    await btn.click()
+                    print("patiente 3s"); await asyncio.sleep(3); 
+                    break
         except:
-            pass  
+            pass 
+            
+
+        try:
+            textes = ["Ignorer", "Skip"]
+            for t in textes:
+                
+                btn = page.get_by_label(f"{t}")
+                if await btn.count() > 0:
+                    await btn.click()
+                    break
+        except:
+            pass 
             
 
         try:
@@ -297,12 +334,26 @@ async def connecter_gmail(page, email):
             
 
         try:
-            btn = page.locator('div[role="button"]:has-text("Nouveau message")')
-            if await btn.count() > 0:
-                break
-        except:
-            pass   
-           
+            textes = ["Nouveau message", "Compose"]
+            trouver = False
+            for texte in textes:
+                
+                btn = page.locator(f'div[role="button"]:has-text("{texte}")')
+                if await btn.count() > 0:
+                    trouver = True
+                    await sauvegarder_cookies(context, fichier_cookie)
+                    break
+                    
+            if trouver: break
+        except Exception as e:
+            print("..erreur"); print(e); pass
+            
+        
+        element = await page.query_selector("text=Le serveur ne peut pas traiter la requête, car son format est incorrect. Nous vous recommandons de ne pas réessayer")
+        if element:
+            print("erreur_serveur_gmail"); return "erreur_serveur_gmail"
+
+
 
 async def post_recent(page):
     btn = page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first

@@ -1,6 +1,6 @@
 import json, asyncio, os, sys, msvcrt, time
 from playwright.async_api import async_playwright
-from outils_playwright import (sauvegarder_cookies)
+from outils_playwright import (sauvegarder_cookies, verifier_blocage2)
 
 MODE_SILENCIEUX = True
 PAUSE_MINUTES = 1
@@ -45,9 +45,8 @@ async def preparer_storage_state(fichier):
             
 
 # VERIFIER COMMANDE CONSOLE
-async def verifier_commande(page, duree_minutes):
-    await page.goto("https://www.facebook.com",timeout=0)   
-    secondes = duree_minutes * 60
+async def verifier_commande(duree_minutes):
+    secondes = duree_minutes * 10
     debut = time.time()
 
     while time.time() - debut < secondes:
@@ -98,11 +97,14 @@ async def main():
             
             page = await context.new_page()
             await appliquer_stealth(page)
+            await page.goto("https://www.facebook.com",timeout=0)   
+            
+            await verifier_blocage2(context, page, fichier)
             
             #await creer_page(page)            
-            await verifier_commande(page, PAUSE_MINUTES)
+            await verifier_commande(PAUSE_MINUTES)
             
-            await sauvegarder_cookies(context, fichier)
+            #await sauvegarder_cookies(context, fichier)
             await context.close()
 
         print("\n✅ terminé")
