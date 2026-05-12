@@ -81,83 +81,84 @@ async def apply_stealth(page):
 
 
     
-async def envoyer_email(page, email):
+async def envoyer_email(fichier2, fichier4, page, email, mon_email):
     while True:
-        print("patiente 2s a"); await asyncio.sleep(2); 
-        textes = ["Nouveau message", "Compose"]
-        for t in textes:
-            
-            btn = await page.query_selector(f"text={t}")
-            if btn:
-                await btn.click()
-                print("patiente 3s"); await asyncio.sleep(3); 
-                break
-        break
+        try:
+            textes = ["Nouveau message", "Compose"]
+            trouver = False
+            for t in textes:
+                
+                btn = await page.query_selector(f"text={t}")
+                if btn:
+                    await btn.click()
+                    print("patiente 3s"); await asyncio.sleep(3); 
+                    trouver = True
+                    break
+            if trouver: break
+        except:
+            pass
 
-    print(" aa");    
-    #print("patiente 10000s"); await asyncio.sleep(10000);   
-    
-    print("patiente 2s b"); await asyncio.sleep(2); 
+
     while True:
-        print("bb ");
         textes = ["Destinataires", "To recipients"]
+        trouver = False
         for t in textes:
             
             element = page.locator(f'input[aria-label*="{t}"]')
             if await element.count() > 0:
                 await element.click()
                 await element.fill(email)
+                trouver = True
                 break
-        break
-    print("cc "); 
+        if trouver: break
 
-    print("patiente 2s c"); await asyncio.sleep(2); 
+
     while True:
-        print("dd ");
         textes = ["Objet", "Subject"]
+        trouver = False
         for t in textes:
             
             element = page.locator(f'input[aria-label="{t}"]')
             if await element.count() > 0:
-                print("oo ");
                 await element.fill(objet)
-                print("pp");
+                trouver = True
                 break
-        print("rr");
-        break
-    print(" ee");    
+        if trouver: break
+        
 
-    print("patiente 2s d"); await asyncio.sleep(2); 
     while True:
-        print("ff ");
         textes = ["Corps du message", "Message Body"]
+        trouver = False
         for t in textes:
             
             element = page.locator(f'div[aria-label="{t}"]')
             if await element.count() > 0:
-                await element.click() #on clique dabord avant d'écrire pour activer la zone de texte, car l'input est en mode contenteditable="true"
+                await element.click() #clique pour activer la zone de texte, car contenteditable="true"
                 await page.keyboard.type(texte)
+                trouver = True
                 break
-        break
-
-    print("patiente 10s"); await asyncio.sleep(10)
-    #while True:
-    #    textes = ["Objet", ""]
-    #    for t in textes:
-            
-    #        element = await page.locator(f'input[aria-label={t}]')
-    #        if element:
-    #            element = await page.locator(f'input[aria-label={t}]').fill(objet)
-    #            break
+        if trouver: break
+        
+        
+    #print("patiente 10000s"); await asyncio.sleep(10000)
+    while True:
+        try:
+            textes = ["Envoyer", "Send"]
+            trouver = False
+            for t in textes: 
                 
-    #    break
-
-    #await page.locator('input[aria-label="Destinataires"]').fill(email)
-    
-
-    
-    #print("patiente 2s"); await asyncio.sleep(2)
-    #await page.get_by_role("button", name="Envoyer").click() #Cliquer sur le bouton Envoyer
+                btn = page.locator(f'div[role="button"][aria-label*="{t}"]')                
+                if await btn.count() > 0:
+                    await btn.click()
+                    trouver = True
+                    print("patiente 10s"); await asyncio.sleep(10)
+                    await marquer_contact(fichier2, "email", email, jours_recontact=60)
+                    await marquer_contact(fichier4, "email", mon_email) #sauvegarde date recontacte de mon compte_email
+                    break
+            if trouver: break
+        except:
+            pass
+    #print("patiente 10000s"); await asyncio.sleep(10000)
 
 
 
@@ -212,8 +213,14 @@ async def marquer_contact(fichier, cle_db, cle, jours_recontact=1):
 
         
 async def verifier_nouveau_element(fichier1, fichier2):
-    emails_collecter = await charger_fichier(fichier1) # Charger le fichier emails_collecter.json et emails_collecter2.json
-    emails_collecter2 = await charger_fichier(fichier2)
+    data = await charger_fichier(fichier1) # Charger le fichier emails_collecter.json et emails_collecter2.json
+    data2 = await charger_fichier(fichier2)
+    
+    #emails_collecter = [c for c in data if not c["fichier"].startswith("-")] # fichier3_filtrer
+    #emails_collecter2 = [c for c in data2 if not c["fichier"].startswith("-")]
+    
+    emails_collecter = [c for c in data if not str(c.get("fichier", "")).startswith("-")]
+    emails_collecter2 = [c for c in data2 if not str(c.get("fichier", "")).startswith("-")]
     
     nouveaux_emails = []
     for element in emails_collecter: # Vérifier si de nouveaux emails sont dans emails_collecter.json
@@ -305,18 +312,20 @@ async def main():
             statut = await connecter_gmail(context, fichier_cookie, page, mon_email)
             if statut == "erreur_serveur_gmail": await context.close()
                 
-            await envoyer_email(page, email)
+            await envoyer_email(fichier2, fichier4, page, email, mon_email)
             
             #if not await verifier_date_recontacte(mail): continue
             #if await verifier_date_recontacte(mail):
                 #print("peut contacter :", email)
             #print("Contacté :", email)
-            await marquer_contact(fichier2, "email", email, jours_recontact=60)
+            #await marquer_contact(fichier2, "email", email, jours_recontact=60)
             emails_deja_contacter.add(email)
             #else:
             #    continue
             
-            await marquer_contact(fichier4, "email", mon_email) #sauvegarde date recontacte de mon compte_email
+            
+            
+            #await marquer_contact(fichier4, "email", mon_email) #sauvegarde date recontacte de mon compte_email
             #comptes_deja_utiliser.add(email)
             
             #print("✅ mon_compte : ", mon_email)

@@ -1,7 +1,10 @@
-import json, os, asyncio, random, sqlite3, msvcrt, time
+import json, os, asyncio, random, sqlite3, msvcrt, time, unicodedata
 
 mot_de_passe_gmail = "diel2019"
 email_recuperation = "kilendodingha@gmail.com"
+
+mots_inutiles = ["hopital", "ecole", "association", "organisation", "gendarmerie", "eglise", "pasteur", "mosquée", "armed", "police", "révérend", "prophete", "imam", 
+"club", "commission", "nationale"]
 
 
 
@@ -100,35 +103,14 @@ async def reparer_fb(page):
                 return "connecté_déblocage_réussi"
 
 
-async def trouver_element_debut(fichier_elements, fichier_element_debut, cle):
-    #fichier_element_debut = "mot_debut.json" # dernier_mot_cle.json
-    #element_debut = (await charger_fichier_d(fichier_element_debut)).get("mot_cle")
-    element_debut = (await charger_fichier_d(fichier_element_debut)).get(cle)
     
-    #fichier_elements = "mot_cles.json"
-    elements = await charger_fichier(fichier_elements) # Charger la liste de mots cles
+async def nettoyer_texte(txt): #ce code permet pour que, Église, eglise, puisse marcher
+    txt = txt.lower().strip()
+    txt = unicodedata.normalize("NFD", txt)
+    txt = "".join(c for c in txt if unicodedata.category(c) != "Mn")
     
-    if element_debut:
-        # Si un dernier element est enregistré, trouver son index
-        for element_db in elements:
-            if element_db == element_debut:
-                element_debut = element_db
-                break
-                
-    return elements, element_debut
+    return txt
     
-
-                
-async def acceder_pagee(page):
-    #print("patiente 10s"); await asyncio.sleep(10) 
-    while True:
-        await asyncio.sleep(1)
-        btn = await page.query_selector("text=Richesse avec SATAN")
-        if btn:
-            await btn.click()
-            print("patiente 1s"); await asyncio.sleep(1)  
-            break
-            
             
 async def acceder_page(page):
     textes = ["Richesse avec SATAN", "Secte de SATAN"]
@@ -243,7 +225,7 @@ async def connecter_gmail(context, fichier_cookie, page, email):
         btn = page.get_by_label("Adresse e-mail ou téléphone")
         if await btn.count() > 0:
             await page.get_by_label("Adresse e-mail ou téléphone").fill(email)
-            await btn.click()
+            #await btn.click()
             await page.get_by_role("button", name="Suivant").click()
             #break
     

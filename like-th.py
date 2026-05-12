@@ -102,8 +102,6 @@ async def reparer_th(page, context, nom_complet, email, mot_de_passe):
 
             
 
-
-
 async def ecrire_commentaire_th(page):
     print("ecrire commentaire"); await asyncio.sleep(5)   
     element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')

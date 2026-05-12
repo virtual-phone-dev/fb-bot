@@ -2,7 +2,7 @@ import json, asyncio, msvcrt, time, unicodedata
 from playwright.async_api import async_playwright
 from itertools import cycle
 from outils_playwright import (connecter_gmail, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, charger_fichier_d, ajouter_dans_fichier,
-mettre_a_jour, post_recent, verifier_blocage2)
+mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles)
 
 
 
@@ -97,7 +97,6 @@ async def basculer_sur_le_compte(page):
     
     
 async def compter_commentaire(page, nom, url):   
-    #print("patiente 5s"); await asyncio.sleep(5);
     
     temps_debut = time.monotonic()  # Enregistre le temps de début
     temps = 5
@@ -118,7 +117,7 @@ async def compter_commentaire(page, nom, url):
             } """)
         
             count = await btn.count()
-            print("Nombre de boutons Répondre :", count) 
+            print("Nombre de boutons Répondre :", count)
 
             if count > 10:
                 print("arrêt → Plus de 10 commentaires")
@@ -135,8 +134,11 @@ async def compter_commentaire(page, nom, url):
                     print("✅ Compte vérifié")
                 else:
                     print("Non vérifié")
-                    await email(page, nom, url)
-                    await message(page, nom, url)
+                    nom_clean = await nettoyer_texte(nom)
+                    
+                    if not any(nom_compte in nom_clean for nom_compte in mots_inutiles): # si nom_compte nest pas dans mots_inutiles, alors tu l'enregistres
+                        await email(page, nom, url)
+                        await message(page, nom, url)
                     
                 break
     
@@ -176,7 +178,7 @@ async def message(page, nom, url):
         
 
 
-async def recuperer_lien(page, context):
+async def recuperer_lien(context, page):
     debut = time.monotonic()
     seen = set()
     
@@ -273,7 +275,7 @@ async def verifier_dernier_mot():
     return mots, mot_debut, fichier_mot_debut
 
 
-async def collecter_liens(context, page, fichier):
+async def collecter_liens(fichier, context, page):
     await page.goto("https://fb.com", timeout=0)
     await verifier_blocage2(context, page, fichier)
     await basculer_sur_le_compte(page)
@@ -312,7 +314,7 @@ async def collecter_liens(context, page, fichier):
                 except Exception as e:
                     print("..erreur"); #print(e) #en general, ici l'erreur cest quand ca essai de cliquer sur: Publications récentes, et ca rate parfois, et quand ca rate il scrolle juste et prend les pages avec post recent/et non recent
         
-            await recuperer_lien(page, context)
+            await recuperer_lien(context, page)
             await sauvegarder_fichier(fichier_mot_debut, { "mot_cle": mot_suivant })
     
     
@@ -320,7 +322,7 @@ async def collecter_liens(context, page, fichier):
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
-            headless=False,
+            headless=True,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
@@ -352,7 +354,7 @@ async def main():
                 page = await context.new_page()
                 await apply_stealth(page)
                 
-                await collecter_liens(context, page, fichier_cookie)
+                await collecter_liens(fichier_cookie, context, page)
                 
                 #await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
                 #await sauvegarder_cookies(context, fichier_cookie)
