@@ -1,7 +1,6 @@
-
 import json, asyncio
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail, charger_fichier, ajouter_dans_fichier, clic_text)
+from outils_playwright import (connecter_gmail, charger_fichier, ajouter_dans_fichier, clic_get_by_label, click_text)
 
 url_post = "https://www.threads.com/@les_luxueux_du_congo/"
 mot_de_passe = "Diel2019@#"
@@ -471,8 +470,18 @@ async def main():
             await creer_compte_insta(email, nom, nom_profil, fichier_cookie_insta)
             await creer_compte_th(email, nom, fichier_cookie_th)
 
-            await click_text(page, ["salut"])
-            await click_text(page, ["Enregistrer", "save", "enregistrar"])
+            await clic_get_by_label(page, ["Pleuvoir", "Rain"])
+
+            await click_text(page, ["Visiter", "Visit"])
+
+            await click_text(page, ["Argent", "Money"])
+
+            await click_text(page, ["Voyager", "Fly"])
+
+            await clic_get_by_label(page, ["Courir", "Run"])
+
+            await clic_get_by_label(page, ["Partager", "Share"])
+
             await creer_compte_bs(email, nom_anglais, fichier_cookie_bs)
             #print("patiente 10000s"); await asyncio.sleep(10000)
             compteur += 1

@@ -2,7 +2,7 @@ import json, asyncio, time, msvcrt
 from playwright.async_api import async_playwright
 from datetime import datetime, timedelta
 from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies, sauvegarder_sur_meme_ligne, sauvegarder_fichier, charger_fichier, charger_fichier_d,
-basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour)
+basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_nouveau_element)
 
 PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
@@ -100,17 +100,20 @@ async def envoyer_email(fichier2, fichier4, page, email, mon_email):
 
 
     while True:
-        textes = ["Destinataires", "To recipients"]
-        trouver = False
-        for t in textes:
-            
-            element = page.locator(f'input[aria-label*="{t}"]')
-            if await element.count() > 0:
-                await element.click()
-                await element.fill(email)
-                trouver = True
-                break
-        if trouver: break
+        try:
+            textes = ["Destinataires", "To recipients"]
+            trouver = False
+            for t in textes:
+                
+                element = page.locator(f'input[aria-label*="{t}"]')
+                if await element.count() > 0:
+                    #await element.click()
+                    await element.fill(email)
+                    trouver = True
+                    break
+            if trouver: break
+        except:
+            pass
 
 
     while True:
@@ -212,29 +215,6 @@ async def marquer_contact(fichier, cle_db, cle, jours_recontact=1):
 
 
         
-async def verifier_nouveau_element(fichier1, fichier2):
-    data = await charger_fichier(fichier1) # Charger le fichier emails_collecter.json et emails_collecter2.json
-    data2 = await charger_fichier(fichier2)
-    
-    #emails_collecter = [c for c in data if not c["fichier"].startswith("-")] # fichier3_filtrer
-    #emails_collecter2 = [c for c in data2 if not c["fichier"].startswith("-")]
-    
-    emails_collecter = [c for c in data if not str(c.get("fichier", "")).startswith("-")]
-    emails_collecter2 = [c for c in data2 if not str(c.get("fichier", "")).startswith("-")]
-    
-    nouveaux_emails = []
-    for element in emails_collecter: # Vérifier si de nouveaux emails sont dans emails_collecter.json
-        if not any(element.get("email") == e.get("email") for e in emails_collecter2): #any sert a lire le resultat
-            nouveaux_emails.append(element)
-    
-    if nouveaux_emails: # Si on a de nouveaux emails, les ajouter à emails_collecter2
-        emails_collecter2.extend(nouveaux_emails)
-        await sauvegarder_sur_meme_ligne(fichier2, emails_collecter2) # Sauvegarder la nouvelle liste dans emails_collecter2.json
-
-    return emails_collecter2
-    
-    
-        
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
@@ -249,12 +229,12 @@ async def main():
 
         fichier1 = "emails_collecter.json"
         fichier2 = "emails_collecter2.json"
-        emails = await verifier_nouveau_element(fichier1, fichier2) # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
+        emails = await verifier_nouveau_element(fichier1, fichier2, "email") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
         emails = [e for e in emails if await verifier_date_recontacte(e)]
         
         fichier3 = "mes_emails.json"
         fichier4 = "mes_emails2.json"
-        compte_emails = await verifier_nouveau_element(fichier3, fichier4) 
+        compte_emails = await verifier_nouveau_element(fichier3, fichier4, "email")
         compte_emails = [c for c in compte_emails if await verifier_date_recontacte(c)]
         
         fichier_email_debut = "email_debut.json"

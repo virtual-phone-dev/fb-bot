@@ -110,8 +110,45 @@ async def nettoyer_texte(txt): #ce code permet pour que, Église, eglise, puisse
     txt = "".join(c for c in txt if unicodedata.category(c) != "Mn")
     
     return txt
+
+
+async def clic_div_aria_label_role_button(page, textes):
+    #while True:
+    print("patiente 1s"); await asyncio.sleep(1)
+    for t in textes:
+                
+        btn = page.locator(f'div[aria-label="{t}"][role="button"]').first
+        if await btn.count() > 0:    
+            return True
+                #await btn.click()
+        else:
+            return False
+        
+
+
+async def verifier_nouveau_element(fichier1, fichier2, cle_db):
+    data = await charger_fichier(fichier1) # Charger le fichier emails_collecter.json et emails_collecter2.json
+    data2 = await charger_fichier(fichier2)
     
-            
+    #emails_collecter = [c for c in data if not c["fichier"].startswith("-")] # fichier3_filtrer
+    #emails_collecter2 = [c for c in data2 if not c["fichier"].startswith("-")]
+    
+    emails_collecter = [c for c in data if not str(c.get("fichier", "")).startswith("-")]
+    emails_collecter2 = [c for c in data2 if not str(c.get("fichier", "")).startswith("-")]
+    
+    nouveaux_emails = []
+    for element in emails_collecter: # Vérifier si de nouveaux emails sont dans emails_collecter.json
+        if not any(element.get(cle_db) == e.get(cle_db) for e in emails_collecter2): #on verifie si element est deja dans le 2e fichier - emails_collecter2
+            nouveaux_emails.append(element) #any sert a lire le resultat
+    
+    if nouveaux_emails: # Si on a de nouveaux emails, les ajouter à emails_collecter2
+        emails_collecter2.extend(nouveaux_emails)
+        await sauvegarder_sur_meme_ligne(fichier2, emails_collecter2) # Sauvegarder la nouvelle liste dans emails_collecter2.json
+
+    return emails_collecter2       
+        
+        
+        
 async def acceder_page(page):
     textes = ["Richesse avec SATAN", "Secte de SATAN"]
 

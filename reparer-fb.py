@@ -100,7 +100,7 @@ async def main():
             await page.goto("https://www.facebook.com",timeout=0)   
             
             await verifier_blocage2(context, page, fichier)
-            
+            #print("patiente 10000s"); await asyncio.sleep(10000)
             #await creer_page(page)            
             await verifier_commande(PAUSE_MINUTES)
             

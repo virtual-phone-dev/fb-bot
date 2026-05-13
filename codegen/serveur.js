@@ -5,7 +5,7 @@ app.use(express.json());
 
 app.post('/ajouter-import', (req, res) => {
 	const { line, fonction } = req.body;
-    const filePath = '../createur-comptes2.py'; // ton fichier à modifier
+    const filePath = '../envoyer-message.py'; // ton fichier à modifier
 
     // Lire le contenu du fichier
     fs.readFile(filePath, 'utf8', (err, data) => {
@@ -37,13 +37,13 @@ app.post('/ajouter-import', (req, res) => {
 		
         const formattedSelectors = selectors.map(s => `"${s}"`); // formatter le selecteur
 		const appelContenu = `await ${fonction}(page, [${formattedSelectors.join(', ')}])`;
-		//const finalContenu = data + `\n${appelContenu}\n`;
-		//const finalContenu = data.replace(/(await creer_compte_th[^\n]*\n)/, `$1\n${appelContenu}`);
 		
-		const finalContenu = data.replace(
-			/(await creer_compte_th\([^\n]*\))/,
-			`$1\n\n            ${appelContenu}`
-		);
+		
+		const regex = /(await creer_compte_th\([^\n]*\))/;
+		let finalContenu;
+
+		if (regex.test(data)) { finalContenu = data.replace(regex, `$1\n            ${appelContenu}`); } // s'il a trouvé la regex, il ajoute le code juste après
+		else { finalContenu = data + `\n\n${appelContenu}\n`; } // Sinon, il ajoute le code en bas du fichier
 
 
         // Écrire le nouveau contenu dans le fichier

@@ -1,13 +1,14 @@
 import json, asyncio
 from playwright.async_api import async_playwright
 from itertools import cycle
-from outils_playwright import (connecter_gmail, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, charger_fichier_d, recuperer_texte_th,
-verifier_commande, basculer_sur_le_compte)
+from outils_playwright import (connecter_gmail, verifier_nouveau_element, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, charger_fichier_d, recuperer_texte_th, verifier_commande, basculer_sur_le_compte, clic_div_aria_label_role_button)
 
-texte = """Dis à tes abonnés qui t'envoient des messages, de t'envoyer un message sur Florinato, c'est là-bas tu vas causer avec eux.
-Et sur Florinato tu vas les facturer 200fcfa pour chaque message envoyer, ou encore tu pourras fixer n'importe quel prix que tu veux.
+texte = """Salut,
+Dis à tes abonnés de venir s'inscrire sur Florinato et si tu obtiens 1000 inscriptions avec ton lien tu seras payer 100 dollars. 
+ils vont s'inscrire pour regarder des vidéos sur Florinato. 
+Si ça t'intéresse, viens sur Florinato, et n'oublie pas d'envoyer un message à CAISIP.
 
-Si ça t'intéresse, sur Florinato, envoie un message à CAISIP.
+voilà ton lien d'inscription, publies ça sur ta page, en disant à tes abonnés de s'inscrire sur Florinato pour regarder des vidéos.
 https://florinato105.onrender.com """
 
 
@@ -445,33 +446,42 @@ async def likerr(page):
     
     
     
-async def envoyer_message(page, url_page):
+async def envoyer_message(fichier_compte, page, url_page):
+    fichier_comptes = "mes_comptes_fb2.json"
     await page.goto(url_page, timeout=0)
     await basculer_sur_le_compte(page, url_page)
     
     #await page.wait_for_load_state("domcontentloaded")
     #print("patiente 5s"); await asyncio.sleep(5)
-
-    btn_message = page.get_by_label("Message").first
-    if await btn_message.count() > 0:
+    
+    statut = await clic_div_aria_label_role_button(page, ["Message"])
+    if statut:
+    #btn_message = page.get_by_label("Message").first
+    #if await btn_message.count() > 0:
+        print("bouton message trouvé")
+        await mettre_a_jour(fichier_comptes, {"message": 1}, "fichier", fichier_compte)
+        
         await page.evaluate("""
         const messageButton = document.querySelector('div[aria-label="Message"]'); // cliquer sur le bouton Message, une popup s'ouvre alors , pour ecrire le message
         if (messageButton) { messageButton.click(); } """)
     
-    print("Patiente 2s"); await asyncio.sleep(2);
-    while True:
-        print("Patiente 1s"); await asyncio.sleep(1)
-        message_box = page.locator('div[aria-label*="Écrire"]').first
-        if await message_box.count() > 0:
-            await message_box.fill(texte)        
-                
+        print("Patiente 2s"); await asyncio.sleep(2);
+        while True:
             print("Patiente 1s"); await asyncio.sleep(1)
-            await page.keyboard.press("Enter")
+            message_box = page.locator('div[aria-label*="Écrire"]').first
+            if await message_box.count() > 0:
+                await message_box.fill(texte)        
+                    
+                print("Patiente 1s"); await asyncio.sleep(1)
+                await page.keyboard.press("Enter")
 
-            print("✅ Message envoyé :", texte);
-            print("Patiente 7s"); await asyncio.sleep(7)
-            break
-    
+                print("✅ Message envoyé :", texte);
+                print("Patiente 7s"); await asyncio.sleep(7)
+                break
+    else:
+        print("Pas de bouton message")
+        await mettre_a_jour(fichier_comptes, {"message": 0}, "fichier", fichier_compte)
+        
     
     
 async def main():
@@ -486,8 +496,13 @@ async def main():
             ],
         )
 
-        fichier_des_comptes = "comptes-fb.json"
-        comptes = await charger_comptes(fichier_des_comptes)
+        #fichier_des_comptes = "mes_comptes_fb.json"
+        #comptes = await charger_comptes(fichier_des_comptes)
+        
+        fichier3 = "mes_comptes_fb.json"
+        fichier4 = "mes_comptes_fb2.json"
+        comptes = await verifier_nouveau_element(fichier3, fichier4, "fichier") 
+        #compte_emails = [c for c in compte_emails if await verifier_date_recontacte(c)]
         
         pages_list = await charger_fichier("pages_contacter.json") # Charger la liste de pages
         pages_list = [p for p in pages_list if "url" in p]
@@ -496,22 +511,25 @@ async def main():
         fichier_derniere_page = "derniere_page_contacter.json"
         data = await charger_fichier_d(fichier_derniere_page)
         derniere_page = data.get("name")
-
-        debut = False
         
+        liste_des_noms = [p.get("name") for p in pages_list] # Vérifier si la page existe encore
+        if derniere_page not in liste_des_noms:
+            derniere_page = None  # recommencer depuis le début
+
+        debut = False if derniere_page else True        
         count = 0
+            
         while count < 3: 
             for compte in comptes:
                 fichier_cookie = compte["fichier"]
-                
-                if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
-                    continue
+                if compte["fichier"].startswith("-"): continue #ignorer les comptes qui commencent par "-"
                     
                 #if compte.get("creer") == "Oui":
                 #    continue  # skip si compte déjà créé
                 
                 page = next(cycle_pages); 
                 fichier_cookie = compte.get("fichier")
+                fichier_compte = compte.get("fichier")
                 nomDeMonCompte = compte.get("id_inchangeable")
 
                 url_page = page.get('url')
@@ -525,7 +543,6 @@ async def main():
                 print("✅", nomDeMonCompte); print(name); print(url_page);
                 
                 context = await browser.new_context() #nouveau contexte pour chaque compte
-                
                 cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
                 await context.add_cookies(cookies)
             
@@ -538,24 +555,18 @@ async def main():
 
                 page = await context.new_page()
                 await apply_stealth(page)
-                #await creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe)
-                #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
-                
-                #await commenter_th(page, email, mot_de_passe)
-                #break
-                
-                #await reparer_th(page, context, nom_complet, email, mot_de_passe)
-                #await connexion_th(page, url_page, email, mot_de_passe)
-                #await liker(page, url_page, email, mot_de_passe)
-                await envoyer_message(page, url_page); #print("patiente 10000s"); await asyncio.sleep(10000)
+                await envoyer_message(fichier_compte, page, url_page); #print("patiente 10000s"); await asyncio.sleep(10000)
                 
                 #await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
                 #await sauvegarder_cookies(context, fichier_cookie)
                 
                 await verifier_commande(page, duree_pause=10); 
                 await context.close()
-
             count += 1
+
+
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
