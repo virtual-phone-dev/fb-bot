@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Ajouter ligne en haut</title>
+</head>
+<body>
+<h1>Mini Codegen</h1>
+<input type="text" id="ligne" placeholder="Ce que tu veux ajouter" />
+<button id="addLineBtn">Envoyer sélecteur</button>
+
+<select id="fonction">
+    <option value="click_text">click_text</option>
+    <option value="clic_get_by_label">clic_get_by_label</option>
+</select>
+
+
+
+<script>
+document.getElementById('addLineBtn').addEventListener('click', () => {
+	const ligne = document.getElementById('ligne').value;
+	const fonction = document.getElementById('fonction').value;
+	
+    fetch('http://localhost:3000/ajouter-import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ line: ligne, fonction: fonction })
+    })
+    .then(res => res.json())
+    .then(data => alert(data.message))
+    .catch(err => alert('Erreur: ' + err));
+});
+</script>
+</body>
+</html>
+

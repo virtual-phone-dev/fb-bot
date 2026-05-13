@@ -3,8 +3,8 @@ import json, os, asyncio, random, sqlite3, msvcrt, time, unicodedata
 mot_de_passe_gmail = "diel2019"
 email_recuperation = "kilendodingha@gmail.com"
 
-mots_inutiles = ["hopital", "ecole", "association", "organisation", "gendarmerie", "eglise", "pasteur", "mosquée", "armed", "police", "révérend", "prophete", "imam", 
-"club", "commission", "nationale"]
+mots_inutiles = ["hopital", "ecole", "association", "organisation", "fédération", "gendarmerie", "eglise", "pasteur", "mosquée", "armed", "police", 
+"révérend", "prophete", "imam", "club", "commission", "nationale"]
 
 
 
