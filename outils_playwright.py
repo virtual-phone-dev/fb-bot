@@ -4,7 +4,7 @@ mot_de_passe_gmail = "diel2019"
 email_recuperation = "kilendodingha@gmail.com"
 
 mots_inutiles = ["hopital", "ecole", "association", "organisation", "fédération", "gendarmerie", "eglise", "pasteur", "mosquée", "armed", "police", 
-"révérend", "prophete", "imam", "club", "commission", "nationale"]
+"révérend", "prophete", "imam", "club", "commission", "nationale", "commissariat", "ministère", "université", "primature"]
 
 
 
@@ -112,17 +112,18 @@ async def nettoyer_texte(txt): #ce code permet pour que, Église, eglise, puisse
     return txt
 
 
-async def clic_div_aria_label_role_button(page, textes):
+async def clic_div_aria_label_role_button(page, textes, cliquer=False):
     #while True:
     print("patiente 1s"); await asyncio.sleep(1)
     for t in textes:
                 
         btn = page.locator(f'div[aria-label="{t}"][role="button"]').first
         if await btn.count() > 0:    
-            return True
+            if cliquer:
+                await btn.click()
+            return btn
                 #await btn.click()
-        else:
-            return False
+    return None
         
 
 

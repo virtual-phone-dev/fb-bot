@@ -8,7 +8,7 @@ PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
 #format_date = "%Y-%m-%d"
 
-texte = """Salut,
+texte = """
 Dis à tes abonnés de venir s'inscrire sur Florinato et si tu obtiens 1000 inscriptions avec ton lien tu seras payer 100 dollars. 
 ils vont s'inscrire pour regarder des vidéos sur Florinato. 
 Si ça t'intéresse, viens sur Florinato, et n'oublie pas d'envoyer un message à CAISIP.
@@ -240,27 +240,9 @@ async def main():
         fichier_email_debut = "email_debut.json"
         email_debut = (await charger_fichier_d(fichier_email_debut)).get("email")
         
-        #get = len(compte_emails)
-        #print("get", get) 
-        #print("patiente 10s"); await asyncio.sleep(10); 
-                
-        #emails = [e for e in emails if not str(e.get("fichier", "")).strip().startswith("-")]
-        #emails = await trouver_element_debut(fichier_email_debut, "email")
-        
-        #emails, email_debut = await trouver_element_debut(fichier_emails, fichier_email_debut, "email")
-
-        #page = await context.new_page() # nouvel onglet
-        #await apply_stealth(page)
-        
-        #start_index = 0
-        #if email_debut:
-        #    if email_debut in emails:
-        #        start_index = emails.index(email_debut)
-                   
         index = next((i for i, mail in enumerate(emails) if mail["email"] == email_debut), 0) # next() prend le premier résultat trouvé, si un email correspond → retourne son index, sinon → retourne 0 (valeur par défaut) 
         email_suivant = None
         emails_deja_contacter = set()
-        #comptes_deja_utiliser = set()
         tour = 0
         
         for compte_email in compte_emails:             
@@ -268,10 +250,8 @@ async def main():
             print("index a", index) 
             
             if index+1 > len(emails): 
-            #if index == 0:
                 print("aucun email a contacter, car tous ont deja été contacter", index); break
             
-            #print("index c", index) 
             mail = emails[index]
             email = mail["email"]
             nom = mail["nom"]
@@ -294,38 +274,12 @@ async def main():
                 
             await envoyer_email(fichier2, fichier4, page, email, mon_email)
             
-            #if not await verifier_date_recontacte(mail): continue
-            #if await verifier_date_recontacte(mail):
-                #print("peut contacter :", email)
-            #print("Contacté :", email)
-            #await marquer_contact(fichier2, "email", email, jours_recontact=60)
             emails_deja_contacter.add(email)
-            #else:
-            #    continue
-            
-            
-            
-            #await marquer_contact(fichier4, "email", mon_email) #sauvegarde date recontacte de mon compte_email
-            #comptes_deja_utiliser.add(email)
-            
-            #print("✅ mon_compte : ", mon_email)
-            #print("email : ", email)            
-            #print("index d", index) 
             index += 1
             
             statut = await tour_suivant(fichier_email_debut, emails, compte_emails, email_suivant, tour, index)
             if statut == "tout_mes_comptes_gmail_utiliser": break
-            
-                #context = await browser.new_context() #nouveau contexte pour chaque compte
-                #cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
-                #await context.add_cookies(cookies)
-                #page = await context.new_page()
-                #await apply_stealth(page)
                 
-                #await connecter_gmail(page, email)
-                #await envoyer_email(page, email)
-                
-                #await sauvegarder_cookies(context, fichier_cookie) #print("patiente 10000s"); await asyncio.sleep(10000)
             #print("patiente 10000s"); await asyncio.sleep(10000)
             await context.close()
 

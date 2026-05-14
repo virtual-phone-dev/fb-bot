@@ -1,6 +1,31 @@
 import json, asyncio
 from outils_playwright import (charger_fichier_t, charger_fichier, ajouter_dans_fichier, nettoyer_texte, mots_inutiles)
 
+
+
+async def nettoyer_pages_avec_nom_inutile():
+    fichier_entree = "page_messages_collecter.json"
+    fichier_sortie = "fichier_nettoyer.json"
+
+    pages = await charger_fichier(fichier_entree)
+    count = 0
+
+    for page in pages:
+        message = page.get("message", "").strip()
+        nom = page.get("nom", "").strip()
+        
+        nom_clean = await nettoyer_texte(nom)
+
+        # ignorer les noms contenant des mots inutiles
+        if not any(mot in nom_clean for mot in mots_inutiles):
+            await ajouter_dans_fichier(fichier_sortie, { "message": message, "nom": nom }, "message", message, "nom")
+            print(message)
+            count += 1
+
+    print(f"✅ {count} pages sauvegardées")
+    resultat = await charger_fichier(fichier_sortie)
+    print(f"{len(resultat)} pages dans le fichier {fichier_sortie}")
+    
     
 
 async def nettoyer_emails_avec_nom_inutile():
@@ -10,7 +35,7 @@ async def nettoyer_emails_avec_nom_inutile():
 
     count = 0
     for item in emails:
-        email = item.get("email", "").strip().lower()
+        email = item.get("email", "").strip()
         nom = item.get("nom", "").strip()
         
         nom_clean = await nettoyer_texte(nom)
@@ -65,11 +90,11 @@ async def nettoyer_emails_gmail():
             print(email)
             count += 1
 
-
     print(f"✅ {count} emails sauvegardés")
-    
     resultat = await charger_fichier(fichier_sortie)
     print(f"{len(resultat)} emails dans le fichier {fichier_sortie}")
     
     
-asyncio.run(nettoyer_emails_avec_nom_inutile())
+    
+asyncio.run(nettoyer_pages_avec_nom_inutile())
+

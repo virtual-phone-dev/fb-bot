@@ -1,8 +1,7 @@
 import json, asyncio, msvcrt, time, unicodedata
 from playwright.async_api import async_playwright
 from itertools import cycle
-from outils_playwright import (connecter_gmail, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, charger_fichier_d, ajouter_dans_fichier,
-mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles)
+from outils_playwright import (connecter_gmail, clic_div_aria_label_role_button, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, charger_fichier_d, ajouter_dans_fichier, mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles, clic_div_aria_label_role_button)
 
 
 
@@ -311,8 +310,12 @@ async def collecter_liens(fichier, context, page):
                     if await btn.count() > 0:                                               
                         await btn.click()
                         break
+                    
+                    await clic_div_aria_label_role_button(page, ["Fermer"], cliquer=True)
+                    #statut = await clic_div_aria_label_role_button(page, ["Fermer"], cliquer=True)
+                    #if statut:
                 except Exception as e:
-                    print("..erreur"); #print(e) #en general, ici l'erreur cest quand ca essai de cliquer sur: Publications récentes, et ca rate parfois, et quand ca rate il scrolle juste et prend les pages avec post recent/et non recent
+                    print("..erreur"); print(e) #en general, ici l'erreur cest quand ca essai de cliquer sur: Publications récentes, et ca rate parfois, et quand ca rate il scrolle juste et prend les pages avec post recent/et non recent
         
             await recuperer_lien(context, page)
             await sauvegarder_fichier(fichier_mot_debut, { "mot_cle": mot_suivant })
@@ -331,9 +334,9 @@ async def main():
             ],
         )
 
-        fichier_des_comptes = "mes_comptes_fb.json"
+        fichier_des_comptes = "mes_comptes_fb2.json"
         comptes = await charger_comptes(fichier_des_comptes)
-        comptes = [c for c in comptes if c.get("message") == "1"] # message_speciale
+        comptes = [c for c in comptes if c.get("message") == 1] # message_speciale
         comptes = [c for c in comptes if not str(c.get("fichier", "")).strip().startswith("-")] # ignorer les comptes qui commencent par -
         
         count = 0

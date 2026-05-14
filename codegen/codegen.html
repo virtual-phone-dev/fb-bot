@@ -5,33 +5,40 @@
 <title>Codegen</title>
 </head>
 <body>
-<h1>Mini Codegen</h1>
-<input type="text" id="ligne" placeholder="ecrire selecteurs .." />
-<button id="addLineBtn">Envoyer</button>
+	<h1>Mini Codegen</h1>
 
-<select id="fonction">
-    <option value="click_text">click_text</option>
-    <option value="clic_get_by_label">clic_get_by_label</option>
-    <option value="clic_div_aria_label_role_button">clic_div_aria_label_role_button</option>
-</select>
+	<input type="text" id="ligne" placeholder="ecrire selecteurs .." />
 
+	<input type="text" id="fichier" placeholder="envoyer-message.py" />
 
+	<button id="addLineBtn">Envoyer</button>
 
-<script>
-document.getElementById('addLineBtn').addEventListener('click', () => {
-	const ligne = document.getElementById('ligne').value;
-	const fonction = document.getElementById('fonction').value;
+	<select id="fonction">
+		<option value="click_text">click_text</option>
+		<option value="clic_get_by_label">clic_get_by_label</option>
+		<option value="clic_div_aria_label_role_button">clic_div_aria_label_role_button</option>
+	</select>
 	
-    fetch('http://localhost:3000/ajouter-import', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ line: ligne, fonction: fonction })
-    })
-    .then(res => res.json())
-    .then(data => alert(data.message))
-    .catch(err => alert('Erreur: ' + err));
-});
-</script>
+	<label> <input type="checkbox" id="cliquer" /> </label>
+
+
+	<script>
+	document.getElementById('addLineBtn').addEventListener('click', () => {
+		const ligne = document.getElementById('ligne').value;
+		const fonction = document.getElementById('fonction').value;
+		const fichier = document.getElementById('fichier').value;
+		const cliquer = document.getElementById('cliquer').checked;
+		
+		fetch('http://localhost:3000/ajouter-import', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ line: ligne, fonction: fonction, fichier, cliquer })
+		})
+		.then(res => res.json())
+		.then(data => alert(data.message))
+		.catch(err => alert('Erreur: ' + err));
+	});
+	</script>
 </body>
 </html>
 

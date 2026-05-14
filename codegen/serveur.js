@@ -4,8 +4,8 @@ const app = express();
 app.use(express.json());
 
 app.post('/ajouter-import', (req, res) => {
-	const { line, fonction } = req.body;
-    const filePath = '../envoyer-message.py'; // ton fichier à modifier
+	const { line, fonction, fichier, cliquer } = req.body;
+	const filePath = `../${fichier}`; // ton fichier à modifier
 
     // Lire le contenu du fichier
     fs.readFile(filePath, 'utf8', (err, data) => {
@@ -36,7 +36,18 @@ app.post('/ajouter-import', (req, res) => {
         if (selectors.length === 0) { return res.status(400).json({ message: "Aucun selecteur fourni" }); } // sécurité - arrete , si aucun selecteur
 		
         const formattedSelectors = selectors.map(s => `"${s}"`); // formatter le selecteur
-		const appelContenu = `await ${fonction}(page, [${formattedSelectors.join(', ')}])`;
+		
+		let appelContenu = [];
+		if (cliquer) {
+			const cliquerTrue = cliquer ? "True" : "False";
+			appelContenu.push(`statut = await ${fonction}(page, [${formattedSelectors.join(', ')}], cliquer=${cliquerTrue})`);
+			appelContenu.push(`if statut:`);
+			//appelContenu.push(`    await statut.click()`);
+		} else {
+			appelContenu.push(`statut = await ${fonction}(page, [${formattedSelectors.join(', ')}])`);
+		}		
+		
+		appelContenu = appelContenu.join('\n'); // join avec retour ligne propre
 		
 		
 		const regex = /(await creer_compte_th\([^\n]*\))/;
@@ -44,8 +55,8 @@ app.post('/ajouter-import', (req, res) => {
 
 		if (regex.test(data)) { finalContenu = data.replace(regex, `$1\n            ${appelContenu}`); } // s'il a trouvé la regex, il ajoute le code juste après
 		else { finalContenu = data + `\n\n${appelContenu}\n`; } // Sinon, il ajoute le code en bas du fichier
-
-
+		
+		
         // Écrire le nouveau contenu dans le fichier
         fs.writeFile(filePath, finalContenu, 'utf8', (err) => {
             if (err) { return res.status(500).json({ message: 'Erreur écriture fichier' }); }
