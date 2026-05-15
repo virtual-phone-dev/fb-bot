@@ -8,12 +8,8 @@ PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
 #format_date = "%Y-%m-%d"
 
-texte = """
-Dis à tes abonnés de venir s'inscrire sur Florinato et si tu obtiens 1000 inscriptions avec ton lien tu seras payer 100 dollars. 
-ils vont s'inscrire pour regarder des vidéos sur Florinato. 
+texte = """Viens publier tes vidéos sur Florinato, et si tu obtiens 1000 clics sur ta vidéo tu seras payer 100 dollars.
 Si ça t'intéresse, viens sur Florinato, et envoie un message à CAISIP.
-
-voilà ton lien d'inscription, publies ça sur ta page, en disant à tes abonnés de s'inscrire sur Florinato pour regarder des vidéos.
 https://florinato105.onrender.com """
 
  
