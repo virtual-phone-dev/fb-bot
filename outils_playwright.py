@@ -236,11 +236,11 @@ async def basculer_sur_la_page(page):
             
             
             
-#async def connecter_gmail(context, email):
 async def connecter_gmail(context, fichier_cookie, page, email):
-    #page = await context.new_page() #acceder a gmail
-    #await appliquer_stealth(page) # appliquer stealth
-    await page.goto("https://mail.google.com", timeout=0)  
+    try:
+        await page.goto("https://mail.google.com", timeout=0)
+    except:
+        await page.goto("https://mail.google.com", timeout=0)
     
     
     btn = page.locator('div[role="button"]:has-text("Nouveau message")')
@@ -368,13 +368,17 @@ async def connecter_gmail(context, fichier_cookie, page, email):
         except Exception as e:
             print("..erreur"); print(e); pass
             
+            
+        textes = [
+        "Le serveur ne peut pas traiter la requête, car son format est incorrect. Nous vous recommandons de ne pas réessayer",
+        "The server encountered a temporary error and could not complete your request."]
+        for t in textes:
+            element = await page.query_selector(f'text="{t}"')
+            if element:
+                print("erreur_serveur_gmail"); return "erreur_serveur_gmail"
+    
         
-        element = await page.query_selector("text=Le serveur ne peut pas traiter la requête, car son format est incorrect. Nous vous recommandons de ne pas réessayer")
-        if element:
-            print("erreur_serveur_gmail"); return "erreur_serveur_gmail"
-
-
-
+        
 async def post_recent(page):
     btn = page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first
     if await btn.count() > 0:    
