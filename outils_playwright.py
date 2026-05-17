@@ -1,4 +1,5 @@
 import json, os, asyncio, random, sqlite3, msvcrt, time, unicodedata
+from datetime import datetime
 
 mot_de_passe_gmail = "diel2019"
 email_recuperation = "kilendodingha@gmail.com"
@@ -126,6 +127,17 @@ async def clic_div_aria_label_role_button(page, textes, cliquer=False):
     return None
         
 
+
+async def verifier_date_recontacte(mail):
+    if "recontacter" not in mail: return True 
+    
+    try:
+        date_recontacte = datetime.strptime(mail["recontacter"], format_date)
+    except:
+        return True
+        
+    return datetime.now() >= date_recontacte
+    
 
 async def verifier_nouveau_element(fichier1, fichier2, cle_db):
     data = await charger_fichier(fichier1) # Charger le fichier emails_collecter.json et emails_collecter2.json

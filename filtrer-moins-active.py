@@ -2,12 +2,11 @@ import json, asyncio, time, msvcrt
 from playwright.async_api import async_playwright
 from datetime import datetime, timedelta
 from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies, sauvegarder_sur_meme_ligne, sauvegarder_fichier, charger_fichier, charger_fichier_d,
-basculer_sur_la_page, basculer_sur_le_compte, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_nouveau_element, verifier_date_recontacte, 
-clic_div_aria_label_role_button)
-
+basculer_sur_la_page, basculer_sur_le_compte, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_nouveau_element, clic_div_aria_label_role_button)
 
 PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
+#format_date = "%Y-%m-%d"
 
 texte = """Partenariat Gagnant-Gagnant
 
@@ -187,6 +186,16 @@ async def tour_suivant(fichier_email_debut, emails, mes_comptes, email_suivant, 
         await sauvegarder_fichier(fichier_email_debut, data)
                 
 
+async def verifier_date_recontacte(mail):
+    if "recontacter" not in mail: return True 
+    
+    try:
+        date_recontacte = datetime.strptime(mail["recontacter"], format_date)
+    except:
+        return True
+        
+    return datetime.now() >= date_recontacte
+
 
 
 async def marquer_contact(fichier, cle_db, cle, jours_recontact=1):
@@ -251,8 +260,8 @@ async def main():
             ],
         )
 
-        fichier1 = "page_messages_collecter.json"
-        fichier2 = "page_messages_collecter2.json"
+        fichier1 = "pages_collecter.json"
+        fichier2 = "pages_collecter2.json"
         pages_fb = await verifier_nouveau_element(fichier1, fichier2, "message") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
         pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]
         
@@ -269,7 +278,6 @@ async def main():
         pages_deja_contacter = set()
         tour = 0
         
-        #if not len(comptes_fb) > 0: 
         if len(comptes_fb) == 0: 
             print("Tout les comptes ont été utilisés") 
         
@@ -283,10 +291,8 @@ async def main():
             
             page = pages_fb[index]
             url_page = page["message"]
-            #nom = page["nom"]
             fichier_cookie = compte_fb.get("fichier")
             mon_compte = compte_fb.get("fichier")
-            #mon_email = compte_fb.get("email")
             
             if url_page in pages_deja_contacter: continue
             
@@ -295,23 +301,21 @@ async def main():
             await context.add_cookies(cookies)
             
             page = await context.new_page()
-            await apply_stealth(page)
+            await apply_stealth(page)            
             print("✅ mon_compte : ", mon_compte)
-            print("Contacté :", url_page)
             
             
+            for page in pages_fb:
+                url_page = page["message"]
+                print("Contacté :", url_page)
             
-            #statut = await connecter_gmail(context, fichier_cookie, page, mon_email)
-            #if statut == "erreur_serveur_gmail": await context.close()
+                #await envoyer_message(fichier2, fichier4, page, url_page, mon_compte)
                 
-            await envoyer_message(fichier2, fichier4, page, url_page, mon_compte)
-            #await envoyer_message(fichier_compte, page, url_page);
-            
-            pages_deja_contacter.add(url_page)
-            index += 1            
-            
-            statut = await tour_suivant(fichier_page_message_debut, pages_fb, comptes_fb, page_suivant, tour, index, "message", "compte")
-            if statut == "tout_mes_comptes_utiliser": break
+                pages_deja_contacter.add(url_page)
+                index += 1            
+                
+                statut = await tour_suivant(fichier_page_message_debut, pages_fb, comptes_fb, page_suivant, tour, index, "message", "compte")
+                if statut == "tout_mes_comptes_utiliser": break
             
             #print("patiente 10s"); await asyncio.sleep(10)  
             await context.close()

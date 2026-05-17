@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Codegen Studio Universel v2</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background-color: #f4f6f9; color: #333; }
+        h1 { color: #2c3e50; }
+        .section { background: white; border: 1px solid #dcdde1; padding: 20px; margin-bottom: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h3 { margin-top: 0; color: #2980b9; }
+        input[type="text"], input[type="number"], select { padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px; width: 280px; display: block; }
+        label { display: block; margin: 10px 0; font-weight: bold; }
+        button { background-color: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px;}
+        button:hover { background-color: #2980b9; }
+        .btn-green { background-color: #2ecc71; }
+        .btn-green:hover { background-color: #27ae60; }
+        .btn-orange { background-color: #e67e22; }
+        .btn-orange:hover { background-color: #d35400; }
+        
+        /* Style du constructeur de workflow */
+        .bloc-item { background: #f8f9fa; border-left: 5px solid #3498db; padding: 10px; margin: 10px 0; border-radius: 4px; position: relative; }
+        .bloc-item button { position: absolute; right: 10px; top: 5px; background: #e74c3c; padding: 5px 10px; border: none; color: white; border-radius: 4px; cursor: pointer; }
+        .bloc-item button:hover { background: #c0392b; }
+        #configuration_dynamique { margin-top: 15px; padding: 10px; background: #edf2f7; border-radius: 6px; display: none; }
+    </style>
+</head>
+<body>
+    <h1>Codegen Studio Universel</h1>
+
+    <!-- CONFIGURATION DU FICHIER CIBLE -->
+    <div class="section">
+        <h3>1. Configuration Générale</h3>
+        <label>Nom du fichier Python à générer :</label>
+        <input type="text" id="main_filename" placeholder="ex: mon_robot_universel.py" value="mon_robot_universel.py" />
+    </div>
+
+    <!-- SÉLECTEUR DE BRIQUES UNIVERSELLES -->
+    <div class="section">
+        <h3>2. Ajouter des étapes à votre code (Ordre d'exécution)</h3>
+        
+        <label>Choisir un type de brique :</label>
+        <select id="select_brique" onchange="changerTypeBrique()">
+            <option value="">-- Sélectionner une brique --</option>
+            <option value="boucle_rotation">Boucle de rotation (for X in Y)</option>
+            <option value="ouvrir_session_isolee">Gestionnaire de Session / Profil (Stealth & Cookies)</option>
+            <option value="boucle_compteur">Boucle Compteur / Cycle (While)</option>
+            <option value="action_simple">Action Simple (Appel de fonction)</option>
+			<option value="synchroniseur">Synchroniseur / Déduplicateur (Fusionner & Filtrer)</option>
+        </select>
+
+        <!-- Formulaires dynamiques selon la brique choisie -->
+        <div id="configuration_dynamique">
+            <div id="champs_boucle_rotation" style="display:none;">
+                <label>Nom de l'élément unique (ex: compte, page, email, marchandise) :</label>
+                <input type="text" id="param_acteur" placeholder="ex: compte" />
+                <label>Nom du groupe / liste contenant ces éléments (ex: comptes, pages) :</label>
+                <input type="text" id="param_liste" placeholder="ex: comptes" />
+            </div>
+
+            <div id="champs_ouvrir_session_isolee" style="display:none;">
+                <label>Nom de la variable acteur (ex: compte, profil, email) :</label>
+                <input type="text" id="param_session_acteur" placeholder="ex: compte" />
+                <label>Dossier / Fichier de stockage des cookies :</label>
+                <input type="text" id="param_session_stockage" placeholder="ex: ./sessions/cookies_fb.json" />
+                <label>
+                    <input type="checkbox" id="param_session_stealth" checked /> 
+                    Activer le mode Stealth (apply_stealth)
+                </label>
+            </div>
+			
+			<div id="champs_synchroniseur" style="display:none;">
+				<label>Nom de la variable de sortie (ex: emails, comptes_valides) :</label>
+				<input type="text" id="param_sync_sortie" placeholder="ex: emails" />
+				<label>Fichier Source A (Nouveaux éléments détectés) :</label>
+				<input type="text" id="param_sync_srcA" placeholder="ex: emails_collecter.json" />
+				<label>Fichier Source B (Base de données historique) :</label>
+				<input type="text" id="param_sync_srcB" placeholder="ex: emails_collecter2.json" />
+				<label>Clé unique de comparaison :</label>
+				<input type="text" id="param_sync_cle" placeholder="ex: email (ou id, url, id_marchandise)" />
+				<label>
+					<input type="checkbox" id="param_sync_filtrer_date" checked />
+					Filtrer aussi par date de recontacte ? (verifier_date_recontacte)
+				</label>
+			</div>
+
+
+            <div id="champs_boucle_compteur" style="display:none;">
+                <label>Nom de la variable compteur :</label>
+                <input type="text" id="param_compteur" value="count" />
+                <label>Limite maximale de cycles :</label>
+                <input type="number" id="param_limite_cycles" value="5" />
+            </div>
+
+            <div id="champs_action_simple" style="display:none;">
+                <label>Nom de la fonction :</label>
+                <input type="text" id="param_nom_fonction" placeholder="ex: click_text" />
+                <label>Argument / Cible :</label>
+                <input type="text" id="param_argument" placeholder="ex: 'Bouton Valider'" />
+            </div>
+
+            <button type="button" class="btn-orange" onclick="ajouterBriqueAuWorkflow()">Ajouter cette brique au Workflow</button>
+        </div>
+    </div>
+
+    <!-- LISTE VISUELLE DES ÉTAPES CHOISIES -->
+    <div class="section">
+        <h3>3. Votre Workflow Actuel</h3>
+        <div id="liste_workflow_visuel">
+            <p id="vide_msg" style="color: #7f8c8d; font-style: italic;">Aucune brique sélectionnée. Construisez votre code ci-dessus.</p>
+        </div>
+        <br>
+        <button id="genMainBtn" class="btn-green" style="width: 100%; padding: 15px; font-size: 1.1em;">Générer le Code Source Final</button>
+    </div>
+
+    <script>
+    let workflowEtapes = [];
+
+    function changerTypeBrique() {
+        const type = document.getElementById('select_brique').value;
+        const conteneur = document.getElementById('configuration_dynamique');
+        
+        document.getElementById('champs_boucle_rotation').style.display = 'none';
+        document.getElementById('champs_ouvrir_session_isolee').style.display = 'none';
+        document.getElementById('champs_boucle_compteur').style.display = 'none';
+        document.getElementById('champs_action_simple').style.display = 'none';
+		document.getElementById('champs_synchroniseur').style.display = 'none';
+
+        if(type === "") {
+            conteneur.style.display = 'none';
+            return;
+        }
+
+        conteneur.style.display = 'block';
+        document.getElementById('champs_' + type).style.display = 'block';
+    }
+
+    function ajouterBriqueAuWorkflow() {
+        const type = document.getElementById('select_brique').value;
+        let params = {};
+        let labelVisuel = "";
+
+        if (type === "boucle_rotation") {
+            const acteur = document.getElementById('param_acteur').value || "item";
+            const liste = document.getElementById('param_liste').value || "items";
+            params = { variable_acteur: acteur, liste_acteurs: liste };
+            labelVisuel = `Boucle For : pour chaque <b>${acteur}</b> dans la liste de <b>${liste}</b>`;
+        } 
+		else if (type === "synchroniseur") {
+			const sortie = document.getElementById('param_sync_sortie').value || "elements";
+			const srcA = document.getElementById('param_sync_srcA').value || "sourceA.json";
+			const srcB = document.getElementById('param_sync_srcB').value || "sourceB.json";
+			const cle = document.getElementById('param_sync_cle').value || "id";
+			const filtrerDate = document.getElementById('param_sync_filtrer_date').checked;
+			params = { variable_sortie: sortie, fichier1: srcA, fichier2: srcB, cle_db: cle, filtrer_date: filtrerDate };
+			labelVisuel = `Synchroniseur : Fusionner <b>${srcA}</b> et <b>${srcB}</b> dans <b>${sortie}</b> (Clé: ${cle}) ${filtrerDate ? '⏳ [Filtre Date: ON]' : ''}`;
+		}
+        else if (type === "ouvrir_session_isolee") {
+            const acteur = document.getElementById('param_session_acteur').value || "compte";
+            const stockage = document.getElementById('param_session_stockage').value || "./sessions/cookies.json";
+            const stealth = document.getElementById('param_session_stealth').checked;
+            params = { variable_acteur: acteur, chemin_stockage: stockage, activer_stealth: stealth };
+            labelVisuel = `Session Isolée : Initialiser le contexte pour <b>${acteur}</b> ${stealth ? '🤖 [Stealth: ON]' : '[Stealth: OFF]'}`;
+        }
+        else if (type === "boucle_compteur") {
+            const cpt = document.getElementById('param_compteur').value || "count";
+            const limite = document.getElementById('param_limite_cycles').value || "1";
+            params = { variable_compteur: cpt, limite_cycles: limite };
+            labelVisuel = `Boucle While : Répéter tant que <b>${cpt}</b> < <b>${limite}</b>`;
+        }
+        else if (type === "action_simple") {
+            const func = document.getElementById('param_nom_fonction').value || "action";
+            const arg = document.getElementById('param_argument').value || "";
+            params = { fonction: func, argument: arg };
+            labelVisuel = `Action Exécuter : <b>${func}(${arg})</b>`;
+        }
+
+        workflowEtapes.push({ type: type, params: params, labelVisuel: labelVisuel });
+        renderWorkflow();
+    }
+
+    function supprimerEtape(index) {
+        workflowEtapes.splice(index, 1);
+        renderWorkflow();
+    }
+
+    function renderWorkflow() {
+        const listeDiv = document.getElementById('liste_workflow_visuel');
+        const videMsg = document.getElementById('vide_msg');
+        
+        listeDiv.querySelectorAll('.bloc-item').forEach(el => el.remove());
+
+        if(workflowEtapes.length === 0) {
+            videMsg.style.display = 'block';
+            return;
+        }
+        
+        videMsg.style.display = 'none';
+
+        workflowEtapes.forEach((etape, index) => {
+            const div = document.createElement('div');
+            div.className = 'bloc-item';
+            div.innerHTML = `
+                <span><strong>[Étape ${index + 1}]</strong> ${etape.labelVisuel}</span>
+                <button onclick="supprimerEtape(${index})">Supprimer</button>
+            `;
+            listeDiv.appendChild(div);
+        });
+    }
+
+    document.getElementById('genMainBtn').addEventListener('click', () => {
+        if(workflowEtapes.length === 0) {
+            alert("Veuillez ajouter au moins une brique à votre workflow.");
+            return;
+        }
+
+        const payload = {
+            fichier_destination: document.getElementById('main_filename').value,
+            etapes: workflowEtapes
+        };
+
+        fetch('http://localhost:3000/generer-workflow-universel', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => alert(data.message))
+        .catch(err => alert('Erreur: ' + err));
+    });
+    </script>
+</body>
+</html>
