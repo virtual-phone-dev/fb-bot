@@ -375,23 +375,10 @@ async def main():
             await preparer_storage_state(fichier)
             
             context = await browser.new_context(storage_state=fichier)   
-            
             page = await context.new_page()
             await appliquer_stealth(page)            
 
-            #await creer_page(page, context)
-            #await publier_post(page)
-                
-            #await page.goto("https://www.facebook.com", timeout=0)
-            #await basculer_sur_la_page(page)
-            #await acceder_page(page)
-                
-            #await mettre_photo(page, context)
-            #await publier_post(page)
-            #await fin_creation_page(page)
-            
             await visiter_page(page)
-            
             await verifier_commande(page, PAUSE_MINUTES)
             
             await sauvegarder_cookies(context, fichier)

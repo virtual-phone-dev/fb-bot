@@ -299,13 +299,7 @@ async def main():
             print("✅ mon_compte : ", mon_compte)
             print("Contacté :", url_page)
             
-            
-            
-            #statut = await connecter_gmail(context, fichier_cookie, page, mon_email)
-            #if statut == "erreur_serveur_gmail": await context.close()
-                
             await envoyer_message(fichier2, fichier4, page, url_page, mon_compte)
-            #await envoyer_message(fichier_compte, page, url_page);
             
             pages_deja_contacter.add(url_page)
             index += 1            

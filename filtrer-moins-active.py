@@ -6,16 +6,13 @@ basculer_sur_la_page, basculer_sur_le_compte, reparer_fb, ajouter_dans_fichier, 
 
 PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
-#format_date = "%Y-%m-%d"
+
 
 texte = """Partenariat Gagnant-Gagnant
 
 Viens publier tes vidéos sur Florinato, et si tu obtiens 1000 clics sur ta vidéo tu seras payer 100 dollars.
 Si ça t'intéresse, viens sur Florinato, et envoie un message à CAISIP.
 https://florinato105.onrender.com """
-
- 
-objet = "Partenariat Gagnant-Gagnant"
 
 
  

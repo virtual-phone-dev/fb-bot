@@ -128,6 +128,8 @@ async def main():
                 page = next(cycle_pages); 
                 fichier_cookie = compte.get("fichier")
                 nomDeMonCompte = compte.get("nom")
+                email = compte["email"]
+                mot_de_passe = compte["mot_de_passe"]
 
                 url_page = page.get('url')
                 name = page.get('name'); #print("name : ", name); print(url_page);
@@ -139,20 +141,11 @@ async def main():
                 print("✅", nomDeMonCompte); print(name); print(url_page);
                 
                 context = await browser.new_context() #nouveau contexte pour chaque compte
-                
                 cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
                 await context.add_cookies(cookies)
-                
-                #nom_complet = compte["nom_complet"]
-                #nom_profil = compte["nom_profil"]
-                email = compte["email"]
-                mot_de_passe = compte["mot_de_passe"]
-                
-                #print(fichier_cookie);
 
                 page = await context.new_page()
                 await appliquer_stealth(page)
-                
                 await connexion_bs(page, email, mot_de_passe)
                 await liker(page, url_page)
                 

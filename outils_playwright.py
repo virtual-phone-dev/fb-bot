@@ -16,6 +16,15 @@ async def appliquer_stealth(page):
     Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
     Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
 
+
+async def apply_stealth(page):
+    await page.add_init_script(
+    """
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+    Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
+    Object.defineProperty(navigator, 'languages', { get: () => ['fr-FR', 'fr'] }); """)
+
+
 # en cas d'erreur, jutiliserai des parties de ce code
 async def nom_page(page, url):
     while True:
