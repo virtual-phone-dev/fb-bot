@@ -112,6 +112,17 @@
                 <input type="checkbox" id="v_filtre_date_pages" />
                 <label for="v_filtre_date_pages">Filtrer les pages par date de recontacte</label>
             </div>
+			
+			<div class="checkbox-container" style="margin-bottom: 15px;">
+				<input type="checkbox" id="v_mode_automation" onchange="cocherAutomatiquement1CompteToutesPages()" />
+				<label for="v_mode_automation">1 compte, Toutes pages</label>
+			</div>
+			
+			<div class="checkbox-container" style="border: none; padding: 0; margin-top: 10px;">
+				<input type="checkbox" id="activer_ami" />
+				<label for="activer_ami"><strong>verifier_ami</strong></label>
+			</div>
+			
             <div class="checkbox-container">
                 <input type="checkbox" id="v_filtre_date_comptes" onchange="majDependanceCheckbox()" />
                 <label for="v_filtre_date_comptes">Filtrer les comptes par date de recontacte</label>
@@ -150,9 +161,26 @@
                     </div>
                     <div style="display: flex; flex-direction: row; align-items: center; gap: 5px;">
                         <label style="margin: 0; white-space: nowrap;">Durée par défaut :</label>
-                        <input type="number" id="v_duree_pause" value="10" min="1" style="width: 80px; margin: 0; padding: 4px;" />
+                        <input type="number" id="v_duree_pause" value="5" min="1" style="width: 80px; margin: 0; padding: 4px;" />
                         <span style="font-size: 13px; font-weight: bold; color: #555;">secondes</span>
                     </div>
+					
+					
+					<div class="checkbox-container" style="border: none; padding: 0; margin: 0;">
+                        <input type="checkbox" id="activer_pause_ami" />
+                        <label for="activer_pause_ami"><strong>Pause Ami</strong></label>
+                    </div>
+                    <div style="display: flex; flex-direction: row; align-items: center; gap: 5px;">
+                        <label style="margin: 0; white-space: nowrap;">Durée par défaut :</label>
+                        <input type="number" id="duree_pause_ami" value="5" min="1" style="width: 80px; margin: 0; padding: 4px;" />
+                        <span style="font-size: 13px; font-weight: bold; color: #555;">secondes</span>
+                    </div>
+					
+					
+					<div class="checkbox-container" style="border: none; padding: 0; margin-top: 10px;">
+						<input type="checkbox" id="activer_visiter_page" />
+						<label for="activer_visiter_page"> <strong>visiter_page</strong> </label>
+					</div>
 					
 					<div class="checkbox-container" style="border: none; padding: 0; margin-top: 10px;">
 						<input type="checkbox" id="v_activer_mise_a_jour" />
@@ -206,6 +234,23 @@
     </div>
 
     <script>
+		function cocherAutomatiquement1CompteToutesPages() {
+			const actif = document.getElementById('v_mode_automation').checked;
+			document.getElementById('v_inclure_debut_false').checked = actif; // debut = False
+			document.getElementById('v_inclure_boucle_pages_fb').checked = actif; // boucle pages
+			
+			majDependancePause(); // afficher le bloc pause automatiquement
+			document.getElementById('v_activer_pause').checked = actif; // pause    
+			//document.getElementById('v_activer_mise_a_jour').checked = actif; // mettre_a_jour
+			document.getElementById('v_activer_preparation_compte').checked = actif; // Context + NewPage
+			document.getElementById('activer_visiter_page').checked = actif;
+			document.getElementById('activer_ami').checked = actif;
+
+			//if (actif) { afficherToast("Mode Automation activé !"); } 
+			//else { afficherToast("Mode Automation désactivé !"); }
+		}
+		
+
         function majDependanceCheckbox() {
             const filtreComptesCoche = document.getElementById('v_filtre_date_comptes').checked;
             document.getElementById('bloc_sous_filtre_strict').style.display = filtreComptesCoche ? 'block' : 'none';
@@ -286,9 +331,13 @@
             const inclureLogiquePage = document.getElementById('v_inclure_logique_page').checked;
             const inclureBouclePagesFb = document.getElementById('v_inclure_boucle_pages_fb').checked;
             const activerPauseCoche = document.getElementById('v_activer_pause').checked;
+            const activerPauseAmiCocher = document.getElementById('activer_pause_ami').checked;
+			const valeurPause = document.getElementById('v_duree_pause').value;
+			const valeurPauseAmi = document.getElementById('duree_pause_ami').value;
 			const activerMiseAJour = document.getElementById('v_activer_mise_a_jour').checked;
 			const activerPreparationCompte = document.getElementById('v_activer_preparation_compte').checked;
-            const valeurPause = document.getElementById('v_duree_pause').value;
+			const activerVisiterPage = document.getElementById('activer_visiter_page').checked;
+			const activerAmi = document.getElementById('activer_ami').checked;
 
             let ligneFiltrePages = filtreDatePagesCoche ? `\n        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]` : "";
 
@@ -315,14 +364,12 @@
             print("Contacté :", url_page)`;
             }
 
-            // Injection dynamique du temps de pause optionnel
-			
-            /*let codePauseOptionnel = "";
-            if (activerPauseCoche) {
-                codePauseOptionnel = `\n                print("Patiente ${valeurPause}s"); await asyncio.sleep(${valeurPause})`;
-            }*/
-			
 			let codeActionsOptionnelles = "";
+
+			if (activerVisiterPage) {
+				codeActionsOptionnelles += `
+                await visiter_page(context, fichier2, url_page)`;
+			}
 
 			if (activerMiseAJour) {
 				codeActionsOptionnelles += `\n                await mettre_a_jour(fichier2, {"ami": 1}, cle_db1, url_page)`;
@@ -331,6 +378,7 @@
 			if (activerPauseCoche) {
 				codeActionsOptionnelles += `\n                print("Patiente ${valeurPause}s"); await asyncio.sleep(${valeurPause})`;
 			}
+			
 
             let codeBouclePagesComplete = "";
 			
@@ -363,9 +411,62 @@
                 print("✅", mon_compte); print(name); print(url_page);${codeActionsOptionnelles}`;
             }
 
-            const codeImports = `import asyncio\nfrom playwright.async_api import async_playwright\nfrom outils_playwright import (charger_fichier_d, verifier_nouveau_element, verifier_date_recontacte, mettre_a_jour, appliquer_stealth)`;
 
-            const codeFonctionPrincipale = `async def main():
+let codeFonctionVisiterPage = "";
+
+if (activerVisiterPage) {
+let callAmi = activerAmi ? `await ami(fichier2, new_page, url_page)`: "";
+codeFonctionVisiterPage = `
+async def visiter_page(context, fichier2, url_page):
+    try:
+        new_page = await context.new_page()
+        await new_page.goto(url_page, timeout=0)
+        ${callAmi}
+
+    except Exception as e:
+        print("cc..")
+
+    finally:
+        if new_page:
+            await new_page.close()
+`;
+}
+
+
+let codeFonctionAmi = "";
+
+if (activerAmi) {
+
+let lignePauseAmi = "";
+    if (activerPauseAmiCocher) {
+        lignePauseAmi = `
+        print("Patiente ${valeurPauseAmi}s"); await asyncio.sleep(${valeurPauseAmi})`;
+    }
+	
+	codeFonctionAmi = `
+async def ami(fichier2, new_page, url_page):
+    btn_ami = await new_page.query_selector('a[href*="/friends"]')
+    if btn_ami: 
+        print("ami")
+        await mettre_a_jour(fichier2, {"ami": 1}, "page", url_page)
+        ${lignePauseAmi}
+    else:
+        print("pas de btn ami")
+        await mettre_a_jour(fichier2, {"ami": 0}, "page", url_page)
+`;
+}
+
+
+const codeImports = `import asyncio
+from playwright.async_api import async_playwright
+from outils_playwright import (charger_fichier_d, verifier_nouveau_element, verifier_date_recontacte, mettre_a_jour, appliquer_stealth, charger_cookies, span_has_text)
+
+${codeFonctionAmi}
+${codeFonctionVisiterPage}`;
+
+
+const codeFonctionPrincipale = `
+async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
             headless=False,

@@ -39,7 +39,42 @@ async def nom_page(page, url):
         except Exception as e:
             print("..erreur"); print(e)
             
+
+
+
+async def clic_div_aria_label_role_button(page, textes, cliquer=False):
+    #while True:
+    print("patiente 1s"); await asyncio.sleep(1)
+    for t in textes:
+                
+        btn = page.locator(f'div[aria-label="{t}"][role="button"]').first
+        if await btn.count() > 0:    
+            if cliquer:
+                await btn.click()
+            return btn
+    return None
+    
+
+async def span_has_text(page, textes, cliquer=False):
+    try:
+        for t in textes:
             
+            btn = page.locator(f'span:has-text("{t}")')        
+            if await btn.count() > 0:  
+                
+                if cliquer: await btn.click()
+                return btn
+        return None
+    except:
+        pass
+        
+
+async def span_has_text_js1(page, textes, cliquer=False):
+    btn = await page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("Followers")); } """)
+    #if btn:
+        
+        
+        
 # VERIFIER COMMANDE CONSOLE
 async def verifier_commande(page, duree_pause):
     print("Écrivez..")
@@ -121,20 +156,6 @@ async def nettoyer_texte(txt): #ce code permet pour que, Église, eglise, puisse
     
     return txt
 
-
-async def clic_div_aria_label_role_button(page, textes, cliquer=False):
-    #while True:
-    print("patiente 1s"); await asyncio.sleep(1)
-    for t in textes:
-                
-        btn = page.locator(f'div[aria-label="{t}"][role="button"]').first
-        if await btn.count() > 0:    
-            if cliquer:
-                await btn.click()
-            return btn
-                #await btn.click()
-    return None
-        
 
 
 async def verifier_date_recontacte(mail):

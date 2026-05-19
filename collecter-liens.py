@@ -312,8 +312,7 @@ async def collecter_liens(fichier, context, page):
                         break
                     
                     await clic_div_aria_label_role_button(page, ["Fermer"], cliquer=True)
-                    #statut = await clic_div_aria_label_role_button(page, ["Fermer"], cliquer=True)
-                    #if statut:
+                    
                 except Exception as e:
                     print("..erreur"); print(e) #en general, ici l'erreur cest quand ca essai de cliquer sur: Publications récentes, et ca rate parfois, et quand ca rate il scrolle juste et prend les pages avec post recent/et non recent
         
