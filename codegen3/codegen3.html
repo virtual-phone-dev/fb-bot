@@ -2,19 +2,51 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8" />
-    <title>Codegen Studio Universel v7 - Sélection Libre</title>
+    <title>RapidCode - Ordonnanceur Linéaire</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 30px; background-color: #f4f6f9; color: #333; }
         h1 { color: #2c3e50; border-bottom: 2px solid #2980b9; padding-bottom: 10px; }
-        .section { background: white; border: 1px solid #dcdde1; padding: 20px; margin-bottom: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        h3 { margin-top: 0; color: #2980b9; }
-        label { display: block; margin: 10px 0 5px; font-weight: bold; font-size: 14px; }
-        input[type="text"], select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; background: #fff; margin-bottom: 5px; }
+        .container { display: flex; gap: 20px; }
+        .panel { flex: 1; background: white; border: 1px solid #dcdde1; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h3 { margin-top: 0; color: #2980b9; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        label { display: block; margin: 8px 0 3px; font-weight: bold; font-size: 13px; }
+        input[type="text"], input[type="number"], select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; background: #fff; margin-bottom: 5px; }
+        
         button { background-color: #27ae60; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px;}
         button:hover { background-color: #219653; }
-        .config-box { background: #f8f9fa; border-left: 4px solid #2980b9; padding: 10px; margin-top: 10px; border-radius: 4px; }
+        
+        /* GRILLE DE CONFIGURATION DES VARIABLES DYNAMIQUES */
+        .variables-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #f1f2f6; padding: 15px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #dcdde1; }
+        .variables-grid div { display: flex; flex-direction: column; }
 
-        /* NOTIFICATION TOAST À GAUCHE (SÉCURISÉE) */
+        /* ZONE OPTIONS DE FILTRAGE PAR CAS À COCHER */
+        .checkbox-container { display: flex; flex-direction: row !important; align-items: center; gap: 8px; margin-top: 6px; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #ccc; }
+        .checkbox-container input[type="checkbox"] { width: 18px; height: 18px; margin: 0; cursor: pointer; }
+        .checkbox-container label { margin: 0; cursor: pointer; font-size: 13px; color: #2c3e50; }
+
+        /* BOUTONS ET LISTE DES BRIQUES DISPONIBLES */
+        .brique-dispo { background: #f8f9fa; border: 1px solid #cfd8dc; padding: 10px; margin-bottom: 8px; border-radius: 4px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; }
+        .brique-dispo:hover { background: #eceff1; border-color: #b0bec5; }
+        .btn-add { background: #2980b9; color: white; padding: 4px 8px; font-size: 12px; border-radius: 3px; cursor: pointer; }
+        .btn-add:hover { background: #3498db; }
+        .btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        .btn-standard { background: #8e44ad; color: white; flex: 1; padding: 10px; font-weight: bold; border-radius: 4px; border: none; cursor: pointer; }
+        .btn-standard:hover { background: #9b59b6; }
+
+        /* ENTÊTE DE WORKFLOW AVEC EFFACEMENT GLOBAL */
+        .workflow-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .btn-clear-all { background-color: #c0392b; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .btn-clear-all:hover { background-color: #962d22; }
+
+        /* WORKFLOW ACTIF (ORDONNANCEMENT) */
+        .workflow-liste { min-height: 400px; background: #fafafa; border: 2px dashed #b0bec5; border-radius: 4px; padding: 10px; }
+        .item-workflow { background: #fff; border-left: 5px solid #27ae60; border-top: 1px solid #ddd; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; padding: 8px 12px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; border-radius: 0 4px 4px 0; }
+        .item-code { font-family: 'Courier New', Courier, monospace; font-size: 12px; white-space: pre-wrap; word-break: break-word; flex-grow: 1; line-height: 1.4; }
+        .item-actions { display: flex; gap: 4px; margin-left: 10px; }
+        .btn-action { padding: 2px 6px; font-size: 11px; border: 1px solid #ccc; background: #fff; border-radius: 3px; cursor: pointer; }
+        .btn-action:hover { background: #f0f0f0; }
+
+        /* NOTIFICATION TOAST À GAUCHE */
         .toast-notification {
             position: fixed;
             top: 20px;
@@ -40,157 +72,453 @@
     <!-- Élément de notification Toast à gauche -->
     <div id="toast" class="toast-notification"></div>
 
-    <h1>Codegen Studio Universel v7</h1>
+    <h1>RapidCode</h1>
 
-    <label style="font-size: 16px;">Nom du script Python à générer :</label>
-    <input type="text" id="fichier_destination" value="mon_script_produit.py" style="font-size: 16px; margin-bottom: 20px;" />
+    <!-- ZONE DE CONFIGURATION DES INPUTS DE REMPLACEMENT -->
+    <div class="panel" style="margin-bottom: 20px;">
+        <h3>Configuration des Variables d'Automatisation</h3>
+        <div class="variables-grid">
+            <div>
+                <label>Clé DB 1 :</label>
+                <input type="text" id="v_cle_db1" value="page" />
+            </div>
+            <div>
+                <label>Clé DB 2 :</label>
+                <input type="text" id="v_cle_db2" value="fichier" />
+            </div>
+            <div>
+                <label>Fichier 1 (Collecte) :</label>
+                <input type="text" id="v_fichier1" value="pages_collecter.json" />
+            </div>
+            <div>
+                <label>Fichier 2 (Sauvegarde Collecte) :</label>
+                <input type="text" id="v_fichier2" value="pages_collecter2.json" />
+            </div>
+            <div>
+                <label>Fichier 3 (Comptes Source) :</label>
+                <input type="text" id="v_fichier3" value="mes_comptes_fb.json" />
+            </div>
+            <div>
+                <label>Fichier 4 (Sauvegarde Comptes) :</label>
+                <input type="text" id="v_fichier4" value="mes_comptes_fb2.json" />
+            </div>
+            <div style="grid-column: span 2;">
+                <label>Fichier de la Dernière Page :</label>
+                <input type="text" id="v_fichier_derniere_page" value="fichier_page_debut.json" />
+            </div>
+            
+            <!-- OPTIONS DE FILTRAGE CONDITIONNEL À COCHER -->
+            <div class="checkbox-container">
+                <input type="checkbox" id="v_filtre_date_pages" />
+                <label for="v_filtre_date_pages">Filtrer les pages par date de recontacte</label>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="v_filtre_date_comptes" onchange="majDependanceCheckbox()" />
+                <label for="v_filtre_date_comptes">Filtrer les comptes par date de recontacte</label>
+            </div>
+            <div style="grid-column: span 2; margin-left: 20px; display: none;" id="bloc_sous_filtre_strict">
+                <div class="checkbox-container" style="width: 100%;">
+                    <input type="checkbox" id="v_activer_filtre_actif" />
+                    <label for="v_activer_filtre_actif">Ajouter la vérification stricte du compte actif (<code>and c.get(cle_db1) == 1</code>)</label>
+                </div>
+            </div>
 
-    <!-- PARTIE 1 : SELECTION DES FICHIERS -->
-    <div class="section">
-        <h3>Partie 1 : Initialisation & Filtrages Complexes</h3>
-        <label>Sélectionner le Cas des Fichiers / Comptes :</label>
-        <select id="partie1_cas" onchange="majChampsFichiers()">
-            <option value="collecter_liens_fb">1. collecter-liens.py (Filtre Message FB & Ignorer "-")</option>
-            <option value="envoyer_email">2. envoyer-email.py (Vérification nouveaux, Relances & Index Reprise)</option>
-            <option value="like_bs">3. like-bs.py (Filtrage Comptes, Cycle Pages & Dernière Page)</option>
-            <option value="envoyer_message_fb">4. envoyer-message.py (Vérification Globale, Sécurité & Index Reprise FB)</option>
-            <option value="like_fb">5. like-fb.py (Comptes, Pages Actives, Ignorer "-" & Reprise Avancée)</option>
-            <option value="deja_liker_fb">6. deja-liker-fb.py (Double Listes, Filtrage Avant & Reprise)</option>
-            <option value="visiter_page_fb">7. visiter-page-fb.py (Chargement simple Comptes FB)</option>
-        </select>
-        
-        <div id="bloc_fichiers_dynamique" class="config-box"></div>
+            <!-- OPTION REPRISE DEBUT OPTIONNELLE -->
+            <div class="checkbox-container">
+                <input type="checkbox" id="v_inclure_debut_false" />
+                <label for="v_inclure_debut_false">Déclarer la variable de reprise (<code>debut = False</code>)</label>
+            </div>
+
+            <!-- OPTION COEUR DE BOUCLE PAR INDEX -->
+            <div class="checkbox-container">
+                <input type="checkbox" id="v_inclure_logique_page" />
+                <label for="v_inclure_logique_page">Inclure la logique interne de traitement de page (Index)</label>
+            </div>
+
+            <!-- BOUCLE IMBRIQUÉE DES PAGES -->
+            <div style="grid-column: span 2;" class="checkbox-container">
+                <input type="checkbox" id="v_inclure_boucle_pages_fb" onchange="majDependancePause()" />
+                <label for="v_inclure_boucle_pages_fb">Inclure la boucle complète des pages (<code>for une_page in pages_fb:</code>) juste sous tour += 1</label>
+            </div>
+
+            <!-- NOUVELLE OPTION : PAUSE PAUSE / TEMPORISATION (DÉCOCHÉE PAR DÉFAUT) -->
+            <div style="grid-column: span 2; display: none;" id="bloc_config_pause">
+                <div style="display: grid; grid-template-columns: auto 1fr; gap: 15px; align-items: center; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                    <div class="checkbox-container" style="border: none; padding: 0; margin: 0;">
+                        <input type="checkbox" id="v_activer_pause" />
+                        <label for="v_activer_pause"><strong>Ajouter un temps de pause (Patiente)</strong></label>
+                    </div>
+                    <div style="display: flex; flex-direction: row; align-items: center; gap: 5px;">
+                        <label style="margin: 0; white-space: nowrap;">Durée par défaut :</label>
+                        <input type="number" id="v_duree_pause" value="10" min="1" style="width: 80px; margin: 0; padding: 4px;" />
+                        <span style="font-size: 13px; font-weight: bold; color: #555;">secondes</span>
+                    </div>
+					
+					<div class="checkbox-container" style="border: none; padding: 0; margin-top: 10px;">
+						<input type="checkbox" id="v_activer_mise_a_jour" />
+						<label for="v_activer_mise_a_jour"><strong>mettre_a_jour</strong></label>
+					</div>
+					
+					<div class="checkbox-container" style="border: none; padding: 0; margin-top: 10px;">
+						<input type="checkbox" id="v_activer_preparation_compte" />
+						<label for="v_activer_preparation_compte">
+							<strong>Context + Newpage</strong>
+						</label>
+					</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label style="font-size: 14px;">Nom du script Python de destination (Dossier parent autorisé avec ../) :</label>
+            <input type="text" id="fichier_destination" value="../cool.py" style="max-width: 400px;" />
+        </div>
     </div>
 
-    <!-- PARTIE 2 : SELECTION DES BOUCLES (COMPLÈTEMENT LIBRE ICI) -->
-    <div class="section">
-        <h3>Partie 2 : Structure des Boucles de Rotation</h3>
-        <label>Sélectionner le Cas de ta Boucle Principale :</label>
-        <select id="partie2_cas">
-            <option value="collecter_liens_fb">Cas 1 : while count &lt; 2 → for compte in comptes</option>
-            <option value="envoyer_email">Cas 2 : for compte_email in compte_emails (tour += 1)</option>
-            <option value="like_bs">Cas 3 : debut = False → while count &lt; 3 → for compte in comptes</option>
-            <option value="envoyer_message_fb">Cas 4 : for compte_fb in comptes_fb (tour += 1)</option>
-            <option value="like_fb">Cas 5 : while count &lt; 2 → count += 1 → for compte → page = next()</option>
-            <option value="deja_liker_fb">Cas 6 : while True → for compte in comptes</option>
-            <option value="visiter_page_fb">Cas 7 : for index, compte in enumerate(comptes)</option>
-        </select>
-    </div>
+    <div class="container">
+        <!-- PANNEL GAUCHE : BIBLIOTHÈQUE DE LIGNES DE CODE -->
+        <div class="panel">
+            <h3>1. Lignes de Code Disponibles</h3>
+            
+            <div class="btn-group">
+                <button class="btn-standard" onclick="ajouterGrosBlocLie()">⚡ Injecter Nouveau Bloc Standard Lié</button>
+            </div>
+            
+            <div id="bibliotheque_briques" style="max-height: 500px; overflow-y: auto; padding-right: 5px;">
+                <!-- Les briques individuelles d'origine restent disponibles -->
+            </div>
+        </div>
 
-    <!-- NAVIGATEUR ET STEALTH -->
-    <div class="section">
-        <h3>Paramètres du Navigateur</h3>
-        <label>Sécurisation Playwright :</label>
-        <select id="stealth_cas">
-            <option value="stealth_cookies">Mode Furtif + Injection Contextuelle Automatique</option>
-            <option value="connexion_initiale">Mode Première Connexion (Sauvegarde Cookies)</option>
-        </select>
+        <!-- PANNEL DROIT : WORKFLOW CONSTRUIT -->
+        <div class="panel">
+            <div class="workflow-header">
+                <h3 style="margin: 0; border: none; padding: 0;">2. Votre Workflow (Ordonnancement Linéaire)</h3>
+                <button class="btn-clear-all" onclick="toutSupprimerWorkflow()">🗑️ Tout supprimer</button>
+            </div>
+            
+            <div id="workflow_actif" class="workflow-liste">
+                <!-- Les lignes sélectionnées apparaîtront ici -->
+            </div>
+            
+            <div style="text-align: right;">
+                <button onclick="envoyerConfiguration()">GÉNÉRER LE ROBOT SANS ERREUR</button>
+            </div>
+        </div>
     </div>
-
-    <button onclick="envoyerConfiguration()">GÉNÉRER LE ROBOT SANS EFFORT</button>
 
     <script>
-        function afficherNotification(message, estErreur = false) {
+        function majDependanceCheckbox() {
+            const filtreComptesCoche = document.getElementById('v_filtre_date_comptes').checked;
+            document.getElementById('bloc_sous_filtre_strict').style.display = filtreComptesCoche ? 'block' : 'none';
+            if(!filtreComptesCoche) {
+                document.getElementById('v_activer_filtre_actif').checked = false;
+            }
+        }
+
+        // Gérer l'affichage de l'option pause uniquement si la boucle complète est activée
+        function majDependancePause() {
+            const boucleCochee = document.getElementById('v_inclure_boucle_pages_fb').checked;
+            document.getElementById('bloc_config_pause').style.display = boucleCochee ? 'block' : 'none';
+            if(!boucleCochee) {
+                document.getElementById('v_activer_pause').checked = false;
+            }
+        }
+
+        const briquesDisponibles = [
+            { id: "main_def", label: "async def main():", code: "async def main():" },
+            { id: "p_init", label: "async with async_playwright() as p:", code: "    async with async_playwright() as p:" },
+            { id: "browser_launch", label: "browser = await p.chromium.launch(...)", code: "        browser = await p.chromium.launch(\n            headless=False,\n            args=[\n                \"--disable-blink-features=AutomationControlled\",\n                \"--no-sandbox\",\n                \"--disable-infobars\",\n                \"--disable-web-security\",\n            ],\n        )" },
+            { id: "msg_f1_f2", label: "Déclaration fichier1 & fichier2", code: "        fichier1 = \"pages_collecter.json\"\n        fichier2 = \"pages_collecter2.json\"" },
+            { id: "msg_pages_fb", label: "pages_fb = verifier_nouveau_element(...)", code: "        pages_fb = await verifier_nouveau_element(fichier1, fichier2, \"page\")" },
+            { id: "msg_filter_pages", label: "Filtrage pages_fb par date recontacte", code: "        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]" },
+            { id: "msg_f3_f4", label: "Déclaration fichier3 & fichier4", code: "        fichier3 = \"mes_comptes_fb.json\"\n        fichier4 = \"mes_comptes_fb2.json\"" },
+            { id: "msg_comptes_fb", label: "comptes_fb = verifier_nouveau_element(...)", code: "        comptes_fb = await verifier_nouveau_element(fichier3, fichier4, \"message\")" },
+            { id: "msg_filter_comptes", label: "Filtrage comptes_fb actifs & recontacte", code: "        comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c) and c.get(\"page\") == 1]" },
+            { id: "msg_f_derniere_page", label: "Déclaration fichier_derniere_page", code: "        fichier_derniere_page = \"fichier_page_debut.json\"" },
+            { id: "msg_load_derniere", label: "derniere_page = charger_fichier_d(...)", code: "        derniere_page = (await charger_fichier_d(fichier_derniere_page)).get(\"page\")" },
+            { id: "msg_index_next", label: "index = next((i for i, page...))", code: "        index = next((i for i, page in enumerate(pages_fb) if page[\"page\"] == derniere_page), 0)" },
+            { id: "msg_init_vars", label: "Init page_suivant, pages_deja_contacter, tour", code: "        page_suivant = None\n        pages_deja_contacter = set()\n        tour = 0" },
+            { id: "msg_check_comptes_empty", label: "if len(comptes_fb) == 0:", code: "        if len(comptes_fb) == 0:\n            print(\"Tout les comptes ont été utilisés\")" },
+            { id: "msg_for_compte", label: "for compte_fb in comptes_fb:", code: "        for compte_fb in comptes_fb:" },
+            { id: "msg_tour_print", label: "tour += 1; print(index)", code: "            tour += 1\n            print(\"index \", index)" },
+            { id: "msg_check_index_bounds", label: "if index+1 > len(pages_fb): break", code: "            if index+1 > len(pages_fb):\n                print(\"aucune page a contacter, car tous ont deja été contacter\", index); break" },
+            { id: "msg_extract_vars", label: "Extraction variables boucle compte", code: "            page = pages_fb[index]\n            url_page = page[\"page\"]\n            fichier_cookie = compte_fb.get(\"fichier\")\n            mon_compte = compte_fb.get(\"fichier\")" },
+            { id: "msg_check_deja_contacter", label: "if url_page in pages_deja_contacter: continue", code: "            if url_page in pages_deja_contacter: continue" },
+            { id: "msg_print_contact", label: "print('Contacté :', url_page)", code: "            print(\"Contacté :\", url_page)" }
+        ];
+
+        let workflowActif = [];
+
+        function genererBibliotheque() {
+            const container = document.getElementById('bibliotheque_briques');
+            container.innerHTML = '';
+            briquesDisponibles.forEach(brique => {
+                const div = document.createElement('div');
+                div.className = 'brique-dispo';
+                div.innerHTML = `
+                    <span>${brique.label}</span>
+                    <span class="btn-add" onclick="ajouterLigne('${brique.id}')">+ Ajouter</span>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function ajouterLigne(id) {
+            const brique = briquesDisponibles.find(b => b.id === id);
+            if (brique) {
+                workflowActif.push({ ...brique, uid: Date.now() + Math.random() });
+                afficherWorkflow();
+            }
+        }
+
+        function ajouterGrosBlocLie() {
+            const db1 = document.getElementById('v_cle_db1').value;
+            const db2 = document.getElementById('v_cle_db2').value;
+            const f1 = document.getElementById('v_fichier1').value;
+            const f2 = document.getElementById('v_fichier2').value;
+            const f3 = document.getElementById('v_fichier3').value;
+            const f4 = document.getElementById('v_fichier4').value;
+            const f_derniere = document.getElementById('v_fichier_derniere_page').value;
+            
+            const filtreDatePagesCoche = document.getElementById('v_filtre_date_pages').checked;
+            const filtreDateComptesCoche = document.getElementById('v_filtre_date_comptes').checked;
+            const filtreStrictCoche = document.getElementById('v_activer_filtre_actif').checked;
+            const inclureDebutFalse = document.getElementById('v_inclure_debut_false').checked;
+            const inclureLogiquePage = document.getElementById('v_inclure_logique_page').checked;
+            const inclureBouclePagesFb = document.getElementById('v_inclure_boucle_pages_fb').checked;
+            const activerPauseCoche = document.getElementById('v_activer_pause').checked;
+			const activerMiseAJour = document.getElementById('v_activer_mise_a_jour').checked;
+			const activerPreparationCompte = document.getElementById('v_activer_preparation_compte').checked;
+            const valeurPause = document.getElementById('v_duree_pause').value;
+
+            let ligneFiltrePages = filtreDatePagesCoche ? `\n        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]` : "";
+
+            let ligneFiltreComptes = "";
+            if (filtreDateComptesCoche) {
+                let conditionStrict = filtreStrictCoche ? ` and c.get(cle_db1) == 1` : ``;
+                ligneFiltreComptes = `\n        comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c)${conditionStrict}]`;
+            }
+
+            let ligneDebutFalse = inclureDebutFalse ? `\n        debut = False` : "";
+
+            let codeInterneBoucleIndex = "";
+            if (inclureLogiquePage) {
+                codeInterneBoucleIndex = `\n            if index+1 > len(pages_fb):
+                print("aucune page a contacter, car tous ont deja été contacter", index); break
+            
+            page = pages_fb[index]
+            url_page = page[cle_db1]
+            fichier_cookie = compte_fb.get(cle_db2)
+            mon_compte = compte_fb.get(cle_db2)
+            
+            if url_page in pages_deja_contacter: continue
+            
+            print("Contacté :", url_page)`;
+            }
+
+            // Injection dynamique du temps de pause optionnel
+			
+            /*let codePauseOptionnel = "";
+            if (activerPauseCoche) {
+                codePauseOptionnel = `\n                print("Patiente ${valeurPause}s"); await asyncio.sleep(${valeurPause})`;
+            }*/
+			
+			let codeActionsOptionnelles = "";
+
+			if (activerMiseAJour) {
+				codeActionsOptionnelles += `\n                await mettre_a_jour(fichier2, {"ami": 1}, cle_db1, url_page)`;
+			}
+
+			if (activerPauseCoche) {
+				codeActionsOptionnelles += `\n                print("Patiente ${valeurPause}s"); await asyncio.sleep(${valeurPause})`;
+			}
+
+            let codeBouclePagesComplete = "";
+			
+			let codePreparationCompte = "";
+			
+			if (activerPreparationCompte) {
+			codePreparationCompte = `
+            # Charger les cookies AVANT d'ouvrir la page
+            fichier_cookie = compte_fb.get(cle_db2)
+            
+            context = await browser.new_context()
+            cookies = charger_cookies(fichier_cookie)
+            await context.add_cookies(cookies)
+                
+            page = await context.new_page()
+            await appliquer_stealth(page)
+            await page.goto("https://fb.com", timeout=0)\n`; }
+			
+            if (inclureBouclePagesFb) {
+                codeBouclePagesComplete = `\n            for une_page in pages_fb:
+                url_page = une_page.get('page')
+                name = une_page.get('nom')
+                fichier_cookie = compte_fb.get(cle_db2)
+                mon_compte = compte_fb.get(cle_db2)
+                
+                if derniere_page:
+                    if derniere_page == name: debut = True
+                    if not debut: continue
+                
+                print("✅", mon_compte); print(name); print(url_page);${codeActionsOptionnelles}`;
+            }
+
+            const codeImports = `import asyncio\nfrom playwright.async_api import async_playwright\nfrom outils_playwright import (charger_fichier_d, verifier_nouveau_element, verifier_date_recontacte, mettre_a_jour, appliquer_stealth)`;
+
+            const codeFonctionPrincipale = `async def main():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(        
+            headless=False,
+            args=[
+                "--disable-blink-features=AutomationControlled",
+                "--no-sandbox",
+                "--disable-infobars",
+                "--disable-web-security",
+            ],
+        )
+        
+        cle_db1 = "${db1}"
+        cle_db2 = "${db2}"
+        
+        fichier1 = "${f1}"
+        fichier2 = "${f2}"
+        pages_fb = await verifier_nouveau_element(fichier1, fichier2, cle_db1)${ligneFiltrePages}
+        
+        fichier3 = "${f3}"
+        fichier4 = "${f4}"
+        comptes_fb = await verifier_nouveau_element(fichier3, fichier4, cle_db2)${ligneFiltreComptes}
+        
+        fichier_derniere_page = "${f_derniere}"
+        derniere_page = (await charger_fichier_d(fichier_derniere_page)).get(cle_db1)${ligneDebutFalse}
+        
+        index = next((i for i, page in enumerate(pages_fb) if page[cle_db1] == derniere_page), 0)
+        page_suivant = None
+        pages_deja_contacter = set()
+        tour = 0
+        
+        if len(comptes_fb) == 0: 
+            print("Tout les comptes ont été utilisés") 
+        
+        for compte_fb in comptes_fb:             
+            tour += 1
+            print("index ", index)${codePreparationCompte}${codeBouclePagesComplete}${codeInterneBoucleIndex}`;
+
+            workflowActif.push({
+                id: "standard_imports",
+                label: "📦 [Import] asyncio, playwright & outils_playwright",
+                code: codeImports,
+                uid: Date.now() + Math.random()
+            });
+
+            workflowActif.push({
+                id: "bloc_standard_variable_lie",
+                label: "⚡ [Standard] Fonction main() dynamique",
+                code: codeFonctionPrincipale,
+                uid: Date.now() + Math.random()
+            });
+
+            afficherWorkflow();
+        }
+
+        function toutSupprimerWorkflow() {
+            workflowActif = [];
+            afficherWorkflow();
+        }
+
+        function afficherWorkflow() {
+            const container = document.getElementById('workflow_actif');
+            container.innerHTML = '';
+
+            if (workflowActif.length === 0) {
+                container.innerHTML = '<div style="color: #999; padding: 20px; text-align: center;">Le workflow est vide. Configurez vos variables puis injectez votre bloc lié.</div>';
+                return;
+            }
+
+            workflowActif.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'item-workflow';
+                const codeEchappe = item.code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+                div.innerHTML = `
+                    <div class="item-code">${codeEchappe}</div>
+                    <div class="item-actions">
+                        <button class="btn-action" onclick="monterLigne(${index})">▲</button>
+                        <button class="btn-action" onclick="descendreLigne(${index})">▼</button>
+                        <button class="btn-action" style="color: red;" onclick="supprimerLigne(${index})">❌</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function monterLigne(index) {
+            if (index > 0) {
+                const temp = workflowActif[index];
+                workflowActif[index] = workflowActif[index - 1];
+                workflowActif[index - 1] = temp;
+                afficherWorkflow();
+            }
+        }
+
+        function descendreLigne(index) {
+            if (index < workflowActif.length - 1) {
+                const temp = workflowActif[index];
+                workflowActif[index] = workflowActif[index + 1];
+                workflowActif[index + 1] = temp;
+                afficherWorkflow();
+            }
+        }
+
+        function supprimerLigne(index) {
+            workflowActif.splice(index, 1);
+            afficherWorkflow();
+        }
+
+        function afficherToast(message, isError = false) {
             const toast = document.getElementById("toast");
             toast.innerText = message;
-            if (estErreur) toast.classList.add("error"); else toast.classList.remove("error");
+            if (isError) {
+                toast.classList.add("error");
+            } else {
+                toast.classList.remove("error");
+            }
             toast.classList.add("visible");
-            setTimeout(() => { toast.classList.remove("visible"); }, 2000);
+            
+            setTimeout(() => {
+                toast.classList.remove("visible");
+            }, 2000);
         }
 
-        function majChampsFichiers() {
-            const cas = document.getElementById("partie1_cas").value;
-            const conteneur = document.getElementById("bloc_fichiers_dynamique");
-            
-            if (cas === "collecter_liens_fb") {
-                conteneur.innerHTML = `<label>Fichier des comptes :</label><input type="text" id="f_comptes" value="mes_comptes_fb2.json" />`;
-            } 
-            else if (cas === "envoyer_email") {
-                conteneur.innerHTML = `
-                    <label>Fichier Cibles Collectées (Fichier 1) :</label><input type="text" id="f1" value="emails_collecter.json" />
-                    <label>Fichier Historique Cibles (Fichier 2) :</label><input type="text" id="f2" value="emails_collecter2.json" />
-                    <label>Fichier Mes Comptes Emails (Fichier 3) :</label><input type="text" id="f3" value="mes_emails.json" />
-                    <label>Fichier Historique Comptes (Fichier 4) :</label><input type="text" id="f4" value="mes_emails2.json" />
-                    <label>Fichier Email Début (Index Reprise) :</label><input type="text" id="f_debut" value="email_debut.json" />`;
-            } 
-            else if (cas === "like_bs") {
-                conteneur.innerHTML = `
-                    <label>Fichier Comptes BS :</label><input type="text" id="f_comptes" value="comptes-bs.json" />
-                    <label>Fichier Pages BS :</label><input type="text" id="f_pages" value="page_active_bs.json" />
-                    <label>Fichier Dernière Page BS :</label><input type="text" id="f_derniere" value="derniere_page_bs.json" />`;
-            } 
-            else if (cas === "envoyer_message_fb") {
-                conteneur.innerHTML = `
-                    <label>Fichier Cibles Messages (Fichier 1) :</label><input type="text" id="f1" value="page_messages_collecter.json" />
-                    <label>Fichier Historique Messages (Fichier 2) :</label><input type="text" id="f2" value="page_messages_collecter2.json" />
-                    <label>Fichier Mes Comptes FB (Fichier 3) :</label><input type="text" id="f3" value="mes_comptes_fb.json" />
-                    <label>Fichier Historique Comptes FB (Fichier 4) :</label><input type="text" id="f4" value="mes_comptes_fb2.json" />
-                    <label>Fichier Page Message Début (Index Reprise) :</label><input type="text" id="f_debut" value="fichier_page_message_debut.json" />`;
-            } 
-            else if (cas === "like_fb") {
-                conteneur.innerHTML = `
-                    <label>Fichier Liste des Pages Actives :</label><input type="text" id="f_pages" value="page_active.json" />
-                    <label>Fichier Mes Comptes FB :</label><input type="text" id="f_comptes" value="mes_comptes_fb.json" />
-                    <label>Fichier Dernière Page (Reprise) :</label><input type="text" id="f_derniere" value="derniere_page_fb.json" />`;
-            } 
-            else if (cas === "deja_liker_fb") {
-                conteneur.innerHTML = `
-                    <label>Fichier Liste des Pages :</label><input type="text" id="f_pages" value="pages-tout-pays.json" />
-                    <label>Fichier Comptes FB :</label><input type="text" id="f_comptes" value="comptes-fb.json" />
-                    <label>Fichier Dernière Page :</label><input type="text" id="f_derniere" value="derniere_page_pdj.json" />`;
-            } 
-            else if (cas === "visiter_page_fb") {
-                conteneur.innerHTML = `<label>Fichier Comptes FB :</label><input type="text" id="f_comptes" value="comptes-fb.json" />`;
-            }
-        }
-
-        async function envoyerConfiguration() {
-            const fichier_destination = document.getElementById("fichier_destination").value;
-            const casPartie1 = document.getElementById("partie1_cas").value;
-            const casPartie2 = document.getElementById("partie2_cas").value;
-            const casStealth = document.getElementById("stealth_cas").value;
-
-            let paramsPartie1 = { cas: casPartie1 };
-            
-            if (["collecter_liens_fb", "visiter_page_fb"].includes(casPartie1)) {
-                paramsPartie1.f_comptes = document.getElementById("f_comptes").value;
-            } else if (["envoyer_email", "envoyer_message_fb"].includes(casPartie1)) {
-                paramsPartie1.f1 = document.getElementById("f1").value;
-                paramsPartie1.f2 = document.getElementById("f2").value;
-                paramsPartie1.f3 = document.getElementById("f3").value;
-                paramsPartie1.f4 = document.getElementById("f4").value;
-                paramsPartie1.f_debut = document.getElementById("f_debut").value;
-            } else if (["like_bs", "like_fb", "deja_liker_fb"].includes(casPartie1)) {
-                paramsPartie1.f_comptes = document.getElementById("f_comptes").value;
-                paramsPartie1.f_pages = document.getElementById("f_pages").value;
-                paramsPartie1.f_derniere = document.getElementById("f_derniere").value;
+        function envoyerConfiguration() {
+            const nomFichier = document.getElementById('fichier_destination').value;
+            if (workflowActif.length === 0) {
+                afficherToast("Erreur : Le workflow est vide !", true);
+                return;
             }
 
-            let etapes = [
-                { type: "no_code_init_fichiers", params: paramsPartie1 },
-                { type: "no_code_init_boucles", params: { cas: casPartie2 } },
-                { type: "no_code_init_navigateur", params: { cas: casStealth } }
-            ];
+            const etapesCode = workflowActif.map(item => item.code);
 
-            try {
-                const reponse = await fetch('http://localhost:3000/generer-workflow-universel', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ fichier_destination, etapes })
-                });
-                
-                if (reponse.ok) {
-                    afficherNotification("✓ Fichier créé avec succès !");
+            fetch('/generer-workflow-universel', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fichier: nomFichier, etapes: etapesCode })
+            })
+            .then(res => {
+                if(res.ok) {
+                    afficherToast("Fichier Python généré avec succès !");
                 } else {
-                    afficherNotification("✕ Erreur serveur lors de la génération", true);
+                    afficherToast("Erreur lors de la génération du fichier.", true);
                 }
-            } catch (err) {
-                afficherNotification("✕ Erreur de connexion réseau", true);
-            }
+            })
+            .catch(err => {
+                afficherToast("Erreur réseau de communication.", true);
+            });
         }
 
-        // Initialisation propre au chargement
-        majChampsFichiers();
+        window.onload = function() {
+            genererBibliotheque();
+            afficherWorkflow();
+        };
     </script>
 </body>
 </html>

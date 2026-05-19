@@ -188,19 +188,16 @@ async def tour_suivant(fichier_email_debut, emails, mes_comptes, email_suivant, 
                 
 
 
-
 async def marquer_contact(fichier, cle_db, cle, jours_recontact=1):
     data = await charger_fichier(fichier) or []
 
     aujourd_hui = datetime.now()
     relance = aujourd_hui + timedelta(days=jours_recontact)
     
-    data_update = {
-        "contacter": aujourd_hui.strftime(format_date),
-        "recontacter": relance.strftime(format_date)
-    }
+    data_update = { "contacter": aujourd_hui.strftime(format_date), "recontacter": relance.strftime(format_date) }
     
     await mettre_a_jour(fichier, data_update, cle_db, cle)
+    
 
 
 
