@@ -4,8 +4,9 @@ from datetime import datetime
 mot_de_passe_gmail = "diel2019"
 email_recuperation = "kilendodingha@gmail.com"
 
-mots_inutiles = ["hopital", "ecole", "association", "organisation", "fédération", "gendarmerie", "eglise", "pasteur", "mosquée", "armed", "police", 
-"révérend", "prophete", "imam", "club", "commission", "nationale", "commissariat", "ministère", "université", "primature"]
+mots_inutiles = ["hopital", "ecole", "association", "organisation", "fédération", "festival", "gendarmerie", "eglise", "pasteur", 
+"mosquée", "armed", "armées", "forces", "police", 
+"révérend", "prophete", "imam", "club", "commission", "nationale", "commissariat", "commune", "collectif", "ministère", "université", "primature"]
 
 
 

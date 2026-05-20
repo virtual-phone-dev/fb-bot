@@ -78,6 +78,20 @@
     <div class="panel" style="margin-bottom: 20px;">
         <h3>Configuration des Variables d'Automatisation</h3>
         <div class="variables-grid">
+		
+			<div class="panel">
+			  <h3>Créer une nouvelle fonction</h3>
+
+			  <label>Nom de la fonction :</label>
+			  <input type="text" id="new_func_name" placeholder="ex: nettoyer_page" />
+
+			  <label>Paramètres (séparés par virgule) :</label>
+			  <input type="text" id="new_func_params" placeholder="ex: page, fichier" />
+
+			  <button onclick="creerFonctionDepuisUI()">➕ Ajouter fonction</button>
+			</div>
+
+
             <div>
                 <label>Clé DB 1 :</label>
                 <input type="text" id="v_cle_db1" value="page" />
@@ -234,6 +248,30 @@
     </div>
 
     <script>
+		
+		function creerFonctionDepuisUI() {
+			const name = document.getElementById("new_func_name").value.trim();
+			const params = document.getElementById("new_func_params").value.trim();
+
+			if (!name) return alert("Nom obligatoire");
+
+			const code = `
+			async def ${name}(${params}):
+				pass
+			`;
+
+			const nouvelleBrique = {
+				id: "user_" + Date.now(),
+				label: `async def ${name}(${params})`,
+				code: code
+			};
+
+			briquesDisponibles.push(nouvelleBrique);
+			genererBibliotheque();
+			ajouterLigne(nouvelleBrique.id);
+		}
+		
+
 		function cocherAutomatiquement1CompteToutesPages() {
 			const actif = document.getElementById('v_mode_automation').checked;
 			document.getElementById('v_inclure_debut_false').checked = actif; // debut = False
@@ -292,6 +330,7 @@
         ];
 
         let workflowActif = [];
+		let editIndex = null;
 
         function genererBibliotheque() {
             const container = document.getElementById('bibliotheque_briques');
@@ -459,7 +498,7 @@ async def ami(fichier2, new_page, url_page):
 
 const codeImports = `import asyncio
 from playwright.async_api import async_playwright
-from outils_playwright import (charger_fichier_d, verifier_nouveau_element, verifier_date_recontacte, mettre_a_jour, appliquer_stealth, charger_cookies, span_has_text)
+from outils_playwright import (charger_fichier_d, verifier_nouveau_element, verifier_date_recontacte, mettre_a_jour, appliquer_stealth, charger_cookies, ajouter_dans_fichier)
 
 ${codeFonctionAmi}
 ${codeFonctionVisiterPage}`;
@@ -546,6 +585,8 @@ async def main():
                         <button class="btn-action" onclick="monterLigne(${index})">▲</button>
                         <button class="btn-action" onclick="descendreLigne(${index})">▼</button>
                         <button class="btn-action" style="color: red;" onclick="supprimerLigne(${index})">❌</button>
+						
+						<button class="btn-action" onclick="editerLigne(${index})">✏️</button>
                     </div>
                 `;
                 container.appendChild(div);
@@ -615,6 +656,34 @@ async def main():
                 afficherToast("Erreur réseau de communication.", true);
             });
         }
+		
+		function editerLigne(index) {
+			const item = workflowActif[index];
+
+			let ancienNom = item.label.match(/async def (\w+)/)?.[1] || "";
+			let anciensParams = item.label.match(/\((.*)\)/)?.[1] || "";
+
+			const nouveauNom = prompt("Nom de la fonction :", ancienNom);
+			if (nouveauNom === null) return;
+
+			const nouveauxParams = prompt("Paramètres :", anciensParams);
+			if (nouveauxParams === null) return;
+
+			const nomFinal = nouveauNom.trim() || ancienNom;
+			const paramsFinal = nouveauxParams.trim() || anciensParams;
+
+			const code = `
+		async def ${nomFinal}(${paramsFinal}):
+			pass
+		`;
+
+			//workflowActif[index].id = "user_" + nomFinal;
+			workflowActif[index].id = nomFinal;
+			workflowActif[index].label = `async def ${nomFinal}(${paramsFinal})`;
+			workflowActif[index].code = code;
+
+			afficherWorkflow();
+		}
 
         window.onload = function() {
             genererBibliotheque();

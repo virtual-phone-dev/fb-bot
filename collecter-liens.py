@@ -147,6 +147,7 @@ async def nom_page(page, url):
     name = await page.locator("h1").first.text_content() # recuperer nom_page
     name = name.strip() if name else None
     await ajouter_dans_fichier("pages_collecter.json", {"page": url, "nom": name}, "page", url) # sauvegarder la page trouvé
+    await ajouter_dans_fichier("pages_collecter2.json", {"page": url, "nom": name}, "page", url) 
     print("nom_page : ", name); return name
             
             
@@ -164,7 +165,7 @@ async def email(page, nom_page, url):
                 print("email :", email)
                 await ajouter_dans_fichier("emails_collecter.json", {"email": email, "nom": nom_page}, "email", email)
     
-    await mettre_a_jour("pages_collecter.json", {"verfierEmail": 1}, "page", url)
+    await mettre_a_jour("pages_collecter2.json", {"verfierEmail": 1}, "page", url)
     
     
 async def message(page, nom, url):
@@ -227,19 +228,18 @@ async def recuperer_lien(context, page):
                 print("Ouverture :", url)
                 
                 try:
-                    #print(" hh")
                     new_page = await context.new_page()
                     await new_page.goto(url)
-                    #print(" ii")
-                                        
-                    btn_ami = await new_page.query_selector('a[href*="/friends"]')
-                    if btn_ami: 
+
+                    btn_follower = await page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("Followers")); } """)
+                    if not btn_follower: 
                         print("ami");
                         await nom_page(new_page, url) #sauvegarder le lien du compte ami
-                        await mettre_a_jour("pages_collecter.json", {"ami": 1}, "page", url) #mettre_a_jour le lien du compte ami
+                        await mettre_a_jour("pages_collecter2.json", {"ami": 1}, "page", url) #mettre_a_jour le lien du compte ami
                     else:
                         #print("patiente 2s"); await asyncio.sleep(2)
                         nom = await nom_page(new_page, url);
+                        await mettre_a_jour("pages_collecter2.json", {"ami": 0}, "page", url)
                         await post_recent(new_page)
                         await compter_commentaire(new_page, nom, url)
                         print("patiente 1s"); await asyncio.sleep(1)
