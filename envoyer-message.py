@@ -11,7 +11,7 @@ format_date = "%d-%m-%Y"
 
 texte = """Partenariat Gagnant-Gagnant
 
-Viens publier tes vidéos sur Florinato, et si tu obtiens 1000 clics sur ta vidéo tu seras payer 100 dollars.
+Viens publier tes vidéos sur Florinato, et si tu obtiens 1000 clics sur ta vidéo tu seras payer 2000 dollars.
 Si ça t'intéresse, viens sur Florinato, et envoie un message à CAISIP.
 https://florinato105.onrender.com """
 
