@@ -8,10 +8,11 @@ PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
 #format_date = "%Y-%m-%d"
 
-texte = """Salut,
-Viens publier tes vidéos sur Florinato, et si tu obtiens 1000 clics sur ta vidéo tu seras payer 1000 dollars.
-Si ça t'intéresse, viens publier tes vidéos sur Florinato.
-https://florinato105.onrender.com """
+texte = """Salut, sur notre site internet on publie l'histoire de la vie des gens,
+et on aimerait avec votre permission publier l'histoire de votre vie.
+2 ou 3 lignes suffisent (et même plusieurs lignes), écrivez nous ça ici et nous allons le publier sur notre site internet.
+Si vous avez eu à aider des gens, vous pouvez aussi le mentionner dans votre histoire,
+comme ça les gens qui liront votre histoire sauront que vous avez été une personne de bien lors de votre passage sur la terre. """
 
  
 objet = "Partenariat Gagnant-Gagnant"
