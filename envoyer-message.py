@@ -9,18 +9,9 @@ clic_div_aria_label_role_button)
 PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
 
-texte = """Salut, sur notre site internet on publie l'histoire de la vie des gens,
-et on aimerait avec votre permission publier l'histoire de votre vie.
-2 ou 3 lignes suffisent (et même plusieurs lignes), écrivez nous ça ici et nous allons le publier sur notre site internet.
-Si vous avez eu à aider des gens, vous pouvez aussi le mentionner dans votre histoire,
-comme ça les gens qui liront votre histoire sauront que vous avez été une personne de bien lors de votre passage sur la terre. """
+texte = """Salut, tu pourras avoir quelques minutes à m'accorder? """
 
  
-objet = "Partenariat Gagnant-Gagnant"
-
-
- 
-
 
 # VERIFIER COMMANDE CONSOLE
 async def verifier_commande(page, duree_minutes):
@@ -212,6 +203,7 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
     statut = await clic_div_aria_label_role_button(page, ["Message"])
     if statut:
         print("bouton message trouvé")
+        await mettre_a_jour(fichier2, {"btn_message": 1}, "message", url_page)
         
         await page.evaluate("""
         const messageButton = document.querySelector('div[aria-label="Message"]'); // cliquer sur le bouton Message, une popup s'ouvre alors , pour ecrire le message
@@ -233,7 +225,8 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
                 await marquer_contact(fichier4, "fichier", mon_compte)
                 print("Patiente 10s"); await asyncio.sleep(10)
                 break
-
+    else:
+        await mettre_a_jour(fichier2, {"btn_message": 0}, "message", url_page)
 
         
 async def main():
@@ -251,7 +244,7 @@ async def main():
         fichier1 = "page_messages_collecter.json"
         fichier2 = "page_messages_collecter2.json"
         pages_fb = await verifier_nouveau_element(fichier1, fichier2, "message") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
-        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]
+        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p) and not p.get("btn_message") != 0]
         
         fichier3 = "mes_comptes_fb.json"
         fichier4 = "mes_comptes_fb2.json"

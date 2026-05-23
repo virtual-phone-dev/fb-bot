@@ -4,9 +4,7 @@ from datetime import datetime, timedelta
 from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies, sauvegarder_sur_meme_ligne, sauvegarder_fichier, charger_fichier, charger_fichier_d,
 basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_nouveau_element)
 
-PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
-#format_date = "%Y-%m-%d"
 
 texte = """Salut, tu pourras avoir quelques minutes à m'accorder? """
 
@@ -20,7 +18,7 @@ objet = "Cool"
 # VERIFIER COMMANDE CONSOLE
 async def verifier_commande(page, duree_minutes):
     print("Écrivez..")
-    secondes = duree_minutes * 60
+    secondes = duree_minutes * 1
     debut = time.time()
 
     while time.time() - debut < secondes:
@@ -44,7 +42,7 @@ async def verifier_commande(page, duree_minutes):
                         break
 
         await asyncio.sleep(0.2)
-    print("suivant automatique")
+    #print("suivant automatique")
 
 
 
@@ -170,13 +168,13 @@ async def tour_suivant(fichier_email_debut, emails, compte_emails, email_suivant
                     
             mail_s = emails[index]
             email_suivant = mail_s["email"] #print("index e", index); 
-            print("email_suivant : ", email_suivant)  
+            #print("email_suivant : ", email_suivant)  
             print("✅ Tous les emails ont été utilisés")
             nbre = len(emails); print(f"{nbre} emails parmis les emails collectés") #break
         else:
             mail_s = emails[index]
             email_suivant = mail_s["email"] #print("index e", index); 
-            print("email_suivant : ", email_suivant)  
+            #print("email_suivant : ", email_suivant)  
                             
         data = {"email": email_suivant}
         await sauvegarder_fichier(fichier_email_debut, data)
@@ -228,10 +226,10 @@ async def main():
         
         fichier3 = "mes_emails.json"
         fichier4 = "mes_emails2.json"
-        compte_emails = await verifier_nouveau_element(fichier3, fichier4, "email")
-        compte_emails = [c for c in compte_emails if await verifier_date_recontacte(c)]
+        compte_emails = await verifier_nouveau_element(fichier3, fichier4, "email") 
+        #compte_emails = [c for c in compte_emails if c.get("email_special") == 1]
         
-        fichier_email_debut = "email_debut.json"
+        fichier_email_debut = "email_debut_pve.json" # email_debut_ poour visiter_email
         email_debut = (await charger_fichier_d(fichier_email_debut)).get("email")
         
         index = next((i for i, mail in enumerate(emails) if mail["email"] == email_debut), 0) # next() prend le premier résultat trouvé, si un email correspond → retourne son index, sinon → retourne 0 (valeur par défaut) 
@@ -261,15 +259,17 @@ async def main():
             page = await context.new_page()
             await apply_stealth(page)
             print("✅ mon_compte : ", mon_email)
-            print("Contacté :", email)
+            #print("Contacté :", email)
             
             statut = await connecter_gmail(context, fichier_cookie, page, mon_email)
-            if statut == "erreur_serveur_gmail": await context.close(); continue
+            if statut == "erreur_serveur_gmail": await context.close(); break
                 
-            await envoyer_email(fichier2, fichier4, page, email, mon_email)
+            #await envoyer_email(fichier2, fichier4, page, email, mon_email)
             
             emails_deja_contacter.add(email)
             index += 1
+            
+            await verifier_commande(page, 10)
             
             statut = await tour_suivant(fichier_email_debut, emails, compte_emails, email_suivant, tour, index)
             if statut == "tout_mes_comptes_gmail_utiliser": break

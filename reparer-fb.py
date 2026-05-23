@@ -76,6 +76,7 @@ async def verifier_commande(duree_minutes):
             
 async def main():
     comptes = json.load(open("mes_comptes_fb.json", encoding="utf-8"))
+    comptes = [c for c in comptes if c.get("compte_special") == 1]
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=False)

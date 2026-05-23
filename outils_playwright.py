@@ -416,10 +416,13 @@ async def connecter_gmail(context, fichier_cookie, page, email):
         "Le serveur ne peut pas traiter la requête, car son format est incorrect. Nous vous recommandons de ne pas réessayer",
         "The server encountered a temporary error and could not complete your request."]
         for t in textes:
-            element = await page.query_selector(f'text="{t}"')
+            print("aa");
+            #element = await page.query_selector(f'text="{t}"')
+            
+            element = await page.evaluate("""() => { return [...document.querySelectorAll('main')].find(el => el.innerText.includes("Le serveur ne peut pas traiter la requête, car son format est incorrect. Nous vous recommandons de ne pas réessayer")); } """)        
             if element:
                 print("erreur_serveur_gmail"); return "erreur_serveur_gmail"
-    
+        print("bb");
         
         
 async def post_recent(page):
