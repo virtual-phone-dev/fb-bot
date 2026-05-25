@@ -1,263 +1,202 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8" />
-    <title>RapidCode - Ordonnanceur Linéaire</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 30px; background-color: #f4f6f9; color: #333; }
-        h1 { color: #2c3e50; border-bottom: 2px solid #2980b9; padding-bottom: 10px; }
-        .container { display: flex; gap: 20px; }
-        .panel { flex: 1; background: white; border: 1px solid #dcdde1; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        h3 { margin-top: 0; color: #2980b9; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        label { display: block; margin: 8px 0 3px; font-weight: bold; font-size: 13px; }
-        input[type="text"], input[type="number"], select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; background: #fff; margin-bottom: 5px; }
-        
-        button { background-color: #27ae60; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px;}
-        button:hover { background-color: #219653; }
-        
-        /* GRILLE DE CONFIGURATION DES VARIABLES DYNAMIQUES */
-        .variables-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #f1f2f6; padding: 15px; border-radius: 6px; margin-bottom: 15px; border: 1px solid #dcdde1; }
-        .variables-grid div { display: flex; flex-direction: column; }
 
-        /* ZONE OPTIONS DE FILTRAGE PAR CAS À COCHER */
-        .checkbox-container { display: flex; flex-direction: row !important; align-items: center; gap: 8px; margin-top: 6px; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #ccc; }
-        .checkbox-container input[type="checkbox"] { width: 18px; height: 18px; margin: 0; cursor: pointer; }
-        .checkbox-container label { margin: 0; cursor: pointer; font-size: 13px; color: #2c3e50; }
+let resultat = document.getElementById("resultat");
+let interfacee = document.getElementById("bloc");
 
-        /* BOUTONS ET LISTE DES BRIQUES DISPONIBLES */
-        .brique-dispo { background: #f8f9fa; border: 1px solid #cfd8dc; padding: 10px; margin-bottom: 8px; border-radius: 4px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Courier New', Courier, monospace; font-size: 13px; }
-        .brique-dispo:hover { background: #eceff1; border-color: #b0bec5; }
-        .btn-add { background: #2980b9; color: white; padding: 4px 8px; font-size: 12px; border-radius: 3px; cursor: pointer; }
-        .btn-add:hover { background: #3498db; }
-        .btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
-        .btn-standard { background: #8e44ad; color: white; flex: 1; padding: 10px; font-weight: bold; border-radius: 4px; border: none; cursor: pointer; }
-        .btn-standard:hover { background: #9b59b6; }
-
-        /* ENTÊTE DE WORKFLOW AVEC EFFACEMENT GLOBAL */
-        .workflow-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .btn-clear-all { background-color: #c0392b; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
-        .btn-clear-all:hover { background-color: #962d22; }
-
-        /* WORKFLOW ACTIF (ORDONNANCEMENT) */
-        .workflow-liste { min-height: 400px; background: #fafafa; border: 2px dashed #b0bec5; border-radius: 4px; padding: 10px; }
-        .item-workflow { background: #fff; border-left: 5px solid #27ae60; border-top: 1px solid #ddd; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; padding: 8px 12px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; border-radius: 0 4px 4px 0; }
-        .item-code { font-family: 'Courier New', Courier, monospace; font-size: 12px; white-space: pre-wrap; word-break: break-word; flex-grow: 1; line-height: 1.4; }
-        .item-actions { display: flex; gap: 4px; margin-left: 10px; }
-        .btn-action { padding: 2px 6px; font-size: 11px; border: 1px solid #ccc; background: #fff; border-radius: 3px; cursor: pointer; }
-        .btn-action:hover { background: #f0f0f0; }
-
-        /* NOTIFICATION TOAST À GAUCHE */
-        .toast-notification {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 15px 25px;
-            background-color: #2ecc71;
-            color: white;
-            font-weight: bold;
-            border-radius: 5px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 1000;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            pointer-events: none;
-        }
-        .toast-notification.error { background-color: #e74c3c; }
-        .toast-notification.visible { opacity: 1; transform: translateY(0); }
-    </style>
-</head>
-<body>
-
-    <!-- Élément de notification Toast à gauche -->
-    <div id="toast" class="toast-notification"></div>
-
-    <h1>RapidCode</h1>
-
-    <!-- ZONE DE CONFIGURATION DES INPUTS DE REMPLACEMENT -->
-    <div class="panel" style="margin-bottom: 20px;">
-        <h3>Configuration des Variables d'Automatisation</h3>
-        <div class="variables-grid">
-		
-			<div class="panel">
-			  <h3>Créer une nouvelle fonction</h3>
-
-			  <label>Nom de la fonction :</label>
-			  <input type="text" id="new_func_name" placeholder="ex: nettoyer_page" />
-
-			  <label>Paramètres (séparés par virgule) :</label>
-			  <input type="text" id="new_func_params" placeholder="ex: page, fichier" />
-
-			  <button onclick="creerFonctionDepuisUI()">➕ Ajouter fonction</button>
-			</div>
+resultat.addEventListener('input', afficherFonctions);
 
 
-            <div>
-                <label>Clé DB 1 :</label>
-                <input type="text" id="v_cle_db1" value="page" />
-            </div>
-            <div>
-                <label>Clé DB 2 :</label>
-                <input type="text" id="v_cle_db2" value="fichier" />
-            </div>
-            <div>
-                <label>Fichier 1 (Collecte) :</label>
-                <input type="text" id="v_fichier1" value="pages_collecter.json" />
-            </div>
-            <div>
-                <label>Fichier 2 (Sauvegarde Collecte) :</label>
-                <input type="text" id="v_fichier2" value="pages_collecter2.json" />
-            </div>
-            <div>
-                <label>Fichier 3 (Comptes Source) :</label>
-                <input type="text" id="v_fichier3" value="mes_comptes_fb.json" />
-            </div>
-            <div>
-                <label>Fichier 4 (Sauvegarde Comptes) :</label>
-                <input type="text" id="v_fichier4" value="mes_comptes_fb2.json" />
-            </div>
-            <div style="grid-column: span 2;">
-                <label>Fichier de la Dernière Page :</label>
-                <input type="text" id="v_fichier_derniere_page" value="fichier_page_debut.json" />
-            </div>
-            
-            <!-- OPTIONS DE FILTRAGE CONDITIONNEL À COCHER -->
-            <div class="checkbox-container">
-                <input type="checkbox" id="v_filtre_date_pages" />
-                <label for="v_filtre_date_pages">Filtrer les pages par date de recontacte</label>
-            </div>
-			
-			<div class="checkbox-container" style="margin-bottom: 15px;">
-				<input type="checkbox" id="v_mode_automation" onchange="cocherAutomatiquement1CompteToutesPages()" />
-				<label for="v_mode_automation">1 compte, Toutes pages</label>
-			</div>
-			
-			<div class="checkbox-container" style="border: none; padding: 0; margin-top: 10px;">
-				<input type="checkbox" id="activer_ami" />
-				<label for="activer_ami"><strong>verifier_ami</strong></label>
-			</div>
-			
-            <div class="checkbox-container">
-                <input type="checkbox" id="v_filtre_date_comptes" onchange="majDependanceCheckbox()" />
-                <label for="v_filtre_date_comptes">Filtrer les comptes par date de recontacte</label>
-            </div>
-            <div style="grid-column: span 2; margin-left: 20px; display: none;" id="bloc_sous_filtre_strict">
-                <div class="checkbox-container" style="width: 100%;">
-                    <input type="checkbox" id="v_activer_filtre_actif" />
-                    <label for="v_activer_filtre_actif">Ajouter la vérification stricte du compte actif (<code>and c.get(cle_db1) == 1</code>)</label>
-                </div>
-            </div>
+const textes = [
+  { texte: "Bonjour 👋 je suis le texte 1" },
+  { texte: "Salut, texte 2" },
+  { texte: "Troisième texte" }
+];
 
-            <!-- OPTION REPRISE DEBUT OPTIONNELLE -->
-            <div class="checkbox-container">
-                <input type="checkbox" id="v_inclure_debut_false" />
-                <label for="v_inclure_debut_false">Déclarer la variable de reprise (<code>debut = False</code>)</label>
-            </div>
-
-            <!-- OPTION COEUR DE BOUCLE PAR INDEX -->
-            <div class="checkbox-container">
-                <input type="checkbox" id="v_inclure_logique_page" />
-                <label for="v_inclure_logique_page">Inclure la logique interne de traitement de page (Index)</label>
-            </div>
-
-            <!-- BOUCLE IMBRIQUÉE DES PAGES -->
-            <div style="grid-column: span 2;" class="checkbox-container">
-                <input type="checkbox" id="v_inclure_boucle_pages_fb" onchange="majDependancePause()" />
-                <label for="v_inclure_boucle_pages_fb">Inclure la boucle complète des pages (<code>for une_page in pages_fb:</code>) juste sous tour += 1</label>
-            </div>
-
-            <!-- NOUVELLE OPTION : PAUSE PAUSE / TEMPORISATION (DÉCOCHÉE PAR DÉFAUT) -->
-            <div style="grid-column: span 2; display: none;" id="bloc_config_pause">
-                <div style="display: grid; grid-template-columns: auto 1fr; gap: 15px; align-items: center; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-                    <div class="checkbox-container" style="border: none; padding: 0; margin: 0;">
-                        <input type="checkbox" id="v_activer_pause" />
-                        <label for="v_activer_pause"><strong>Ajouter un temps de pause (Patiente)</strong></label>
-                    </div>
-                    <div style="display: flex; flex-direction: row; align-items: center; gap: 5px;">
-                        <label style="margin: 0; white-space: nowrap;">Durée par défaut :</label>
-                        <input type="number" id="v_duree_pause" value="5" min="1" style="width: 80px; margin: 0; padding: 4px;" />
-                        <span style="font-size: 13px; font-weight: bold; color: #555;">secondes</span>
-                    </div>
-					
-					
-					<div class="checkbox-container" style="border: none; padding: 0; margin: 0;">
-                        <input type="checkbox" id="activer_pause_ami" />
-                        <label for="activer_pause_ami"><strong>Pause Ami</strong></label>
-                    </div>
-                    <div style="display: flex; flex-direction: row; align-items: center; gap: 5px;">
-                        <label style="margin: 0; white-space: nowrap;">Durée par défaut :</label>
-                        <input type="number" id="duree_pause_ami" value="5" min="1" style="width: 80px; margin: 0; padding: 4px;" />
-                        <span style="font-size: 13px; font-weight: bold; color: #555;">secondes</span>
-                    </div>
-					
-					
-					<div class="checkbox-container" style="border: none; padding: 0; margin-top: 10px;">
-						<input type="checkbox" id="activer_visiter_page" />
-						<label for="activer_visiter_page"> <strong>visiter_page</strong> </label>
-					</div>
-					
-					<div class="checkbox-container" style="border: none; padding: 0; margin-top: 10px;">
-						<input type="checkbox" id="v_activer_mise_a_jour" />
-						<label for="v_activer_mise_a_jour"><strong>mettre_a_jour</strong></label>
-					</div>
-					
-					<div class="checkbox-container" style="border: none; padding: 0; margin-top: 10px;">
-						<input type="checkbox" id="v_activer_preparation_compte" />
-						<label for="v_activer_preparation_compte">
-							<strong>Context + Newpage</strong>
-						</label>
-					</div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <label style="font-size: 14px;">Nom du script Python de destination (Dossier parent autorisé avec ../) :</label>
-            <input type="text" id="fichier_destination" value="../cool.py" style="max-width: 400px;" />
-        </div>
+const html = textes.map(data => {
+  return `
+    <div class="bloc">
+      <p>${data.texte}</p>
     </div>
+  `;
+}).join("");
 
-    <div class="container">
-        <!-- PANNEL GAUCHE : BIBLIOTHÈQUE DE LIGNES DE CODE -->
-        <div class="panel">
-            <h3>1. Lignes de Code Disponibles</h3>
-            
-            <div class="btn-group">
-                <button class="btn-standard" onclick="ajouterGrosBlocLie()">⚡ Injecter Nouveau Bloc Standard Lié</button>
-            </div>
-            
-            <div id="bibliotheque_briques" style="max-height: 500px; overflow-y: auto; padding-right: 5px;">
-                <!-- Les briques individuelles d'origine restent disponibles -->
-            </div>
-        </div>
+interfacee.innerHTML = html;
 
-        <!-- PANNEL DROIT : WORKFLOW CONSTRUIT -->
-        <div class="panel">
-            <div class="workflow-header">
-                <h3 style="margin: 0; border: none; padding: 0;">2. Votre Workflow (Ordonnancement Linéaire)</h3>
-                <button class="btn-clear-all" onclick="toutSupprimerWorkflow()">🗑️ Tout supprimer</button>
-            </div>
-            
-            <div id="workflow_actif" class="workflow-liste">
-                <!-- Les lignes sélectionnées apparaîtront ici -->
-            </div>
-            
-            <div style="text-align: right;">
-                <button onclick="envoyerConfiguration()">GÉNÉRER LE ROBOT SANS ERREUR</button>
-            </div>
-        </div>
-    </div>
 
-    <script>
+const blocs = interfacee.querySelectorAll(".bloc");
+blocs.forEach(function(bloc) {
+  bloc.onclick = function() {
+
+	let texteInterface = bloc.innerText; // texteActuel
+	let textarea = resultat.value;
+    //console.log("aa", texteInterface);
+	
+    const phraseCible = "async def";
+
+	const regex = new RegExp(
+	  phraseCible
+		.split(" ")
+		.map(mot => mot.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+		.join("\\s+"),
+	  "i"
+	); 
+	
+	if (regex.test(textarea)) { // Vérifie si phrase cible est dans le textarea
+		//console.log("texteInterface trouvé");
 		
+		  const lignes = textarea.split('\n');
+		  const nouvLignes = lignes.map(ligne => {
+			if (regex.test(ligne)) {
+			  // ajoute le texte du bloc à la ligne suivante, indenté
+			  return ligne + '\n    ' + texteInterface;
+			}
+			return ligne;
+		  });
+		  resultat.value = nouvLignes.join('\n');
+		  afficherFonctions();
+    } else {
+	  //console.log("pas de texteInterface");
+	  resultat.value += '\n' + texteInterface; // Sinon, remplace tout le contenu par le texteInterface
+	  afficherFonctions();
+    }
+}		
+});		
+
+
+
+function afficherFonctions() {
+  const textarea = resultat.value;
+  const lignes = textarea.split('\n');
+  const liste = document.getElementById("liste_fonctions_utilisateur");
+  
+  
+  // ✅ 1. Sauvegarder les index ouverts AVANT de reconstruire
+  const ouvertAvant = new Set();
+  liste.querySelectorAll('div[id^="instructions-"]').forEach(div => {
+    if (div.style.display === 'flex') {
+      const index = div.id.replace('instructions-', '');
+      ouvertAvant.add(index);
+    }
+  });
+  
+  // afficher les fonctions avec leurs lignes internes
+  const fonctions = [];
+  let fnCourante = null;
+
+  lignes.forEach(ligne => {
+    if (/(?:async\s+)?def\s+/i.test(ligne)) { // cherche toutes les lignes qui contiennent "async def"
+		
+      fnCourante = { nom: ligne.trim(), instructions: [] }; // nouvelle fonction trouvée,  .trim() nettoie les espaces
+      fonctions.push(fnCourante);
+    } else if (fnCourante && ligne.trim() !== '') {
+      
+      fnCourante.instructions.push(ligne.trim()); // ligne non-vide à l'intérieur d'une fonction
+    }
+  });
+
+  if (fonctions.length === 0) { liste.innerHTML = ''; return; } // effacer la liste avant de return . si on a pas encore de fonctions dans le textarea, on evite que la suite de ce code ne s'execute.
+	
+  // --- afficher ---
+  liste.innerHTML = fonctions.map((fn, i) => `
+    <div style="margin-bottom:12px">
+
+      <div class="bloc scroller-jusqua-fonction" style="display:flex; align-items:center; justify-content:space-between;">
+        <span>${fn.nom}</span>
+		
+		<div style="display:flex; gap:6px;">
+			<span data-index="${i}" id="toggle-${i}" title="Dérouler/Enrouler" style="cursor:pointer;">▶</span> <!-- flèche dérouler/enrouler . id="toggle-0" pour i=0, "toggle-1" pour i=1... data-index stocke le numéro pour retrouver le bon div  -->
+			<span data-fn="${fn.nom.replace(/"/g, '&quot;')}" class="icon-descendre" title="Aller à cette fonction">⤵</span> <!-- flèche scroller . data-fn stocke le nom de la fonction . utilisé par allerAFonction() pour scroller  -->
+		</div>
+      </div>
+
+      <div id="instructions-${i}" style="padding-left:12px; margin-top:4px; display:none; flex-direction:column; gap:3px;"> <!-- instructions cachées par défaut -->
+        ${fn.instructions.map(inst => `
+		  <div style="display:flex; align-items:center; justify-content:space-between; font-size:12px; color:#555; padding:3px 8px; background:#f5f5f5; border-radius:5px;">
+			<span>${inst.texte}</span>
+			<span data-index-ligne="${inst.indexLigne}" class="icon-suppr" title="Supprimer cette ligne" style="cursor:pointer; color:#aaa; font-size:11px; padding:0 4px;">✕</span>
+		  </div>
+		`).join('')}
+      </div>
+
+    </div>
+  `).join(''); // stocke dans data-attribute à la place .  data-fn , apparemment cest une element html qui permet de scroller jusqua la fonction - peut etre cest ca 
+
+	
+  // ✅ 2. Restaurer les listes qui étaient ouvertes
+  ouvertAvant.forEach(index => {
+    const div = document.getElementById('instructions-' + index);
+    const toggle = document.getElementById('toggle-' + index);
+    if (div) div.style.display = 'flex';
+    if (toggle) toggle.textContent = '▼';
+  });
+
+    // onclick flèche toggle
+	liste.querySelectorAll('span[id^="toggle-"]').forEach(toggle => {
+	  toggle.onclick = () => {
+		const index = toggle.dataset.index; //lit data-index → ex: "0"
+		const div = document.getElementById('instructions-' + index); // trouve le bon div → "instructions-0"
+		const ouvert = div.style.display === 'flex'; // est-ce que c'est déjà ouvert ?
+
+		div.style.display = ouvert ? 'none' : 'flex'; // si ouvert → ferme (none) | si fermé → ouvre (flex)
+		toggle.textContent = ouvert ? '▶' : '▼'; // ▶ fermé, ▼ ouvert .  change l'icône en conséquence
+	  };
+	});
+
+    liste.querySelectorAll('span[data-fn]').forEach(fleche => { // onclick flèche scroll . lit data-fn → ex: "async def cool():"
+      fleche.onclick = () => allerAFonction(fleche.dataset.fn);
+    });
+  
+    
+	liste.querySelectorAll('span.icon-suppr').forEach(btn => { // onclick ✕ — supprimer la ligne dans le textarea
+	  btn.onclick = (e) => {
+	    e.stopPropagation(); 
+		const ligneASupprimer = btn.dataset.ligne;
+		const lignes = resultat.value.split('\n');
+		
+		let supprime = false;
+		const nouvLignes = lignes.filter(l => {
+		  if (!supprime && l.trim() === ligneASupprimer.trim()) {
+			supprime = true;
+			return false; // supprime seulement la première
+		  }
+		  return true;
+		});
+
+		resultat.value = nouvLignes.join('\n');
+		afficherFonctions(); // rafraîchit la liste à droite
+	  };
+	});
+	
+	
+}
+
+
+
+
+function allerAFonction(nomFn) {
+  const lignes = resultat.value.split('\n');
+  const index = lignes.findIndex(l => l.trim() === nomFn);
+  if (index === -1) return;
+  
+  const positionChar = lignes.slice(0, index).join('\n').length; // calcule le nombre de caractères avant cette ligne
+  
+  resultat.focus(); // place le curseur sur cette ligne
+  resultat.setSelectionRange(positionChar, positionChar);
+  
+  const ligneHauteur = resultat.scrollHeight / lignes.length; // scroll jusqu'à cette ligne
+  resultat.scrollTop = ligneHauteur * index;
+}
+
+
+
+
 		function creerFonctionDepuisUI() {
 			const name = document.getElementById("new_func_name").value.trim();
 			const params = document.getElementById("new_func_params").value.trim();
-
-			if (!name) return alert("Nom obligatoire");
+			//if (!name) return alert("Nom obligatoire");
 
 			const code = `
 			async def ${name}(${params}):
-				pass
+				
 			`;
 
 			const nouvelleBrique = {
@@ -269,6 +208,128 @@
 			briquesDisponibles.push(nouvelleBrique);
 			genererBibliotheque();
 			ajouterLigne(nouvelleBrique.id);
+			
+		}
+		
+		
+		
+		function afficherInstructionsDisponibles() {
+
+			const container = document.getElementById("liste_instructions");
+			container.innerHTML = "";
+
+			instructionsDisponibles.forEach((instruction, index) => {
+
+				container.innerHTML += `
+					<div class="instruction-item"
+						 onclick="ajouterInstructionDepuisListe(${index})">
+
+						${instruction.id ? `<strong>${instruction.id}</strong><br>` : ""}
+						<code>${instruction.code.trim()}</code>
+
+					</div>
+				`;
+			});
+		}
+		
+
+		
+		let fonctionSelectionnee = null;
+		function selectionnerFonction(index) {
+			fonctionSelectionnee = index;
+			afficherInstructionsDisponibles(); // affiche seulement quand on clique
+		}
+		
+		
+		function ajouterInstructionDepuisListe(indexInstruction) {
+
+
+    const instruction = instructionsDisponibles[indexInstruction];
+
+    let codeFonction = workflowActif[fonctionSelectionnee].code;
+    const lignesFonction = codeFonction.split("\n");
+
+    const lignesInstruction = instruction.code
+        .trim()
+        .split("\n")
+        .filter(l => l.trim() !== "")
+        .map(l => "    " + l);
+
+    lignesFonction.splice(
+        lignesFonction.length - 1,
+        0,
+        ...lignesInstruction
+    );
+
+    workflowActif[fonctionSelectionnee].code =
+        lignesFonction.join("\n");
+
+    afficherWorkflow();
+
+    document.getElementById("bigEditor").value =
+        workflowActif.map(w => w.code).join("\n\n");
+}
+
+		
+		let fonctionsUtilisateur = [];
+		
+		function afficherFonctionsUtilisateur() {
+			const container = document.getElementById("liste_fonctions_utilisateur");
+			container.innerHTML = "";
+
+			fonctionsUtilisateur.forEach((f, index) => {
+				container.innerHTML += `
+					<div onclick="selectionnerFonction(${index})">
+						${f.nom}(${f.params})
+					</div>
+				`;
+			});
+		}
+				
+		
+		
+		function analyserFonctionsDepuisEditor() {
+			console.log("analyse lancée");
+			
+			const code = document.getElementById("bigEditor").value;
+			console.log("CODE =", code);
+			const regex = /async\s+def\s+(\w+)\((.*?)\)/g;
+
+			let match;
+			const result = [];
+
+			while ((match = regex.exec(code)) !== null) {
+				console.log("CODE =", code);
+				
+				result.push({
+					nom: match[1],
+					params: match[2],
+					code: match[0]
+				});
+			}
+			
+			console.log("RESULTAT FINAL =", result);
+			fonctionsUtilisateur = result;
+			afficherFonctionsUtilisateur();
+		}
+		
+				
+		
+		function insererFonctionAvantPremiereFonction(code, nouvelleFonction) {
+			const lignes = code.split("\n");
+
+			const index = lignes.findIndex(l =>
+				l.trim().startsWith("async def") ||
+				l.trim().startsWith("def ")
+			);
+
+			if (index === -1) {
+				lignes.unshift(nouvelleFonction);
+			} else {
+				lignes.splice(index, 0, nouvelleFonction);
+			}
+
+			return lignes.join("\n");
 		}
 		
 
@@ -353,6 +414,32 @@
                 afficherWorkflow();
             }
         }
+		
+		
+		function ajouterInstructionDansFonction(indexFonction) {
+			const nouvelleLigne = prompt("Nouvelle instruction :");
+
+			if (!nouvelleLigne) return;
+			let code = workflowActif[indexFonction].code;
+			const lignes = code.split("\n");
+
+			// chercher la ligne "pass"
+			const indexPass = lignes.findIndex(l => l.trim() === "pass");
+			if (indexPass !== -1) { // remplacer pass				
+				lignes.splice(indexPass, 1,
+					`    ${nouvelleLigne}`
+				);
+
+			} else { // ajouter avant la dernière ligne
+				lignes.splice(lignes.length - 1, 0,
+					`    ${nouvelleLigne}`
+				);
+			}
+
+			workflowActif[indexFonction].code = lignes.join("\n");
+			afficherWorkflow();
+		}
+
 
         function ajouterGrosBlocLie() {
             const db1 = document.getElementById('v_cle_db1').value;
@@ -377,6 +464,7 @@
 			const activerPreparationCompte = document.getElementById('v_activer_preparation_compte').checked;
 			const activerVisiterPage = document.getElementById('activer_visiter_page').checked;
 			const activerAmi = document.getElementById('activer_ami').checked;
+			
 
             let ligneFiltrePages = filtreDatePagesCoche ? `\n        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]` : "";
 
@@ -587,6 +675,8 @@ async def main():
                         <button class="btn-action" style="color: red;" onclick="supprimerLigne(${index})">❌</button>
 						
 						<button class="btn-action" onclick="editerLigne(${index})">✏️</button>
+						<button class="btn-action" onclick="ajouterInstructionDansFonction(${index})">➕</button>
+						<button class="btn-action" onclick="editerCodeComplet(${index})">📝</button>
                     </div>
                 `;
                 container.appendChild(div);
@@ -615,6 +705,108 @@ async def main():
             workflowActif.splice(index, 1);
             afficherWorkflow();
         }
+		
+		
+		document.getElementById("bigEditor").addEventListener("input", analyserFonctionsDepuisEditor);
+		
+		let editorIndex = null;
+		function editerCodeComplet(index) {
+			editorIndex = index;
+			
+			const toutLeCode = workflowActif.map(w => w.code).join("\n\n");
+			document.getElementById("bigEditor").value = toutLeCode;
+			
+			analyserFonctionsDepuisEditor();
+			document.getElementById("editorModal").style.display = "block";
+		}
+		
+		
+		function fermerEditor() {
+			document.getElementById("editorModal").style.display = "none";
+			editorIndex = null;
+		}
+
+
+		function sauverEditor() {
+			const newCode = document.getElementById("bigEditor").value;
+			
+			if (editorIndex === null) { // SI aucun bloc lié
+
+				workflowActif.push({
+					id: "editor_" + Date.now(),
+					label: "Code complet",
+					code: newCode,
+					uid: Date.now()
+				});
+
+				fermerEditor();
+				afficherWorkflow();
+				return;
+			}
+
+			workflowActif[editorIndex].code = newCode; // mode édition classique
+			const match = newCode.match(/async def\s+(\w+)\((.*?)\)/);
+
+			if (match) {
+				workflowActif[editorIndex].label =
+					`async def ${match[1]}(${match[2]})`;
+			}
+
+			fermerEditor();
+			afficherWorkflow();
+		}
+		
+		
+		function ajouterFonctionDansEditorr() {
+			const name = prompt("Nom de la fonction :");
+			if (!name) return;
+
+			const params = prompt("Paramètres (séparés par virgule) :", "");
+			if (params === null) return;
+
+			const nouvelleFonction = `
+		async def ${name}(${params}):
+			
+		`;
+
+			const editor = document.getElementById("bigEditor");
+			const codeActuel = editor.value;
+			const nouveauCode = insererFonctionAvantPremiereFonction(codeActuel, nouvelleFonction);
+
+			editor.value = nouveauCode;
+			analyserFonctionsDepuisEditor();
+		}
+		
+		
+		function ajouterFonctionDansEditor() {
+			document.getElementById("popupFonction").style.display = "block";
+			document.getElementById("popup_func_name").value = "";
+			document.getElementById("popup_func_params").value = "";
+			document.getElementById("zone_params_popup").style.display = "none";
+		}
+
+		function suivantFonctionPopup() {
+			document.getElementById("zone_params_popup").style.display = "block";
+		}
+
+		function validerFonctionPopup() {
+			const name = document.getElementById("popup_func_name").value.trim();
+			const params = document.getElementById("popup_func_params").value.trim();
+
+			const nouvelleFonction = `
+		async def ${name}(${params}):
+
+		`;
+
+			const editor = document.getElementById("bigEditor");
+			const codeActuel = editor.value;
+			const nouveauCode = insererFonctionAvantPremiereFonction(codeActuel, nouvelleFonction);
+
+			editor.value = nouveauCode;
+			analyserFonctionsDepuisEditor();
+			document.getElementById("popupFonction").style.display = "none";
+		}
+
 
         function afficherToast(message, isError = false) {
             const toast = document.getElementById("toast");
@@ -689,6 +881,4 @@ async def main():
             genererBibliotheque();
             afficherWorkflow();
         };
-    </script>
-</body>
-</html>
+		

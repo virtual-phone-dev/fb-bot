@@ -9,8 +9,9 @@ app.use(express.json());
 app.use(cors());
 
 // Servir l'interface graphique de RapidCode
+app.use(express.static(__dirname));
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "codegen3.html"));
+    res.sendFile(path.join(__dirname, "rapidcode.html"));
 });
 
 // Objet de gestion du NoCode - Adapté à la réception des briques linéaires

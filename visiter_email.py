@@ -262,7 +262,7 @@ async def main():
             #print("Contacté :", email)
             
             statut = await connecter_gmail(context, fichier_cookie, page, mon_email)
-            if statut == "erreur_serveur_gmail": await context.close(); break
+            if statut == "erreur_serveur_gmail": await context.close(); continue
                 
             #await envoyer_email(fichier2, fichier4, page, email, mon_email)
             

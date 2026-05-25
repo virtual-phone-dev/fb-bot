@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Injection dans Textarea</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 40px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; margin-bottom: 20px; }
+        textarea { display: block; margin: 0 auto; width: 300px; height: 150px; font-size: 14px; padding: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>Ajouter du texte au clic</h1>
+    
+    <!-- Bouton d'action -->
+    <button id="monBouton">Ajouter du texte</button>
+
+    <!-- Zone de texte vide au départ -->
+    <textarea id="maZoneTexte" placeholder="Le texte apparaîtra ici..."></textarea>
+
+    <!-- Le script JavaScript -->
+    <script>
+        // 1. Sélection du bouton et du textarea
+        const bouton = document.getElementById('monBouton');
+        const zoneTexte = document.getElementById('maZoneTexte');
+
+        // 2. Écoute du clic
+        bouton.addEventListener('click', () => {
+            // 3. Injection du texte (on ajoute un saut de ligne \n à chaque clic)
+            zoneTexte.value += "Nouveau clic enregistré ! 🎉\n";
+			})
+        </script>
+
+</body>
+</html>

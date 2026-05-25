@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Clic sur texte visible</title>
+
+  <style>
+    body{
+      font-family:Arial;
+      background:#f2f2f2;
+      padding:20px;
+    }
+
+    .bloc{
+      background:white;
+      padding:20px;
+      margin-bottom:15px;
+      border-radius:10px;
+      cursor:pointer;
+      border:2px solid transparent;
+      transition:0.2s;
+    }
+
+    .bloc:hover{
+      border-color:#4a90e2;
+      background:#eef5ff;
+    }
+
+    textarea{
+      width:100%;
+      height:180px;
+      padding:10px;
+      font-size:16px;
+      border-radius:10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Clique sur un texte</h1>
+
+  <div class="bloc">
+    Bonjour 👋 je suis le vrai texte de la zone 1
+  </div>
+
+  <div class="bloc">
+    Salut, ici tu cliques et ce texte va dans le textarea
+  </div>
+
+  <div class="bloc">
+    Troisième bloc : texte visible directement utilisé
+  </div>
+
+  <textarea id="textarea"></textarea>
+
+  <script>
+    let blocs = document.querySelectorAll(".bloc");
+    let textarea = document.getElementById("textarea");
+
+    blocs.forEach(function(bloc){
+      bloc.onclick = function(){
+	  
+		let texte = bloc.innerText;
+        console.log("aa", texte);
+		
+        // on prend directement le texte visible
+        textarea.value = bloc.innerText;
+      };
+    });
+  </script>
+
+</body>
+</html>
