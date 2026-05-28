@@ -97,6 +97,7 @@ async def basculer_sur_le_compte(page):
     
 async def compter_commentaire(page, nom, url):   
     
+    nom_clean = await nettoyer_texte(nom)
     temps_debut = time.monotonic()  # Enregistre le temps de début
     temps = 5
     
@@ -120,28 +121,22 @@ async def compter_commentaire(page, nom, url):
 
             if count > 10:
                 print("arrêt → Plus de 10 commentaires")
-                
-                #print("+ Pas encore liké"); 
-                #page_active = await charger_fichier("page_active.json") #on sauvegarde les pages (Pas encore liker), qui ont plus de 5 commentaires 
-                #page_active.append({ "name": name, "url": url_page })
-                #await sauvegarder_sur_meme_ligne("page_active.json", page_active)
-                
-                
                 await ajouter_dans_fichier("page_active2.json", { "page_active": url, "nom": nom }, "page_active", url)
                 
                 if "Compte vérifié" in nom:
                     print("✅ Compte vérifié")
                 else:
                     print("Non vérifié")
-                    nom_clean = await nettoyer_texte(nom)
-                    
                     if not any(nom_compte in nom_clean for nom_compte in mots_inutiles): # si nom_compte nest pas dans mots_inutiles, alors tu l'enregistres
                         await email(page, nom, url)
                         await message(page, nom, url)
                     
                 break
-    
-        
+            else:
+                if not any(nom_compte in nom_clean for nom_compte in mots_inutiles):
+                    await email(page, nom, url)
+                    await message(page, nom, url)
+                    
         
 async def nom_page(page, url):
     name = await page.locator("h1").first.text_content() # recuperer nom_page
@@ -230,15 +225,14 @@ async def recuperer_lien(context, page):
                 try:
                     new_page = await context.new_page()
                     await new_page.goto(url)
+                    nom = await nom_page(new_page, url); #sauvegarder le lien du compte ami
 
                     btn_follower = await page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("Followers")); } """)
                     if not btn_follower: 
                         print("ami");
-                        await nom_page(new_page, url) #sauvegarder le lien du compte ami
                         await mettre_a_jour("pages_collecter2.json", {"ami": 1}, "page", url) #mettre_a_jour le lien du compte ami
+                        await email(new_page, nom, url)
                     else:
-                        #print("patiente 2s"); await asyncio.sleep(2)
-                        nom = await nom_page(new_page, url);
                         await mettre_a_jour("pages_collecter2.json", {"ami": 0}, "page", url)
                         await post_recent(new_page)
                         await compter_commentaire(new_page, nom, url)

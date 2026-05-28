@@ -222,7 +222,7 @@ async def main():
         fichier1 = "emails_collecter.json"
         fichier2 = "emails_collecter2.json"
         emails = await verifier_nouveau_element(fichier1, fichier2, "email") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
-        emails = [e for e in emails if await verifier_date_recontacte(e)]
+        #emails = [e for e in emails if await verifier_date_recontacte(e)]
         
         fichier3 = "mes_emails.json"
         fichier4 = "mes_emails2.json"
@@ -240,9 +240,6 @@ async def main():
         for compte_email in compte_emails:             
             tour += 1
             print("index a", index) 
-            
-            if index+1 > len(emails): 
-                print("aucun email a contacter, car tous ont deja été contacter", index); break
             
             mail = emails[index]
             email = mail["email"]

@@ -8,10 +8,10 @@ PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
 #format_date = "%Y-%m-%d"
 
-texte = """Salut, tu pourras avoir quelques minutes à m'accorder? """
+texte = """Salut, je suis développeur et je propose la création de site internet, d'application mobile et de robot. Si tu en as besoin, je suis disponible. """
 
  
-objet = "Cool"
+objet = "Développeur"
 
 
  

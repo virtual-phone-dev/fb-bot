@@ -1,4 +1,5 @@
-
+let indexFonctionCible = null; // null = comportement normal
+let fonctionOuverte = null; // stocke l'index de la fonction dont la liste est déroulée
 let resultat = document.getElementById("resultat");
 let interfacee = document.getElementById("bloc");
 
@@ -6,9 +7,9 @@ resultat.addEventListener('input', afficherFonctions);
 
 
 const textes = [
-  { texte: "Bonjour 👋 je suis le texte 1" },
-  { texte: "Salut, texte 2" },
-  { texte: "Troisième texte" }
+  { texte: "instruction1 = await browser.new_context()" },
+  { texte: "instruction2 = charger_cookies(fichier_cookie)" },
+  { texte: "await instruction1.add_cookies(instruction2)" }
 ];
 
 const html = textes.map(data => {
@@ -25,6 +26,7 @@ interfacee.innerHTML = html;
 const blocs = interfacee.querySelectorAll(".bloc");
 blocs.forEach(function(bloc) {
   bloc.onclick = function() {
+	if (fonctionOuverte === null) return; // aucune fonction ouverte → on fait rien
 
 	let texteInterface = bloc.innerText; // texteActuel
 	let textarea = resultat.value;
@@ -42,8 +44,8 @@ blocs.forEach(function(bloc) {
 	
 	if (regex.test(textarea)) { // Vérifie si phrase cible est dans le textarea
 		//console.log("texteInterface trouvé");
-		
 		  const lignes = textarea.split('\n');
+		  
 		  const nouvLignes = lignes.map(ligne => {
 			if (regex.test(ligne)) {
 			  // ajoute le texte du bloc à la ligne suivante, indenté
@@ -69,7 +71,7 @@ function afficherFonctions() {
   const liste = document.getElementById("liste_fonctions_utilisateur");
   
   
-  // ✅ 1. Sauvegarder les index ouverts AVANT de reconstruire
+  // 1. Sauvegarder les index ouverts AVANT de reconstruire
   const ouvertAvant = new Set();
   liste.querySelectorAll('div[id^="instructions-"]').forEach(div => {
     if (div.style.display === 'flex') {
@@ -82,19 +84,20 @@ function afficherFonctions() {
   const fonctions = [];
   let fnCourante = null;
 
-  lignes.forEach(ligne => {
+  lignes.forEach((ligne, indexLigne) => {
     if (/(?:async\s+)?def\s+/i.test(ligne)) { // cherche toutes les lignes qui contiennent "async def"
 		
       fnCourante = { nom: ligne.trim(), instructions: [] }; // nouvelle fonction trouvée,  .trim() nettoie les espaces
       fonctions.push(fnCourante);
     } else if (fnCourante && ligne.trim() !== '') {
       
-      fnCourante.instructions.push(ligne.trim()); // ligne non-vide à l'intérieur d'une fonction
+      fnCourante.instructions.push({ texte: ligne.trim(), indexLigne }); // ligne non-vide à l'intérieur d'une fonction
     }
   });
 
   if (fonctions.length === 0) { liste.innerHTML = ''; return; } // effacer la liste avant de return . si on a pas encore de fonctions dans le textarea, on evite que la suite de ce code ne s'execute.
-	
+
+
   // --- afficher ---
   liste.innerHTML = fonctions.map((fn, i) => `
     <div style="margin-bottom:12px">
@@ -103,6 +106,8 @@ function afficherFonctions() {
         <span>${fn.nom}</span>
 		
 		<div style="display:flex; gap:6px;">
+			<span data-index-fn="${i}" class="icon-inserer-fn" title="Insérer une fonction ici" style="cursor:pointer;">➕</span>
+			<span data-index="${i}" id="toggle-liste-${i}" title="Ajouter une instruction" style="cursor:pointer;">📋</span>
 			<span data-index="${i}" id="toggle-${i}" title="Dérouler/Enrouler" style="cursor:pointer;">▶</span> <!-- flèche dérouler/enrouler . id="toggle-0" pour i=0, "toggle-1" pour i=1... data-index stocke le numéro pour retrouver le bon div  -->
 			<span data-fn="${fn.nom.replace(/"/g, '&quot;')}" class="icon-descendre" title="Aller à cette fonction">⤵</span> <!-- flèche scroller . data-fn stocke le nom de la fonction . utilisé par allerAFonction() pour scroller  -->
 		</div>
@@ -116,12 +121,20 @@ function afficherFonctions() {
 		  </div>
 		`).join('')}
       </div>
+	  
+	    <div id="liste-blocs-${i}" style="display:none; flex-direction:column; gap:4px; margin-top:4px;">
+		  ${textes.map(t => `
+			<div class="bloc-instruction" data-index-fn="${i}" data-texte="${t.texte}" style="cursor:pointer; padding:4px 8px; background:#eef; border-radius:5px; font-size:12px;">
+			  ${t.texte}
+			</div>
+		  `).join('')}
+		</div>
 
     </div>
   `).join(''); // stocke dans data-attribute à la place .  data-fn , apparemment cest une element html qui permet de scroller jusqua la fonction - peut etre cest ca 
 
 	
-  // ✅ 2. Restaurer les listes qui étaient ouvertes
+  // 2. Restaurer les listes qui étaient ouvertes
   ouvertAvant.forEach(index => {
     const div = document.getElementById('instructions-' + index);
     const toggle = document.getElementById('toggle-' + index);
@@ -146,29 +159,161 @@ function afficherFonctions() {
     });
   
     
-	liste.querySelectorAll('span.icon-suppr').forEach(btn => { // onclick ✕ — supprimer la ligne dans le textarea
+	liste.querySelectorAll('span.icon-suppr').forEach(btn => {
 	  btn.onclick = (e) => {
-	    e.stopPropagation(); 
-		const ligneASupprimer = btn.dataset.ligne;
+		e.stopPropagation();
+		const indexLigne = parseInt(btn.dataset.indexLigne); // bon attribut
 		const lignes = resultat.value.split('\n');
-		
-		let supprime = false;
-		const nouvLignes = lignes.filter(l => {
-		  if (!supprime && l.trim() === ligneASupprimer.trim()) {
-			supprime = true;
-			return false; // supprime seulement la première
+		lignes.splice(indexLigne, 1); // supprime exactement cette ligne
+		resultat.value = lignes.join('\n');
+		afficherFonctions();
+	  };
+	});
+	
+	
+	liste.querySelectorAll('span.icon-inserer-fn').forEach(btn => {
+	  btn.onclick = () => {
+		indexFonctionCible = parseInt(btn.dataset.indexFn); // stocke quelle fonction on vise
+		ajouterFonctionDansEditor(); // ouvre la popup normalement
+	  };
+	});
+	
+	
+	
+	liste.querySelectorAll('span[id^="toggle-liste-"]').forEach(toggle => { // toggle — ouvre/ferme la liste des blocs
+	  toggle.onclick = () => {
+		const index = toggle.dataset.index;
+		const div = document.getElementById('liste-blocs-' + index);
+		const ouvert = div.style.display === 'flex';
+		div.style.display = ouvert ? 'none' : 'flex';
+		fonctionOuverte = ouvert ? null : parseInt(index);
+	  };
+	});
+
+
+	
+	liste.querySelectorAll('.bloc-instruction').forEach(bloc => { // clic sur un bloc dans la liste
+	  bloc.onclick = () => {
+		const texteInterface = bloc.dataset.texte;
+		const indexFn = parseInt(bloc.dataset.indexFn);
+		const lignes = resultat.value.split('\n');		
+		let count = 0; // trouver la dernière ligne de cette fonction
+		let debutFn = -1;
+		let finFn = -1;
+
+		const nouvLignes = lignes.map(ligne => {
+		  if (/(?:async\s+)?def\s+/i.test(ligne)) {
+			if (count === indexFn) {
+			  count++;
+			  return ligne + '\n    ' + texteInterface; // ajoute dans cette fonction uniquement
+			}
+			count++;
 		  }
-		  return true;
+		  return ligne;
 		});
 
 		resultat.value = nouvLignes.join('\n');
-		afficherFonctions(); // rafraîchit la liste à droite
+		afficherFonctions();
+	  };
+	});
+	
+	
+	liste.querySelectorAll('.bloc-instruction').forEach(bloc => {
+	  bloc.onclick = () => {
+		const texteInterface = bloc.dataset.texte;
+		const indexFn = parseInt(bloc.dataset.indexFn);
+		const lignes = resultat.value.split('\n');
+
+		// trouver la dernière ligne de cette fonction
+		let count = 0;
+		let debutFn = -1;
+		let finFn = -1;
+
+		lignes.forEach((ligne, i) => {
+		  if (/(?:async\s+)?def\s+/i.test(ligne)) {
+			if (count === indexFn) debutFn = i; // début de la fonction ciblée
+			else if (count > indexFn && finFn === -1) finFn = i - 1; // début de la suivante = fin de la ciblée
+			count++;
+		  }
+		});
+
+		if (finFn === -1) finFn = lignes.length - 1; // pas de fonction suivante → fin du textarea
+
+		// reculer pour ignorer les lignes vides à la fin
+		while (finFn > debutFn && lignes[finFn].trim() === '') finFn--;
+
+		lignes.splice(finFn + 1, 0, '    ' + texteInterface); // insère après la dernière instruction
+		resultat.value = lignes.join('\n');
+		afficherFonctions();
 	  };
 	});
 	
 	
 }
 
+
+
+function ajouterFonctionDansEditor() {
+	document.getElementById("popupFonction").style.display = "block";
+	const inputNom = document.getElementById("popup_func_name");
+	
+	inputNom.value = "";
+	document.getElementById("popup_func_params").value = "";
+	document.getElementById("zone_params_popup").style.display = "none";
+	inputNom.focus();
+}
+
+
+function suivantFonctionPopup() {
+  const zoneParams = document.getElementById("zone_params_popup");
+  zoneParams.style.display = 'block'; // affiche le champ params
+  document.getElementById("popup_func_params").focus();
+}
+
+
+function validerFonctionPopup() {
+  const name = document.getElementById("popup_func_name").value.trim();
+  const params = document.getElementById("popup_func_params").value.trim(); // vide si on a pas cliqué Suivant, c'est pas grave
+  //if (!name) { document.getElementById("popup_func_name").style.border = "1px solid red"; return; }
+
+	const nouvelleFonction = `async def ${name}(${params}):`;
+	const lignes = resultat.value.split('\n');
+	
+	if (indexFonctionCible !== null) {
+		// trouver la ligne exacte de la fonction ciblée
+		let count = 0;
+		const lignesCible = lignes.findIndex(l => {
+		  if (/(?:async\s+)?def\s+/i.test(l)) {
+			if (count === indexFonctionCible) return true;
+			count++;
+		  }
+		  return false;
+		});	
+		
+		lignes.splice(lignesCible, 0, nouvelleFonction, '', ''); // insère AVANT la fonction ciblée
+		resultat.value = lignes.join('\n');
+		indexFonctionCible = null; // reset
+		
+	} else {
+		// comportement normal : au dessus de la 1ère fonction
+		const premiereDef = lignes.findIndex(l => /(?:async\s+)?def\s+/i.test(l)); // trouve l'index de la 1ère fonction
+
+		if (premiereDef === -1) {
+		  resultat.value += '\n' + nouvelleFonction; // pas de fonction → ajoute à la fin
+		} else {
+		  lignes.splice(premiereDef, 0, nouvelleFonction, '', ''); // insère AVANT la 1ère fonction
+		  resultat.value = lignes.join('\n');
+		}
+	}
+
+  // reset la popup
+  document.getElementById("popup_func_name").value = '';
+  document.getElementById("popup_func_params").value = '';
+  document.getElementById("zone_params_popup").style.display = 'none';
+
+  afficherFonctions();
+  document.getElementById("popupFonction").style.display = "none"; //fermer la popup
+}
 
 
 
@@ -757,39 +902,19 @@ async def main():
 		}
 		
 		
+		
 		function ajouterFonctionDansEditorr() {
-			const name = prompt("Nom de la fonction :");
-			if (!name) return;
-
-			const params = prompt("Paramètres (séparés par virgule) :", "");
-			if (params === null) return;
-
-			const nouvelleFonction = `
-		async def ${name}(${params}):
-			
-		`;
-
-			const editor = document.getElementById("bigEditor");
-			const codeActuel = editor.value;
-			const nouveauCode = insererFonctionAvantPremiereFonction(codeActuel, nouvelleFonction);
-
-			editor.value = nouveauCode;
-			analyserFonctionsDepuisEditor();
-		}
-		
-		
-		function ajouterFonctionDansEditor() {
 			document.getElementById("popupFonction").style.display = "block";
 			document.getElementById("popup_func_name").value = "";
 			document.getElementById("popup_func_params").value = "";
 			document.getElementById("zone_params_popup").style.display = "none";
 		}
 
-		function suivantFonctionPopup() {
+		function suivantFonctionPopupp() {
 			document.getElementById("zone_params_popup").style.display = "block";
 		}
 
-		function validerFonctionPopup() {
+		function validerFonctionPopupp() {
 			const name = document.getElementById("popup_func_name").value.trim();
 			const params = document.getElementById("popup_func_params").value.trim();
 
