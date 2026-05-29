@@ -2,6 +2,9 @@ let indexFonctionCible = null; // null = comportement normal
 let fonctionOuverte = null; // stocke l'index de la fonction dont la liste est déroulée
 let resultat = document.getElementById("resultat");
 let interfacee = document.getElementById("bloc");
+let positionInsertion = null; // { indexLigne, direction: 'haut' | 'bas' }
+let historique = [];      // pour Ctrl+Z (undo)
+let historiqueRedo = [];  // pour Ctrl+Y (redo)
 
 resultat.addEventListener('input', afficherFonctions);
 
@@ -106,6 +109,7 @@ function afficherFonctions() {
         <span>${fn.nom}</span>
 		
 		<div style="display:flex; gap:6px;">
+			<span data-index-fn="${i}" class="icon-suppr-fn" title="Supprimer cette fonction" style="cursor:pointer;">✕</span>
 			<span data-index-fn="${i}" class="icon-inserer-fn" title="Insérer une fonction ici" style="cursor:pointer;">➕</span>
 			<span data-index="${i}" id="toggle-liste-${i}" title="Ajouter une instruction" style="cursor:pointer;">📋</span>
 			<span data-index="${i}" id="toggle-${i}" title="Dérouler/Enrouler" style="cursor:pointer;">▶</span> <!-- flèche dérouler/enrouler . id="toggle-0" pour i=0, "toggle-1" pour i=1... data-index stocke le numéro pour retrouver le bon div  -->
@@ -113,14 +117,19 @@ function afficherFonctions() {
 		</div>
       </div>
 
-      <div id="instructions-${i}" style="padding-left:12px; margin-top:4px; display:none; flex-direction:column; gap:3px;"> <!-- instructions cachées par défaut -->
-        ${fn.instructions.map(inst => `
-		  <div style="display:flex; align-items:center; justify-content:space-between; font-size:12px; color:#555; padding:3px 8px; background:#f5f5f5; border-radius:5px;">
-			<span>${inst.texte}</span>
-			<span data-index-ligne="${inst.indexLigne}" class="icon-suppr" title="Supprimer cette ligne" style="cursor:pointer; color:#aaa; font-size:11px; padding:0 4px;">✕</span>
-		  </div>
-		`).join('')}
-      </div>
+
+        <div id="instructions-${i}" style="padding-left:12px; margin-top:4px; display:none; flex-direction:column; gap:3px;"> <!-- instructions cachées par défaut -->
+			${fn.instructions.map(inst => `
+			  <div style="display:flex; align-items:center; justify-content:space-between; font-size:12px; color:#555; padding:3px 8px; background:#f5f5f5; border-radius:5px;">
+				<span>${inst.texte}</span>
+				<div style="display:flex; gap:4px;">
+				  <span data-index-ligne="${inst.indexLigne}" class="icon-haut" title="Insérer au dessus" style="cursor:pointer; color:#aaa; font-size:11px;">▲</span>
+				  <span data-index-ligne="${inst.indexLigne}" class="icon-bas" title="Insérer en dessous" style="cursor:pointer; color:#aaa; font-size:11px;">▼</span>
+				  <span data-index-ligne="${inst.indexLigne}" class="icon-suppr" title="Supprimer" style="cursor:pointer; color:#aaa; font-size:11px; padding:0 4px;">✕</span>
+				</div>
+			  </div>
+			`).join('')}
+		</div>
 	  
 	    <div id="liste-blocs-${i}" style="display:none; flex-direction:column; gap:4px; margin-top:4px;">
 		  ${textes.map(t => `
@@ -162,6 +171,7 @@ function afficherFonctions() {
 	liste.querySelectorAll('span.icon-suppr').forEach(btn => {
 	  btn.onclick = (e) => {
 		e.stopPropagation();
+		sauvegarderHistorique();
 		const indexLigne = parseInt(btn.dataset.indexLigne); // bon attribut
 		const lignes = resultat.value.split('\n');
 		lignes.splice(indexLigne, 1); // supprime exactement cette ligne
@@ -190,66 +200,153 @@ function afficherFonctions() {
 	  };
 	});
 
-
 	
-	liste.querySelectorAll('.bloc-instruction').forEach(bloc => { // clic sur un bloc dans la liste
-	  bloc.onclick = () => {
-		const texteInterface = bloc.dataset.texte;
-		const indexFn = parseInt(bloc.dataset.indexFn);
-		const lignes = resultat.value.split('\n');		
-		let count = 0; // trouver la dernière ligne de cette fonction
-		let debutFn = -1;
-		let finFn = -1;
+	liste.querySelectorAll('.icon-haut, .icon-bas').forEach(btn => {
+	  btn.onclick = (e) => {
+		e.stopPropagation();
+		const indexLigne = parseInt(btn.dataset.indexLigne);
+		const direction = btn.classList.contains('icon-haut') ? 'haut' : 'bas';
+		positionInsertion = { indexLigne, direction };
 
-		const nouvLignes = lignes.map(ligne => {
+		// trouver à quelle fonction appartient cette instruction
+		const lignes = resultat.value.split('\n');
+		let count = 0;
+		let indexFnTrouve = 0;
+		lignes.forEach((ligne, i) => {
 		  if (/(?:async\s+)?def\s+/i.test(ligne)) {
-			if (count === indexFn) {
-			  count++;
-			  return ligne + '\n    ' + texteInterface; // ajoute dans cette fonction uniquement
-			}
+			if (i <= indexLigne) indexFnTrouve = count;
 			count++;
 		  }
-		  return ligne;
 		});
 
-		resultat.value = nouvLignes.join('\n');
-		afficherFonctions();
+		// fermer toutes les listes-blocs ouvertes
+		liste.querySelectorAll('div[id^="liste-blocs-"]').forEach(d => d.style.display = 'none');
+
+		// ouvrir la liste des textes[] de cette fonction
+		const div = document.getElementById('liste-blocs-' + indexFnTrouve);
+		if (div) {
+		  div.style.display = 'flex'; // ✅ ouvre le div qui contient les blocs de textes[]
+		  fonctionOuverte = indexFnTrouve;
+		}
 	  };
 	});
 	
 	
 	liste.querySelectorAll('.bloc-instruction').forEach(bloc => {
 	  bloc.onclick = () => {
+		sauvegarderHistorique();
 		const texteInterface = bloc.dataset.texte;
-		const indexFn = parseInt(bloc.dataset.indexFn);
 		const lignes = resultat.value.split('\n');
 
-		// trouver la dernière ligne de cette fonction
-		let count = 0;
-		let debutFn = -1;
-		let finFn = -1;
+		if (positionInsertion !== null) {
+		  // insérer par rapport à l'instruction ciblée
+		  const { indexLigne, direction } = positionInsertion;
+		  const pos = direction === 'haut' ? indexLigne : indexLigne + 1;
+		  lignes.splice(pos, 0, '    ' + texteInterface);
+		  positionInsertion = null; // reset
 
-		lignes.forEach((ligne, i) => {
-		  if (/(?:async\s+)?def\s+/i.test(ligne)) {
-			if (count === indexFn) debutFn = i; // début de la fonction ciblée
-			else if (count > indexFn && finFn === -1) finFn = i - 1; // début de la suivante = fin de la ciblée
-			count++;
-		  }
-		});
+		} else {
+		  // comportement normal : fin de la fonction
+		  const indexFn = parseInt(bloc.dataset.indexFn);
+		  let count = 0;
+		  let debutFn = -1;
+		  let finFn = -1;
+		  lignes.forEach((ligne, i) => {
+			if (/(?:async\s+)?def\s+/i.test(ligne)) {
+			  if (count === indexFn) debutFn = i;
+			  else if (count > indexFn && finFn === -1) finFn = i - 1;
+			  count++;
+			}
+		  });
+		  if (finFn === -1) finFn = lignes.length - 1;
+		  while (finFn > debutFn && lignes[finFn].trim() === '') finFn--;
+		  lignes.splice(finFn + 1, 0, '    ' + texteInterface);
+		}
 
-		if (finFn === -1) finFn = lignes.length - 1; // pas de fonction suivante → fin du textarea
-
-		// reculer pour ignorer les lignes vides à la fin
-		while (finFn > debutFn && lignes[finFn].trim() === '') finFn--;
-
-		lignes.splice(finFn + 1, 0, '    ' + texteInterface); // insère après la dernière instruction
 		resultat.value = lignes.join('\n');
 		afficherFonctions();
 	  };
 	});
 	
 	
+	liste.querySelectorAll('.icon-suppr-fn').forEach(btn => {
+	  btn.onclick = (e) => {
+		e.stopPropagation();
+		sauvegarderHistorique();
+		const indexFn = parseInt(btn.dataset.indexFn);
+		const lignes = resultat.value.split('\n');
+
+		// trouver le début et la fin de cette fonction
+		let count = 0;
+		let debut = -1;
+		let fin = -1;
+
+		lignes.forEach((ligne, i) => {
+		  if (/(?:async\s+)?def\s+/i.test(ligne)) {
+			if (count === indexFn) debut = i;
+			else if (count === indexFn + 1 && fin === -1) fin = i - 1;
+			count++;
+		  }
+		});
+
+		if (fin === -1) fin = lignes.length - 1; // dernière fonction → jusqu'à la fin
+
+		lignes.splice(debut, fin - debut + 1); // supprime toutes les lignes de la fonction
+		resultat.value = lignes.join('\n');
+		afficherFonctions();
+	  };
+	});
+	
 }
+
+
+
+
+function sauvegarderHistorique() {
+  historique.push(resultat.value);
+  historiqueRedo = []; // efface le redo dès qu'une nouvelle action est faite
+  if (historique.length > 50) historique.shift();
+}
+
+resultat.addEventListener('keydown', (e) => {
+
+  if (e.ctrlKey && e.key === 'z') { // précédent
+    e.preventDefault();
+    if (historique.length > 0) {
+      historiqueRedo.push(resultat.value);
+      resultat.value = historique.pop();
+      afficherFonctions();
+    }
+  }
+
+  if (e.ctrlKey && e.key === 'y') { // suivant
+    e.preventDefault();
+    if (historiqueRedo.length > 0) {
+      historique.push(resultat.value);
+      resultat.value = historiqueRedo.pop();
+      afficherFonctions();
+    }
+  }
+
+});
+
+
+
+resultat.addEventListener('keydown', (e) => {
+
+  const modifie = 
+    e.key === 'Backspace' || 
+    e.key === 'Delete' || 
+    (e.key.length === 1 && !e.ctrlKey && !e.metaKey); // une lettre/chiffre normale
+
+  if (modifie && resultat.selectionStart !== resultat.selectionEnd) {
+    sauvegarderHistorique(); // 👈 seulement si du texte est sélectionné
+  } else if (e.key === 'Backspace' || e.key === 'Delete') {
+    sauvegarderHistorique(); // 👈 suppression normale
+  }
+
+  // ... Ctrl+Z et Ctrl+Y
+});
 
 
 
@@ -274,7 +371,7 @@ function suivantFonctionPopup() {
 function validerFonctionPopup() {
   const name = document.getElementById("popup_func_name").value.trim();
   const params = document.getElementById("popup_func_params").value.trim(); // vide si on a pas cliqué Suivant, c'est pas grave
-  //if (!name) { document.getElementById("popup_func_name").style.border = "1px solid red"; return; }
+  sauvegarderHistorique();
 
 	const nouvelleFonction = `async def ${name}(${params}):`;
 	const lignes = resultat.value.split('\n');
