@@ -15,16 +15,6 @@ const textes = [
   { texte: "await instruction1.add_cookies(instruction2)" }
 ];
 
-const html = textes.map(data => {
-  return `
-    <div class="bloc">
-      <p>${data.texte}</p>
-    </div>
-  `;
-}).join("");
-
-interfacee.innerHTML = html;
-
 
 const blocs = interfacee.querySelectorAll(".bloc");
 blocs.forEach(function(bloc) {

@@ -149,6 +149,9 @@ async def nom_page(page, url):
 async def email(page, nom_page, url):           
     element = await page.query_selector('[href^="mailto:"]') # recuperer email
     
+    domaines_autoriser = ("gmail.com", "yahoo.com", "yahoo.fr", "yahoo.co.uk", "yahoo.ca", "outlook.com", "outlook.fr", "hotmail.com", "live.fr", "orange.fr", "free.fr", 
+    "sfr.fr", "laposte.net", "wanadoo.fr", "icloud.com", "me.com", "mac.com")
+    
     email = None
     if element:
         href = await element.get_attribute("href")
@@ -156,7 +159,7 @@ async def email(page, nom_page, url):
         if href:
             email = href.replace("mailto:", "").strip()
             
-            if email.endswith("gmail.com"):
+            if email.endswith(domaines_autoriser):
                 print("email :", email)
                 await ajouter_dans_fichier("emails_collecter.json", {"email": email, "nom": nom_page}, "email", email)
     
