@@ -340,12 +340,12 @@ resultat.addEventListener('keydown', (e) => {
     (e.key.length === 1 && !e.ctrlKey && !e.metaKey); // une lettre/chiffre normale
 
   if (modifie && resultat.selectionStart !== resultat.selectionEnd) {
-    sauvegarderHistorique(); // 👈 seulement si du texte est sélectionné
+    sauvegarderHistorique(); // seulement si du texte est sélectionné
   } else if (e.key === 'Backspace' || e.key === 'Delete') {
-    sauvegarderHistorique(); // 👈 suppression normale
+    sauvegarderHistorique(); // suppression normale
   }
 
-  // ... Ctrl+Z et Ctrl+Y
+  // Ctrl+Z et Ctrl+Y
 });
 
 
