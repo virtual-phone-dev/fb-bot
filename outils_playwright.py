@@ -54,6 +54,7 @@ async def clic_div_aria_label_role_button(page, textes, cliquer=False):
     return None
     
 
+
 async def span_has_text(page, textes, cliquer=False):
     try:
         for t in textes:
@@ -68,10 +69,6 @@ async def span_has_text(page, textes, cliquer=False):
         pass
         
 
-async def span_has_text_js1(page, textes, cliquer=False):
-    btn = await page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("Followers")); } """)
-    #if btn:
-        
         
         
 # VERIFIER COMMANDE CONSOLE
@@ -409,6 +406,10 @@ async def connecter_gmail(context, fichier_cookie, page, email):
         except Exception as e:
             print("..erreur"); print(e); pass
             
+        
+        statut = await span_has_text(page, ["Impossible de vous connecter"])
+        if statut: print("Impossible de se connecter"); return; 
+        
             
         textes = [
         "Le serveur ne peut pas traiter la requête, car son format est incorrect. Nous vous recommandons de ne pas réessayer",

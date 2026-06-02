@@ -90,7 +90,6 @@ function afficherFonctions() {
 
   if (fonctions.length === 0) { liste.innerHTML = ''; return; } // effacer la liste avant de return . si on a pas encore de fonctions dans le textarea, on evite que la suite de ce code ne s'execute.
 
-
   // --- afficher ---
   liste.innerHTML = fonctions.map((fn, i) => `
     <div style="margin-bottom:12px">
@@ -102,6 +101,7 @@ function afficherFonctions() {
 			<span data-index-fn="${i}" class="icon-suppr-fn" title="Supprimer cette fonction" style="cursor:pointer;">✕</span>
 			<span data-index-fn="${i}" class="icon-inserer-fn" title="Insérer une fonction ici" style="cursor:pointer;">➕</span>
 			<span data-index="${i}" id="toggle-liste-${i}" title="Ajouter une instruction" style="cursor:pointer;">📋</span>
+			<span data-index="${i}" class="icon-appel-fn" title="Appeler une fonction" style="cursor:pointer;">📞</span> 
 			<span data-index="${i}" id="toggle-${i}" title="Dérouler/Enrouler" style="cursor:pointer;">▶</span> <!-- flèche dérouler/enrouler . id="toggle-0" pour i=0, "toggle-1" pour i=1... data-index stocke le numéro pour retrouver le bon div  -->
 			<span data-fn="${fn.nom.replace(/"/g, '&quot;')}" class="icon-descendre" title="Aller à cette fonction">⤵</span> <!-- flèche scroller . data-fn stocke le nom de la fonction . utilisé par allerAFonction() pour scroller  -->
 		</div>
@@ -125,6 +125,14 @@ function afficherFonctions() {
 		  ${textes.map(t => `
 			<div class="bloc-instruction" data-index-fn="${i}" data-texte="${t.texte}" style="cursor:pointer; padding:4px 8px; background:#eef; border-radius:5px; font-size:12px;">
 			  ${t.texte}
+			</div>
+		  `).join('')}
+		</div>
+		
+		<div id="liste-appel-fn-${i}" style="display:none; flex-direction:column; gap:4px; margin-top:4px;">
+		  ${fonctions.map(f => `
+			<div class="bloc-appel-fn" data-index-fn="${i}" data-nom-fn="${f.nom.replace(/"/g, '&quot;')}" style="cursor:pointer; padding:4px 8px; background:#efe; border-radius:5px; font-size:12px;">
+			  ${f.nom}
 			</div>
 		  `).join('')}
 		</div>
