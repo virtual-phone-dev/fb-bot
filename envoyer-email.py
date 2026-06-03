@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies, sauvegarder_sur_meme_ligne, sauvegarder_fichier, charger_fichier, charger_fichier_d,
 basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_nouveau_element)
 
-PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
 #format_date = "%Y-%m-%d"
 
@@ -20,7 +19,7 @@ objet = "Développeur"
 # VERIFIER COMMANDE CONSOLE
 async def verifier_commande(page, duree_minutes):
     print("Écrivez..")
-    secondes = duree_minutes * 60
+    secondes = duree_minutes * 1
     debut = time.time()
 
     while time.time() - debut < secondes:
@@ -270,6 +269,8 @@ async def main():
             
             emails_deja_contacter.add(email)
             index += 1
+            
+            await verifier_commande(page, 5)
             
             statut = await tour_suivant(fichier_email_debut, emails, compte_emails, email_suivant, tour, index)
             if statut == "tout_mes_comptes_gmail_utiliser": break

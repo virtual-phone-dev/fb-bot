@@ -295,6 +295,68 @@ function afficherFonctions() {
 	  };
 	});
 	
+	
+	
+	// toggle 📞 — ouvre/ferme la liste des fonctions à appeler
+	liste.querySelectorAll('span.icon-appel-fn').forEach(btn => {
+	  btn.onclick = (e) => {
+		e.stopPropagation();
+		const index = btn.dataset.index;
+		const div = document.getElementById('liste-appel-fn-' + index);
+		const ouvert = div.style.display === 'flex';
+
+		// ferme toutes les autres listes-appel ouvertes
+		liste.querySelectorAll('div[id^="liste-appel-fn-"]').forEach(d => d.style.display = 'none');
+
+		div.style.display = ouvert ? 'none' : 'flex';
+	  };
+	});
+
+
+	// clic sur une fonction dans la liste d'appel
+	liste.querySelectorAll('.bloc-appel-fn').forEach(bloc => {
+	  bloc.onclick = (e) => {
+		e.stopPropagation();
+		sauvegarderHistorique();
+
+		const indexFn = parseInt(bloc.dataset.indexFn); // fonction qui reçoit l'appel
+		const nomFnAppelee = bloc.dataset.nomFn; // ex: "async def cool():"
+
+		// extraire juste le nom sans "async def" et sans les paramètres
+		const nomPropre = nomFnAppelee.replace(/async\s+def\s+/i, '').replace(/\(.*$/, '').trim();
+		const ligneAAjouter = `    await ${nomPropre}()`;
+
+		const lignes = resultat.value.split('\n');
+
+		// trouver la fin de la fonction ciblée
+		let finFn = null;
+		
+		/* let count = 0;
+		let debutFn = -1;
+		let finFn = -1; */
+		lignes.forEach((ligne, i) => {
+		  if (/(?:async\s+)?def\s+/i.test(ligne)) {
+			//if (count === indexFn) debutFn = i;
+			//else if (count > indexFn && finFn === -1) finFn = i - 1;
+			//count++;
+			
+			finFn = i - 1;
+			console.log("index", i);
+			console.log("finFn", finFn);
+		  }
+		});
+		//if (finFn === -1) finFn = lignes.length - 1;
+		//while (finFn > debutFn && lignes[finFn].trim() === '') finFn--;
+
+		lignes.splice(finFn + 1, 0, ligneAAjouter); // ajoute à la fin de la fonction
+		resultat.value = lignes.join('\n');
+
+		// fermer la liste
+		document.getElementById('liste-appel-fn-' + indexFn).style.display = 'none';
+		afficherFonctions();
+	  };
+	});
+	
 }
 
 
