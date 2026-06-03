@@ -6,6 +6,9 @@ email_recuperation = "kilendodingha@gmail.com"
 
 mots_inutiles = ["fédération", "gendarmerie", "armed", "armées", "forces", "police", "commission", "nationale", "commissariat", "commune", "ministère", "primature"]
 
+domaines_autoriser = ("gmail.com", "yahoo.com", "yahoo.fr", "yahoo.co.uk", "yahoo.ca", "outlook.com", "outlook.fr", "hotmail.com", "live.fr", "orange.fr", "free.fr", 
+"sfr.fr", "laposte.net", "wanadoo.fr", "icloud.com", "me.com", "mac.com", "protonmail.com", "laposte.net")
+    
 
 
 async def appliquer_stealth(page):

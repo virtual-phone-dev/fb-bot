@@ -1,9 +1,5 @@
 import json, asyncio
-from outils_playwright import (charger_fichier_t, charger_fichier, ajouter_dans_fichier, nettoyer_texte, mots_inutiles)
-
-domaines_autoriser = ("gmail.com", "yahoo.com", "yahoo.fr", "yahoo.co.uk", "yahoo.ca", "outlook.com", "outlook.fr", "hotmail.com", "live.fr", "orange.fr", "free.fr", 
-"sfr.fr", "laposte.net", "wanadoo.fr", "icloud.com", "me.com", "mac.com")
-    
+from outils_playwright import (charger_fichier_t, charger_fichier, ajouter_dans_fichier, nettoyer_texte, mots_inutiles, domaines_autoriser)
 
 
 async def nettoyer_pages_avec_nom_inutile():
@@ -76,7 +72,7 @@ async def recuperer_nom(): #recuperer le nom de l'email
 
 async def nettoyer_email_trouver(): #recuperer le nom de l'email
     fichier_entree = "mes_emails.txt"
-    fichier_sortie = "mes_emails.json"
+    fichier_sortie = "emails_collecter.json"
     emails = await charger_fichier_t(fichier_entree)
 
     for email in emails:

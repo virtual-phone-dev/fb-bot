@@ -1,7 +1,8 @@
 import json, asyncio, msvcrt, time, unicodedata
 from playwright.async_api import async_playwright
 from itertools import cycle
-from outils_playwright import (connecter_gmail, clic_div_aria_label_role_button, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, charger_fichier_d, ajouter_dans_fichier, mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles, clic_div_aria_label_role_button)
+from outils_playwright import (connecter_gmail, clic_div_aria_label_role_button, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, 
+charger_fichier_d, ajouter_dans_fichier, mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles, domaines_autoriser, clic_div_aria_label_role_button)
 
 
 
@@ -148,10 +149,7 @@ async def nom_page(page, url):
             
 async def email(page, nom_page, url):           
     element = await page.query_selector('[href^="mailto:"]') # recuperer email
-    
-    domaines_autoriser = ("gmail.com", "yahoo.com", "yahoo.fr", "yahoo.co.uk", "yahoo.ca", "outlook.com", "outlook.fr", "hotmail.com", "live.fr", "orange.fr", "free.fr", 
-    "sfr.fr", "laposte.net", "wanadoo.fr", "icloud.com", "me.com", "mac.com")
-    
+
     email = None
     if element:
         href = await element.get_attribute("href")
