@@ -407,8 +407,8 @@ async def connecter_gmail(context, fichier_cookie, page, email):
             print("..erreur"); print(e); pass
             
         
-        statut = await span_has_text(page, ["Impossible de vous connecter"])
-        if statut: print("Impossible de se connecter"); return; 
+        element = await span_has_text(page, ["Impossible de vous connecter"])
+        if element: print("Impossible_de_vous_connecter"); return "Impossible_de_vous_connecter"
         
             
         textes = [

@@ -147,7 +147,8 @@ async def envoyer_email(fichier2, fichier4, page, email, mon_email):
                 if await btn.count() > 0:
                     await btn.click()
                     trouver = True
-                    print("patiente 10s"); await asyncio.sleep(10)
+                    await verifier_commande(page, 10)
+                    #print("patiente 10s"); await asyncio.sleep(10)
                     await marquer_contact(fichier2, "email", email, jours_recontact=60)
                     await marquer_contact(fichier4, "email", mon_email) #sauvegarde date recontacte de mon compte_email
                     break
@@ -264,13 +265,12 @@ async def main():
             
             statut = await connecter_gmail(context, fichier_cookie, page, mon_email)
             if statut == "erreur_serveur_gmail": await context.close(); continue
+            if statut == "Impossible_de_vous_connecter": await context.close(); continue
                 
             await envoyer_email(fichier2, fichier4, page, email, mon_email)
             
             emails_deja_contacter.add(email)
             index += 1
-            
-            await verifier_commande(page, 5)
             
             statut = await tour_suivant(fichier_email_debut, emails, compte_emails, email_suivant, tour, index)
             if statut == "tout_mes_comptes_gmail_utiliser": break
