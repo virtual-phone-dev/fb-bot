@@ -221,6 +221,7 @@ async def main():
             ],
         )
 
+        #fichier1 = "emails_collecter_europe.json"
         fichier1 = "emails_collecter.json"
         fichier2 = "emails_collecter2.json"
         emails = await verifier_nouveau_element(fichier1, fichier2, "email") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
