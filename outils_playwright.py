@@ -156,6 +156,16 @@ async def nettoyer_texte(txt): #ce code permet pour que, Église, eglise, puisse
     return txt
 
 
+def nettoyer_texte2(texte: str, supprimer: list[str] = None) -> str:
+    # Nettoie un texte : supprime mots indésirables + espaces multiples
+    if not texte: return ""
+    
+    for mot in (supprimer or []):
+        texte = texte.replace(mot, "")
+    
+    return re.sub(r'\s+', ' ', texte).strip()
+    
+    
 
 async def verifier_date_recontacte(mail):
     if "recontacter" not in mail: return True 
@@ -418,13 +428,14 @@ async def connecter_gmail(context, fichier_cookie, page, email):
         "Le serveur ne peut pas traiter la requête, car son format est incorrect. Nous vous recommandons de ne pas réessayer",
         "The server encountered a temporary error and could not complete your request."]
         for t in textes:
-            print("aa");
-            #element = await page.query_selector(f'text="{t}"')
-            
-            element = await page.evaluate("""() => { return [...document.querySelectorAll('main')].find(el => el.innerText.includes("Le serveur ne peut pas traiter la requête, car son format est incorrect. Nous vous recommandons de ne pas réessayer")); } """)        
-            if element:
-                print("erreur_serveur_gmail"); return "erreur_serveur_gmail"
-        print("bb");
+            try:
+                await page.wait_for_load_state("networkidle")
+                
+                element = await page.evaluate("""() => { return [...document.querySelectorAll('main')].find(el => el.innerText.includes("Le serveur ne peut pas traiter la requête, car son format est incorrect. Nous vous recommandons de ne pas réessayer")); } """)        
+                if element:
+                    print("erreur_serveur_gmail"); return "erreur_serveur_gmail"
+            except Exception as e:
+                print("..erreur"); print(e); pass
         
         
 async def post_recent(page):
