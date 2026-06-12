@@ -1,41 +1,39 @@
 import asyncio
 from itertools import cycle;
 from playwright.async_api import async_playwright
-from outils_playwright import (creer_context, creer_page, aller, envoyer_commentaire_bs, charger_json, post_deja_commente, est_blacklist, ajouter_blacklist, sauvegarder_json)
+from outils_playwright import (creer_context, creer_page, aller, envoyer_commentaire_bs, post_deja_commente, charger_fichier, charger_fichier_d, verifier_nouveau_element,
+sauvegarder_json)
 
 FICHIER_POSTS = "sauvegarde-bs/posts_commentes.json"
-FICHIER_BLACKLIST = "sauvegarde-bs/blacklist.json"
 
 
-
-async def visiter(browser, compte, url, comments, posts, blacklist, page_name=None):
+async def visiter(browser, compte, url, posts, page_name=None):
     fichier = compte["fichier"]
-    if est_blacklist(blacklist, fichier, url): print("Blacklist :", fichier, url); return
 
     contexte = await creer_context(browser, fichier)
     page = await creer_page(contexte)
 
     try:
         await aller(page, url)
-        await envoyer_commentaire_bs(page, comments, posts, FICHIER_POSTS, page_name, url, fichier)
+        await envoyer_commentaire_bs(page, posts, FICHIER_POSTS, page_name, url, fichier)
         
     except Exception as e:
         print("Erreur :", e)
-        ajouter_blacklist(blacklist, FICHIER_BLACKLIST, fichier, url)
         
     await contexte.close()
 
 
 async def main():
-    comptes = charger_json("accounts-bs.json", [])
-    pages = charger_json("pages-tout-pays-bs.json", [])
-    comments = charger_json("phrases-travail.json", [])
-    posts = charger_json(FICHIER_POSTS, [])
-    blacklist = charger_json(FICHIER_BLACKLIST, {})
+    fichier3 = "mes_comptes_bs.json"
+    fichier4 = "mes_comptes_bs2.json"
+    comptes = await verifier_nouveau_element(fichier3, fichier4, "email")
+    
+    pages = await charger_fichier("pages-tout-pays-bs.json")
+    posts = await charger_fichier(FICHIER_POSTS)
     
     # pour choisir la zone ou demarrer
-    index_zone = charger_json("index_zone_bs.json", {})
-    start_zone = index_zone.get("start_zone")
+    fichier_debut = "index_zone_bs.json"
+    start_zone = (await charger_fichier_d(fichier_debut)).get("start_zone")
 
     start_index = 0
     if start_zone:
@@ -63,7 +61,7 @@ async def main():
         
                 if "url" not in page:
                     continue
-                await visiter(browser, next(cycle_comptes), page["url"], comments, posts, blacklist, page.get("name"))
+                await visiter(browser, next(cycle_comptes), page["url"], posts, page.get("name"))
 
 asyncio.run(main())
 

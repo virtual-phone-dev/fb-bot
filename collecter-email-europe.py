@@ -3,6 +3,10 @@ from playwright.async_api import async_playwright
 from outils_playwright import (charger_fichier_d, verifier_nouveau_element, verifier_date_recontacte, mettre_a_jour, appliquer_stealth, 
 charger_cookies, ajouter_dans_fichier, nettoyer_texte, mots_inutiles, domaines_autoriser)
 
+# leav = Liste des experts AMO Vaud . https://www.vd.ch/fileadmin/user_upload/themes/environnement/energie/fichiers_pdf/Liste_AMO_accredites.pdf
+# lm = Liste des médiateurs . https://www.cours-appel.justice.fr/sites/default/files/2025-09/CA%20ORLEANS-Liste%20des%20médiateurs-2024-2026.pdf
+# lede = Liste des ensigenant departement Électronique . https://fge.usthb.dz/wp-content/uploads/2026/02/Liste-des-enseignants-ELN-5.pdf
+
 
 url_osteopathe ="https://www.osteopathie.org/?fond=annuaire&nom=&prenom=&cpostal=&ville=&departement=&region=&latlong=&pays=&page={}#results"
 url_site_architecte = "https://www.cfai.fr/fr/recherche/annuaire-professionnel?page={}"

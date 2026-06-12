@@ -1,4 +1,4 @@
-import json, asyncio
+import json, asyncio, re
 from outils_playwright import (charger_fichier_t, charger_fichier, ajouter_dans_fichier, nettoyer_texte, mots_inutiles, domaines_autoriser)
 
 
@@ -70,15 +70,37 @@ async def recuperer_nom(): #recuperer le nom de l'email
     
 
 
+async def nettoyer_email_trouver_avec_beaucoup_de_champ():
+    fichier_entree = "mes_emails.txt"
+    fichier_sortie = "emails_collecter_europe.json"
+    emails_lignes = await charger_fichier_t(fichier_entree)
+    
+    # Pattern pour extraire les emails du texte
+    pattern_email = r'\b[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b'
+    
+    for ligne in emails_lignes:
+        # Extraire tous les emails de la ligne
+        emails_trouves = re.findall(pattern_email, ligne)
+        
+        for email in emails_trouves:
+            if email.endswith(domaines_autoriser):
+                nom = email.split("@")[0]
+                await ajouter_dans_fichier(fichier_sortie, {"email": email, "nom": nom, "pays": "Algerie", "site": "lede"}, "email", email)
+    
+    resultat = await charger_fichier(fichier_sortie)
+    print(f"{len(resultat)} emails dans le fichier {fichier_sortie}")
+    
+    
 async def nettoyer_email_trouver(): #recuperer le nom de l'email
     fichier_entree = "mes_emails.txt"
-    fichier_sortie = "emails_collecter.json"
+    #fichier_sortie = "emails_collecter.json"
+    fichier_sortie = "emails_collecter_europe.json"
     emails = await charger_fichier_t(fichier_entree)
 
     for email in emails:
         if email.endswith(domaines_autoriser):
             nom = email.split("@")[0] 
-            await ajouter_dans_fichier(fichier_sortie, {"email": email, "nom": nom}, "email", email, "nom")  
+            await ajouter_dans_fichier(fichier_sortie, {"email": email, "nom": nom, "pays": "Suisse", "site": "leav"}, "email", email, "nom")  
             
     resultat = await charger_fichier(fichier_sortie)
     print(f"{len(resultat)} emails dans le fichier {fichier_sortie}")
@@ -100,7 +122,7 @@ async def nettoyer_emails_gmail():
 
         # garder seulement gmail
         if email.endswith("@gmail.com") and "Compte vérifié" not in nom_clean:
-            await ajouter_dans_fichier(fichier_sortie, { "email": email, "nom": nom }, "email", email, "nom")
+            await ajouter_dans_fichier(fichier_sortie, { "email": email, "nom": nom}, "email", email, "nom")
             print(email)
             count += 1
 
@@ -110,5 +132,5 @@ async def nettoyer_emails_gmail():
     
     
     
-asyncio.run(nettoyer_email_trouver())
+asyncio.run(nettoyer_email_trouver_avec_beaucoup_de_champ())
 

@@ -6,10 +6,18 @@ basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_
 
 format_date = "%d-%m-%Y"
 
-texte = """Salut, tu pourras avoir quelques minutes à m'accorder? """
 
- 
-objet = "Cool"
+texte = """Salut, je suis développeur, si tu as envies de créer un réseau social ou une application mobile, je suis disponible. """
+
+objet = "Développeur"
+
+# albanais
+
+
+# estonien
+# texte = """  """
+
+# objet = ""
 
 
  
@@ -42,7 +50,7 @@ async def verifier_commande(page, duree_minutes):
                         break
 
         await asyncio.sleep(0.2)
-    #print("suivant automatique")
+    print("suivant automatique")
 
 
 
@@ -146,7 +154,8 @@ async def envoyer_email(fichier2, fichier4, page, email, mon_email):
                 if await btn.count() > 0:
                     await btn.click()
                     trouver = True
-                    print("patiente 10s"); await asyncio.sleep(10)
+                    await verifier_commande(page, 10)
+                    #print("patiente 10s"); await asyncio.sleep(10)
                     await marquer_contact(fichier2, "email", email, jours_recontact=60)
                     await marquer_contact(fichier4, "email", mon_email) #sauvegarde date recontacte de mon compte_email
                     break
@@ -168,13 +177,13 @@ async def tour_suivant(fichier_email_debut, emails, compte_emails, email_suivant
                     
             mail_s = emails[index]
             email_suivant = mail_s["email"] #print("index e", index); 
-            #print("email_suivant : ", email_suivant)  
+            print("email_suivant : ", email_suivant)  
             print("✅ Tous les emails ont été utilisés")
             nbre = len(emails); print(f"{nbre} emails parmis les emails collectés") #break
         else:
             mail_s = emails[index]
             email_suivant = mail_s["email"] #print("index e", index); 
-            #print("email_suivant : ", email_suivant)  
+            print("email_suivant : ", email_suivant)  
                             
         data = {"email": email_suivant}
         await sauvegarder_fichier(fichier_email_debut, data)
@@ -219,17 +228,18 @@ async def main():
             ],
         )
 
-        fichier1 = "emails_collecter.json"
+        fichier1 = "emails_collecter_europe.json"
+        #fichier1 = "emails_collecter.json"
         fichier2 = "emails_collecter2.json"
         emails = await verifier_nouveau_element(fichier1, fichier2, "email") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
-        #emails = [e for e in emails if await verifier_date_recontacte(e)]
+        emails = [e for e in emails if await verifier_date_recontacte(e)]
         
         fichier3 = "mes_emails.json"
         fichier4 = "mes_emails2.json"
-        compte_emails = await verifier_nouveau_element(fichier3, fichier4, "email") 
-        compte_emails = [c for c in compte_emails if c.get("email_special") == 1]
+        compte_emails = await verifier_nouveau_element(fichier3, fichier4, "email")
+        compte_emails = [c for c in compte_emails if await verifier_date_recontacte(c)]
         
-        fichier_email_debut = "email_debut_pve.json" # email_debut_ poour visiter_email
+        fichier_email_debut = "email_debut.json"
         email_debut = (await charger_fichier_d(fichier_email_debut)).get("email")
         
         index = next((i for i, mail in enumerate(emails) if mail["email"] == email_debut), 0) # next() prend le premier résultat trouvé, si un email correspond → retourne son index, sinon → retourne 0 (valeur par défaut) 
@@ -237,41 +247,49 @@ async def main():
         emails_deja_contacter = set()
         tour = 0
         
-        for compte_email in compte_emails:             
-            tour += 1
-            print("index a", index) 
+        count = 0 #count je met juste ca pour compter le nombre de tours, que fera la boucle while
+        while count < 10:   
+            count += 1
             
-            mail = emails[index]
-            email = mail["email"]
-            nom = mail["nom"]
-            fichier_cookie = compte_email.get("fichier")
-            mon_email = compte_email.get("email")
-            
-            if email in emails_deja_contacter: continue
-            
-            context = await browser.new_context() #nouveau contexte pour chaque compte
-            cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
-            await context.add_cookies(cookies)
-            
-            page = await context.new_page()
-            await apply_stealth(page)
-            print("✅ mon_compte : ", mon_email)
-            #print("Contacté :", email)
-            
-            statut = await connecter_gmail(context, fichier_cookie, page, mon_email)
-            if statut == "erreur_serveur_gmail": await context.close(); continue
+            for compte_email in compte_emails:             
+                tour += 1
+                print("index a", index) 
+                print("count ", count) 
                 
-            #await envoyer_email(fichier2, fichier4, page, email, mon_email)
-            
-            emails_deja_contacter.add(email)
-            index += 1
-            
-            await verifier_commande(page, 5)
-            
-            statut = await tour_suivant(fichier_email_debut, emails, compte_emails, email_suivant, tour, index)
-            if statut == "tout_mes_comptes_gmail_utiliser": break
+                if index+1 > len(emails): 
+                    print("aucun email a contacter, car tous ont deja été contacter", index); break
                 
-            #print("patiente 10000s"); await asyncio.sleep(10000)
-            await context.close()
+                mail = emails[index]
+                email = mail["email"]
+                nom = mail["nom"]
+                fichier_cookie = compte_email.get("fichier")
+                mon_email = compte_email.get("email")
+                
+                if email in emails_deja_contacter: continue
+                
+                context = await browser.new_context() #nouveau contexte pour chaque compte
+                cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
+                await context.add_cookies(cookies)
+                
+                page = await context.new_page()
+                await apply_stealth(page)
+                print("✅ mon_compte : ", mon_email)
+                print("Contacté :", email)
+                
+                statut = await connecter_gmail(context, fichier_cookie, page, mon_email)
+                if statut == "erreur_serveur_gmail": await context.close(); continue
+                if statut == "Impossible_de_vous_connecter": await context.close(); continue
+                    
+                await envoyer_email(fichier2, fichier4, page, email, mon_email)
+                
+                emails_deja_contacter.add(email)
+                index += 1
+                
+                await tour_suivant(fichier_email_debut, emails, compte_emails, email_suivant, tour, index)
+                #statut = await tour_suivant(fichier_email_debut, emails, compte_emails, email_suivant, tour, index)
+                #if statut == "tout_mes_comptes_gmail_utiliser": break
+                    
+                #print("patiente 10000s"); await asyncio.sleep(10000)
+                await context.close()
 
 asyncio.run(main())

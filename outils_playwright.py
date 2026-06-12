@@ -739,27 +739,6 @@ async def pause_random(min, max):
     await asyncio.sleep(random.uniform(min,max))
 
 
-# JSON utils (du 2e code, sans duplication avec cookies)
-def charger_json(fichier, defaut):
-    dossier = os.path.dirname(fichier)
-    if dossier and not os.path.exists(dossier):
-        os.makedirs(dossier)
-
-    if not os.path.exists(fichier):
-        with open(fichier,"w",encoding="utf-8") as f:
-            json.dump(defaut,f,indent=2)
-        return defaut
-
-    with open(fichier,"r",encoding="utf-8") as f:
-        try:
-            data = json.load(f)
-
-            if not isinstance(data, type(defaut)):
-                return defaut
-            return data
-        except:
-            return defaut
-            
             
 def sauvegarder_json(fichier, data):
     with open(fichier,"w",encoding="utf-8") as f:
@@ -779,22 +758,7 @@ def ajouter_post(posts, fichier, lien):
         posts.append(lien)
         sauvegarder_json(fichier, posts)
         
-       
-# Blacklist
-def est_blacklist(blacklist, compte, page):
-    return compte in blacklist and page in blacklist[compte]
-    
-
-def ajouter_blacklist(blacklist, fichier, compte, page):
-    if compte not in blacklist or not isinstance(blacklist[compte], list):
-        blacklist[compte] = []
-
-    if page not in blacklist[compte]:
-        blacklist[compte].append(page)
-        sauvegarder_json(fichier, blacklist)
         
-
-
 
 def ajouter_profil(lienAmis, nomAmis, monCompte):
     conn = sqlite3.connect("profils.db"); cur = conn.cursor()
@@ -867,24 +831,21 @@ async def envoyer_message(page, MESSAGES, page_name=None, page_url=None, cookie_
     return "ok"   
     
       
-async def envoyer_commentaire_bs(page, COMMENTS, posts=None, fichier_posts=None, page_name=None, page_url=None, cookie_file=None):
+async def envoyer_commentaire_bs(page, posts=None, fichier_posts=None, page_name=None, page_url=None, cookie_file=None):
     identifiant_post = None
+    commentaire = "Salut, je suis développeur, si tu as envies de créer un réseau social ou une application mobile, je suis disponible."
     
     # attendre chargement posts
     try:
         await page.wait_for_selector('div[data-testid="contentHider-post"]', timeout=60000)
     except:
-        print("Les posts ne se chargent pas")
-        return False
-
+        print("Les posts ne se chargent pas"); return False
 
     # 🔹 trouver le premier post
     post_locator = page.locator('div[data-testid="contentHider-post"]').first
     count_post = await post_locator.count()
 
-    if count_post == 0:
-        print("❌ Aucun post trouvé")
-        return False
+    if count_post == 0: print("❌ Aucun post trouvé"); return False
 
     # 🔹 récupérer texte du post
     try:
@@ -893,9 +854,7 @@ async def envoyer_commentaire_bs(page, COMMENTS, posts=None, fichier_posts=None,
         print("Texte :", identifiant_post[:80])
 
         # vérifier déjà commenté
-        if posts and post_deja_commente(posts, identifiant_post):
-            print("Déjà commenté")
-            return True
+        if posts and post_deja_commente(posts, identifiant_post): print("Déjà commenté"); return True
 
         # sauvegarder texte
         if posts is not None and fichier_posts:
@@ -909,18 +868,14 @@ async def envoyer_commentaire_bs(page, COMMENTS, posts=None, fichier_posts=None,
     # 🔹 cliquer sur le post
     await page.evaluate("""
     const posts = document.querySelectorAll('div[data-testid="contentHider-post"]');
-    if (posts.length > 0) {
-      posts[0].click();
-    } """)
+    if (posts.length > 0) { posts[0].click(); } """)
     await asyncio.sleep(random.uniform(5, 7))
 
 
     # 🔹 cliquer sur le bouton Repondre ou rédiger réponse
     await page.evaluate("""
     const buttonRédiger = document.querySelector('button[aria-label="Rédiger une réponse"]');
-    if (buttonRédiger) {
-      buttonRédiger.click();
-    } """)
+    if (buttonRédiger) { buttonRédiger.click(); } """)
     await asyncio.sleep(random.uniform(5, 7))
     
     # attendre apparition zone texte
@@ -928,16 +883,13 @@ async def envoyer_commentaire_bs(page, COMMENTS, posts=None, fichier_posts=None,
 
     # écrire le commentaire
     comment_box = page.locator("div[role='textbox']").first
-    comment = random.choice(COMMENTS)
-    await comment_box.fill(comment)
+    await comment_box.fill(commentaire)
     await asyncio.sleep(random.uniform(4, 6))
 
     # publier
     await page.evaluate("""
     const boutonPublier = document.querySelector('button[aria-label="Publier la réponse"]');
-    if (boutonPublier) {
-      boutonPublier.click();
-    } """)
+    if (boutonPublier) { boutonPublier.click(); } """)
     
     print("✅ Commentaire envoyé :", comment)
     print(cookie_file)
