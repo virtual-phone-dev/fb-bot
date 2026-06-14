@@ -4,42 +4,82 @@ from outils_playwright import (connecter_gmail, charger_fichier, ajouter_dans_fi
 
 url_post = "https://www.threads.com/@les_luxueux_du_congo/"
 mot_de_passe = "Diel2019@#"
+email = "abdelilluminati@gmail.com"
+
+url_su = "https://substack.com/signup?utm_source=reader-cta&utm_medium=web&utm_campaign=home&utm_content=explore-sidebar"
+url_insta = "https://www.instagram.com/accounts/emailsignup/?next="
+url_li = "https://www.linkedin.com/signup/cold-join/?lipi=urn%3Ali%3Apage%3Ad_flagship3_login%3BRHQKdL8PSAGa2TJzJukqoA%3D%3D"
+url_parler = "https://app.parler.com/login"
+url_minds = "https://www.minds.com"
+url_mewe = "https://mewe.com"
+url_go = "https://www.goafricaonline.com/inscription"
+url_you = "https://www.youtube.com"
+url_da = "https://www.dailymotion.com"
+url_tu = "https://www.tumblr.com/register?redirect_to=%2Fdashboard%2Fblog%2Fzk-j" # pas de date , au niveau des posts
+url_sh = "https://sharechat.com/comment/mlWADada" # cest en hindi
+#url_ = ""
+
+# Ma passion c'est la création d'applications mobile
 
 
+
+        
+async def creer_bs(page): # blue sky
+    await page.goto("https://bsky.app", timeout=0)
+
+async def creer_da(page): # dailymotion
+    await page.goto(url_da, timeout=0)
+
+async def creer_go(page): # goafrica
+    await page.goto(url_go, timeout=0)
+   
+async def creer_insta(page): # instagram
+    await page.goto(url_insta, timeout=0)
+
+async def creer_li(page): # linkedin
+    await page.goto(url_li, timeout=0)
+    
+    
+async def creer_minds(page): # minds
+    await page.goto(url_minds, timeout=0)
+    
+async def creer_mewe(page): # mewe
+    await page.goto(url_mewe, timeout=0)
+
+async def creer_parler(page): # parler
+    await page.goto(url_parler, timeout=0)
 
 async def creer_pi(page): # pinterest
     await page.goto("https://www.pinterest.com", timeout=0)
     print("patiente 2s"); await asyncio.sleep(2)
     
     
-async def creer_quo(page): # quora
-    await page.goto("https://www.quora.com", timeout=0)
+async def creer_su(page): # substack
+    await page.goto(url_su, timeout=0)
     print("patiente 2s"); await asyncio.sleep(2)
-
+    
+    element = page.locator('input[name="email"]')
+    if await element.count() > 0:
+        await element.fill(email)      
+ 
+ 
+async def creer_sh(page): # sharechat
+    await page.goto(url_sh, timeout=0)
     
 async def creer_th(page): # threads
     await page.goto("https://www.threads.com", timeout=0)
-    print("patiente 2s"); await asyncio.sleep(2)
 
-
-async def creer_insta(page): # instagram
-    await page.goto("https://www.instagram.com", timeout=0)
-    print("patiente 2s"); await asyncio.sleep(2)
-
-async def creer_bs(page): # blue sky
-    await page.goto("https://bsky.app", timeout=0)
-    print("patiente 2s"); await asyncio.sleep(2)
-
-
+async def creer_tu(page): # tumblr
+    await page.goto(url_tu, timeout=0)
+   
+    
 async def creer_wat(page): # wattpad
     await page.goto("https://www.wattpad.com", timeout=0)
     print("patiente 2s"); await asyncio.sleep(2)
    
-    
-async def creer_su(page): # substack
-    await page.goto("https://www.substack.com", timeout=0)
-    print("patiente 2s"); await asyncio.sleep(2)
-    
+async def creer_you(page): # youtube
+    await page.goto(url_you, timeout=0)    
+
     
     
 
@@ -412,7 +452,7 @@ async def connecter_compte_insta(page, context, compte, fichier_des_comptes, ema
     #await creer_compte_threads(page2)  
     
             
-async def creer_compte_insta1(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe):
+async def creer_compte_insta(page, context, compte, fichier_des_comptes, nom_complet, nom_profil, email, mot_de_passe):
     print(f"Création du compte : {nom_complet}")
           
     #await connecter_gmail(context, email)
@@ -469,7 +509,7 @@ async def creer_compte_bs(email, nom, fichier_cookie):
     print(f"{len(resultat)} comptes blue sky")
     
     
-async def creer_compte_insta(email, nom, nom_profil, fichier_cookie):
+async def creer_compte_insta1(email, nom, nom_profil, fichier_cookie):
     fichier_insta = "mes_comptes_insta.json"
     
     print(fichier_cookie);
@@ -574,22 +614,41 @@ async def main():
         #page = await context.new_page() # nouvel onglet
         #await apply_stealth(page)
         
+        page_bs = await context.new_page(); await apply_stealth(page_bs)  
+        page_da = await context.new_page(); await apply_stealth(page_da)      
+        page_go = await context.new_page(); await apply_stealth(page_go)      
+        page_insta = await context.new_page(); await apply_stealth(page_insta)                              
+        page_li = await context.new_page(); await apply_stealth(page_li)       
+        page_minds = await context.new_page(); await apply_stealth(page_minds)       
+        page_mewe = await context.new_page(); await apply_stealth(page_mewe)       
+        page_parler = await context.new_page(); await apply_stealth(page_parler)         
+        page_pi = await context.new_page(); await apply_stealth(page_pi)         
+        page_su = await context.new_page(); await apply_stealth(page_su)          
+        page_sh = await context.new_page(); await apply_stealth(page_sh)    
+        page_th = await context.new_page(); await apply_stealth(page_th)             
+        page_tu = await context.new_page(); await apply_stealth(page_tu)
+        page_wat = await context.new_page(); await apply_stealth(page_wat)         
+        page_you = await context.new_page(); await apply_stealth(page_you)              
         
-        page_su = await context.new_page(); await apply_stealth(page_su)      
-        page_wat = await context.new_page(); await apply_stealth(page_wat)        
-        page_th = await context.new_page(); await apply_stealth(page_th)         
-        page_insta = await context.new_page(); await apply_stealth(page_insta)         
-        page_bs = await context.new_page(); await apply_stealth(page_bs)              
-        page_pi = await context.new_page(); await apply_stealth(page_pi)              
-        page_quo = await context.new_page(); await apply_stealth(page_quo)              
         
-        await creer_su(page_su) # substack
-        await creer_wat(page_wat) # wattpad
-        await creer_th(page_th) # threads
-        await creer_insta(page_insta) # insta
         await creer_bs(page_bs) # blue sky
+        await creer_da(page_da) # dailymotion
+        await creer_go(page_go) # goafrica
+        await creer_insta(page_insta) # insta
+        await creer_li(page_li) # linkedin
+        
+        await creer_minds(page_minds) # minds
+        await creer_mewe(page_mewe) # mewe
+        await creer_parler(page_parler) # parler
         await creer_pi(page_pi) # pinterest
-        await creer_quo(page_quo) # quora
+        await creer_su(page_su) # substack
+        
+        await creer_sh(page_sh) # sharechat
+        await creer_th(page_th) # threads
+        await creer_tu(page_tu) # tumblr
+        await creer_wat(page_wat) # wattpad
+        await creer_you(page_you) # youtube
+        
         
         await verifier_commande(50000)
         #print("patiente 2s"); await asyncio.sleep(2)
