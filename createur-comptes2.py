@@ -1,4 +1,4 @@
-import json, asyncio
+import json, asyncio, os, sys, msvcrt, time
 from playwright.async_api import async_playwright
 from outils_playwright import (connecter_gmail, charger_fichier, ajouter_dans_fichier)
 
@@ -7,6 +7,71 @@ mot_de_passe = "Diel2019@#"
 
 
 
+async def creer_pi(page): # pinterest
+    await page.goto("https://www.pinterest.com", timeout=0)
+    print("patiente 2s"); await asyncio.sleep(2)
+    
+    
+async def creer_quo(page): # quora
+    await page.goto("https://www.quora.com", timeout=0)
+    print("patiente 2s"); await asyncio.sleep(2)
+
+    
+async def creer_th(page): # threads
+    await page.goto("https://www.threads.com", timeout=0)
+    print("patiente 2s"); await asyncio.sleep(2)
+
+
+async def creer_insta(page): # instagram
+    await page.goto("https://www.instagram.com", timeout=0)
+    print("patiente 2s"); await asyncio.sleep(2)
+
+async def creer_bs(page): # blue sky
+    await page.goto("https://bsky.app", timeout=0)
+    print("patiente 2s"); await asyncio.sleep(2)
+
+
+async def creer_wat(page): # wattpad
+    await page.goto("https://www.wattpad.com", timeout=0)
+    print("patiente 2s"); await asyncio.sleep(2)
+   
+    
+async def creer_su(page): # substack
+    await page.goto("https://www.substack.com", timeout=0)
+    print("patiente 2s"); await asyncio.sleep(2)
+    
+    
+    
+
+async def verifier_commande(duree_minutes):    
+    secondes = duree_minutes * 1
+    debut = time.time()
+
+    while time.time() - debut < secondes:
+        if msvcrt.kbhit():
+            cmd = input().strip().lower()
+
+            # passer au compte suivant immédiatement
+            if cmd == "+":
+                print("compte suivant")
+                return
+
+            # pause
+            if cmd in ["stop", "-"]:
+                print("PAUSE")
+
+                while True:
+                    cmd = input("Tape + pour continuer : ").strip()
+                    if cmd == "+":
+                        print("reprise")
+                        debut = time.time()
+                        break
+
+        await asyncio.sleep(0.2)
+    print("suivant automatique")
+    
+    
+    
 
 async def formatter(data, fichier_des_comptes):
     with open(fichier_des_comptes, "w", encoding="utf-8") as f:
@@ -414,7 +479,7 @@ async def creer_compte_insta(email, nom, nom_profil, fichier_cookie):
     print(f"{len(resultat)} comptes instagram")
 
 
-async def main():
+async def mainn():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
             headless=False,
@@ -488,5 +553,46 @@ async def main():
             #await context.close() #fermer le contexte (ou la fenetre)
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+
+
+    
+    
+async def main():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(
+        headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
+        
+        context = await browser.new_context()
+        
+        #fichier_emails = "mes_emails.json"
+        #emails = await charger_comptes(fichier_emails)
+
+        # Charger les cookies AVANT d'ouvrir la page
+        #cookies = load_cookies(fichier_des_comptes)
+        #await context.add_cookies(cookies)
+
+        #page = await context.new_page() # nouvel onglet
+        #await apply_stealth(page)
+        
+        
+        page_su = await context.new_page(); await apply_stealth(page_su)      
+        page_wat = await context.new_page(); await apply_stealth(page_wat)        
+        page_th = await context.new_page(); await apply_stealth(page_th)         
+        page_insta = await context.new_page(); await apply_stealth(page_insta)         
+        page_bs = await context.new_page(); await apply_stealth(page_bs)              
+        page_pi = await context.new_page(); await apply_stealth(page_pi)              
+        page_quo = await context.new_page(); await apply_stealth(page_quo)              
+        
+        await creer_su(page_su) # substack
+        await creer_wat(page_wat) # wattpad
+        await creer_th(page_th) # threads
+        await creer_insta(page_insta) # insta
+        await creer_bs(page_bs) # blue sky
+        await creer_pi(page_pi) # pinterest
+        await creer_quo(page_quo) # quora
+        
+        await verifier_commande(50000)
+        #print("patiente 2s"); await asyncio.sleep(2)
+
+      
+asyncio.run(main())

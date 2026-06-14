@@ -178,6 +178,19 @@ async def verifier_date_recontacte(mail):
     return datetime.now() >= date_recontacte
     
 
+
+async def creer_context(browser, fichier):
+    cookie_file = f"cookies-bs/{fichier}.json"
+    
+    if os.path.exists(cookie_file):
+        contexte = await browser.new_context(storage_state=cookie_file)
+    else:
+        # Créer un contexte sans cookies (première connexion)
+        contexte = await browser.new_context()
+    
+    return contexte
+    
+    
 async def verifier_nouveau_element(fichier1, fichier2, cle_db):
     data = await charger_fichier(fichier1) # Charger le fichier emails_collecter.json et emails_collecter2.json
     data2 = await charger_fichier(fichier2)
@@ -708,7 +721,7 @@ async def creer_contexte(browser, cookie_file):
 
 
     
-async def creer_context(browser, cookie_file):
+async def creer_context2(browser, cookie_file):
     contexte = await browser.new_context(storage_state=cookie_file)
     contexte.set_default_timeout(180000)
     contexte.set_default_navigation_timeout(180000)
