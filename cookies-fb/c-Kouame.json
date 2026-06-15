@@ -2,7 +2,7 @@
     "cookies": [
         {
             "name": "dbln",
-            "value": "%7B%22100029155272922%22%3A%22AIMGtHEg%22%7D",
+            "value": "%7B%22100029155272922%22%3A%22gbKCXODq%22%7D",
             "domain": ".facebook.com",
             "path": "/login/device-based/",
             "expires": -1,
@@ -35,7 +35,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1782053977,
+            "expires": -1,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -59,16 +59,6 @@
             "httpOnly": true,
             "secure": true,
             "sameSite": "Lax"
-        },
-        {
-            "name": "c_user",
-            "value": "100029155272922",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1812985178.591085,
-            "httpOnly": false,
-            "secure": true,
-            "sameSite": "None"
         },
         {
             "name": "alsfid",
@@ -101,34 +91,64 @@
             "sameSite": "Lax"
         },
         {
-            "name": "fr",
-            "value": "1h9U7Ne7cZ5OGXHlQ.AWdZ0ExP9Z1misD7sHsHbDm2jFKsOu-tUWF6OJLJcVW0qWKdLJY.BqLsHb..AAA.0.0.BqLsHb.AWcLYfj4D7VpohIthFPAQdLMD38",
-            "domain": ".facebook.com",
+            "name": "csrftoken",
+            "value": "8nzHK_8-hWWxPR0KeWBU0D",
+            "domain": ".instagram.com",
             "path": "/",
-            "expires": 1789225178.591249,
-            "httpOnly": true,
+            "expires": -1,
+            "httpOnly": false,
             "secure": true,
-            "sameSite": "None"
+            "sameSite": "Lax"
         },
         {
-            "name": "xs",
-            "value": "16%3AKD2Jmk8vw1rlzQ%3A2%3A1778450598%3A-1%3A-1%3A%3AAcynR7oQ5gQXREt5zrqcTpw9vDH6CypR5ik8XM4UiKim",
+            "name": "mid",
+            "value": "ai8CPQALAAHg_qkD7CSv4DzjWwhB",
+            "domain": ".instagram.com",
+            "path": "/",
+            "expires": -1,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "c_user",
+            "value": "100029155272922",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1812985178.591377,
-            "httpOnly": true,
+            "expires": 1813056572.279317,
+            "httpOnly": false,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1781449179615%2C%22v%22%3A1%7D",
+            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1781491175615%2C%22v%22%3A1%7D",
             "domain": ".facebook.com",
             "path": "/",
             "expires": -1,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
+        },
+        {
+            "name": "fr",
+            "value": "1UJcqT1UMpgJ0Vbhi.AWex5Az4vRmLDfdBUMrcUmhxXv16ItljEy0MiofI4dJBdYNZKHk.BqL9i-..AAA.0.0.BqL9i-.AWf1lH-0TG85Bua1wpRRtE_nrfk",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1789296572.279487,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "xs",
+            "value": "32%3AB8HEPew5tu6FaQ%3A2%3A1781465663%3A-1%3A-1%3A%3AAcyJKnJEfNtYK4P7cEWL3XJK6p57sbfu64tN-bEiNg",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1813056572.280106,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
         }
     ],
     "origins": [
@@ -137,43 +157,27 @@
             "localStorage": [
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"100029155272922\",\"currentIntervalLastTick\":1781449185,\"currentIntervalStart\":1781449175,\"initRemoteAgg\":{\"timestamp\":1781429269,\"today_s\":3256},\"intervals\":[],\"lastCallbackAttempt\":1781449175,\"localStorageId\":\"93939027\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                    "value": "{\"actorId\":\"100029155272922\",\"currentIntervalLastTick\":null,\"currentIntervalStart\":null,\"initRemoteAgg\":{\"timestamp\":1781511589,\"today_s\":14855},\"intervals\":[],\"lastCallbackAttempt\":null,\"localStorageId\":\"89329115\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
                 },
                 {
                     "name": "last_headload_time",
-                    "value": "1781449176481"
-                },
-                {
-                    "name": "RSTData",
-                    "value": "{}"
-                },
-                {
-                    "name": "bdz_playback_state",
-                    "value": "{\"session_key\":\"mpzmfwa4\",\"buffer_length\":60}"
-                },
-                {
-                    "name": "hb_timestamp",
-                    "value": "1781449178090"
-                },
-                {
-                    "name": "mw_encrypted_backups_restore_upsell_first_impression_time_key",
-                    "value": "1781449173802"
-                },
-                {
-                    "name": "ares_last_signal_flush",
-                    "value": "1780585177900"
-                },
-                {
-                    "name": "signal_flush_timestamp",
-                    "value": "1781449179277"
+                    "value": "1781520572940"
                 },
                 {
                     "name": "Session",
-                    "value": "a91sx7:1781449209757"
+                    "value": "n85bie:1781520598820"
                 },
                 {
-                    "name": "banzai:last_storage_flush",
-                    "value": "1781449175184.9001"
+                    "name": "mutex_screen_time_period_logging_mutex_100029155272922_facebook",
+                    "value": "rbx1t9:1781520592265"
+                },
+                {
+                    "name": "mutex_banzai",
+                    "value": "rbx1t9:1781520576389"
+                },
+                {
+                    "name": "mw_encrypted_backups_restore_upsell_first_impression_time_key",
+                    "value": "1781520571083"
                 }
             ]
         }

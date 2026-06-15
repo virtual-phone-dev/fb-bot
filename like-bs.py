@@ -1,7 +1,7 @@
 import asyncio
 from itertools import cycle;
 from playwright.async_api import async_playwright
-from outils_playwright import (creer_context, creer_page, aller, appliquer_stealth, recuperer_texte_bs,
+from outils_playwright import (creer_context, creer_page, aller, appliquer_stealth, recuperer_texte_bs, connexion_bs,
 sauvegarder_cookies, charger_cookies, charger_fichier_d, charger_fichier, sauvegarder_fichier)
 
 FICHIER_POSTS = "sauvegarde-bs/posts_commentes.json"
@@ -28,44 +28,8 @@ async def visiter(browser, compte, url, comments, posts, blacklist, page_name=No
         ajouter_blacklist(blacklist, FICHIER_BLACKLIST, fichier, url)
         
     await contexte.close()
-
-
-
-async def verifier_blocage_bs(page):
-    btn = await page.query_selector("text=Votre compte a été suspendu")
-    if btn:
-        return "compte_desactiver"
-        
-        
-async def connexion_bs(page, email, mot_de_passe):
-    await page.goto("https://bsky.app/", timeout=0)
-    await page.wait_for_load_state("domcontentloaded")
-
-    while True:
-        btn = page.locator('span:has-text("Connexion")')
-        if await btn.count() > 0:
-            await btn.click() #print("Non Connecté");
-            
-            await page.get_by_label("Pseudo ou e-mail").fill(email)
-            await page.fill('input[data-testid="loginPasswordInput"]', mot_de_passe);
-            #await page.fill('input[aria-label="Mot de passe"]', 'votre_mot_de_passe');
-            
-            print("patiente 1s"); await asyncio.sleep(1)
-            await page.click('button[data-testid="loginNextButton"]');
-
-            print("patiente 10s"); await asyncio.sleep(10)
-            statut = await verifier_blocage_bs(page)
-            if statut == "compte_desactiver": print("⛔ Compte désactiver"); return
-            
-            break
-            
-            
-        element = await page.query_selector('a[aria-label="Paramètres"]')
-        if element:
-            break #print("Connecté");
     
-    #print("patiente 10000s"); await asyncio.sleep(10000)
-    
+        
     
 async def liker(page, url_page):
     await page.goto(url_page, timeout=0)

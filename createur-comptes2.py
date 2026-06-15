@@ -1,34 +1,45 @@
 import json, asyncio, os, sys, msvcrt, time
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail, charger_fichier, ajouter_dans_fichier)
+from outils_playwright import (connecter_gmail, charger_fichier, ajouter_dans_fichier, connexion_bs, query_selector_text, query_selector_a_text, 
+input_name, input_type, input_id, span_has_text)
+
 
 url_post = "https://www.threads.com/@les_luxueux_du_congo/"
 mot_de_passe = "Diel2019@#"
 email = "abdelilluminati@gmail.com"
+nom = "Queen Fleurina" 
+
+url_au = "https://audiomack.com/"
 
 url_su = "https://substack.com/signup?utm_source=reader-cta&utm_medium=web&utm_campaign=home&utm_content=explore-sidebar"
 url_insta = "https://www.instagram.com/accounts/emailsignup/?next="
 url_li = "https://www.linkedin.com/signup/cold-join/?lipi=urn%3Ali%3Apage%3Ad_flagship3_login%3BRHQKdL8PSAGa2TJzJukqoA%3D%3D"
 url_parler = "https://app.parler.com/login"
 url_minds = "https://www.minds.com"
-url_mewe = "https://mewe.com"
+url_mewe = "https://mewe.com/register#auth-1"
 url_go = "https://www.goafricaonline.com/inscription"
 url_you = "https://www.youtube.com"
-url_da = "https://www.dailymotion.com"
 url_tu = "https://www.tumblr.com/register?redirect_to=%2Fdashboard%2Fblog%2Fzk-j" # pas de date , au niveau des posts
-url_sh = "https://sharechat.com/comment/mlWADada" # cest en hindi
+
+url_bo = "https://www.boomplay.com/songs/213391263?from=search" # ici il montre le pays
+url_mi = "https://www.mixcloud.com/brooklynradio/oonops-drops-brainforests/" # ici ce que jai vu, en general cest beaucoup plus, les radio avec leur emissions en ligne, mais ya des commentaires des gens de uk et autres anglophones. ya aussi les dj 
+#url_ = "https://bandcamp.com/" les gar ci affiche les ventes des cd en temps reel , mais jai pas vu les commentaires, ni la partie commentaire. je garde juste pour un jour mettre cet idee dafficher les ventes en temps reel
 #url_ = ""
 
 # Ma passion c'est la création d'applications mobile
+# Création d'applications mobile et de site internet
 
 
 
+async def visiter_de(page): # deepai
+    await page.goto("https://deepai.org", timeout=0)
+    
         
 async def creer_bs(page): # blue sky
-    await page.goto("https://bsky.app", timeout=0)
+    #await page.goto("https://bsky.app", timeout=0)
+    email = "jefflambo298@gmail.com"; mot_de_passe = "Diel2019@#"
+    await connexion_bs(page, email, mot_de_passe)
 
-async def creer_da(page): # dailymotion
-    await page.goto(url_da, timeout=0)
 
 async def creer_go(page): # goafrica
     await page.goto(url_go, timeout=0)
@@ -39,38 +50,85 @@ async def creer_insta(page): # instagram
 async def creer_li(page): # linkedin
     await page.goto(url_li, timeout=0)
     
+    await input_name(page, ["email-address"], email)
+    await input_name(page, ["password"], mot_de_passe)
+    await query_selector_text(page, ["Accepter et s’inscrire"], clic=True)  
+    
     
 async def creer_minds(page): # minds
-    await page.goto(url_minds, timeout=0)
+    await page.goto(url_minds, timeout=0) 
+    
+    await query_selector_text(page, ["Join Now"], clic=True, p=3)    
+    await query_selector_a_text(page, ["Join Minds Now"], clic=True)
+    
     
 async def creer_mewe(page): # mewe
-    await page.goto(url_mewe, timeout=0)
+    await page.goto(url_mewe, timeout=0) 
+    await span_has_text(page, ["Use email or phone"], clic=True)
 
+
+async def pa(page): # parler
+    await connecter_pa(page)
+
+async def connecter_pa(page): 
+    await page.goto(url_parler, timeout=0)
+    
+    
 async def creer_parler(page): # parler
     await page.goto(url_parler, timeout=0)
+    
+    await input_id(page, ["email"], email)
+        
+    element = await page.query_selector('button[type="submit"]:has-text("Continue")')
+    if element:
+        await element.click()
+        print("clic reussi - parler.com");   
+        
 
 async def creer_pi(page): # pinterest
     await page.goto("https://www.pinterest.com", timeout=0)
-    print("patiente 2s"); await asyncio.sleep(2)
+    
+    await query_selector_text(page, ["S’inscrire"], clic=True, p=3)    
+    await input_type(page, ["email"], email)
+    await input_type(page, ["password"], mot_de_passe)
+    
+    
+async def su(page): # substack
+    await connecter_su(page)
+
+async def connecter_su(page): 
+    await page.goto(url_su, timeout=0)
     
     
 async def creer_su(page): # substack
     await page.goto(url_su, timeout=0)
-    print("patiente 2s"); await asyncio.sleep(2)
     
-    element = page.locator('input[name="email"]')
-    if await element.count() > 0:
-        await element.fill(email)      
- 
- 
-async def creer_sh(page): # sharechat
-    await page.goto(url_sh, timeout=0)
+    await input_name(page, ["email"], email)
+        
+    element = await page.query_selector('button[data-state="unchecked"][aria-checked="false"]')
+    if element:
+        await element.click()
+        
+    element = await page.query_selector('button[type="submit"]:has-text("Continuer")')
+    if element:
+        print("clic reussi");
+        
+        await page.evaluate("""
+        const button = Array.from(document.querySelectorAll('button[type="submit"]')).find(btn => btn.textContent.trim() === "Continuer");
+        if (button) { button.click(); } """)
+        
     
 async def creer_th(page): # threads
     await page.goto("https://www.threads.com", timeout=0)
+    
 
 async def creer_tu(page): # tumblr
     await page.goto(url_tu, timeout=0)
+    
+    await input_name(page, ["email"], email)
+    await input_name(page, ["password"], mot_de_passe)
+    await span_has_text(page, ["Inscription"], clic=True)
+   
    
     
 async def creer_wat(page): # wattpad
@@ -603,6 +661,7 @@ async def main():
         headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
         
         context = await browser.new_context()
+        fichier_cookie = "cookies-gmail/gillesilluminati.json"
         
         #fichier_emails = "mes_emails.json"
         #emails = await charger_comptes(fichier_emails)
@@ -616,6 +675,7 @@ async def main():
         
         page_bs = await context.new_page(); await apply_stealth(page_bs)  
         page_da = await context.new_page(); await apply_stealth(page_da)      
+        page_gmail = await context.new_page(); await apply_stealth(page_gmail)      
         page_go = await context.new_page(); await apply_stealth(page_go)      
         page_insta = await context.new_page(); await apply_stealth(page_insta)                              
         page_li = await context.new_page(); await apply_stealth(page_li)       
@@ -629,29 +689,27 @@ async def main():
         page_tu = await context.new_page(); await apply_stealth(page_tu)
         page_wat = await context.new_page(); await apply_stealth(page_wat)         
         page_you = await context.new_page(); await apply_stealth(page_you)              
-        
+        page_de = await context.new_page(); await apply_stealth(page_de)              
+        await connecter_gmail(context, fichier_cookie, page_gmail, email)
         
         await creer_bs(page_bs) # blue sky
-        await creer_da(page_da) # dailymotion
         await creer_go(page_go) # goafrica
         await creer_insta(page_insta) # insta
         await creer_li(page_li) # linkedin
-        
         await creer_minds(page_minds) # minds
-        await creer_mewe(page_mewe) # mewe
-        await creer_parler(page_parler) # parler
-        await creer_pi(page_pi) # pinterest
-        await creer_su(page_su) # substack
         
-        await creer_sh(page_sh) # sharechat
+        await creer_mewe(page_mewe) # mewe
+        await pa(page_parler) # parler
+        await creer_pi(page_pi) # pinterest
+        await su(page_su) # substack
         await creer_th(page_th) # threads
+        
         await creer_tu(page_tu) # tumblr
         await creer_wat(page_wat) # wattpad
         await creer_you(page_you) # youtube
         
-        
+        await visiter_de(page_de) # deepai        
         await verifier_commande(50000)
-        #print("patiente 2s"); await asyncio.sleep(2)
 
       
 asyncio.run(main())

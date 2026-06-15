@@ -42,11 +42,61 @@ async def nom_page(page, url):
             print("..erreur"); print(e)
             
 
+async def input_name(page, textes, ecrire):
+    for t in textes:
+        
+        element = page.locator(f'input[name="{t}"]')
+        if await element.count() > 0:
+            await element.fill(ecrire)            
+            return element
+    return None
+    
+    
+async def input_type(page, textes, ecrire):
+    for t in textes:
+        
+        element = page.locator(f'input[type="{t}"]')
+        if await element.count() > 0:
+            await element.fill(ecrire)            
+            return element
+    return None
 
 
+async def input_id(page, textes, ecrire):
+    for t in textes:
+        
+        element = page.locator(f'input[id="{t}"]')
+        if await element.count() > 0:
+            await element.fill(ecrire)            
+            return element
+    return None
+    
+    
+async def query_selector_a_text(page, textes, clic=False):
+    for t in textes:
+        
+        btn = await page.query_selector(f'a:has-text("{t}")')
+        if btn:
+            if clic:
+                await btn.click()
+                print("patiente 2s"); await asyncio.sleep(2)
+            return btn            
+    return None
+    
+    
+async def query_selector_text(page, textes, clic=False, p=False):
+    for t in textes:
+        
+        btn = await page.query_selector(f'text="{t}"')
+        if btn:
+            if clic:
+                await btn.click()
+                if p: print(f"patiente {p}s"); await asyncio.sleep(p)
+            return btn
+    return None
+    
+    
 async def clic_div_aria_label_role_button(page, textes, cliquer=False):
-    #while True:
-    print("patiente 1s"); await asyncio.sleep(1)
     for t in textes:
                 
         btn = page.locator(f'div[aria-label="{t}"][role="button"]').first
@@ -58,14 +108,14 @@ async def clic_div_aria_label_role_button(page, textes, cliquer=False):
     
 
 
-async def span_has_text(page, textes, cliquer=False):
+async def span_has_text(page, textes, clic=False):
     try:
         for t in textes:
             
             btn = page.locator(f'span:has-text("{t}")')        
             if await btn.count() > 0:  
-                
-                if cliquer: await btn.click()
+                if clic: 
+                    await btn.click()
                 return btn
         return None
     except:
@@ -450,7 +500,8 @@ async def connecter_gmail(context, fichier_cookie, page, email):
             except Exception as e:
                 print("..erreur"); print(e); pass
         
-        
+
+    
 async def post_recent(page):
     btn = page.locator('div[aria-label="Laissez un commentaire"][role="button"]').first
     if await btn.count() > 0:    
@@ -505,7 +556,43 @@ async def recuperer_texte_th(page, posts, fichier_posts):
         pass #print("Impossible de récupérer le texte :", e)
 
 
+async def verifier_blocage_bs(page):
+    btn = await page.query_selector("text=Votre compte a été suspendu")
+    if btn:
+        return "compte_desactiver"
+        
+        
+async def connexion_bs(page, email, mot_de_passe):
+    await page.goto("https://bsky.app/", timeout=0)
+    await page.wait_for_load_state("domcontentloaded")
 
+    while True:
+        btn = page.locator('span:has-text("Connexion")')
+        if await btn.count() > 0:
+            await btn.click() #print("Non Connecté");
+            
+            await page.get_by_label("Pseudo ou e-mail").fill(email)
+            await page.fill('input[data-testid="loginPasswordInput"]', mot_de_passe);
+            #await page.fill('input[aria-label="Mot de passe"]', 'votre_mot_de_passe');
+            
+            print("patiente 1s"); await asyncio.sleep(1)
+            await page.click('button[data-testid="loginNextButton"]');
+
+            print("patiente 10s"); await asyncio.sleep(10)
+            statut = await verifier_blocage_bs(page)
+            if statut == "compte_desactiver": print("⛔ Compte désactiver"); return
+            
+            break
+            
+            
+        element = await page.query_selector('a[aria-label="Paramètres"]')
+        if element:
+            break #print("Connecté");
+    
+    #print("patiente 10000s"); await asyncio.sleep(10000)
+    
+    
+    
 async def recuperer_texte_bs(page, posts, fichier_posts):
     # RÉCUPÉRATION TEXTE POST (NOUVELLE MÉTHODE)
     try:        
