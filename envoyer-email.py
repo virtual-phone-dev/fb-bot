@@ -2,13 +2,12 @@ import json, asyncio, time, msvcrt
 from playwright.async_api import async_playwright
 from datetime import datetime, timedelta
 from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies, sauvegarder_sur_meme_ligne, sauvegarder_fichier, charger_fichier, charger_fichier_d,
-basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_nouveau_element)
+basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_nouveau_element, verifier_nouveau_message)
 
 format_date = "%d-%m-%Y"
 
 
 texte = """Salut, je suis développeur, si tu as envies de créer un réseau social ou une application mobile, je suis disponible. """
-
 objet = "Développeur"
 
 # albanais
@@ -162,7 +161,8 @@ async def envoyer_email(fichier2, fichier4, page, email, mon_email):
             if trouver: break
         except:
             pass
-    #print("patiente 10000s"); await asyncio.sleep(10000)
+
+    await verifier_nouveau_message(page, mon_email)
 
 
 

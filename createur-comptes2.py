@@ -1,13 +1,15 @@
 import json, asyncio, os, sys, msvcrt, time
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail, charger_fichier, ajouter_dans_fichier, connexion_bs, query_selector_text, query_selector_a_text, 
-input_name, input_type, input_id, span_has_text)
+from outils_playwright import (connecter_gmail, charger_fichier, ajouter_dans_fichier, connexion_bs, query_selector_text, query_selector_a_text, div_data_testid,
+button_id, button_button_text, button_submit_text, input_name, input_type, input_id, span_has_text)
 
 
 url_post = "https://www.threads.com/@les_luxueux_du_congo/"
 mot_de_passe = "Diel2019@#"
 email = "abdelilluminati@gmail.com"
 nom = "Queen Fleurina" 
+nom1 = "Queen" 
+nom2 = "Fleurina" 
 
 url_au = "https://audiomack.com/"
 
@@ -33,42 +35,132 @@ url_mi = "https://www.mixcloud.com/brooklynradio/oonops-drops-brainforests/" # i
 
 async def visiter_de(page): # deepai
     await page.goto("https://deepai.org", timeout=0)
-    
+
+
+async def bs(page): # blue sky
+    try:
+        await creer_bs(page)
+    except Exception as e:
+        print("..erreur"); print(e)
+        
         
 async def creer_bs(page): # blue sky
     #await page.goto("https://bsky.app", timeout=0)
     email = "jefflambo298@gmail.com"; mot_de_passe = "Diel2019@#"
     await connexion_bs(page, email, mot_de_passe)
+    await collecter_bs(page)
 
 
-async def creer_go(page): # goafrica
+async def collecter_bs(page):   
+    statut = await div_data_testid(page, ["contentHider-post"])
+    if statut:
+        print("posts trouvés")
+    else:
+        print("posts pas trouvés")
+
+
+async def go(page): # goafrica
+    try:
+        await connexion_go(page)
+    except Exception as e:
+        print("..erreur"); print(e)
+
+
+async def connexion_go(page): 
+    await page.goto("https://www.goafricaonline.com", timeout=0)
+    await button_id(page, ["Zsl8fRiKsZ"], clic=True)
+    
+async def creer_go(page): 
     await page.goto(url_go, timeout=0)
-   
-async def creer_insta(page): # instagram
-    await page.goto(url_insta, timeout=0)
+    
+    
+    
+async def insta(page, context): # instagram
+    try:
+        email="kfhilluminati@gmail.com"; mot_de_passe="Diel2019@#"; nom_profil="Caroline_.1145"; compte="cookies-insta/Caroline.json"; 
+        fichier_des_comptes = "mes_comptes_insta2.json"
+        
+        await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil) # connexion_insta
+    except Exception as e:
+        print("..erreur"); print(e)
+    
+    
+async def connexion_insta(page): 
+    await page.goto("https://www.instagram.com", timeout=0)  
 
+   
+async def creer_insta(page):
+    await page.goto(url_insta, timeout=0)
+    
+    
+    
+async def li(page): # linkedin
+    try:
+        await connexion_li(page) 
+    except Exception as e:
+        print("..erreur"); print(e)
+    
+    
+async def connexion_li(page): 
+    await page.goto("https://www.linkedin.com", timeout=0)
+
+    
 async def creer_li(page): # linkedin
     await page.goto(url_li, timeout=0)
     
     await input_name(page, ["email-address"], email)
     await input_name(page, ["password"], mot_de_passe)
-    await query_selector_text(page, ["Accepter et s’inscrire"], clic=True)  
+    await query_selector_text(page, ["Accepter et s’inscrire"], clic=True, p=15)
     
+    await input_name(page, ["first-name"], nom1)
+    await input_name(page, ["last-name"], nom2)
+    await button_id(page, ["join-form-submit"], clic=True)
+
+
     
+async def minds(page): # minds
+    try:
+        await creer_minds(page)
+    except Exception as e:
+        print("..erreur"); print(e)
+        
+        
 async def creer_minds(page): # minds
-    await page.goto(url_minds, timeout=0) 
+    try:
+        await page.goto(url_minds, timeout=0) 
+        
+        await query_selector_text(page, ["Join Now"], clic=True, p=3)    
+        await query_selector_a_text(page, ["Join Minds Now"], clic=True)
+        
+        await input_id(page, ["username"], nom, clic=True)
+        await input_id(page, ["email"], email, clic=True)
+        await input_id(page, ["password"], mot_de_passe, clic=True)
+        await input_id(page, ["password2"], mot_de_passe, clic=True)
+        await input_type(page, ["checkbox"], clic=True)
+    except Exception as e:
+        print("..erreur"); print(e)
     
-    await query_selector_text(page, ["Join Now"], clic=True, p=3)    
-    await query_selector_a_text(page, ["Join Minds Now"], clic=True)
-    
-    
+
+
+async def mewe(page): # mewe
+    try:
+        await creer_mewe(page)
+    except Exception as e:
+        print("..erreur"); print(e)
+
+        
 async def creer_mewe(page): # mewe
     await page.goto(url_mewe, timeout=0) 
-    await span_has_text(page, ["Use email or phone"], clic=True)
+    await button_button_text(page, ["Use email or phone"], clic=True)
+
 
 
 async def pa(page): # parler
-    await connecter_pa(page)
+    try:
+        await connecter_pa(page)
+    except Exception as e:
+        print("..erreur"); print(e)
+
 
 async def connecter_pa(page): 
     await page.goto(url_parler, timeout=0)
@@ -85,6 +177,14 @@ async def creer_parler(page): # parler
         print("clic reussi - parler.com");   
         
 
+
+async def pi(page): # pinterest
+    try:
+        await creer_pi(page)
+    except Exception as e:
+        print("..erreur"); print(e)
+        
+        
 async def creer_pi(page): # pinterest
     await page.goto("https://www.pinterest.com", timeout=0)
     
@@ -92,12 +192,23 @@ async def creer_pi(page): # pinterest
     await input_type(page, ["email"], email)
     await input_type(page, ["password"], mot_de_passe)
     
-    
-async def su(page): # substack
-    await connecter_su(page)
 
-async def connecter_su(page): 
-    await page.goto(url_su, timeout=0)
+
+async def su(page): # substack
+    try:
+        await connexion_su(page)
+    except Exception as e:
+        print("..erreur"); print(e)
+        
+
+async def connexion_su(page): 
+    await page.goto("https://substack.com", timeout=0)
+    
+    await button_button_text(page, ["Se connecter"], clic=True, p=2)
+    await button_button_text(page, ["Se connecter avec le mot de passe"], clic=True, p=3)
+    await input_name(page, ["email"], email)
+    await input_name(page, ["password"], email)
+    await button_submit_text(page, ["Continuer"], clic=True)
     
     
 async def creer_su(page): # substack
@@ -117,11 +228,31 @@ async def creer_su(page): # substack
         const button = Array.from(document.querySelectorAll('button[type="submit"]')).find(btn => btn.textContent.trim() === "Continuer");
         if (button) { button.click(); } """)
         
-    
+        
+        
+async def th(page): # threads
+    try:
+        email="dgjilluminati@gmail.com"; mot_de_passe="Diel2019@#"
+        await connexion_th(page, email, mot_de_passe)
+    except Exception as e:
+        print("..erreur"); print(e)
+
+
 async def creer_th(page): # threads
     await page.goto("https://www.threads.com", timeout=0)
-    
 
+   
+   
+async def tu(page): # tumblr
+    try:
+        await connexion_tu(page)
+    except Exception as e:
+        print("..erreur"); print(e)
+    
+    
+async def connexion_tu(page):
+    await page.goto("https://www.tumblr.com", timeout=0)
+    
 async def creer_tu(page): # tumblr
     await page.goto(url_tu, timeout=0)
     
@@ -130,11 +261,27 @@ async def creer_tu(page): # tumblr
     await span_has_text(page, ["Inscription"], clic=True)
    
    
-    
-async def creer_wat(page): # wattpad
+   
+async def wa(page): # wattpad
+    try:
+        await creer_wat(page)
+    except Exception as e:
+        print("..erreur"); print(e)
+
+        
+async def creer_wat(page): 
     await page.goto("https://www.wattpad.com", timeout=0)
     print("patiente 2s"); await asyncio.sleep(2)
-   
+
+
+
+async def you(page): # youtube
+    try:
+        await creer_you(page)
+    except Exception as e:
+        print("..erreur"); print(e)   
+        
+        
 async def creer_you(page): # youtube
     await page.goto(url_you, timeout=0)    
 
@@ -575,84 +722,6 @@ async def creer_compte_insta1(email, nom, nom_profil, fichier_cookie):
     
     resultat = await charger_fichier(fichier_insta) 
     print(f"{len(resultat)} comptes instagram")
-
-
-async def mainn():
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(        
-            headless=False,
-            args=[
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--disable-infobars",
-                "--disable-web-security",
-            ],
-        )
-
-        #context = await browser.new_context()
-        
-        fichier_emails = "mes_emails.json"
-        emails = await charger_comptes(fichier_emails)
-
-        # Charger les cookies AVANT d'ouvrir la page
-        #cookies = load_cookies(fichier_des_comptes)
-        #await context.add_cookies(cookies)
-
-        #page = await context.new_page() # nouvel onglet
-        #await apply_stealth(page)
-        
-        compteur = 1
-        
-        for mail in emails:
-        #    if compte["fichier"].startswith("-"): #ignorer les comptes qui commencent par "-"
-        #        continue
-                
-                
-            #context = await browser.new_context() #nouveau contexte pour chaque compte
-            email = mail.get("email")
-            nom_profil = f"richesse.avec.satan{compteur}" 
-            nom = "Richesse avec SATAN" 
-            nom_anglais = "Wealth with Satan" 
-            
-            fichier_cookie_insta = f"cookies-insta/Richesse{compteur}.json" 
-            fichier_cookie_th = f"cookies-th/Richesse{compteur}.json" 
-            fichier_cookie_bs = f"cookies-bs/Richesse{compteur}.json" 
-            
-            #nom_complet = compte["nom_complet"]
-            #nom_profil = compte["nom_profil"]
-            #email = compte["email"]
-            #mot_de_passe = compte["mot_de_passe"]
-            
-            #print(email);
-
-            #page = await context.new_page()
-            #await apply_stealth(page)        
-            #await connecter_gmail(context, email)
-            
-            
-            await creer_compte_insta(email, nom, nom_profil, fichier_cookie_insta)
-            await creer_compte_th(email, nom, fichier_cookie_th)
-
-            #await creer_compte_bs(email, nom_anglais, fichier_cookie_bs)
-            #print("patiente 10000s"); await asyncio.sleep(10000)
-            compteur += 1
-
-            #await page.goto("https://www.instagram.com", timeout=0)
-            #await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil)
-            
-            #await commenter_th(page, email, mot_de_passe)
-            #print("patiente 10000s"); await asyncio.sleep(10000)
-            #break
-            
-            #await reparer_th(page, context, nom_complet, email, mot_de_passe)
-            #await connexion_th(page, email, mot_de_passe)
-            
-            
-            #await context.close() #fermer le contexte (ou la fenetre)
-
-
-
-
     
     
 async def main():
@@ -692,24 +761,24 @@ async def main():
         page_de = await context.new_page(); await apply_stealth(page_de)              
         await connecter_gmail(context, fichier_cookie, page_gmail, email)
         
-        await creer_bs(page_bs) # blue sky
-        await creer_go(page_go) # goafrica
-        await creer_insta(page_insta) # insta
-        await creer_li(page_li) # linkedin
-        await creer_minds(page_minds) # minds
+        await bs(page_bs) # blue sky
+        await go(page_go) # goafrica
+        await insta(page_insta, context) # insta
+        await li(page_li) # linkedin
+        await minds(page_minds) # minds
         
-        await creer_mewe(page_mewe) # mewe
+        await mewe(page_mewe) # mewe
         await pa(page_parler) # parler
-        await creer_pi(page_pi) # pinterest
+        await pi(page_pi) # pinterest
         await su(page_su) # substack
-        await creer_th(page_th) # threads
+        await th(page_th) # threads
         
-        await creer_tu(page_tu) # tumblr
-        await creer_wat(page_wat) # wattpad
-        await creer_you(page_you) # youtube
+        await tu(page_tu) # tumblr
+        await wa(page_wat) # wattpad
+        await you(page_you) # youtube
         
         await visiter_de(page_de) # deepai        
         await verifier_commande(50000)
 
-      
+
 asyncio.run(main())

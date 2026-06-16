@@ -52,24 +52,27 @@ async def input_name(page, textes, ecrire):
     return None
     
     
-async def input_type(page, textes, ecrire):
+async def input_type(page, textes, ecrire=False, clic=False):
     for t in textes:
         
         element = page.locator(f'input[type="{t}"]')
         if await element.count() > 0:
-            await element.fill(ecrire)            
+            if ecrire: await element.fill(ecrire)            
+            if clic: await element.click()            
             return element
     return None
 
 
-async def input_id(page, textes, ecrire):
+async def input_id(page, textes, ecrire, clic=False):
     for t in textes:
         
         element = page.locator(f'input[id="{t}"]')
         if await element.count() > 0:
+            if clic: 
+                await element.click() 
             await element.fill(ecrire)            
             return element
-    return None
+    return None 
     
     
 async def query_selector_a_text(page, textes, clic=False):
@@ -96,6 +99,83 @@ async def query_selector_text(page, textes, clic=False, p=False):
     return None
     
     
+async def button_id(page, textes, clic=False):
+    for t in textes:
+        
+        element = page.locator(f'button[id="{t}"]')
+        if await element.count() > 0:
+            if clic: await element.click()            
+            return element
+    return None
+
+
+async def button_button_text(page, textes, clic=False, p=False):
+    for t in textes:
+        
+        element = page.locator(f'button[type="button"]:has-text("{t}")')
+        if await element.count() > 0:
+            if clic: 
+                await element.click()   
+                if p: print(f"patiente {p}s"); await asyncio.sleep(p)
+            return element
+    return None
+
+
+async def button_submit_text(page, textes, clic=False, p=False):
+    for t in textes:
+        
+        element = page.locator(f'button[type="submit"]:has-text("{t}")')
+        if await element.count() > 0:
+            if clic: 
+                await element.click()   
+                if p: print(f"patiente {p}s"); await asyncio.sleep(p)
+            return element
+    return None
+    
+
+async def div_data_testid(page, textes, clic=False, p=False):
+    for t in textes:
+        
+        element = page.locator(f'div[data-testid="{t}"]')
+        if await element.count() > 0:
+            #if clic: 
+            #    await element.click()   
+            #    if p: print(f"patiente {p}s"); await asyncio.sleep(p)
+            return element
+    return None
+    
+# post_locator = page.locator('div[data-testid="contentHider-post"]').first
+# count_post = await post_locator.count()
+
+
+async def span_name(page, textes, clic=False, p=False):
+    for t in textes:
+        
+        element = page.locator(f'span[name="{t}"]')
+        if await element.count() > 0:
+            if clic: 
+                await element.click()   
+                if p: print(f"patiente {p}s"); await asyncio.sleep(p)
+            return element
+    return None
+    
+
+
+async def span_has_text(page, textes, clic=False):
+    try:
+        for t in textes:
+            
+            element = page.locator(f'span:has-text("{t}")')        
+            if await element.count() > 0:  
+                print("t", t);
+                if clic: 
+                    await element.click()
+                return element
+        return None
+    except:
+        pass
+        
+        
 async def clic_div_aria_label_role_button(page, textes, cliquer=False):
     for t in textes:
                 
@@ -105,24 +185,40 @@ async def clic_div_aria_label_role_button(page, textes, cliquer=False):
                 await btn.click()
             return btn
     return None
+
+
+async def verifier_nouveau_message(page, email):
+    statut = await span_has_text(page, ["Adresse introuvable", "Message non distribué", "Boîte de réception du destinataire pleine"])
+    if statut: 
+        print("Pas de nouveau message a"); 
+        await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", email)
+        return
+
+    statut = await span_name(page, ["moi"])
+    if statut:
+        print("nouveau message trouvé")
+        await mettre_a_jour("mes_emails2.json", {"message_trouvé": 1}, "email", email)
+    else:
+        print("Pas de nouveau message b")
+        await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", email)   
+        
+
+async def verifier_nouveau_message2(page, email):
+    statut = await span_has_text(page, ["Adresse introuvable", "Message non distribué", "Boîte de réception du destinataire pleine"])
+    if statut: 
+        print("Pas de nouveau message a") 
+        await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", email)
+        return
     
+    # Chercher span[name="moi"] uniquement dans un tr non lu (zE)
+    element = page.locator('tr.zA.zE span[name="moi"]')
+    if await element.count() > 0:
+        print("nouveau message trouvé (non lu)")
+        await mettre_a_jour("mes_emails2.json", {"message_trouvé": 1}, "email", email)
+    else:
+        print("Pas de nouveau message b (lu ou absent)")
+        await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", email)
 
-
-async def span_has_text(page, textes, clic=False):
-    try:
-        for t in textes:
-            
-            btn = page.locator(f'span:has-text("{t}")')        
-            if await btn.count() > 0:  
-                if clic: 
-                    await btn.click()
-                return btn
-        return None
-    except:
-        pass
-        
-
-        
         
 # VERIFIER COMMANDE CONSOLE
 async def verifier_commande(page, duree_pause):
@@ -195,8 +291,7 @@ async def reparer_fb(page):
             btn = page.get_by_label("Votre profil")
             if await btn.count() > 0:
                 return "connecté_déblocage_réussi"
-
-
+                
     
 async def nettoyer_texte(txt): #ce code permet pour que, Église, eglise, puisse marcher
     txt = txt.lower().strip()
@@ -349,7 +444,7 @@ async def basculer_sur_la_page(page):
                 pass
             
             
-            
+             
 async def connecter_gmail(context, fichier_cookie, page, email):
     try:
         await page.goto("https://mail.google.com", timeout=0)

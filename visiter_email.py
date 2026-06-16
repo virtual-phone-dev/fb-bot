@@ -2,17 +2,14 @@ import json, asyncio, time, msvcrt
 from playwright.async_api import async_playwright
 from datetime import datetime, timedelta
 from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies, sauvegarder_sur_meme_ligne, sauvegarder_fichier, charger_fichier, charger_fichier_d,
-basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_nouveau_element)
+basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_nouveau_element, verifier_nouveau_message, span_name, span_has_text)
 
 format_date = "%d-%m-%Y"
 
 texte = """Salut, tu pourras avoir quelques minutes à m'accorder? """
-
- 
 objet = "Cool"
 
 
- 
 
 
 # VERIFIER COMMANDE CONSOLE
@@ -227,7 +224,8 @@ async def main():
         fichier3 = "mes_emails.json"
         fichier4 = "mes_emails2.json"
         compte_emails = await verifier_nouveau_element(fichier3, fichier4, "email") 
-        compte_emails = [c for c in compte_emails if c.get("email_special") == 1]
+        compte_emails = [c for c in compte_emails if c.get("message_trouvé") == 1]
+        #compte_emails = [c for c in compte_emails if c.get("email_special") == 1]
         
         fichier_email_debut = "email_debut_pve.json" # email_debut_ poour visiter_email
         email_debut = (await charger_fichier_d(fichier_email_debut)).get("email")
@@ -262,6 +260,8 @@ async def main():
             if statut == "erreur_serveur_gmail": await context.close(); continue
                 
             #await envoyer_email(fichier2, fichier4, page, email, mon_email)
+            
+            await verifier_nouveau_message(page, mon_email)
             
             emails_deja_contacter.add(email)
             index += 1
