@@ -1,24 +1,23 @@
 import json, asyncio, os, sys, msvcrt, time
 from playwright.async_api import async_playwright
-from outils_playwright import (connecter_gmail, charger_fichier, ajouter_dans_fichier, connexion_bs, query_selector_text, query_selector_a_text, div_data_testid,
-button_id, button_button_text, button_submit_text, input_name, input_type, input_id, span_has_text)
+from outils_playwright import (connecter_gmail, charger_fichier, ajouter_dans_fichier, connexion_bs, query_selector_text, query_selector_a_text, 
+div_data_testid, div_data_pagelet, button_id, button_button_text, button_submit_text, input_name, input_type, input_id, span_has_text, connexion_tu)
 
 
-url_post = "https://www.threads.com/@les_luxueux_du_congo/"
 mot_de_passe = "Diel2019@#"
 email = "abdelilluminati@gmail.com"
 nom = "Queen Fleurina" 
 nom1 = "Queen" 
 nom2 = "Fleurina" 
 
-url_au = "https://audiomack.com/"
+url_post = "https://www.threads.com/@les_luxueux_du_congo/"
 
+url_au = "https://audiomack.com/"
 url_su = "https://substack.com/signup?utm_source=reader-cta&utm_medium=web&utm_campaign=home&utm_content=explore-sidebar"
 url_insta = "https://www.instagram.com/accounts/emailsignup/?next="
 url_li = "https://www.linkedin.com/signup/cold-join/?lipi=urn%3Ali%3Apage%3Ad_flagship3_login%3BRHQKdL8PSAGa2TJzJukqoA%3D%3D"
 url_parler = "https://app.parler.com/login"
 url_minds = "https://www.minds.com"
-url_mewe = "https://mewe.com/register#auth-1"
 url_go = "https://www.goafricaonline.com/inscription"
 url_you = "https://www.youtube.com"
 url_tu = "https://www.tumblr.com/register?redirect_to=%2Fdashboard%2Fblog%2Fzk-j" # pas de date , au niveau des posts
@@ -26,6 +25,8 @@ url_tu = "https://www.tumblr.com/register?redirect_to=%2Fdashboard%2Fblog%2Fzk-j
 url_bo = "https://www.boomplay.com/songs/213391263?from=search" # ici il montre le pays
 url_mi = "https://www.mixcloud.com/brooklynradio/oonops-drops-brainforests/" # ici ce que jai vu, en general cest beaucoup plus, les radio avec leur emissions en ligne, mais ya des commentaires des gens de uk et autres anglophones. ya aussi les dj 
 #url_ = "https://bandcamp.com/" les gar ci affiche les ventes des cd en temps reel , mais jai pas vu les commentaires, ni la partie commentaire. je garde juste pour un jour mettre cet idee dafficher les ventes en temps reel
+# on laisse tomber substack, car pour se connecter a chaque compte , ya des "je ne suis pas un robot" qui font chier
+# mewe aussi deconne trop, le site reste bloqué
 #url_ = ""
 
 # Ma passion c'est la création d'applications mobile
@@ -41,7 +42,7 @@ async def bs(page): # blue sky
     try:
         await creer_bs(page)
     except Exception as e:
-        print("..erreur"); print(e)
+        print("..erreur -bs"); print(e)
         
         
 async def creer_bs(page): # blue sky
@@ -63,7 +64,7 @@ async def go(page): # goafrica
     try:
         await connexion_go(page)
     except Exception as e:
-        print("..erreur"); print(e)
+        print("..erreur -go"); print(e)
 
 
 async def connexion_go(page): 
@@ -80,9 +81,10 @@ async def insta(page, context): # instagram
         email="kfhilluminati@gmail.com"; mot_de_passe="Diel2019@#"; nom_profil="Caroline_.1145"; compte="cookies-insta/Caroline.json"; 
         fichier_des_comptes = "mes_comptes_insta2.json"
         
+        await page.goto("https://www.instagram.com", timeout=0)  
         await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil) # connexion_insta
     except Exception as e:
-        print("..erreur"); print(e)
+        print("..erreur -insta"); print(e)
     
     
 async def connexion_insta(page): 
@@ -98,12 +100,17 @@ async def li(page): # linkedin
     try:
         await connexion_li(page) 
     except Exception as e:
-        print("..erreur"); print(e)
+        print("..erreur -linkedin"); print(e)
     
     
 async def connexion_li(page): 
-    await page.goto("https://www.linkedin.com", timeout=0)
-
+    await page.goto("https://www.linkedin.com/login/fr/", timeout=0)
+    #await query_selector_text(page, ["S’identifier avec un e-mail"], clic=True)
+    
+    await input_type(page, ["email"], email)
+    await input_type(page, ["password"], mot_de_passe) 
+    await span_has_text(page, ["S’identifier"], clic=True)
+    
     
 async def creer_li(page): # linkedin
     await page.goto(url_li, timeout=0)
@@ -122,7 +129,7 @@ async def minds(page): # minds
     try:
         await creer_minds(page)
     except Exception as e:
-        print("..erreur"); print(e)
+        print("..erreur - minds"); print(e)
         
         
 async def creer_minds(page): # minds
@@ -138,35 +145,18 @@ async def creer_minds(page): # minds
         await input_id(page, ["password2"], mot_de_passe, clic=True)
         await input_type(page, ["checkbox"], clic=True)
     except Exception as e:
-        print("..erreur"); print(e)
+        print("..erreur -minds"); print(e)
     
-
-
-async def mewe(page): # mewe
-    try:
-        await creer_mewe(page)
-    except Exception as e:
-        print("..erreur"); print(e)
-
-        
-async def creer_mewe(page): # mewe
-    await page.goto(url_mewe, timeout=0) 
-    await button_button_text(page, ["Use email or phone"], clic=True)
-
 
 
 async def pa(page): # parler
     try:
-        await connecter_pa(page)
+        await connexion_inscription_parler(page)
     except Exception as e:
-        print("..erreur"); print(e)
+        print("..erreur -parler"); print(e)
 
-
-async def connecter_pa(page): 
-    await page.goto(url_parler, timeout=0)
     
-    
-async def creer_parler(page): # parler
+async def connexion_inscription_parler(page): # parler , la connexion et l'inscription cest la meme popup, c'est lié
     await page.goto(url_parler, timeout=0)
     
     await input_id(page, ["email"], email)
@@ -182,7 +172,7 @@ async def pi(page): # pinterest
     try:
         await creer_pi(page)
     except Exception as e:
-        print("..erreur"); print(e)
+        print("..erreur -pinterest"); print(e)
         
         
 async def creer_pi(page): # pinterest
@@ -192,73 +182,43 @@ async def creer_pi(page): # pinterest
     await input_type(page, ["email"], email)
     await input_type(page, ["password"], mot_de_passe)
     
-
-
-async def su(page): # substack
-    try:
-        await connexion_su(page)
-    except Exception as e:
-        print("..erreur"); print(e)
-        
-
-async def connexion_su(page): 
-    await page.goto("https://substack.com", timeout=0)
-    
-    await button_button_text(page, ["Se connecter"], clic=True, p=2)
-    await button_button_text(page, ["Se connecter avec le mot de passe"], clic=True, p=3)
-    await input_name(page, ["email"], email)
-    await input_name(page, ["password"], email)
-    await button_submit_text(page, ["Continuer"], clic=True)
-    
-    
-async def creer_su(page): # substack
-    await page.goto(url_su, timeout=0)
-    
-    await input_name(page, ["email"], email)
-        
-    element = await page.query_selector('button[data-state="unchecked"][aria-checked="false"]')
-    if element:
-        await element.click()
-        
-    element = await page.query_selector('button[type="submit"]:has-text("Continuer")')
-    if element:
-        print("clic reussi");
-        
-        await page.evaluate("""
-        const button = Array.from(document.querySelectorAll('button[type="submit"]')).find(btn => btn.textContent.trim() === "Continuer");
-        if (button) { button.click(); } """)
-        
         
         
 async def th(page): # threads
     try:
         email="dgjilluminati@gmail.com"; mot_de_passe="Diel2019@#"
         await connexion_th(page, email, mot_de_passe)
+        await collecter_th(page)
     except Exception as e:
-        print("..erreur"); print(e)
+        print("..erreur -threads"); print(e)
 
 
 async def creer_th(page): # threads
     await page.goto("https://www.threads.com", timeout=0)
+   
 
-   
-   
+async def collecter_th(page):   
+    statut = await div_data_pagelet(page, ["threads_feed"])
+    if statut:
+        print("posts trouvés")
+    else:
+        print("posts pas trouvés")
+
+
+        
 async def tu(page): # tumblr
     try:
         await connexion_tu(page)
     except Exception as e:
-        print("..erreur"); print(e)
+        print("..erreur -tumblr"); print(e)
     
-    
-async def connexion_tu(page):
-    await page.goto("https://www.tumblr.com", timeout=0)
-    
+  
 async def creer_tu(page): # tumblr
     await page.goto(url_tu, timeout=0)
     
     await input_name(page, ["email"], email)
     await input_name(page, ["password"], mot_de_passe)
-    await span_has_text(page, ["Inscription"], clic=True)
+    await span_has_text(page, ["Inscription"], clic=True) 
    
    
    
@@ -266,7 +226,7 @@ async def wa(page): # wattpad
     try:
         await creer_wat(page)
     except Exception as e:
-        print("..erreur"); print(e)
+        print("..erreur -wattpad"); print(e)
 
         
 async def creer_wat(page): 
@@ -279,7 +239,7 @@ async def you(page): # youtube
     try:
         await creer_you(page)
     except Exception as e:
-        print("..erreur"); print(e)   
+        print("..erreur -youtube"); print(e)   
         
         
 async def creer_you(page): # youtube
@@ -463,7 +423,7 @@ async def connexion_th(page, email, mot_de_passe):
             print("patiente 2s"); await asyncio.sleep(2)   
             element = await page.query_selector('div[aria-label="Champ de texte vide. Rédigez une nouvelle publication."]')
             if element:
-                await page.goto(url_post, timeout=0)
+                #await page.goto(url_post, timeout=0)
                 break
         except:
             pass  
@@ -743,39 +703,33 @@ async def main():
         #await apply_stealth(page)
         
         page_bs = await context.new_page(); await apply_stealth(page_bs)  
-        page_da = await context.new_page(); await apply_stealth(page_da)      
         page_gmail = await context.new_page(); await apply_stealth(page_gmail)      
-        page_go = await context.new_page(); await apply_stealth(page_go)      
+        #page_go = await context.new_page(); await apply_stealth(page_go)      
         page_insta = await context.new_page(); await apply_stealth(page_insta)                              
         page_li = await context.new_page(); await apply_stealth(page_li)       
         page_minds = await context.new_page(); await apply_stealth(page_minds)       
-        page_mewe = await context.new_page(); await apply_stealth(page_mewe)       
         page_parler = await context.new_page(); await apply_stealth(page_parler)         
-        page_pi = await context.new_page(); await apply_stealth(page_pi)         
-        page_su = await context.new_page(); await apply_stealth(page_su)          
-        page_sh = await context.new_page(); await apply_stealth(page_sh)    
+        #page_pi = await context.new_page(); await apply_stealth(page_pi)         
         page_th = await context.new_page(); await apply_stealth(page_th)             
         page_tu = await context.new_page(); await apply_stealth(page_tu)
-        page_wat = await context.new_page(); await apply_stealth(page_wat)         
-        page_you = await context.new_page(); await apply_stealth(page_you)              
+        #page_wat = await context.new_page(); await apply_stealth(page_wat)         
+        #page_you = await context.new_page(); await apply_stealth(page_you)              
         page_de = await context.new_page(); await apply_stealth(page_de)              
         await connecter_gmail(context, fichier_cookie, page_gmail, email)
         
         await bs(page_bs) # blue sky
-        await go(page_go) # goafrica
+        #await go(page_go) # goafrica
         await insta(page_insta, context) # insta
         await li(page_li) # linkedin
         await minds(page_minds) # minds
         
-        await mewe(page_mewe) # mewe
         await pa(page_parler) # parler
-        await pi(page_pi) # pinterest
-        await su(page_su) # substack
+        #await pi(page_pi) # pinterest
         await th(page_th) # threads
         
         await tu(page_tu) # tumblr
-        await wa(page_wat) # wattpad
-        await you(page_you) # youtube
+        #await wa(page_wat) # wattpad
+        #await you(page_you) # youtube
         
         await visiter_de(page_de) # deepai        
         await verifier_commande(50000)

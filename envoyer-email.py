@@ -7,8 +7,11 @@ basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_
 format_date = "%d-%m-%Y"
 
 
-texte = """Salut, je suis développeur, si tu as envies de créer un réseau social ou une application mobile, je suis disponible. """
-objet = "Développeur"
+texte = """Pourquoi avoir sa propre application mobile ?
+Si tu as ta propre application mobile, tu pourras vendre de la publicité dans ton application.
+
+je suis développeur, si tu as envies de créer un réseau social ou une application mobile, je suis disponible. """
+objet = "Application Mobile"
 
 # albanais
 
@@ -231,12 +234,12 @@ async def main():
         fichier1 = "emails_collecter.json"
         fichier2 = "emails_collecter2.json"
         emails = await verifier_nouveau_element(fichier1, fichier2, "email") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
-        emails = [e for e in emails if await verifier_date_recontacte(e)]
+        #emails = [e for e in emails if await verifier_date_recontacte(e)]
         
         fichier3 = "mes_emails.json"
         fichier4 = "mes_emails2.json"
         compte_emails = await verifier_nouveau_element(fichier3, fichier4, "email")
-        compte_emails = [c for c in compte_emails if await verifier_date_recontacte(c)]
+        #compte_emails = [c for c in compte_emails if await verifier_date_recontacte(c)]
         
         fichier_email_debut = "email_debut.json"
         email_debut = (await charger_fichier_d(fichier_email_debut)).get("email")

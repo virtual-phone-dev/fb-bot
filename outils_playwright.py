@@ -9,6 +9,11 @@ mots_inutiles = ["fédération", "gendarmerie", "armed", "armées", "forces", "p
 domaines_autoriser = ("gmail.com", "yahoo.com", "yahoo.fr", "yahoo.co.uk", "yahoo.ca", "outlook.com", "outlook.fr", "hotmail.com", "live.fr", "orange.fr", "free.fr", 
 "sfr.fr", "laposte.net", "wanadoo.fr", "icloud.com", "me.com", "mac.com", "protonmail.com", "laposte.net")
     
+mot_de_passe = "Diel2019@#"
+email = "abdelilluminati@gmail.com"
+nom = "Queen Fleurina" 
+nom1 = "Queen" 
+nom2 = "Fleurina" 
 
 
 async def appliquer_stealth(page):
@@ -131,21 +136,40 @@ async def button_submit_text(page, textes, clic=False, p=False):
                 if p: print(f"patiente {p}s"); await asyncio.sleep(p)
             return element
     return None
-    
+
+
+async def button_aria_label(page, textes, clic=False, p=False):
+    for t in textes:
+                
+        btn = page.locator(f'button[aria-label="{t}"]').first
+        if await btn.count() > 0:    
+            if clic:
+                await btn.click()
+                if p: print(f"patiente {p}s"); await asyncio.sleep(p)
+            return btn
+    return None   
+
 
 async def div_data_testid(page, textes, clic=False, p=False):
     for t in textes:
         
         element = page.locator(f'div[data-testid="{t}"]')
         if await element.count() > 0:
-            #if clic: 
-            #    await element.click()   
-            #    if p: print(f"patiente {p}s"); await asyncio.sleep(p)
             return element
     return None
     
 # post_locator = page.locator('div[data-testid="contentHider-post"]').first
 # count_post = await post_locator.count()
+
+
+async def div_data_pagelet(page, textes):
+    for t in textes:
+        
+        element = page.locator(f'div[data-pagelet*="{t}"]')
+        if await element.count() > 0:
+            return element
+    return None
+
 
 
 async def span_name(page, textes, clic=False, p=False):
@@ -161,15 +185,15 @@ async def span_name(page, textes, clic=False, p=False):
     
 
 
-async def span_has_text(page, textes, clic=False):
+async def span_has_text(page, textes, clic=False, p=False):
     try:
         for t in textes:
             
             element = page.locator(f'span:has-text("{t}")')        
             if await element.count() > 0:  
-                print("t", t);
                 if clic: 
                     await element.click()
+                    if p: print(f"patiente {p}s"); await asyncio.sleep(p)
                 return element
         return None
     except:
@@ -187,6 +211,18 @@ async def clic_div_aria_label_role_button(page, textes, cliquer=False):
     return None
 
 
+
+
+async def connexion_tu(page):
+    await page.goto("https://www.tumblr.com", timeout=0)
+    await button_aria_label(page, ["Connexion"], clic=True, p=2)
+    await query_selector_text(page, ["Continuer avec E-mail"], clic=True, p=2)   
+    await input_name(page, ["email"], email) 
+    await span_has_text(page, ["Suivant"], clic=True, p=2)
+    await input_name(page, ["password"], mot_de_passe) 
+    await span_has_text(page, ["Connexion"], clic=True)
+    
+    
 async def verifier_nouveau_message(page, email):
     statut = await span_has_text(page, ["Adresse introuvable", "Message non distribué", "Boîte de réception du destinataire pleine"])
     if statut: 
@@ -218,6 +254,8 @@ async def verifier_nouveau_message2(page, email):
     else:
         print("Pas de nouveau message b (lu ou absent)")
         await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", email)
+
+
 
         
 # VERIFIER COMMANDE CONSOLE
@@ -1223,3 +1261,44 @@ async def envoyer_commentaire(page, COMMENTS, posts=None, fichier_posts=None, pa
     return False
     
     
+
+
+
+# ma petite poubelle
+
+
+
+async def su(page): # substack
+    try:
+        await connexion_su(page)
+    except Exception as e:
+        print("..erreur"); print(e)
+        
+
+async def connexion_su(page): 
+    await page.goto("https://substack.com", timeout=0)
+    
+    await button_button_text(page, ["Se connecter"], clic=True, p=2)
+    await button_button_text(page, ["Se connecter avec le mot de passe"], clic=True, p=3)
+    await input_name(page, ["email"], email)
+    await input_name(page, ["password"], email)
+    await button_submit_text(page, ["Continuer"], clic=True)
+    
+    
+async def creer_su(page): # substack
+    await page.goto(url_su, timeout=0)
+    
+    await input_name(page, ["email"], email)
+        
+    element = await page.query_selector('button[data-state="unchecked"][aria-checked="false"]')
+    if element:
+        await element.click()
+        
+    element = await page.query_selector('button[type="submit"]:has-text("Continuer")')
+    if element:
+        print("clic reussi");
+        
+        await page.evaluate("""
+        const button = Array.from(document.querySelectorAll('button[type="submit"]')).find(btn => btn.textContent.trim() === "Continuer");
+        if (button) { button.click(); } """)
+        
