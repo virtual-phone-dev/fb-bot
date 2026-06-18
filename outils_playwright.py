@@ -191,6 +191,7 @@ async def span_has_text(page, textes, clic=False, p=False):
             
             element = page.locator(f'span:has-text("{t}")')        
             if await element.count() > 0:  
+                print(f"t ici ", t);
                 if clic: 
                     await element.click()
                     if p: print(f"patiente {p}s"); await asyncio.sleep(p)
@@ -223,7 +224,7 @@ async def connexion_tu(page):
     await span_has_text(page, ["Connexion"], clic=True)
     
     
-async def verifier_nouveau_message(page, email):
+async def verifier_nouveau_message2(page, email):
     statut = await span_has_text(page, ["Adresse introuvable", "Message non distribué", "Boîte de réception du destinataire pleine"])
     if statut: 
         print("Pas de nouveau message a"); 
@@ -239,20 +240,28 @@ async def verifier_nouveau_message(page, email):
         await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", email)   
         
 
-async def verifier_nouveau_message2(page, email):
-    statut = await span_has_text(page, ["Adresse introuvable", "Message non distribué", "Boîte de réception du destinataire pleine"])
-    if statut: 
-        print("Pas de nouveau message a") 
-        await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", email)
-        return
+async def verifier_nouveau_message(page, email):
+    mot_inutiles = ["Adresse introuvable", "Message non distribué", "Boîte de réception du destinataire pleine"]
+    element = page.locator('tr.zA.zE')
+
+    for mot in mot_inutiles:
+        element = element.filter(has_not_text=mot)
+
+    element = element.locator('span[name="moi"]')
+    
+    #statut = await span_has_text(page, ["Adresse introuvable", "Message non distribué", "Boîte de réception du destinataire pleine"])
+    #if statut: 
+    #    print("Pas de nouveau message a") 
+    #    await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", email)
+    #    return
     
     # Chercher span[name="moi"] uniquement dans un tr non lu (zE)
-    element = page.locator('tr.zA.zE span[name="moi"]')
+    # element = page.locator('tr.zA.zE span[name="moi"]')
     if await element.count() > 0:
         print("nouveau message trouvé (non lu)")
         await mettre_a_jour("mes_emails2.json", {"message_trouvé": 1}, "email", email)
     else:
-        print("Pas de nouveau message b (lu ou absent)")
+        print("Pas de nouveau message b")
         await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", email)
 
 

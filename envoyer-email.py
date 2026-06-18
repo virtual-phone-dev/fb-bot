@@ -10,7 +10,7 @@ format_date = "%d-%m-%Y"
 texte = """Pourquoi avoir sa propre application mobile ?
 Si tu as ta propre application mobile, tu pourras vendre de la publicité dans ton application.
 
-je suis développeur, si tu as envies de créer un réseau social ou une application mobile, je suis disponible. """
+Je suis développeur, si tu as un projet de créer un réseau social ou une application mobile, je suis disponible. """
 objet = "Application Mobile"
 
 # albanais
@@ -221,25 +221,18 @@ async def marquer_contact(fichier, cle_db, cle, jours_recontact=1):
         
 async def main():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(        
-            headless=False,
-            args=[
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--disable-infobars",
-                "--disable-web-security",
-            ],
-        )
+        browser = await p.chromium.launch(
+        headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
 
         fichier1 = "emails_collecter.json"
         fichier2 = "emails_collecter2.json"
         emails = await verifier_nouveau_element(fichier1, fichier2, "email") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
-        #emails = [e for e in emails if await verifier_date_recontacte(e)]
+        emails = [e for e in emails if await verifier_date_recontacte(e)]
         
         fichier3 = "mes_emails.json"
         fichier4 = "mes_emails2.json"
         compte_emails = await verifier_nouveau_element(fichier3, fichier4, "email")
-        #compte_emails = [c for c in compte_emails if await verifier_date_recontacte(c)]
+        compte_emails = [c for c in compte_emails if await verifier_date_recontacte(c)]
         
         fichier_email_debut = "email_debut.json"
         email_debut = (await charger_fichier_d(fichier_email_debut)).get("email")

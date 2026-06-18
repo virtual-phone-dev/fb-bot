@@ -1,7 +1,40 @@
 import json, asyncio, re
-from outils_playwright import (charger_fichier_t, charger_fichier, ajouter_dans_fichier, nettoyer_texte, mots_inutiles, domaines_autoriser)
+from outils_playwright import (charger_fichier_t, charger_fichier, ajouter_dans_fichier, nettoyer_texte, mots_inutiles, domaines_autoriser, sauvegarder_sur_meme_ligne)
 
 
+
+async def nettoyer_emails_et_supprimer_champ():
+    fichier_entree = "emails_collecter.json"
+    fichier_sortie = "emails_nettoyer.json"
+    emails = await charger_fichier(fichier_entree)
+    
+    existant = await charger_fichier(fichier_sortie) or []
+    emails_existants = {p.get("email") for p in existant}
+    
+    count = 0
+    for item in emails:
+        email = item.get("email", "").strip()
+        nom = item.get("nom", "").strip()
+        nom_clean = await nettoyer_texte(nom)
+        
+        if email in emails_existants:
+            continue
+        if "%" in email or any(mot in nom_clean for mot in mots_inutiles):
+            continue
+        
+        existant.append({"email": email, "nom": nom})
+        emails_existants.add(email)
+        print(email)
+        count += 1
+    
+    existant.sort(key=lambda x: x.get("nom", "").lower())
+    await sauvegarder_sur_meme_ligne(fichier_sortie, existant)
+    
+    print(f"✅ {count} emails sauvegardés")
+    print(f"{len(existant)} emails dans le fichier {fichier_sortie}")   
+    
+    
+    
 async def nettoyer_pages_avec_nom_inutile():
     fichier_entree = "page_messages_collecter.json"
     fichier_sortie = "fichier_nettoyer.json"
@@ -132,5 +165,5 @@ async def nettoyer_emails_gmail():
     
     
     
-asyncio.run(nettoyer_email_trouver_avec_beaucoup_de_champ())
+asyncio.run(nettoyer_emails_et_supprimer_champ())
 
