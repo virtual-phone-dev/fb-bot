@@ -9,7 +9,20 @@ clic_div_aria_label_role_button)
 PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
 
-texte = """Salut, tu pourras avoir quelques minutes à m'accorder? """
+texte = """Salut, on a un nouveau service, vous pouvez gagnez de l'argent avec vos vidéos que vous publier sur les réseaux sociaux, ou encore avec vos photos.
+exemple, vous fixez un nombre de vue à atteindre sur votre vidéo:
+
+vous pariez 100fcfa, si vous atteignez 100 vues, on vous envoie 300fcfa
+vous pariez 200fcfa, si vous atteignez 200 vues, on vous envoie 600fcfa
+vous pariez 2000fcfa, si vous atteignez 2000 vues, on vous envoie 6000fcfa
+
+l'avantage est que ca vous booste a augmenter le nombre de vue de vos vidéos et en plus, si vous atteignez votre objectif, vous gagnez de l'argent.
+Et un autre avantage est que tu paries uniquement sur ce que tu es sûr que tu vas atteindre.
+
+N.B: Nous on gagne de l'argent uniquement si vous n'atteignez pas votre objectif. Et vous, vous gagnez de l'argent uniquement si vous atteignez votre objectif.
+A la place des vidéos, si vous voulez, vous pouvez aussi pariez sur vos photos.
+
+Pour un début, on vous donne 1 pari à moitié gratuit, et si vous gagnez, vous recevez l'argent comme cadeau de Bienvenue."""
 
  
 
@@ -241,10 +254,12 @@ async def main():
             ],
         )
 
-        fichier1 = "page_messages_collecter.json"
-        fichier2 = "page_messages_collecter2.json"
-        pages_fb = await verifier_nouveau_element(fichier1, fichier2, "message") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
-        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p) and not p.get("btn_message") != 0]
+        fichier1 = "liste-pages-congo.json"
+        fichier2 = "liste-pages-congo2.json"
+        pages_fb = await verifier_nouveau_element(fichier1, fichier2, "url") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
+        pages_fb = [p for p in pages_fb if "url" in p] # filtre pour prendre uniquement les ligne qui ont "url", pas "zone"
+        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]
+        #pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p) and not p.get("btn_message") != 0]
         
         fichier3 = "mes_comptes_fb.json"
         fichier4 = "mes_comptes_fb2.json"
@@ -252,9 +267,9 @@ async def main():
         comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c) and c.get("message") == 1]; #print("comptes_fb ", comptes_fb) 
         
         fichier_page_message_debut = "fichier_page_message_debut.json"
-        page_message_debut = (await charger_fichier_d(fichier_page_message_debut)).get("message")
+        page_message_debut = (await charger_fichier_d(fichier_page_message_debut)).get("url")
         
-        index = next((i for i, page in enumerate(pages_fb) if page["message"] == page_message_debut), 0) # next() prend le premier résultat trouvé, si un email correspond → retourne son index, sinon → retourne 0 (valeur par défaut) 
+        index = next((i for i, page in enumerate(pages_fb) if page.get("url") == page_message_debut), 0) # next() prend le premier résultat trouvé, si un email correspond → retourne son index, sinon → retourne 0 (valeur par défaut) 
         page_suivant = None
         pages_deja_contacter = set()
         tour = 0
@@ -272,7 +287,7 @@ async def main():
                 print("aucune page a contacter, car tous ont deja été contacter", index); break
             
             page = pages_fb[index]
-            url_page = page["message"]
+            url_page = page.get("url")
             #nom = page["nom"]
             fichier_cookie = compte_fb.get("fichier")
             mon_compte = compte_fb.get("fichier")
@@ -294,7 +309,7 @@ async def main():
             pages_deja_contacter.add(url_page)
             index += 1            
             
-            statut = await tour_suivant(fichier_page_message_debut, pages_fb, comptes_fb, page_suivant, tour, index, "message", "compte")
+            statut = await tour_suivant(fichier_page_message_debut, pages_fb, comptes_fb, page_suivant, tour, index, "url", "compte")
             if statut == "tout_mes_comptes_utiliser": break
             
             #print("patiente 10s"); await asyncio.sleep(10)  

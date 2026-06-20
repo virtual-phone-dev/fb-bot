@@ -7,14 +7,18 @@ connexion_tu, div_data_testid, div_data_pagelet, button_id, button_button_text, 
 
 async def main():
     async with async_playwright() as p:
-        browser = await p.chromium.launch(
-        headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
+        try:
+            browser = await p.chromium.launch(
+            headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
+            
+            context = await browser.new_context()
+            page_tu = await context.new_page(); await appliquer_stealth(page_tu)
+            
+            await connexion_tu(page_tu) # tumblr
+        except Exception as e:
+            print("..erreur"); print(e)
         
-        context = await browser.new_context()
-        page_tu = await context.new_page(); await appliquer_stealth(page_tu)
-        
-        await connexion_tu(page_tu) # tumblr
-        
+        p=50000; print(f"patiente {p}s"); await asyncio.sleep(p)
         
 asyncio.run(main())
 

@@ -3,13 +3,18 @@ from playwright.async_api import async_playwright
 from itertools import cycle
 from outils_playwright import (connecter_gmail, verifier_nouveau_element, mettre_a_jour, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, charger_fichier_d, recuperer_texte_th, verifier_commande, basculer_sur_le_compte, clic_div_aria_label_role_button)
 
-texte = """Salut,
-Dis à tes abonnés de venir s'inscrire sur Florinato et si tu obtiens 1000 inscriptions avec ton lien tu seras payer 100 dollars. 
-ils vont s'inscrire pour regarder des vidéos sur Florinato. 
-Si ça t'intéresse, viens sur Florinato, et n'oublie pas d'envoyer un message à CAISIP.
+texte = """Salut, on a un nouveau service, vous pouvez gagnez de l'argent avec vos vidéos que vous publier sur les réseaux sociaux.
+exemple, vous fixez un nombre de vue à atteindre sur votre vidéo:
 
-voilà ton lien d'inscription, publies ça sur ta page, en disant à tes abonnés de s'inscrire sur Florinato pour regarder des vidéos.
-https://florinato105.onrender.com """
+vous pariez 100fcfa, si vous atteignez 100 vues, on vous envoie 300fcfa
+vous pariez 200fcfa, si vous atteignez 200 vues, on vous envoie 600fcfa
+vous pariez 2000fcfa, si vous atteignez 2000 vues, on vous envoie 6000fcfa
+
+l'avantage est que ca vous booste a augmenter le nombre de vue de vos vidéos et en plus, si vous atteignez votre objectif, vous gagnez de l'argent.
+Et un autre avantage est que tu paries uniquement sur ce que tu es sûr que tu vas atteindre.
+
+N.B: Nous on gagne de l'argent uniquement si vous n'atteignez pas votre objectif. Et vous, vous gagnez de l'argent uniquement si vous atteignez votre objectif.
+A la place des vidéos, vous pouvez aussi faire la même chose pour les photos."""
 
 
 

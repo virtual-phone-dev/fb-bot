@@ -212,16 +212,19 @@ async def clic_div_aria_label_role_button(page, textes, cliquer=False):
     return None
 
 
-
-
 async def connexion_tu(page):
     await page.goto("https://www.tumblr.com", timeout=0)
-    await button_aria_label(page, ["Connexion"], clic=True, p=2)
-    await query_selector_text(page, ["Continuer avec E-mail"], clic=True, p=2)   
-    await input_name(page, ["email"], email) 
-    await span_has_text(page, ["Suivant"], clic=True, p=2)
-    await input_name(page, ["password"], mot_de_passe) 
-    await span_has_text(page, ["Connexion"], clic=True)
+    await button_aria_label(page, ["Connexion"], clic=True, p=2); 
+    await query_selector_text(page, ["Continuer avec E-mail"], clic=True, p=2);
+    await input_name(page, ["email"], email)
+    
+    await page.evaluate("""const t = "Suivant";
+    const span = Array.from(document.querySelectorAll('span')).find(el => el.innerText.includes(t));
+    if (span) { span.click(); } else { console.log("Non trouvé"); } """)
+    
+    await input_name(page, ["password"], mot_de_passe)     
+    await button_submit_text(page, ["Connexion"], clic=True)
+    
     
     
 async def verifier_nouveau_message2(page, email):

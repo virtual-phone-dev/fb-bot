@@ -7,6 +7,7 @@ div_data_testid, div_data_pagelet, button_id, button_button_text, button_submit_
 mot_de_passe = "Diel2019@#"
 email = "abdelilluminati@gmail.com"
 nom = "Queen Fleurina" 
+username = "Queen_Fleurina" 
 nom1 = "Queen" 
 nom2 = "Fleurina" 
 
@@ -83,6 +84,8 @@ async def insta(page, context): # instagram
         
         await page.goto("https://www.instagram.com", timeout=0)  
         await connecter_compte_insta(page, context, compte, fichier_des_comptes, email, mot_de_passe, nom_profil) # connexion_insta
+        
+        await page.goto("https://www.instagram.com/marine_lepen/", timeout=0)
     except Exception as e:
         print("..erreur -insta"); print(e)
     
@@ -139,7 +142,7 @@ async def creer_minds(page): # minds
         await query_selector_text(page, ["Join Now"], clic=True, p=3)    
         await query_selector_a_text(page, ["Join Minds Now"], clic=True)
         
-        await input_id(page, ["username"], nom, clic=True)
+        await input_id(page, ["username"], username, clic=True)
         await input_id(page, ["email"], email, clic=True)
         await input_id(page, ["password"], mot_de_passe, clic=True)
         await input_id(page, ["password2"], mot_de_passe, clic=True)
@@ -198,6 +201,8 @@ async def creer_th(page): # threads
    
 
 async def collecter_th(page):   
+    await page.goto("https://www.threads.com/@jlmelenchon", timeout=0)
+    
     statut = await div_data_pagelet(page, ["threads_feed"])
     if statut:
         print("posts trouvés")
@@ -209,6 +214,7 @@ async def collecter_th(page):
 async def tu(page): # tumblr
     try:
         await connexion_tu(page)
+        await page.goto("https://www.tumblr.com/communities/french-learners", timeout=0)        
     except Exception as e:
         print("..erreur -tumblr"); print(e)
     
