@@ -5,7 +5,8 @@ div_data_testid, div_data_pagelet, button_id, button_button_text, button_submit_
 
 
 mot_de_passe = "Diel2019@#"
-email = "abdelilluminati@gmail.com"
+#email = "abdelilluminati@gmail.com"
+email = "dgkilluminati@gmail.com"
 nom = "Queen Fleurina" 
 username = "Queen_Fleurina" 
 nom1 = "Queen" 
@@ -723,21 +724,20 @@ async def main():
         page_de = await context.new_page(); await apply_stealth(page_de)              
         await connecter_gmail(context, fichier_cookie, page_gmail, email)
         
-        await bs(page_bs) # blue sky
+        #await bs(page_bs) # blue sky
+        #await insta(page_insta, context) # insta
+        #await li(page_li) # linkedin
+        #await minds(page_minds) # minds
+        #await pa(page_parler) # parler
+        #await th(page_th) # threads
+        #await tu(page_tu) # tumblr
+        #await visiter_de(page_de) # deepai   
+        
         #await go(page_go) # goafrica
-        await insta(page_insta, context) # insta
-        await li(page_li) # linkedin
-        await minds(page_minds) # minds
-        
-        await pa(page_parler) # parler
         #await pi(page_pi) # pinterest
-        await th(page_th) # threads
-        
-        await tu(page_tu) # tumblr
         #await wa(page_wat) # wattpad
         #await you(page_you) # youtube
         
-        await visiter_de(page_de) # deepai        
         await verifier_commande(50000)
 
 

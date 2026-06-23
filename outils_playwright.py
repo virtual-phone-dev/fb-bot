@@ -1,5 +1,6 @@
 import json, os, asyncio, random, sqlite3, msvcrt, time, unicodedata
 from datetime import datetime
+format_date = "%d-%m-%Y"
 
 mot_de_passe_gmail = "diel2019"
 email_recuperation = "kilendodingha@gmail.com"
@@ -227,6 +228,17 @@ async def connexion_tu(page):
     
     
     
+async def verifier_btn_message(fichier_sauvegarde, page, champ_url, url, champ_nom, nom):
+    message_btn = await page.query_selector('div[aria-label="Message"]') # verifier si ya le btn message sur la page
+    if message_btn:
+        print("📩 message disponible")
+        await ajouter_dans_fichier(fichier_sauvegarde, {champ_url: url, champ_nom: nom}, champ_url, url)
+        #await ajouter_dans_fichier("page_messages_collecter.json", {"message": url, "nom": nom}, "message", url)
+    else:
+        print("❌ pas de message")
+
+        
+        
 async def verifier_nouveau_message2(page, email):
     statut = await span_has_text(page, ["Adresse introuvable", "Message non distribué", "Boîte de réception du destinataire pleine"])
     if statut: 
@@ -363,6 +375,18 @@ def nettoyer_texte2(texte: str, supprimer: list[str] = None) -> str:
     
 
 async def verifier_date_recontacte(mail):
+    if "recontacter" not in mail: return True 
+    
+    try:
+        date_recontacte = datetime.strptime(mail["recontacter"], format_date)
+    except Exception as e:
+        print("⚠️ erreur parsing date recontacte:", mail.get("recontacter"), "->", e)
+        return True
+        
+    return datetime.now() >= date_recontacte
+
+    
+async def verifier_date_recontacte2(mail):
     if "recontacter" not in mail: return True 
     
     try:

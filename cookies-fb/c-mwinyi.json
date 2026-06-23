@@ -2,10 +2,10 @@
     "cookies": [
         {
             "name": "dbln",
-            "value": "%7B%22100007045084334%22%3A%22ytSTgGP7%22%7D",
+            "value": "%7B%22100007045084334%22%3A%22eGEQeMYh%22%7D",
             "domain": ".facebook.com",
             "path": "/login/device-based/",
-            "expires": 1786226518.259622,
+            "expires": 1789901848.209196,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
@@ -85,7 +85,7 @@
             "value": "qcyvaa1ICs5fgFYUIE5G8fKJ",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1813010518.260306,
+            "expires": 1816685848.209483,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
@@ -735,7 +735,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1779258746,
+            "expires": 1782753953,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -745,27 +745,37 @@
             "value": "100007045084334",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1809990929.201772,
+            "expires": 1813685154.790176,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
         },
         {
-            "name": "xs",
-            "value": "28%3AiDu0w6ngv9_jDw%3A2%3A1778450515%3A-1%3A-1%3A%3AAcxikF8mYGnLypHuQuMLCY6CZvwMdRhXIcIFhE-U_g",
+            "name": "i_user",
+            "value": "61564778434680",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1809990929.202183,
-            "httpOnly": true,
+            "expires": 1813661871.015366,
+            "httpOnly": false,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "fr",
-            "value": "1zuSmQ6Urj8Ogrwly.AWeFHqv6ScEixsS_GwWv1OdMvcEBDnFw0S3gowVJVhf431SdWXs.BqARGS..AAA.0.0.BqBBr1.AWd9b12SfdbzJyrG_XME60ygq04",
+            "value": "1Y7U6NlSgYF0uN5zU.AWfzzfFpDZQVhJfPATj_4Q2d_HJPLFAGVsa_nPAmA7_XqdLC6AY.BqOXAk..AAA.0.0.BqOXAk.AWcUUe4CxKRsnkNW8UM_8J5IUpI",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1786429940.267106,
+            "expires": 1789925154.790552,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "xs",
+            "value": "11%3AMgTpe33CTiTWjw%3A2%3A1782125846%3A-1%3A-1%3A%3AAcwKvRM95mu0S-puI7Puvb-J0orBZGBFvF9pW_w39w",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1813685154.790664,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
@@ -776,20 +786,16 @@
             "origin": "https://www.facebook.com",
             "localStorage": [
                 {
-                    "name": "armadillo_msgr_data_loss_stats",
-                    "value": "{}"
-                },
-                {
                     "name": "CacheStorageVersion",
                     "value": "3b"
                 },
                 {
                     "name": "mw_encrypted_backups_restore_upsell_first_impression_time_key",
-                    "value": "1777975471617"
+                    "value": "1782125871328"
                 },
                 {
                     "name": "Session",
-                    "value": "aapel3:1778653978125"
+                    "value": "g2keov:1782149331658"
                 },
                 {
                     "name": "_oz_bandwidthEstimate",
@@ -797,31 +803,27 @@
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1778653945956.0999"
+                    "value": "1782125838560.4001"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"100007045084334\",\"currentIntervalLastTick\":1778653945,\"currentIntervalStart\":1778653945,\"initRemoteAgg\":{\"timestamp\":1776850536,\"today_s\":0},\"intervals\":[{\"end\":1777975540,\"start\":1777975474}],\"lastCallbackAttempt\":1778653945,\"localStorageId\":\"74909415\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                    "value": "{\"actorId\":\"61564778434680\",\"currentIntervalLastTick\":1782149294,\"currentIntervalStart\":1782149150,\"initRemoteAgg\":{\"timestamp\":1777575213,\"today_s\":0},\"intervals\":[{\"end\":1782125885,\"start\":1782125878},{\"end\":1782126040,\"start\":1782126025}],\"lastCallbackAttempt\":1782149150,\"localStorageId\":\"52611214\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
                 },
                 {
                     "name": "last_headload_time",
-                    "value": "1778653944951"
+                    "value": "1782149150023"
                 },
                 {
                     "name": "RSTData",
                     "value": "{}"
                 },
                 {
-                    "name": "ps:61564778434680:e2168e28-59f3-4a61-b27d-14d4b94d84f4",
-                    "value": "97b86927-a000-4fe5-b1e5-90b42ac7e7d6:1776868618095"
-                },
-                {
                     "name": "bdz_playback_state",
-                    "value": "{\"session_key\":\"mnvuxb0o\",\"buffer_length\":60}"
+                    "value": "{\"session_key\":\"mqatc0mc\",\"buffer_length\":60}"
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1778450512302"
+                    "value": "1782149183733"
                 },
                 {
                     "name": "_oz_bandwidthAndTTFBSamples",
@@ -829,11 +831,11 @@
                 },
                 {
                     "name": "ares_last_signal_flush",
-                    "value": "1776003997704"
+                    "value": "1781261882148"
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1778450512338"
+                    "value": "1782149153957"
                 }
             ]
         },

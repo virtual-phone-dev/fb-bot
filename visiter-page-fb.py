@@ -355,7 +355,7 @@ async def visiter_page(page):
     
 
 async def main():
-    comptes = json.load(open("comptes-fb.json", encoding="utf-8"))
+    comptes = json.load(open("mes_comptes_fb2.json", encoding="utf-8"))
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=False)

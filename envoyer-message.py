@@ -13,23 +13,22 @@ texte = """Salut, on a un nouveau service, vous pouvez gagnez de l'argent avec v
 exemple, vous fixez un nombre de vue à atteindre sur votre vidéo:
 
 vous pariez 100fcfa, si vous atteignez 100 vues, on vous envoie 300fcfa
-vous pariez 200fcfa, si vous atteignez 200 vues, on vous envoie 600fcfa
-vous pariez 2000fcfa, si vous atteignez 2000 vues, on vous envoie 6000fcfa
+vous pariez 1000fcfa, si vous atteignez 1000 vues, on vous envoie 3000fcfa
+vous pariez 10000fcfa, si vous atteignez 10000 vues, on vous envoie 30.000fcfa
 
-l'avantage est que ca vous booste a augmenter le nombre de vue de vos vidéos et en plus, si vous atteignez votre objectif, vous gagnez de l'argent.
+l'avantage est que ça vous booste à augmenter le nombre de vues de vos vidéos et en plus, si vous atteignez votre objectif, vous gagnez de l'argent.
 Et un autre avantage est que tu paries uniquement sur ce que tu es sûr que tu vas atteindre.
 
-N.B: Nous on gagne de l'argent uniquement si vous n'atteignez pas votre objectif. Et vous, vous gagnez de l'argent uniquement si vous atteignez votre objectif.
-A la place des vidéos, si vous voulez, vous pouvez aussi pariez sur vos photos.
-
-Pour un début, on vous donne 1 pari à moitié gratuit, et si vous gagnez, vous recevez l'argent comme cadeau de Bienvenue."""
+N.B: Nous on gagne de l'argent uniquement si vous n'atteignez pas votre objectif.
+A la place des vidéos, vous pouvez aussi pariez sur vos photos et vous pouvez pariez n'importe quelle somme, et gagnez x3 
+Si vous êtes prêt à parier, faites le nous savoir."""
 
  
 
 # VERIFIER COMMANDE CONSOLE
 async def verifier_commande(page, duree_minutes):
     print("Écrivez..")
-    secondes = duree_minutes * 60
+    secondes = duree_minutes * 1
     debut = time.time()
 
     while time.time() - debut < secondes:
@@ -203,10 +202,10 @@ async def marquer_contact(fichier, cle_db, cle, jours_recontact=1):
     await mettre_a_jour(fichier, data_update, cle_db, cle)
     
 
-
+# verifier_btn_message(fichier_sauvegarde, page, champ_url, url, champ_nom, nom)
 
 async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
-    fichier_comptes = "mes_comptes_fb2.json"
+    #fichier_comptes = "mes_comptes_fb2.json"
     await page.goto(url_page, timeout=0)
     await basculer_sur_le_compte(page, url_page)
     
@@ -216,7 +215,7 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
     statut = await clic_div_aria_label_role_button(page, ["Message"])
     if statut:
         print("bouton message trouvé")
-        await mettre_a_jour(fichier2, {"btn_message": 1}, "message", url_page)
+        await mettre_a_jour(fichier2, {"btn_message": 1}, "url", url_page)
         
         await page.evaluate("""
         const messageButton = document.querySelector('div[aria-label="Message"]'); // cliquer sur le bouton Message, une popup s'ouvre alors , pour ecrire le message
@@ -232,14 +231,14 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
                 print("Patiente 1s"); await asyncio.sleep(1)
                 await page.keyboard.press("Enter")
 
-                #print("✅ Message envoyé :", texte);
+                #print("✅ Message envoyé :", texte); on deprint pas ca
                 
-                await marquer_contact(fichier2, "message", url_page, jours_recontact=60)
+                await marquer_contact(fichier2, "url", url_page, jours_recontact=120)
                 await marquer_contact(fichier4, "fichier", mon_compte)
-                print("Patiente 10s"); await asyncio.sleep(10)
+                #print("Patiente 10s"); await asyncio.sleep(10)
                 break
     else:
-        await mettre_a_jour(fichier2, {"btn_message": 0}, "message", url_page)
+        await mettre_a_jour(fichier2, {"btn_message": 0}, "url", url_page)
 
         
 async def main():
@@ -258,8 +257,8 @@ async def main():
         fichier2 = "liste-pages-congo2.json"
         pages_fb = await verifier_nouveau_element(fichier1, fichier2, "url") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
         pages_fb = [p for p in pages_fb if "url" in p] # filtre pour prendre uniquement les ligne qui ont "url", pas "zone"
-        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]
-        #pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p) and not p.get("btn_message") != 0]
+        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p) and p.get("btn_message") != 0]
+        
         
         fichier3 = "mes_comptes_fb.json"
         fichier4 = "mes_comptes_fb2.json"
@@ -274,45 +273,49 @@ async def main():
         pages_deja_contacter = set()
         tour = 0
         
-        #if not len(comptes_fb) > 0: 
-        if len(comptes_fb) == 0: 
-            print("Tout les comptes ont été utilisés") 
+        count = 0 #count je met juste ca pour compter le nombre de tours, que fera la boucle while
+        while count < 10:   
+            count += 1
         
-        for compte_fb in comptes_fb:             
-            tour += 1
-            print("index ", index) 
+            #if not len(comptes_fb) > 0: 
+            if len(comptes_fb) == 0: print("Tout les comptes ont été utilisés") 
             
-           
-            if index+1 > len(pages_fb): 
-                print("aucune page a contacter, car tous ont deja été contacter", index); break
-            
-            page = pages_fb[index]
-            url_page = page.get("url")
-            #nom = page["nom"]
-            fichier_cookie = compte_fb.get("fichier")
-            mon_compte = compte_fb.get("fichier")
-            #mon_email = compte_fb.get("email")
-            
-            if url_page in pages_deja_contacter: continue
-            
-            context = await browser.new_context() #nouveau contexte pour chaque compte
-            cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
-            await context.add_cookies(cookies)
-            
-            page = await context.new_page()
-            await apply_stealth(page)
-            print("✅ mon_compte : ", mon_compte)
-            print("Contacté :", url_page)
-            
-            await envoyer_message(fichier2, fichier4, page, url_page, mon_compte)
-            
-            pages_deja_contacter.add(url_page)
-            index += 1            
-            
-            statut = await tour_suivant(fichier_page_message_debut, pages_fb, comptes_fb, page_suivant, tour, index, "url", "compte")
-            if statut == "tout_mes_comptes_utiliser": break
-            
-            #print("patiente 10s"); await asyncio.sleep(10)  
-            await context.close()
+            for compte_fb in comptes_fb:             
+                tour += 1
+                print("index ", index) 
+                
+               
+                if index+1 > len(pages_fb): 
+                    print("aucune page a contacter, car tous ont deja été contacter", index); break
+                
+                page = pages_fb[index]
+                url_page = page.get("url")
+                #nom = page["nom"]
+                fichier_cookie = compte_fb.get("fichier")
+                mon_compte = compte_fb.get("fichier")
+                #mon_email = compte_fb.get("email")
+                
+                if url_page in pages_deja_contacter: continue
+                
+                context = await browser.new_context() #nouveau contexte pour chaque compte
+                cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
+                await context.add_cookies(cookies)
+                
+                page = await context.new_page()
+                await apply_stealth(page)
+                print("✅ mon_compte : ", mon_compte)
+                print("Contacté :", url_page)
+                
+                await envoyer_message(fichier2, fichier4, page, url_page, mon_compte)
+                await verifier_commande(page, 10)
+                
+                pages_deja_contacter.add(url_page)
+                index += 1            
+                
+                statut = await tour_suivant(fichier_page_message_debut, pages_fb, comptes_fb, page_suivant, tour, index, "url", "compte")
+                if statut == "tout_mes_comptes_utiliser": break
+                
+                #print("patiente 10s"); await asyncio.sleep(10)  
+                await context.close()
 
 asyncio.run(main())

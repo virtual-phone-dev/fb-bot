@@ -1,8 +1,150 @@
 [ 
-	"eric zemmour", "marine lepen", "jean luc melonchon", "Mark Carney", "justin trudeau", "giorgia meloni", "guy parmelin", "keir starmer", "Éhpad", "famille d’accueil",
-	"Revenu de solidarité active (RSA)", "edf", "airbus", "hlm", "permis de construire pour une maison individuelle (PCMI)", "Caisse d'allocations familiales (Caf)",
+	"australie", "Commonwealth Bank (CBA)", "Westpac", "ANZ Bank", "NAB (National Australia Bank)", "BHP", "Rio Tinto", "Telstra", "Woolworths Group", "Coles", "Qantas", 
+	"Atlassian", "Origin Energy", "Woodside Energy", "Macquarie Group", "GP (General Practitioner)", "Hospital Australia", "NDIS services", "Sydney", "Melbourne", "Brisbane", 
+	"Perth", "Adelaide", "Canberra", "Gold Coast", "Hobart", "Darwin", "Cairns", "Great Barrier Reef", "Outback Australia", "Centrelink", "Medicare", "ATO", "JobSeeker", 
+	"Australian visa", "rent Australia",
+	
+	"allemagne", "Bundestag", "Bundesrat", "Bundesagentur für Arbeit", "Deutsche Rentenversicherung", "Familienkasse", "Finanzamt", "Bürgeramt", "Ausländerbehörde", 
+	"Bürgergeld", "Kindergeld", "Wohngeld", "Elterngeld", "Arbeitslosengeld", "Sozialhilfe", "Pflegegeld", "Grundsicherung", "Deutsche Telekom",
+	"Volkswagen", "Immobilienmakler", "Wohneigentum", "Eigentumswohnung", "Hauskauf", "Baufinanzierung", "Baugenehmigung", "Mietwohnung", "Sozialwohnung", "Hausarzt", 
+	"Zahnarzt", "Apotheker", "Krankenkasse", "Deutsche Bahn", "Deutschlandticket", "BVG", "S-Bahn", "U-Bahn", "Düsseldorf", "Dresde", "Heidelberg", "Wärmepumpe", "Arzt", 
+	"Rechtsanwalt", "Notar", "Steuerberater", "Unternehmensberater", 
+	
+	"autriche", "Bundesregierung Österreich", "Nationalrat", "Finanzamt Österreich", "AMS (Arbeitsmarktservice)", "ÖGK", "Gemeinde", "Statistik Austria", 
+	"Bundeskanzleramt", "Sozialversicherung Österreich", "Notstandshilfe", "Familienbeihilfe", "Wohnbeihilfe", "Mindestsicherung", "Kinderbetreuungsgeld", 
+	"Pension Österreich", "Bildungskarenz", "Erste Group", "Raiffeisen Bank", "Voestalpine", "Wiener Städtische", "Austrian Airlines", "Spar Österreich", 
+	"Hofer (Aldi)", "Rewe Austria", "Magna International", "Allgemeinmediziner", "Krankenhaus", "Apotheke", "Notruf 144 / 112", 
+	"Wohnung Wien", "Haus kaufen Österreich", "Kredit Immobilien", "Bauprojekt", "Immobilienmarkt Wien", "Wien (Vienne)", "Salzburg", 
+	"Innsbruck", "Graz", "Linz", "Klagenfurt", "Hallstatt", "Tirol", "Vorarlberg", "Wachau", "Alpes autrichiennes", "Lehrer", "IT Entwickler", 
+	"Unternehmer", "Krankenschwester",
+	
+	"Belgique", "MyMinfin", "SPF Santé publique", "Actiris", "Solidaris", "Allocation handicap",
+	"Proximus", "Orange Belgium", "Telenet", "Colruyt", "Delhaize", "Carrefour Belgique", "bpost", "SNCB", "Brussels Airlines", "Solvay", "UCB", "Umicore", "KBC", "Belfius", 
+	"ING Belgique", "Bruxelles", "Anvers", "Liège", "Charleroi", "Namur", "Mons", "Gand", "Bruges", "Louvain", "Waterloo", "Knokke", "Ardennes", "Ostende",
+	
+	"canada", "RBC (Royal Bank of Canada)", "TD Bank", "Scotiabank", "BMO", "National Bank of Canada", "Air Canada", "Hydro-Québec", "Enbridge", "Bell Canada", "Rogers", "Telus", 
+	"SNC-Lavalin", "Tim Hortons", "Canadian Tire", "Family doctor", "Walk-in clinic", "OHIP (Ontario Health Insurance Plan)", "RAMQ (Régie de l’assurance maladie du Québec)", 
+	"Mortgage", "House for sale", "Condo", "Rental apartment", "Housing market Canada", "First-time home buyer", "Real estate broker", "Toronto", "Montréal", "Vancouver", 
+	"Calgary", "Ottawa", "Edmonton", "Winnipeg", "Québec City", "Halifax", "Mississauga", "Laval", "British Columbia", "Alberta", "Ontario", "Saskatchewan", "Yukon", 
+	"Nunavut",
+	
+	"Chypre", "Government of Cyprus", "Vouli ton Antiprosopon", "Cyprus Tax Department", "Social Insurance Services Cyprus", "Cyprus Police", 
+	"Cyprus Health Insurance Organisation (HIO)", "Municipalities of Cyprus", "Central Bank of Cyprus", "Unemployment benefit Cyprus", "Pension Cyprus", 
+	"Healthcare coverage (GESY)", "Student grants Cyprus", "Bank of Cyprus", "Hellenic Bank Cyprus", "Cyta (telecom)", "Epic (telecom)", "Petrolina", "TotalEnergies Cyprus", 
+	"Columbia Shipmanagement", "Wargaming (important presence)", "FxPro", "IronFX", "Cyprus Airways", "Louis Group", "GESY (health system)", "Public hospitals Cyprus",
+	"GP Cyprus", "Emergency 112 Cyprus", "Real estate agent", "House for sale Cyprus", "Apartment Limassol", "Property Cyprus", "Rent Cyprus", "Mortgage Cyprus", 
+	"Luxury villas Cyprus", "Property market Limassol", "Nicosia apartments", "Nicosia", "Limassol", "Larnaca", "Paphos", "Ayia Napa", "Kyrenia (North Cyprus context)", 
+	"Troodos Mountains", "Protaras", "Coral Bay", "Mediterranean coast",
+
+	"estonie", "Bolt", "Playtech", "Swedbank Estonia", "LHV Bank", "Telia Estonia", "Eesti Energia", "Pipedrive", "Starship Technologies", "Skeleton Technologies", "Hospital Estonia", 
+	"Clinic Estonia", "Tallinn", "Tartu", "Narva", "Pärnu", "Saaremaa", "Hiiumaa", "Rakvere", "Viljandi", "Baltic Sea coast", "Old Town Tallinn",	
+	
+	"espagne", "Gobierno de España", "Congreso de los Diputados", "Senado de España", "Seguridad Social (INSS)", "SEPE", "Agencia Tributaria", "Ministerio del Interior", 
+	"Ayuntamiento", "Comunidades Autónomas", "Servicio Público de Empleo", "Ingreso Mínimo Vital (IMV)", "Prestación por desempleo", "Subsidio de paro", "Ayudas al alquiler", 
+	"Bono social electricidad", "Pensiones", "Ayuda familiar", "Prestaciones por hijo a cargo", "Renta activa de inserción (RAI)", "Santander", "BBVA", "CaixaBank", 
+	"Telefónica", "Iberdrola", "Repsol", "Inditex (Zara, Bershka)", "Mercadona", "Endesa", "Naturgy", "Mapfre", "Amadeus IT", "Ferrovial", "ACS Group", "IAG (Iberia)", 
+	"Seguridad Social", "Sistema Nacional de Salud (SNS)", "Médico de cabecera", "Dentista", "Centro de salud", "Urgencias", 
+	"Agente inmobiliario", "Piso en venta", "Piso en alquiler", "Hipoteca", "Mercado inmobiliario", "Vivienda", "Promotor inmobiliario", "Comunidad de propietarios", 
+	"Madrid", "Barcelona", "Valencia", "Sevilla", "Málaga", "Bilbao", "Zaragoza", "Alicante", "Granada", "Palma de Mallorca", "Ibiza", "Canarias", "Costa del Sol",
+	
+	"finlande", "TE-toimisto", "Digi- ja väestötietovirasto", "Maistraatti", "Police of Finland (Poliisi)", "Migri (Finnish Immigration Service)", "Suomi.fi", 
+	"Finnish Pension Centre", "Municipalities (Kunta)", "työttömyystuki", "lapsilisä", "asumistuki", "opintotuki", "Wärtsilä", "Fortum", "UPM-Kymmene", "Stora Enso", 
+	"Sampo Group", "Fazer", "Supercell", "Rovio", "Wolt", "Oura Health", "Health center (terveysasema)", "Kela health coverage", "sairaanhoitaja", 
+	"kiinteistönvälittäjätaloyhtiö", "Helsinki", "Espoo", "Vantaa", "Tampere", "Turku", "Oulu", "Rovaniemi", "Lapland (Lappi)", "Jyväskylä", "Kuopio", 
+	"Finnish Lakeland", "Kela", "Vero", "Finland happiness", "Sanna Marin",
+	
+	"france", "eric zemmour", "marine lepen", "jean luc melonchon", "Mark Carney", "justin trudeau", "giorgia meloni", "guy parmelin", "keir starmer", "Éhpad", 
+	"Revenu de solidarité active (RSA)", "edf", "airbus", "hlm", "permis de construire pour une maison individuelle (PCMI)", "Allocation adulte handicapé (AAH)", 
+	"Caisse d'allocations familiales (Caf)", "Allocation de rentrée scolaire", "Parcoursup", "canicule", "printemps", "Psychologist", "Real Estate Agent",
 	"Rob Jetten", "Simon Harris", "Micheál Martin", "angela merkel", "Friedrich Merz", "Halla Tómasdóttir", "Kristrún Frostadóttir", "Martine Lunde", "Jonas Gahr Støre",
-	"carte vitale", "aide sociale à l’enfance (ASE)", "Neuilly-sur-Seine", "Valérie Pécresse", "sncf", "Cap d'Agde", "Normandie", "Val d'Oise", "canicule", "printemps",
-	"Rima Hassan", "Anne Hidalgo", "Rachida Dati", "Périscolaire", "croisière", "iceberg"
+	"carte vitale", "aide sociale à l’enfance (ASE)", "URSSAF", "DGFiP", "CPAM", "CROUS", "Neuilly-sur-Seine", "Valérie Pécresse", "sncf", "Decathlon", "famille d’accueil",
+	"Cap d'Agde", "Normandie", "Val d'Oise", "Côte d'Azur", "Corse", "Bretagne", "camping-car", "randonnée", "vélo électrique", "placement financier", "assurance vie", 
+	"Rima Hassan", "Anne Hidalgo", "Rachida Dati", "Périscolaire", "croisière", "iceberg", "Ostéopathe", "Psychologue", "diététicienne", "nutritionniste", "Coach sportif", 
+	
+	"Georgia", "Government of Georgia", "Sakartvelos Parlamenti", "sachkaro services", "National Bank of Georgia", "Georgian Airways", "TBC Bank", "Bank of Georgia", 
+	"Silknet", "MagtiCom", "Georgia Railway", "Borjomi", "Wissol Group", "Liberty Bank", "Adjara Group", "Rustavi 2", "Telasi (energy)", "Public healthcare Georgia", 
+	"Hospital Georgia", "Clinic Tbilisi", "Apartment Tbilisi", "House for sale Georgia", "Rent Georgia", "Property market Tbilisi", "Real estate Batumi", "Tbilisi (Tiflis)", 
+	"Batumi", "Kutaisi", "Rustavi", "Mtskheta", "Kazbegi", "Gudauri", "Svaneti", "Kakheti", "Black Sea coast",
+
+	
+	"irlande", "Irish Immigration Service", "Garda Síochána", "Pfizer Ireland", "Ryanair", "Aer Lingus", "Bank of Ireland", "AIB (Allied Irish Banks)", "Kerry Group", 
+	"Dublin", "Cork", "Galway", "Limerick", "Waterford", "Belfast", "Killarney", "Kilkenny", "Galway Bay", "Cliffs of Moher", "Ring of Kerry", "Jobseeker’s Allowance",
+	
+	"islande", "Government of Iceland", "Alþingi", "Directorate of Immigration (Útlendingastofnun)", "Iceland Revenue and Customs (Skatturinn)", "Thingvellir", "Vatnajökull",
+	"Social Insurance Administration (Tryggingastofnun)", "Directorate of Labour (Vinnumálastofnun)", "National Registry of Iceland (Þjóðskrá)", "Gullfoss", "Geysir",
+	"Icelandic Health Insurance (Sjúkratryggingar Íslands)", "Unemployment benefits (atvinnuleysisbætur)", "Child benefits (barnabætur)", "Housing benefits (húsnæðisbætur)", 
+	"Icelandair", "Marel", "Össur", "Íslandsbanki", "Arion Bank", "Landsbankinn", "CCP Games (EVE Online)", "Orkuveita Reykjavíkur (Reykjavik Energy)", "Nova", "Síminn", 
+	"Samherji", "Hospital Reykjavik (Landspítali)", "GP (Heilsugæsla)", "Reykjavik", "Akureyri", "Keflavik", "Vik", "Selfoss", "Húsavík", "Blue Lagoon", "Golden Circle", 
+	
+	"italie", "Governo italiano", "Parlamento italiano", "INPS", "Agenzia delle Entrate", "INAIL", "Comune", "Regione", "Questura", "CAF (Centro di Assistenza Fiscale)", 
+	"Servizio Sanitario Nazionale (SSN)", "Assegno unico familiare", "Reddito di cittadinanza", "Assegno di inclusione", "NASpI", "Pensione", "Bonus sociale energia", 
+	"Bonus affitto", "Bonus bebè", "Invalidità civile", "Fiat (Stellantis)", "Maserati", "Pirelli", "Intesa Sanpaolo", "UniCredit", "Poste Italiane", "Leonardo S.p.A.", 
+	"Generali", "Telecom Italia (TIM)", "Barilla", "Luxottica", "Medico di base", "Ospedale", "Farmacia", "Psicologo", "Guardia medica", "Agente immobiliare", 
+	"Casa in vendita", "Appartamento in affitto", "Mutuo", "Mercato immobiliare", "Proprietà", "Condominio", "Agenzia immobiliare", "Rome", "Milan", "Naples", "Turin", 
+	"Florence", "Venise", "Bologne", "Palerme", "Gênes", "Vérone", "Sicile", "Sardaigne", "Toscane", "Côte Amalfitaine", "Avvocato", "Commercialista", "Medico", "Ingegnere", 
+	"Architetto", "Imprenditore", "Consulente", "Insegnante", "Infermiere",
+	
+	"Luxembourg", "Gouvernement du Luxembourg", "Centre commun de la sécurité sociale (CCSS)", "CNAP (pensions)", "Guichet.lu", "Ville de Luxembourg", 
+	"Allocation de vie chère", "Revenu d’inclusion sociale (REVIS)", "Pension Luxembourg", "Congé parental", "ArcelorMittal", "Luxembourg Stock Exchange", "RTL Group", 
+	"Post Luxembourg", "Cargolux", "SES (satellites)", "Amazon EU (Luxembourg)", "Banque Internationale à Luxembourg (BIL)", "BCEE / Spuerkeess", "Pictet Luxembourg",
+	"UBS Luxembourg", "Deloitte Luxembourg", "PwC Luxembourg", "KPMG Luxembourg", "EY Luxembourg", "CNS (assurance maladie)", "Hôpital Kirchberg", 
+	"CHL (Centre Hospitalier de Luxembourg)", "Agent immobilier Luxembourg", "Appartement Luxembourg-ville", "Maison à vendre Luxembourg", "Prix immobilier Luxembourg", 
+	"Marché immobilier Luxembourg", "Logement Luxembourg", "Luxembourg-ville", "Esch-sur-Alzette", "Differdange", "Dudelange", "Ettelbruck", "Echternach", 
+	"Moselle luxembourgeoise", "Kirchberg", "Clervaux", "Mullerthal", "emploi européen", "Allocation familiale",
+	
+	"malte", "Government of Malta", "Parliament of Malta", "Malta Tax and Customs Administration", "Jobsplus", "Identity Malta Agency", "Malta Police Force", 
+	"Malta Health Department", "Social Security Malta", "Malta Business Registry", "Transport Malta", "Child benefit Malta", "Social assistance Malta", 
+	"Malta International Airport", "Bank of Valletta (BOV)", "HSBC Malta", "GO plc", "Melita Ltd", "Playmobil Malta", "Betsson Group", "Kindred Group", "Camilleri Group", 
+	"Malta Freeport", "Public Health Malta", "Mater Dei Hospital", "Health Centres Malta", "Emergency 112 Malta", "Property Malta", "Apartment Valletta", 
+	"House for sale Malta", "Rent Malta", "Property market Malta", "Sliema housing", "St Julian’s apartments", "Gozo property", "Valletta", "Sliema", "St Julian’s", 
+	"Birkirkara", "Mosta", "Mdina", "Gozo", "Mellieħa", "Marsaxlokk", "Blue Lagoon (Comino)",
+	
+
+	"norvege", "NAV (Arbeids- og velferdsetaten)", "Skatteetaten", "UDI", "Folkeregisteret", "Helfo", "Altinn", "Politiet", "Kommune", "NAV arbeidsledig", "Dagpenger", 
+	"Kontantstøtte", "Sykepenger", "AAP (Arbeidsavklaringspenger)", "Uføretrygd", "Stønad til bolig", "Pensjon", "Gratis skole", "Equinor", "DNB", "Telenor", "Norsk Hydro", 
+	"Yara International", "Aker Solutions", "Kongsberg Gruppen", "Orkla", "Statkraft", "Rema 1000", "Coop Norge", "NorgesGruppen", "Fjordkraft", "Vy", "Fastlege", "Sykehus", 
+	"Psykolog", "Tannlege", "Fysioterapeut", "Apotek", "Psykolog Norge", "Eiendomsmegler", "Bolig til salgs", "Leilighet", "Hus", "Boliglån", "Husbank", "Hybel", "Eiendom", 
+	"Oslo", "Bergen", "Trondheim", "Stavanger", "Tromsø", "Kristiansand", "Drammen", "Bodø", "Lofoten", "Ålesund", "Nord-Norge", "Fjords de Norvège", "Barnetrygd", 
+	"Aurora borealis",
+	
+	"Nouvelle-Zélande", "Government of New Zealand", "New Zealand Parliament (Wellington)", "WINZ (Work and Income NZ)", "Immigration New Zealand", "Kāinga Ora", "NZ Police", 
+	"NZ Superannuation", "Air New Zealand", "Fonterra", "Spark NZ", "Vodafone New Zealand (One NZ)", "ANZ Bank NZ", "ASB Bank", "Westpac NZ", "BNZ (Bank of New Zealand)", 
+	"Xero", "Fisher & Paykel", "Meridian Energy", "Z Energy", "Te Whatu Ora (Health NZ)", "Public hospital NZ", "St John Ambulance", "House for sale NZ", 
+	"Auckland housing market", "Wellington property", "First home grant", "Kāinga Ora housing", "Property investor", "Auckland", "Wellington", "Christchurch", "Hamilton", 
+	"Tauranga", "Dunedin", "Queenstown", "Rotorua", "Bay of Islands", "South Island", "North Island", "Fiordland",
+	
+	"pays bas", "Rijksoverheid", "Tweede Kamer", "Eerste Kamer", "Belastingdienst", "Gemeente", "Zorginstituut Nederland", "WW-uitkering", "Bijstand", "Kinderbijslag", 
+	"Huurtoeslag", "Zorgtoeslag", "Studiefinanciering", "Kindgebonden budget", "Arbeidsongeschiktheidsuitkering", "Shell", "Philips", "ING Group", "ABN AMRO", "Rabobank", 
+	"ASML", "Heineken", "Unilever", "Ahold Delhaize", "KLM", "Booking.com", "Randstad", "Adyen", "Prosus", "AkzoNobel", "Huisarts", "Ziekenhuis", "Zorgverzekering", 
+	"Apotheek", "Psycholoog", "Tandarts", "Spoedeisende hulp", "Makelaar", "Huis te koop", "Appartement Amsterdam", "Huurwoning", "Hypotheek", "Woningmarkt", 
+	"Sociale huurwoning", "Koopwoning", "Amsterdam", "Rotterdam", "La Haye (Den Haag)", "Utrecht", "Eindhoven", "Groningen", "Maastricht", "Haarlem", "Leiden", "Delft", 
+	"Frise", "Îles Wadden",
+	
+	"portugal", "Governo de Portugal", "Assembleia da República", "Segurança Social", "Autoridade Tributária (Finanças)", "IEFP", "Serviço Nacional de Saúde (SNS)", 
+	"SEF, AIMA", "AIMA (Agência para a Integração, Migrações e Asilo)", "Câmaras Municipais", "Portal das Finanças", "Subsídio de desemprego", 
+	"RSI (Rendimento Social de Inserção)", "Abono de família", "Apoio à habitação", "Subsídio de doença", "Pensão de reforma", "Subsídio parental", "Apoios sociais", 
+	"Tarifa social de energia", "EDP", "Galp Energia", "NOS", "MEO", "Vodafone Portugal", "Caixa Geral de Depósitos", "Millennium BCP", "Banco Santander Totta", 
+	"Jerónimo Martins (Pingo Doce)", "Sonae", "TAP Air Portugal", "CTT (poste)", "Efacec", "Autoeuropa (Volkswagen Portugal)", "Centro de saúde", "Hospital público", 
+	"Médico de família", "Farmácia", "Psicólogo", "Urgência hospitalar", "INEM (urgences médicales)", "Agente imobiliário", "Casa à venda", 
+	"Apartamento para arrendar", "Mercado imobiliário Portugal", "Crédito habitação", "Imóvel", "AL (Alojamento Local)", "Lisbonne", "Porto", "Braga", 
+	"Coimbra", "Faro", "Algarve", "Sintra", "Madeira", "Açores", "Cascais", "Setúbal", "Aveiro", "Médico", "Enfermeiro", "Advogado", "Engenheiro", "Professor", 
+	"Contabilista", "Consultor", "Empresário", "Técnico IT",
+	
+	"pologne", "Government of Poland", "Sejm (parlement)", "Senate of Poland", "Urząd Skarbowy", "Urząd Pracy", "Gov.pl", "Social assistance (MOPS)", "PKN Orlen", "PGNiG", 
+	"PKO Bank Polski", "Pekao", "Allegro", "CD Projekt", "LPP (Reserved, Cropp)", "Żabka", "KGHM", "LOT Polish Airlines", "InPost", "Orange Polska", "mBank", 
+	"Santander Bank Polska", "lekarz rodzinny", "przychodnia", "Apartment Warsaw", "House for sale Poland", "Rent Poland", "Property market Warsaw", "Flat (mieszkanie)", 
+	"Warsaw (Warszawa)", "Krakow (Kraków)", "Gdansk", "Wroclaw", "Poznan", "Lodz", "Szczecin", "Lublin", "Zakopane", "Masuria lakes",
+	
+	
+	"republique tcheque", "Government of the Czech Republic", "Poslanecká sněmovna", "Senate of the Czech Republic", "Czech Social Security Administration (ČSSZ)", 
+	"Úřad práce", "Finanční správa", "Czech Health Insurance system", "Czech Statistical Office", "Czech eGovernment portal (ePortál)", "rodičovský příspěvek", "Škoda Auto", 
+	"ČEZ Group", "PPF Group", "Seznam.cz", "Komerční banka", "Česká spořitelna", "ČSOB", "Budweiser Budvar", "Alza.cz", "Colt CZ Group", "RegioJet", "České dráhy (ČD)", 
+	"Public health insurance (VZP)", "Hospital Czech Republic", "praktický lékař", "Clinic Czech Republic", "Apartment Prague", "House for sale Czech Republic", 
+	"Rent Czech Republic", "Mortgage Czech Republic", "Property market Prague", "Housing Czech Republic", "Real estate Prague", "Prague (Praha)", "Brno", "Ostrava", "Plzeň", 
+	"Liberec", "Olomouc", "České Budějovice", "Karlovy Vary", "South Bohemia", "Moravia", "Český Krumlov",
+	
+	"suisse", "UBS", "Credit Suisse", "Swiss Re", "Zurich Insurance", "Swiss Life", "Novartis", "Roche", "ABB", "Swisscom", "Migros", "Coop", "Richemont", "CFF", "SBB", 
+	"Swiss International Air Lines", "CarPostal", "SwissPass", "PPE (Propriété par étage)", "Genève", "Zurich", "Lausanne", "Berne", "Bâle", "Fribourg", "Neuchâtel", 
+	"Montreux", "Verbier", "Zermatt", "Lugano", "Interlaken", "Fiduciaire", "LAMal"
 ]
 
