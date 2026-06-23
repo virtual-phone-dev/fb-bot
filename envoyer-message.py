@@ -229,13 +229,12 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
                 await message_box.fill(texte)        
                     
                 print("Patiente 1s"); await asyncio.sleep(1)
-                await page.keyboard.press("Enter")
+                #await page.keyboard.press("Enter")
 
                 #print("✅ Message envoyé :", texte); on deprint pas ca
                 
-                await marquer_contact(fichier2, "url", url_page, jours_recontact=120)
-                await marquer_contact(fichier4, "fichier", mon_compte)
-                #print("Patiente 10s"); await asyncio.sleep(10)
+                #await marquer_contact(fichier2, "url", url_page, jours_recontact=120)
+                #await marquer_contact(fichier4, "fichier", mon_compte)
                 break
     else:
         await mettre_a_jour(fichier2, {"btn_message": 0}, "url", url_page)
