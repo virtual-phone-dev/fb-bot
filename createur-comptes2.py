@@ -6,7 +6,7 @@ div_data_testid, div_data_pagelet, button_id, button_button_text, button_submit_
 
 mot_de_passe = "Diel2019@#"
 #email = "abdelilluminati@gmail.com"
-email = "dgkilluminati@gmail.com"
+email = "eddyilluminati001@gmail.com"
 nom = "Queen Fleurina" 
 username = "Queen_Fleurina" 
 nom1 = "Queen" 
