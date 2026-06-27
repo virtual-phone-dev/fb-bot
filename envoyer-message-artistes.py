@@ -10,8 +10,8 @@ PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
 
 texte = """Salut, on a besoin du contenu, si vous avez du contenu, envoyer nous ça et on va publier ça sur notre page Facebook Blue Music.
-Et si c'est une vidéo que vous avez déjà eu à publier sur votre page Facebook, c'est une bonne chose pour nous, envoyer nous le lien de la vidéo, on va télécharger la vidéo 
-puis publier ça sur notre page Facebook Blue Music.
+Et si c'est une vidéo que vous avez déjà eu à publier sur votre page Facebook, c'est une bonne chose, envoyer nous le lien de la vidéo, on va télécharger la vidéo 
+et publier ça sur notre page Facebook Blue Music.
 
 Blue Music
 https://www.facebook.com/profile.php?id=61571362742384

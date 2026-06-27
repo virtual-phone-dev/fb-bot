@@ -319,14 +319,7 @@ async def collecter_liens(fichier, context, page):
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
-            headless=True,
-            args=[
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--disable-infobars",
-                "--disable-web-security",
-            ],
-        )
+        headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
 
         fichier_des_comptes = "mes_comptes_fb2.json"
         comptes = await charger_comptes(fichier_des_comptes)

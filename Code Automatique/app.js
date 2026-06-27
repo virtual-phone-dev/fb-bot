@@ -292,7 +292,6 @@ function afficherFonctions() {
 		lignes.splice(debut, fin - debut + 1); // supprime toutes les lignes de la fonction
 		resultat.value = lignes.join('\n');
 		afficherFonctions();
-	  };
 	});
 	
 	
@@ -331,22 +330,22 @@ function afficherFonctions() {
 		// trouver la fin de la fonction ciblée
 		let finFn = null;
 		
-		/* let count = 0;
+		let count = 0;
 		let debutFn = -1;
-		let finFn = -1; */
+		let finFn = -1; 
 		lignes.forEach((ligne, i) => {
 		  if (/(?:async\s+)?def\s+/i.test(ligne)) {
-			//if (count === indexFn) debutFn = i;
-			//else if (count > indexFn && finFn === -1) finFn = i - 1;
-			//count++;
+			if (count === indexFn) debutFn = i;
+			else if (count > indexFn && finFn === -1) finFn = i - 1;
+			count++;
 			
 			finFn = i - 1;
 			console.log("index", i);
 			console.log("finFn", finFn);
 		  }
 		});
-		//if (finFn === -1) finFn = lignes.length - 1;
-		//while (finFn > debutFn && lignes[finFn].trim() === '') finFn--;
+		if (finFn === -1) finFn = lignes.length - 1;
+		while (finFn > debutFn && lignes[finFn].trim() === '') finFn--;
 
 		lignes.splice(finFn + 1, 0, ligneAAjouter); // ajoute à la fin de la fonction
 		resultat.value = lignes.join('\n');
