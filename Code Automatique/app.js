@@ -292,8 +292,8 @@ function afficherFonctions() {
 		lignes.splice(debut, fin - debut + 1); // supprime toutes les lignes de la fonction
 		resultat.value = lignes.join('\n');
 		afficherFonctions();
+	  }
 	});
-	
 	
 	
 	// toggle 📞 — ouvre/ferme la liste des fonctions à appeler
@@ -332,7 +332,7 @@ function afficherFonctions() {
 		
 		let count = 0;
 		let debutFn = -1;
-		let finFn = -1; 
+		//let finFn = -1; 
 		lignes.forEach((ligne, i) => {
 		  if (/(?:async\s+)?def\s+/i.test(ligne)) {
 			if (count === indexFn) debutFn = i;
