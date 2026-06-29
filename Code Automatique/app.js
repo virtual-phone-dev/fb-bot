@@ -328,20 +328,16 @@ function afficherFonctions() {
 		const lignes = resultat.value.split('\n');
 
 		// trouver la fin de la fonction ciblée
-		let finFn = null;
+		//let finFn = null;
 		
 		let count = 0;
 		let debutFn = -1;
-		//let finFn = -1; 
+		let finFn = -1; 
 		lignes.forEach((ligne, i) => {
 		  if (/(?:async\s+)?def\s+/i.test(ligne)) {
 			if (count === indexFn) debutFn = i;
 			else if (count > indexFn && finFn === -1) finFn = i - 1;
 			count++;
-			
-			finFn = i - 1;
-			console.log("index", i);
-			console.log("finFn", finFn);
 		  }
 		});
 		if (finFn === -1) finFn = lignes.length - 1;
