@@ -7,10 +7,7 @@ basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_
 format_date = "%d-%m-%Y"
 
 
-texte = """Pourquoi avoir sa propre application mobile ?
-Si vous avez votre propre application mobile, vous pourrez vendre de la publicité dans votre application.
-
-Salut, je suis développeur, si vous avez un projet de créer un réseau social ou une application mobile, je suis disponible. """
+texte = """Salut, je suis développeur, je propose la création de réseau social et d'application mobile. On va vous fournir un code de qualité excellente, et nos prix sont très moins chère."""
 
 objet = "Super Code"
 
