@@ -239,21 +239,6 @@ async def verifier_btn_message(fichier_sauvegarde, page, champ_url, url, champ_n
 
         
         
-async def verifier_nouveau_message2(page, email):
-    statut = await span_has_text(page, ["Adresse introuvable", "Message non distribué", "Boîte de réception du destinataire pleine"])
-    if statut: 
-        print("Pas de nouveau message a"); 
-        await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", email)
-        return
-
-    statut = await span_name(page, ["moi"])
-    if statut:
-        print("nouveau message trouvé")
-        await mettre_a_jour("mes_emails2.json", {"message_trouvé": 1}, "email", email)
-    else:
-        print("Pas de nouveau message b")
-        await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", email)   
-        
 
 async def verifier_nouveau_message(page, email):
     mot_inutiles = ["Adresse introuvable", "Message non distribué", "Boîte de réception du destinataire pleine"]
@@ -262,16 +247,9 @@ async def verifier_nouveau_message(page, email):
     for mot in mot_inutiles:
         element = element.filter(has_not_text=mot)
 
-    element = element.locator('span[name="moi"]')
+    element = element.locator('span[name="moi"], span[name="me"]')
     
-    #statut = await span_has_text(page, ["Adresse introuvable", "Message non distribué", "Boîte de réception du destinataire pleine"])
-    #if statut: 
-    #    print("Pas de nouveau message a") 
-    #    await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", email)
-    #    return
     
-    # Chercher span[name="moi"] uniquement dans un tr non lu (zE)
-    # element = page.locator('tr.zA.zE span[name="moi"]')
     if await element.count() > 0:
         print("nouveau message trouvé (non lu)")
         await mettre_a_jour("mes_emails2.json", {"message_trouvé": 1}, "email", email)
