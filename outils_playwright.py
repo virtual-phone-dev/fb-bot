@@ -841,7 +841,26 @@ async def sauvegarder_cookies(contexte, fichier):
 
     print(f"cookies sauvegardés")
     
-    
+
+
+async def sauvegarder_par_bloc(fichier, data, taille_bloc=5):
+    with open(fichier, "w", encoding="utf-8") as f:
+        f.write("[\n")
+        for i, item in enumerate(data):
+            json_line = json.dumps(item, ensure_ascii=False, separators=(', ', ':'))
+
+            # ligne vide avant chaque nouveau bloc (sauf le tout premier élément)
+            if i > 0 and i % taille_bloc == 0:
+                f.write("\n")
+
+            f.write(f"  {json_line}")
+
+            if i < len(data) - 1:
+                f.write(",\n")
+            else:
+                f.write("\n")
+        f.write("]")    
+
 
 async def sauvegarder_sur_meme_ligne(fichier, data):
     with open(fichier, "w", encoding="utf-8") as f:
@@ -885,7 +904,8 @@ async def charger_fichier_t(fichier):
             return [ligne.strip() for ligne in f if ligne.strip()]  # strip pour ignorer les espaces, et les lignes saut de lignes
     except:
         return ""
-        
+        #return []    
+  
         
 def charger_posts(fichier):
     if not os.path.exists(fichier):

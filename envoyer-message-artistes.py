@@ -227,7 +227,8 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
 
                 #print("✅ Message envoyé :", texte); on deprint pas ca
                 
-                #await marquer_contact(fichier2, "url", url_page, jours_recontact=120)
+                await marquer_contact(fichier2, "url", url_page, jours_recontact=120)
+                
                 #await marquer_contact(fichier4, "fichier", mon_compte)
                 break
     else:
@@ -240,11 +241,11 @@ async def main():
         browser = await p.chromium.launch(        
         headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
 
-        fichier1 = "liste-pages-artistes.json"
-        fichier2 = "liste-pages-artistes2.json"
+        fichier1 = "artistes.json"
+        fichier2 = "artistes2.json"
         pages_fb = await verifier_nouveau_element(fichier1, fichier2, "url") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
         pages_fb = [p for p in pages_fb if "url" in p] # filtre pour prendre uniquement les ligne qui ont "url", pas "zone"
-        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p) and p.get("btn_message") != 0]
+        #pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p) and p.get("btn_message") != 0]
         
         
         fichier3 = "mes_comptes_fb.json"
@@ -252,7 +253,7 @@ async def main():
         comptes_fb = await verifier_nouveau_element(fichier3, fichier4, "message")
         comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c) and c.get("message") == 1]; #print("comptes_fb ", comptes_fb) 
         
-        fichier_page_message_debut = "page_artistes_debut.json"
+        fichier_page_message_debut = "artistes_debut.json"
         page_message_debut = (await charger_fichier_d(fichier_page_message_debut)).get("url")
         
         index = next((i for i, page in enumerate(pages_fb) if page.get("url") == page_message_debut), 0) # next() prend le premier résultat trouvé, si un email correspond → retourne son index, sinon → retourne 0 (valeur par défaut) 
