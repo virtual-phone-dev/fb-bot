@@ -206,6 +206,19 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
     #await page.wait_for_load_state("domcontentloaded")
     #print("patiente 5s"); await asyncio.sleep(5) 
     
+    #if (document.body.innerText.includes("6 juillet")) {
+    #console.log("❌ date indisponible !");
+    #} else {
+    #    console.log("✅ date trouvé");
+    #}
+    
+    #date_trouver = await page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("7 juillet")); } """)
+    date_trouver = await page.evaluate("""() => { return document.body.innerText.includes("7 juillet"); }""")    
+    if date_trouver:
+        print("❌ date indisponible !")
+    else:
+        print("✅ date trouvé")        
+    
     statut = await clic_div_aria_label_role_button(page, ["Message"])
     if statut:
         print("bouton message trouvé")
@@ -226,7 +239,6 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
                 #await page.keyboard.press("Enter")
 
                 #print("✅ Message envoyé :", texte); on deprint pas ca
-                
                 await marquer_contact(fichier2, "url", url_page, jours_recontact=120)
                 
                 #await marquer_contact(fichier4, "fichier", mon_compte)
@@ -245,13 +257,14 @@ async def main():
         fichier2 = "artistes2.json"
         pages_fb = await verifier_nouveau_element(fichier1, fichier2, "url") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
         pages_fb = [p for p in pages_fb if "url" in p] # filtre pour prendre uniquement les ligne qui ont "url", pas "zone"
+        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]
         #pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p) and p.get("btn_message") != 0]
         
         
         fichier3 = "mes_comptes_fb.json"
         fichier4 = "mes_comptes_fb2.json"
-        comptes_fb = await verifier_nouveau_element(fichier3, fichier4, "message")
-        comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c) and c.get("message") == 1]; #print("comptes_fb ", comptes_fb) 
+        comptes_fb = await verifier_nouveau_element(fichier3, fichier4, "btn_message")
+        comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c) and c.get("btn_message") == 1]; #print("comptes_fb ", comptes_fb) 
         
         fichier_page_message_debut = "artistes_debut.json"
         page_message_debut = (await charger_fichier_d(fichier_page_message_debut)).get("url")
@@ -262,7 +275,7 @@ async def main():
         tour = 0
         
         count = 0 #count je met juste ca pour compter le nombre de tours, que fera la boucle while
-        while count < 10:   
+        while count < 2:   
             count += 1
         
             #if not len(comptes_fb) > 0: 
@@ -304,6 +317,6 @@ async def main():
                 if statut == "tout_mes_comptes_utiliser": break
                 
                 #print("patiente 10s"); await asyncio.sleep(10)  
-                await context.close()
+            await context.close()
 
 asyncio.run(main())

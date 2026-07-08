@@ -200,22 +200,22 @@ async def marquer_contact(fichier, cle_db, cle, jours_recontact=1):
     data_update = { "contacter": aujourd_hui.strftime(format_date), "recontacter": relance.strftime(format_date) }
     
     await mettre_a_jour(fichier, data_update, cle_db, cle)
-    
 
-# verifier_btn_message(fichier_sauvegarde, page, champ_url, url, champ_nom, nom)
+
 
 async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
-    #fichier_comptes = "mes_comptes_fb2.json"
     await page.goto(url_page, timeout=0)
     await basculer_sur_le_compte(page, url_page)
     
-    #await page.wait_for_load_state("domcontentloaded")
-    #print("patiente 5s"); await asyncio.sleep(5) 
+    #btn_follower = await page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("6 juillet")); } """)
+    #if btn_follower:
+
     
     statut = await clic_div_aria_label_role_button(page, ["Message"])
     if statut:
         print("bouton message trouvé")
-        await mettre_a_jour(fichier2, {"btn_message": 1}, "url", url_page)
+        await mettre_a_jour(fichier4, {"btn_message": 1}, "fichier", mon_compte)
+        #await mettre_a_jour(fichier2, {"btn_message": 1}, "url", url_page)
         
         await page.evaluate("""
         const messageButton = document.querySelector('div[aria-label="Message"]'); // cliquer sur le bouton Message, une popup s'ouvre alors , pour ecrire le message
@@ -237,7 +237,8 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
                 #await marquer_contact(fichier4, "fichier", mon_compte)
                 break
     else:
-        await mettre_a_jour(fichier2, {"btn_message": 0}, "url", url_page)
+        await mettre_a_jour(fichier4, {"btn_message": 1}, "fichier", mon_compte)
+        #await mettre_a_jour(fichier2, {"btn_message": 0}, "url", url_page)
 
         
 async def main():

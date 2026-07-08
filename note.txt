@@ -737,6 +737,13 @@ if (boutonPublier) {
 
 
 
+if (document.body.innerText.includes("6 juillet")) {
+    console.log("❌ date indisponible !");
+} else {
+    console.log("✅ date trouvé");
+}
+
+
 regarde ca , et si je veux cibler ceux que role="button"
 const element = document.querySelector('[data-ad-preview="message"]');
 console.log(element.innerText); // lecture

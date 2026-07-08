@@ -247,7 +247,8 @@ async def verifier_nouveau_message(page, email):
     for mot in mot_inutiles:
         element = element.filter(has_not_text=mot)
 
-    element = element.locator('span[name="moi"], span[name="me"]')
+    element = element.locator('span[name="moi"]')
+    #element = element.locator('span[name="moi"], span[name="me"]')
     
     
     if await element.count() > 0:
