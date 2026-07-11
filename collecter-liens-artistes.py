@@ -2,7 +2,8 @@ import json, asyncio, msvcrt, time, unicodedata
 from playwright.async_api import async_playwright
 from itertools import cycle
 from outils_playwright import (connecter_gmail, clic_div_aria_label_role_button, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, 
-charger_fichier_d, ajouter_dans_fichier, mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles, domaines_autoriser, clic_div_aria_label_role_button)
+charger_fichier_d, ajouter_dans_fichier, mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles, domaines_autoriser, clic_div_aria_label_role_button,
+query_selector_text)
 
 
 
@@ -138,13 +139,34 @@ async def compter_commentaire(page, nom, url):
                     await email(page, nom, url)
                     await message(page, nom, url)
                     
+
+
+
+
+#if (document.body.innerText.includes("Musique/groupe")) {
+#	console.log("✅ trouvé");
+#} else {
+#	console.log("❌ non trouvé !");
+#}
+
+
         
 async def nom_page(page, url):
     name = await page.locator("h1").first.text_content() # recuperer nom_page
     name = name.strip() if name else None
-    await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url) # sauvegarder la page trouvé
-    await ajouter_dans_fichier("pages_collecter_artistes2.json", {"nom": name, "url": url}, "url", url) 
-    print("nom_page : ", name); return name
+
+
+    statut = await query_selector_text(page, ["Artiste", "Musique/groupe"])
+    if statut: 
+        print("artiste trouvé"); 
+        await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url) # sauvegarder la page trouvé
+        await ajouter_dans_fichier("pages_collecter_artistes2.json", {"nom": name, "url": url}, "url", url) 
+    else:
+        print("pas artiste"); 
+        
+    print("nom_page : ", name); return name 
+            
+   
             
             
 async def email(page, nom_page, url):           
@@ -198,12 +220,8 @@ async def recuperer_lien(context, page):
                 else:
                     url = url.split("?")[0]
                 
-                #print("aa ")
                 if not url: continue 
-                #print("bb ")
                 if url in seen: continue # Skip déjà vus 
-                #print("cc ")
-                #print(url)
                 
                 if "-" in url or "%" in url: continue
                 if any(x in url for x in blacklist): continue # Skip blacklist
@@ -215,11 +233,9 @@ async def recuperer_lien(context, page):
                     if p.get("page") == url: 
                         print("url existe déjà")
                         url_existe_deja = True
-                        #print("ee ")
                         break 
-                #print("ff ")
+
                 if url_existe_deja: continue  # si url_existe_deja=True, on passe à l'url suivante
-                #print("gg ")
                 seen.add(url)
                 print("Ouverture :", url)
                 

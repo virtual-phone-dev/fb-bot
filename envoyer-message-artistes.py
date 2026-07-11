@@ -200,7 +200,6 @@ async def marquer_contact(fichier, cle_db, cle, jours_recontact=1):
     await mettre_a_jour(fichier, data_update, cle_db, cle)
     
 
-# verifier_btn_message(fichier_sauvegarde, page, champ_url, url, champ_nom, nom)
 
 async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
     #fichier_comptes = "mes_comptes_fb2.json"

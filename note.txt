@@ -737,10 +737,10 @@ if (boutonPublier) {
 
 
 
-if (document.body.innerText.includes("6 juillet")) {
-    console.log("❌ date indisponible !");
+if (document.body.innerText.includes("Musique/groupe")) {
+	console.log("✅ trouvé");
 } else {
-    console.log("✅ date trouvé");
+	console.log("❌ non trouvé !");
 }
 
 
