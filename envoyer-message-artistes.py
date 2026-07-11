@@ -9,12 +9,16 @@ clic_div_aria_label_role_button)
 PAUSE_MINUTES = 1
 format_date = "%d-%m-%Y"
 
-texte = """Salut, on a besoin du contenu, si vous avez du contenu, envoyer nous ça et on va publier ça sur notre page Facebook Blue Music.
-Et si c'est une vidéo que vous avez déjà eu à publier sur votre page Facebook, c'est une bonne chose, envoyer nous le lien de la vidéo, on va télécharger la vidéo 
-et publier ça sur notre page Facebook Blue Music.
+texte = """Salut, j'ai besoin du contenu, est-ce que c'est possible de m'envoyer du contenu, et on va publier ça sur notre page Facebook Blue Music 
 
-Blue Music
+🌍🎵 Blue Music 
 https://www.facebook.com/profile.php?id=61571362742384
+
+🇨🇬 Blue Music Congo
+https://www.facebook.com/profile.php?id=61590983143767
+
+🇹🇩 Blue Music Tchad
+https://www.facebook.com/profile.php?id=61591692635517
 """
 
  
@@ -202,22 +206,13 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
     #fichier_comptes = "mes_comptes_fb2.json"
     await page.goto(url_page, timeout=0)
     await basculer_sur_le_compte(page, url_page)
-    
-    #await page.wait_for_load_state("domcontentloaded")
-    #print("patiente 5s"); await asyncio.sleep(5) 
-    
-    #if (document.body.innerText.includes("6 juillet")) {
-    #console.log("❌ date indisponible !");
-    #} else {
-    #    console.log("✅ date trouvé");
-    #}
-    
-    #date_trouver = await page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("7 juillet")); } """)
-    date_trouver = await page.evaluate("""() => { return document.body.innerText.includes("7 juillet"); }""")    
-    if date_trouver:
-        print("❌ date indisponible !")
-    else:
-        print("✅ date trouvé")        
+
+    # ce bout de code, fonctionne pas , je laisse ca, peut etre un jour, a partir de ca, je pourrai extraire la date du post
+    #date_trouver = await page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("juillet")); } """)
+    #if date_trouver:
+    #    print("✅ date trouvé")    
+    #else:
+    #    print("❌ date indisponible !")
     
     statut = await clic_div_aria_label_role_button(page, ["Message"])
     if statut:
@@ -234,12 +229,11 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
             message_box = page.locator('div[aria-label*="Écrire"]').first
             if await message_box.count() > 0:
                 await message_box.fill(texte)        
-                    
                 print("Patiente 1s"); await asyncio.sleep(1)
+                
                 #await page.keyboard.press("Enter")
-
-                #print("✅ Message envoyé :", texte); on deprint pas ca
-                await marquer_contact(fichier2, "url", url_page, jours_recontact=120)
+                #print("✅ Message envoyé"); #on deprint pas ca
+                #await marquer_contact(fichier2, "url", url_page, jours_recontact=120)
                 
                 #await marquer_contact(fichier4, "fichier", mon_compte)
                 break
@@ -264,7 +258,7 @@ async def main():
         fichier3 = "mes_comptes_fb.json"
         fichier4 = "mes_comptes_fb2.json"
         comptes_fb = await verifier_nouveau_element(fichier3, fichier4, "btn_message")
-        comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c) and c.get("btn_message") == 1]; #print("comptes_fb ", comptes_fb) 
+        comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c) and c.get("message") == 1]; #print("comptes_fb ", comptes_fb) 
         
         fichier_page_message_debut = "artistes_debut.json"
         page_message_debut = (await charger_fichier_d(fichier_page_message_debut)).get("url")
@@ -275,7 +269,7 @@ async def main():
         tour = 0
         
         count = 0 #count je met juste ca pour compter le nombre de tours, que fera la boucle while
-        while count < 2:   
+        while count < 30:   
             count += 1
         
             #if not len(comptes_fb) > 0: 

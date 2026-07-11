@@ -316,6 +316,6 @@ async def main():
                 if statut == "tout_mes_comptes_utiliser": break
                 
                 #print("patiente 10s"); await asyncio.sleep(10)  
-                await context.close()
+            await context.close()
 
 asyncio.run(main())

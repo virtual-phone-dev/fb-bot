@@ -354,11 +354,14 @@ async def visiter_page(page):
     await acceder_page(page)   
     
 
-async def main():
-    comptes = json.load(open("mes_comptes_fb2.json", encoding="utf-8"))
-
+async def main():   
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False)
+        browser = await p.chromium.launch(        
+        headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
+
+        
+        comptes = json.load(open("mes_comptes_fb2.json", encoding="utf-8"))
+        comptes = [c for c in comptes if c.get("compte_special") == 1];
         total = len(comptes)
 
         for index, compte in enumerate(comptes):

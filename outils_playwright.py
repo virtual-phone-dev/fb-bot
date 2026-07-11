@@ -225,7 +225,32 @@ async def connexion_tu(page):
     
     await input_name(page, ["password"], mot_de_passe)     
     await button_submit_text(page, ["Connexion"], clic=True)
+
+
+
+# EXTRAIRE INFOS COMPTE
+async def extraire_fichier(compte):
+    if isinstance(compte, str):
+        fichier = compte
+    else:
+        fichier = compte["fichier"]
+
+    ignore = fichier.startswith("-")
+    return fichier.lstrip("-"), ignore
     
+    
+async def preparer_storage_state(fichier):
+    dossier = os.path.dirname(fichier)
+    if dossier:
+        os.makedirs(dossier, exist_ok=True)
+
+    if not os.path.exists(fichier):
+        with open(fichier, "w", encoding="utf-8") as f:
+            json.dump({
+                "cookies": [],
+                "origins": []
+            }, f, indent=4)
+                
     
     
 async def verifier_btn_message(fichier_sauvegarde, page, champ_url, url, champ_nom, nom):

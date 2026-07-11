@@ -142,8 +142,8 @@ async def compter_commentaire(page, nom, url):
 async def nom_page(page, url):
     name = await page.locator("h1").first.text_content() # recuperer nom_page
     name = name.strip() if name else None
-    await ajouter_dans_fichier("pages_collecter.json", {"page": url, "nom": name}, "page", url) # sauvegarder la page trouvé
-    await ajouter_dans_fichier("pages_collecter2.json", {"page": url, "nom": name}, "page", url) 
+    await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url) # sauvegarder la page trouvé
+    await ajouter_dans_fichier("pages_collecter_artistes2.json", {"nom": name, "url": url}, "url", url) 
     print("nom_page : ", name); return name
             
             
@@ -168,7 +168,7 @@ async def message(page, nom, url):
     message_btn = await page.query_selector('div[aria-label="Message"]') # verifier si ya le btn message sur la page
     if message_btn:
         print("📩 message disponible")
-        await ajouter_dans_fichier("page_messages_collecter.json", {"message": url, "nom": nom}, "message", url)
+        await ajouter_dans_fichier("pages_collecter_artistes.json", {"message": url, "nom": nom}, "message", url)
     else:
         print("❌ pas de message")
         
@@ -208,7 +208,7 @@ async def recuperer_lien(context, page):
                 if "-" in url or "%" in url: continue
                 if any(x in url for x in blacklist): continue # Skip blacklist
                 
-                contenu = await charger_fichier("pages_collecter.json") or []
+                contenu = await charger_fichier("pages_collecter_artistes.json") or []
                 
                 url_existe_deja = False 
                 for p in contenu: # verifier si url existe deja dans db
@@ -228,16 +228,16 @@ async def recuperer_lien(context, page):
                     await new_page.goto(url)
                     nom = await nom_page(new_page, url); #sauvegarder le lien du compte ami
 
-                    btn_follower = await page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("Followers")); } """)
+                    btn_follower = await new_page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("Followers")); } """)
                     if not btn_follower: 
                         print("ami");
-                        await mettre_a_jour("pages_collecter2.json", {"ami": 1}, "page", url) #mettre_a_jour le lien du compte ami
-                        await email(new_page, nom, url)
+                        await mettre_a_jour("pages_collecter_artistes2.json", {"ami": 1}, "page", url) #mettre_a_jour le lien du compte ami
+                        #await email(new_page, nom, url)
                     else:
-                        await mettre_a_jour("pages_collecter2.json", {"ami": 0}, "page", url)
-                        await post_recent(new_page)
-                        await compter_commentaire(new_page, nom, url)
-                        print("patiente 1s"); await asyncio.sleep(1)
+                        await mettre_a_jour("pages_collecter_artistes2.json", {"ami": 0}, "page", url)
+                        #await post_recent(new_page)
+                        #await compter_commentaire(new_page, nom, url)
+                        #print("patiente 1s"); await asyncio.sleep(1)
                         
                     await new_page.close()
                 except Exception as e:
@@ -253,7 +253,7 @@ async def recuperer_lien(context, page):
         
         
 async def verifier_dernier_mot():
-    fichier_mot_debut = "mot_cles_debut_artistes.json" # dernier_mot_cle.json
+    fichier_mot_debut = "mot_cles_artistes_debut.json" # dernier_mot_cle.json
     mot_debut = (await charger_fichier_d(fichier_mot_debut)).get("mot_cle")
     
     fichier_mot = "mot_cles_artistes.json"
