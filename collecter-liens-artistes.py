@@ -3,7 +3,7 @@ from playwright.async_api import async_playwright
 from itertools import cycle
 from outils_playwright import (connecter_gmail, clic_div_aria_label_role_button, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, 
 charger_fichier_d, ajouter_dans_fichier, mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles, domaines_autoriser, clic_div_aria_label_role_button,
-query_selector_text)
+query_selector_text, compter_followers_fb)
 
 
 
@@ -152,22 +152,33 @@ async def compter_commentaire(page, nom, url):
 
         
 async def nom_page(page, url):
-    name = await page.locator("h1").first.text_content() # recuperer nom_page
-    name = name.strip() if name else None
+    try: # recuperer nom_page
+        name = await page.evaluate('''() => {
+        const el = document.querySelector('span[dir="auto"] div[role="button"]');
+        return el ? el.childNodes[0].textContent.trim() : null; }''')
+        
+        print("name aa", name)
+    except Exception as e:
+        print("pas de nom"); print(e)
 
 
-    statut = await query_selector_text(page, ["Artiste", "Musique/groupe"])
+    statut = await query_selector_text(page, ["Artiste", "Musique/groupe", "Groupe", "Rappeur"])
     if statut: 
-        print("artiste trouvé"); 
-        await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url) # sauvegarder la page trouvé
-        await ajouter_dans_fichier("pages_collecter_artistes2.json", {"nom": name, "url": url}, "url", url) 
+        
+        follower = await compter_followers_fb(page)
+        if follower is not None and follower < 10000:
+            print("artiste trouvé"); 
+            await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url) # sauvegarder la page trouvé
+            await ajouter_dans_fichier("pages_collecter_artistes2.json", {"nom": name, "url": url}, "url", url) 
+        else:
+            print("non trouvé")
     else:
         print("pas artiste"); 
         
-    print("nom_page : ", name); return name 
-            
-   
-            
+    #print("nom_page : ", name); 
+    return name 
+    
+                        
             
 async def email(page, nom_page, url):           
     element = await page.query_selector('[href^="mailto:"]') # recuperer email
@@ -230,7 +241,7 @@ async def recuperer_lien(context, page):
                 
                 url_existe_deja = False 
                 for p in contenu: # verifier si url existe deja dans db
-                    if p.get("page") == url: 
+                    if p.get("url") == url: 
                         print("url existe déjà")
                         url_existe_deja = True
                         break 
@@ -247,17 +258,18 @@ async def recuperer_lien(context, page):
                     btn_follower = await new_page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("Followers")); } """)
                     if not btn_follower: 
                         print("ami");
-                        await mettre_a_jour("pages_collecter_artistes2.json", {"ami": 1}, "page", url) #mettre_a_jour le lien du compte ami
+                        await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": nom, "url": url, "ami": 1}, "url", url) #lien du compte ami
+                        #await mettre_a_jour("pages_collecter_artistes.json", {"ami": 1}, "page", url) #mettre_a_jour le lien du compte ami
                         #await email(new_page, nom, url)
-                    else:
-                        await mettre_a_jour("pages_collecter_artistes2.json", {"ami": 0}, "page", url)
+                    #else:
+                        #await mettre_a_jour("pages_collecter_artistes2.json", {"ami": 0}, "page", url)
                         #await post_recent(new_page)
                         #await compter_commentaire(new_page, nom, url)
                         #print("patiente 1s"); await asyncio.sleep(1)
                         
                     await new_page.close()
                 except Exception as e:
-                    print("cc.."); #print(e) #en general, ici l'erreur cest quand ca a trop charger la page longtemps
+                    print("cc.."); print(e) #en general, ici l'erreur cest quand ca a trop charger la page longtemps
                     await new_page.close()
 
             # Scroll pour charger plus de contenu 

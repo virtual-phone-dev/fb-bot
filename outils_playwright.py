@@ -251,6 +251,27 @@ async def preparer_storage_state(fichier):
                 "origins": []
             }, f, indent=4)
                 
+
+
+    
+async def compter_followers_fb(page):
+    followers = await page.evaluate('''() => {
+        const element = document.querySelector('a[href*="followers"] strong');
+        const raw = element ? element.textContent.trim() : null;
+
+        function parseCount(str) {
+            if (!str) return null;
+            str = str.replace(/\\u00A0/g, ' ').trim().toUpperCase();
+            if (str.includes('K')) return parseFloat(str.replace('K', '').trim()) * 1000;
+            if (str.includes('M')) return parseFloat(str.replace('M', '').trim()) * 1000000;
+            return parseFloat(str.replace(/[^\\d.]/g, ''));
+        }
+
+        return parseCount(raw);
+    }''')
+
+    return followers
+ 
     
     
 async def verifier_btn_message(fichier_sauvegarde, page, champ_url, url, champ_nom, nom):
