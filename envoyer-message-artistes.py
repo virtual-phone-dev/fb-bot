@@ -230,9 +230,9 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
                 await message_box.fill(texte)        
                 print("Patiente 1s"); await asyncio.sleep(1)
                 
-                #await page.keyboard.press("Enter")
-                #print("✅ Message envoyé"); #on deprint pas ca
-                #await marquer_contact(fichier2, "url", url_page, jours_recontact=120)
+                await page.keyboard.press("Enter")
+                print("✅ Message envoyé"); #on deprint pas ca
+                await marquer_contact(fichier2, "url", url_page, jours_recontact=120)
                 
                 #await marquer_contact(fichier4, "fichier", mon_compte)
                 break
@@ -246,7 +246,7 @@ async def main():
         browser = await p.chromium.launch(        
         headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
 
-        fichier1 = "artistes.json"
+        fichier1 = "pages_collecter_artistes2.json"
         fichier2 = "artistes2.json"
         pages_fb = await verifier_nouveau_element(fichier1, fichier2, "url") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
         pages_fb = [p for p in pages_fb if "url" in p] # filtre pour prendre uniquement les ligne qui ont "url", pas "zone"
@@ -257,7 +257,7 @@ async def main():
         fichier3 = "mes_comptes_fb.json"
         fichier4 = "mes_comptes_fb2.json"
         comptes_fb = await verifier_nouveau_element(fichier3, fichier4, "btn_message")
-        comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c) and c.get("message") == 1]; #print("comptes_fb ", comptes_fb) 
+        comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c) and c.get("envoyer_message") == 1]; #print("comptes_fb ", comptes_fb) 
         
         fichier_page_message_debut = "artistes_debut.json"
         page_message_debut = (await charger_fichier_d(fichier_page_message_debut)).get("url")
@@ -302,14 +302,15 @@ async def main():
                 
                 await envoyer_message(fichier2, fichier4, page, url_page, mon_compte)
                 await verifier_commande(page, 10)
+                await sauvegarder_cookies(context, fichier_cookie)
                 
                 pages_deja_contacter.add(url_page)
                 index += 1            
                 
                 statut = await tour_suivant(fichier_page_message_debut, pages_fb, comptes_fb, page_suivant, tour, index, "url", "compte")
-                if statut == "tout_mes_comptes_utiliser": break
+                if statut == "tout_mes_comptes_utiliser": await context.close(); break
                 
                 #print("patiente 10s"); await asyncio.sleep(10)  
-            await context.close()
+                await context.close()
 
 asyncio.run(main())

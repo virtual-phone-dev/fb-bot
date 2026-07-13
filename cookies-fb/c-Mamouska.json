@@ -1,16 +1,6 @@
 {
     "cookies": [
         {
-            "name": "dbln",
-            "value": "%7B%22100029347359549%22%3A%22cru7IYzW%22%7D",
-            "domain": ".facebook.com",
-            "path": "/login/device-based/",
-            "expires": 1779912118.93237,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
             "name": "datr",
             "value": "7KWgaZtdkpeo4-bYP1RA0hZq",
             "domain": ".facebook.com",
@@ -25,7 +15,7 @@
             "value": "100029347359549",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1806709936.809901,
+            "expires": 1815418360.020551,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -41,41 +31,61 @@
             "sameSite": "None"
         },
         {
-            "name": "wd",
-            "value": "1280x720",
+            "name": "presence",
+            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1775173941258%2C%22v%22%3A1%7D",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1775778740,
+            "expires": -1,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
         },
         {
-            "name": "fr",
-            "value": "1xNbF1YnJFvJC3Zc8.AWdr4WFc4A1OG2m-hwFtIAC4V2vvONt99zO_7LDLiv7ykZ4nJV0.BpzwEy..AAA.0.0.BpzwEy.AWeI7t0uYgnMrRNo-IekqKELzgw",
+            "name": "ps_l",
+            "value": "1",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1782949936.810235,
+            "expires": 1818442350.809291,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "ps_n",
+            "value": "1",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1818442350.809497,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "fr",
+            "value": "1lWsQUgUqW0Mn154C.AWcDNDu8YeOU6Nk7c17avHJPZvUwbglBQKV5OBUh-Q5a19zYy5Q.BqU-J5..AAA.0.0.BqU-J5.AWdBQzY582sbFdq7n3nq8ZZQrPA",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1791658360.020702,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "2%3A0gbP2lbvXSUKlQ%3A2%3A1772136105%3A-1%3A-1%3A%3AAcy2BawiNDwYZSjmD8pK6hRqs3HwLg85hd0T0kVbsg",
+            "value": "2%3A0gbP2lbvXSUKlQ%3A2%3A1772136105%3A-1%3A-1%3A%3AAcy-BLHM7YBYtV9GMwqWKJRsmFa2S0zbDORRTjog_w",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1806709936.81041,
+            "expires": 1815418360.020768,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
-            "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1775173941258%2C%22v%22%3A1%7D",
+            "name": "wd",
+            "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": -1,
+            "expires": 1784487164,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -86,10 +96,6 @@
             "origin": "https://www.facebook.com",
             "localStorage": [
                 {
-                    "name": "mutex_falco_queue_critical^$100029347359549^#100029347359549^#^#hmac_ttl.1775173933.AR3eq8vut7QNayjhaSJ_evQTYYiV56yH8htR3HfTLmzdJoAX^$",
-                    "value": "9cp9tz:1775173936480"
-                },
-                {
                     "name": "CacheStorageVersion",
                     "value": "3b"
                 },
@@ -99,19 +105,19 @@
                 },
                 {
                     "name": "Session",
-                    "value": "ar5jv3:1775173972543"
+                    "value": "djbuln:1783882394296"
                 },
                 {
                     "name": "ps:100029347359549:1f5af1eb-f348-4fdc-819d-ae2994cedf8a",
                     "value": "ab216f63-86a1-4572-98fa-8d660884f1e5:1775122491834"
                 },
                 {
-                    "name": "mutex_falco_queue_immediately^$100029347359549^#100029347359549^#^#hmac_ttl.1775173933.AR3eq8vut7QNayjhaSJ_evQTYYiV56yH8htR3HfTLmzdJoAX^$",
-                    "value": "9cp9tz:1775173936480"
+                    "name": "comet_ai_hts_chat_support_user",
+                    "value": "{\"comet_ai_hts_genpop_fb_ufac\":{\"attemptToken\":\"Q8CtDAEG9AAkQlxfjGOmqz8Q5SD_Q5PF_DzlDgbD3GWwipd8R8Q7UmVGAir6NrpJoIIbTJaooi6fYshmgwPqBgq6Gs1LOMFx5oEoblwV_hLPRd7jfmsMKePGHHBVgZ6mHr_zuOPA6HnvaIJL7oc3e6JNa_yHCGf2m7d7XoFs8twy2v0-fJWN6K-MVBE7gn8S_mnhgeNWa_psfzerH0vp8eqMQDjlpUmtbJsk-DsPu2JoIvk-PxlzIGKBUCQ46Ch9rSryKTfDCefmPAo9uiqRD0n2CAyBajCVbepyTNRLeDCFcfVHl1v0uJwvRx0XsbnfJQL9dUNmy-hUovIAU03KRIEyi8Ay72Jq4KGUQsw7AgCILXBkAxr9fMvfRdb1xqiDbPGKiIaoxiUn2GJ4R0DmbfIy_TLlnGyGwF11-IJeQuj1pgw4E_O3uhtMdZ9KPHUyBVBWLqySXXaLBJuVixvIMs14t3p4FKy7UjIBmLEe7s7OL-GrtVSibtJjwfnjtV1m_0gL-FJbRHjdyljr7AJ2r4CVXpPvQfRJtuPDV61OXBk\",\"nonce\":null,\"threadId\":null,\"userID\":null}}"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1775173939872.4001"
+                    "value": "1783882357535.9"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
@@ -131,19 +137,15 @@
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1775173970941"
+                    "value": "1783882364767"
                 },
                 {
                     "name": "ares_last_signal_flush",
                     "value": "1771272121105"
                 },
                 {
-                    "name": "mutex_falco_queue_log^$100029347359549^#100029347359549^#^#hmac_ttl.1775173933.AR3eq8vut7QNayjhaSJ_evQTYYiV56yH8htR3HfTLmzdJoAX^$",
-                    "value": "9cp9tz:1775173936480"
-                },
-                {
                     "name": "signal_flush_timestamp",
-                    "value": "1775173941017"
+                    "value": "1783882364795"
                 },
                 {
                     "name": "topicsLastReportingTime",

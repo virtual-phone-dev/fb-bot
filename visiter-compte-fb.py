@@ -17,7 +17,7 @@ async def main():
         headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
         
         comptes = json.load(open("mes_comptes_fb2.json", encoding="utf-8"))
-        #comptes = [c for c in comptes if c.get("message") == 1]
+        comptes = [c for c in comptes if c.get("visiter_compte") == 1]
         #comptes = [c for c in comptes if c.get("message") == 1]
         total = len(comptes)
         url_page = "https://www.facebook.com/profile.php?id=61591692635517"

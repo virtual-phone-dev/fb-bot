@@ -160,23 +160,31 @@ async def nom_page(page, url):
         print("name aa", name)
     except Exception as e:
         print("pas de nom"); print(e)
-
-
-    statut = await query_selector_text(page, ["Artiste", "Musique/groupe", "Groupe", "Rappeur"])
-    if statut: 
         
-        follower = await compter_followers_fb(page)
-        if follower is not None and follower < 10000:
-            print("artiste trouvé"); 
-            await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url) # sauvegarder la page trouvé
-            await ajouter_dans_fichier("pages_collecter_artistes2.json", {"nom": name, "url": url}, "url", url) 
-        else:
-            print("non trouvé")
+        
+    btn_follower = await page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("Followers")); } """)
+    if not btn_follower: 
+        print("ami");
+        await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url, "ami": 1}, "url", url) #lien du compte ami
     else:
-        print("pas artiste"); 
+        await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url)
         
-    #print("nom_page : ", name); 
-    return name 
+                    
+        statut = await query_selector_text(page, ["Artiste", "Musique/groupe", "Groupe", "Rappeur"])
+        if statut: 
+            
+            follower = await compter_followers_fb(page)
+            if follower is not None and follower < 10000:
+                print("artiste trouvé"); 
+                await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url) # sauvegarder la page trouvé
+                await ajouter_dans_fichier("pages_collecter_artistes2.json", {"nom": name, "url": url}, "url", url) 
+            else:
+                print("non trouvé")
+        else:
+            print("pas artiste"); 
+            
+        #print("nom_page : ", name); 
+        return name 
     
                         
             
@@ -254,18 +262,6 @@ async def recuperer_lien(context, page):
                     new_page = await context.new_page()
                     await new_page.goto(url)
                     nom = await nom_page(new_page, url); #sauvegarder le lien du compte ami
-
-                    btn_follower = await new_page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("Followers")); } """)
-                    if not btn_follower: 
-                        print("ami");
-                        await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": nom, "url": url, "ami": 1}, "url", url) #lien du compte ami
-                        #await mettre_a_jour("pages_collecter_artistes.json", {"ami": 1}, "page", url) #mettre_a_jour le lien du compte ami
-                        #await email(new_page, nom, url)
-                    #else:
-                        #await mettre_a_jour("pages_collecter_artistes2.json", {"ami": 0}, "page", url)
-                        #await post_recent(new_page)
-                        #await compter_commentaire(new_page, nom, url)
-                        #print("patiente 1s"); await asyncio.sleep(1)
                         
                     await new_page.close()
                 except Exception as e:
@@ -347,7 +343,7 @@ async def collecter_liens(fichier, context, page):
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
-        headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
+        headless=True, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
 
         fichier_des_comptes = "mes_comptes_fb2.json"
         comptes = await charger_comptes(fichier_des_comptes)
