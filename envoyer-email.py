@@ -7,7 +7,10 @@ basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_
 format_date = "%d-%m-%Y"
 
 
-texte = """Salut, je suis développeur et je propose la création de site internet, d'application mobile et de robot. Si vous en avez besoin, je suis disponible. """
+texte = """Pourquoi avoir sa propre application mobile ?
+Si vous avez votre propre application mobile, vous pourrez vendre de la publicité dans votre application.
+
+Je suis développeur, si vous avez un projet de créer un réseau social ou une application mobile, je suis disponible"""
 
 objet = "Super Code"
 
