@@ -17,11 +17,19 @@ https://www.facebook.com/profile.php?id=61571362742384
 🇨🇬 Blue Music Congo
 https://www.facebook.com/profile.php?id=61590983143767
 
+🇨🇮 Blue Music Côte d'Ivoire
+https://www.facebook.com/profile.php?id=61591566555411
+
+🇲🇬 Blue Music Madagascar
+https://www.facebook.com/profile.php?id=61591724200270
+
 🇹🇩 Blue Music Tchad
 https://www.facebook.com/profile.php?id=61591692635517
 """
 
- 
+
+
+
 
 # VERIFIER COMMANDE CONSOLE
 async def verifier_commande(page, duree_minutes):
