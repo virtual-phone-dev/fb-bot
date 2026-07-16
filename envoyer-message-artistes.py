@@ -3,7 +3,7 @@ from playwright.async_api import async_playwright
 from datetime import datetime, timedelta
 from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies, sauvegarder_sur_meme_ligne, sauvegarder_fichier, charger_fichier, charger_fichier_d,
 basculer_sur_la_page, basculer_sur_le_compte, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_nouveau_element, verifier_date_recontacte, 
-clic_div_aria_label_role_button)
+clic_div_aria_label_role_button, fermer_popup_message)
 
 
 PAUSE_MINUTES = 1
@@ -221,6 +221,8 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
     #else:
     #    print("❌ date indisponible !")
     
+    await fermer_popup_message(page)
+    
     statut = await clic_div_aria_label_role_button(page, ["Message"])
     if statut:
         print("bouton message trouvé")
@@ -246,7 +248,9 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
                 break
     else:
         await mettre_a_jour(fichier2, {"btn_message": 0}, "url", url_page)
-        
+    
+    #await fermer_popup_message(page)
+    
 
         
 async def main():

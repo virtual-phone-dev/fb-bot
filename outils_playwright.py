@@ -213,6 +213,29 @@ async def clic_div_aria_label_role_button(page, textes, cliquer=False):
     return None
 
 
+
+async def fermer_popup_message(page):
+    count = 0
+    while count < 5: 
+        print("Patiente 1s"); await asyncio.sleep(1)
+        statut = await div_aria_label_role_button(page, ["Fermer la discussion"], clic=True)
+        if statut: print("discussion fermé bb")
+        count += 1
+        
+        
+        
+async def div_aria_label_role_button(page, textes, clic=False):
+    for t in textes:
+                
+        btn = page.locator(f'div[aria-label="{t}"][role="button"]').first
+        if await btn.count() > 0:    
+            if clic:
+                await btn.click()
+            return btn
+    return None
+    
+    
+    
 async def connexion_tu(page):
     await page.goto("https://www.tumblr.com", timeout=0)
     await button_aria_label(page, ["Connexion"], clic=True, p=2); 

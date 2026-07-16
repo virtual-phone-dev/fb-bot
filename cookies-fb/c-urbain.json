@@ -55,7 +55,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1784733748,
+            "expires": 1784802923,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -95,40 +95,40 @@
             "value": "100022129691543",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1815664698.98114,
+            "expires": 1815733787.865436,
             "httpOnly": false,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
-            "name": "fr",
-            "value": "1HgydzgoA9ErUI6tZ.AWfoAcQI957x8H5Sleu0BFQU7J_QsVsU282Oa5ubARYLRfIrBXM.BqV6S9..AAA.0.0.BqV6S9.AWfduxky6G8B2pHtDfI5xrnFqxQ",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1791904698.98143,
-            "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "32%3ARquwYgkRQowYkg%3A2%3A1784119410%3A-1%3A-1%3A%3AAcwYGGuy8LK3vhwfMqPfoR8kdT9LTfl2J7Zt_Dq9JA",
+            "value": "32%3ARquwYgkRQowYkg%3A2%3A1784119410%3A-1%3A-1%3A%3AAcxPLaOIjyM6Dhjk7PJG8bbpUaOZPPanv5ylDfAuHQ",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1815664698.981615,
+            "expires": 1815733787.865823,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
-            "name": "i_user",
-            "value": "61591724200270",
+            "name": "fr",
+            "value": "16ufvEbJdS4QyJXLB.AWdFBAoC06N6Y0ZqrnDWr4RMuqhbrYK-JK8UjvwxbmTe_LZ-pMQ.BqWLKc..AAA.0.0.BqWLKk.AWe9P-7ra1uu81Z-3HHg172rlWk",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1815664943.580146,
-            "httpOnly": false,
+            "expires": 1791973796.354284,
+            "httpOnly": true,
             "secure": true,
             "sameSite": "None"
+        },
+        {
+            "name": "presence",
+            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1784198503720%2C%22v%22%3A1%7D",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": -1,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "Lax"
         }
     ],
     "origins": [
@@ -136,28 +136,20 @@
             "origin": "https://www.facebook.com",
             "localStorage": [
                 {
-                    "name": "armadillo_msgr_data_loss_stats",
-                    "value": "{}"
-                },
-                {
                     "name": "CacheStorageVersion",
                     "value": "3b"
                 },
                 {
-                    "name": "Session",
-                    "value": "g79bgj:1784129450076"
+                    "name": "mw_encrypted_backups_restore_upsell_first_impression_time_key",
+                    "value": "1784198122151"
                 },
                 {
-                    "name": "ps:100034240509889:4f9d7593-e533-4fb9-bdef-9392ae0a1207",
-                    "value": "c62635d1-fc81-4282-be88-334d2ff4c2ca:1784129345809"
+                    "name": "Session",
+                    "value": "gjdbt4:1784198585645"
                 },
                 {
                     "name": "mutex_banzai",
-                    "value": "uyxyzu:1784128949865"
-                },
-                {
-                    "name": "ps:100083639947544:4f9d7593-e533-4fb9-bdef-9392ae0a1207",
-                    "value": "245b676b-4d13-4ae7-99f5-896e659cc86b:1784129348928"
+                    "value": "pzlmea:1784198122827"
                 },
                 {
                     "name": "_oz_bandwidthEstimate",
@@ -165,11 +157,11 @@
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1784117351623.5999"
+                    "value": "1784197788371.4001"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"61591724200270\",\"currentIntervalLastTick\":1784129418,\"currentIntervalStart\":1784128951,\"initRemoteAgg\":{\"timestamp\":1784128856,\"today_s\":4383},\"intervals\":[],\"lastCallbackAttempt\":1784129252,\"localStorageId\":\"73231027\",\"syncedL24HS\":-1,\"syncedTodayS\":4787,\"lastSyncTimeStamp\":1784129252}"
+                    "value": "{\"actorId\":\"100022129691543\",\"currentIntervalLastTick\":1784198556,\"currentIntervalStart\":1784198120,\"initRemoteAgg\":{\"timestamp\":1784051390,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1784198421,\"localStorageId\":\"69298802\",\"syncedL24HS\":-1,\"syncedTodayS\":301,\"lastSyncTimeStamp\":1784198421}"
                 },
                 {
                     "name": "RSTData",
@@ -177,15 +169,31 @@
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1784128725683"
+                    "value": "1784197789161"
+                },
+                {
+                    "name": "bdz_playback_state",
+                    "value": "{\"session_key\":\"mr933cnf\",\"buffer_length\":60}"
                 },
                 {
                     "name": "_oz_bandwidthAndTTFBSamples",
                     "value": "{\"b\":[],\"t\":[]}"
                 },
                 {
+                    "name": "ares_last_signal_flush",
+                    "value": "1783334123979"
+                },
+                {
+                    "name": "mw_sent_message",
+                    "value": "1784198498587"
+                },
+                {
                     "name": "signal_flush_timestamp",
-                    "value": "1784128697058"
+                    "value": "1784197789599"
+                },
+                {
+                    "name": "__MWSimpleNux.WEB_MSGR_PINNED_MESSAGES_NUX__",
+                    "value": "{\"lastViewDate\":1784198295856,\"views\":1}"
                 }
             ]
         }
