@@ -228,13 +228,36 @@ async def div_aria_label_role_button(page, textes, clic=False):
     for t in textes:
                 
         btn = page.locator(f'div[aria-label="{t}"][role="button"]').first
-        if await btn.count() > 0:    
-            if clic:
-                await btn.click()
-            return btn
+        if await btn.count() > 0:  
+            visible = await btn.is_visible()
+            if visible:
+                if clic:
+                    await btn.click()
+                    #await btn.click(timeout=3000)
+                return btn
     return None
     
     
+async def div_aria_label_role_button2(page, textes, clic=False):
+    for t in textes:
+        btn = page.locator(f'div[aria-label="{t}"][role="button"]')
+        count = await btn.count()
+        print(f"🔍 {count} élément(s) trouvé(s) pour '{t}'")
+        
+        for i in range(count):
+            el = btn.nth(i)
+            visible = await el.is_visible()
+            print(f"  - élément {i} : visible = {visible}")
+            
+            if visible:
+                if clic:
+                    await el.click()
+                return el
+        
+        print(f"❌ Aucun élément visible pour '{t}'")
+    return None
+
+
     
 async def connexion_tu(page):
     await page.goto("https://www.tumblr.com", timeout=0)

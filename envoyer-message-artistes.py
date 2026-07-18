@@ -312,7 +312,11 @@ async def main():
                 print("✅ mon_compte : ", mon_compte)
                 print("Contacté :", url_page)
                 
-                await envoyer_message(fichier2, fichier4, page, url_page, mon_compte)
+                try:
+                    await envoyer_message(fichier2, fichier4, page, url_page, mon_compte)
+                except Exception as e:
+                    print("..erreur main", e)
+
                 await verifier_commande(page, 10)
                 await sauvegarder_cookies(context, fichier_cookie)
                 

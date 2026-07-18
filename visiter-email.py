@@ -224,8 +224,7 @@ async def main():
         fichier3 = "mes_emails.json"
         fichier4 = "mes_emails2.json"
         compte_emails = await verifier_nouveau_element(fichier3, fichier4, "email") 
-        compte_emails = [c for c in compte_emails if c.get("message_trouvé") == 1]
-        #compte_emails = [c for c in compte_emails if c.get("email_special") == 1]
+        #compte_emails = [c for c in compte_emails if c.get("message_trouvé") == 1]
         
         fichier_email_debut = "email_debut_pve.json" # email_debut_ poour visiter_email
         email_debut = (await charger_fichier_d(fichier_email_debut)).get("email")
@@ -267,7 +266,7 @@ async def main():
             index += 1
             
             await verifier_commande(page, 5)
-            await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", mon_email) # ici, on mentionne que ya plus de nouveau message
+            #await mettre_a_jour("mes_emails2.json", {"message_trouvé": 0}, "email", mon_email) # ici, on mentionne que ya plus de nouveau message
             
             statut = await tour_suivant(fichier_email_debut, emails, compte_emails, email_suivant, tour, index)
             if statut == "tout_mes_comptes_gmail_utiliser": break
