@@ -1,16 +1,6 @@
 {
     "cookies": [
         {
-            "name": "dbln",
-            "value": "%7B%22100058728397113%22%3A%22rehmvnBv%22%7D",
-            "domain": ".facebook.com",
-            "path": "/login/device-based/",
-            "expires": 1779651692.837938,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
             "name": "datr",
             "value": "0qGcaYuFWgCDmfN8jUg0WQVs",
             "domain": ".facebook.com",
@@ -25,7 +15,7 @@
             "value": "100058728397113",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1806709448.352316,
+            "expires": 1815929215.841315,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -61,36 +51,6 @@
             "sameSite": "None"
         },
         {
-            "name": "wd",
-            "value": "1280x720",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1775778260,
-            "httpOnly": false,
-            "secure": true,
-            "sameSite": "Lax"
-        },
-        {
-            "name": "fr",
-            "value": "1x2fLsFulSAY2pk9b.AWfZxnuMe81TMGTjDX4ilZWCL-SGm46P_X78mrwfBvp-OpgY2kY.Bpzv9J..AAA.0.0.Bpzv9J.AWee9ihRp_agUitLMXzD5Ud-fOo",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1782949448.352534,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
-            "name": "xs",
-            "value": "36%3AZx7yg4wytMzmQg%3A2%3A1771875620%3A-1%3A-1%3A%3AAcz-YCSjcotk8bqTELp7Tmp2lTBi9ukpgsMzGz7e0Q",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1806709448.352687,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
             "name": "presence",
             "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1775173460760%2C%22v%22%3A1%7D",
             "domain": ".facebook.com",
@@ -99,12 +59,46 @@
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
+        },
+        {
+            "name": "wd",
+            "value": "1280x720",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1784998012,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "fr",
+            "value": "11xQrScdE2RhsN2JX.AWeo1aFb9IYqFpo1xibU-OVmpsR-jDARl_-T-5_RrFiPwSAUGN8.BqW64A..AAA.0.0.BqW64A.AWe-Lweja27PjjzfmggaabBNDNI",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1792169215.841524,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "xs",
+            "value": "36%3AZx7yg4wytMzmQg%3A2%3A1771875620%3A-1%3A-1%3A%3AAcyJF-tC0eb7dqwGIDoo-XoTKsO_b_YJ5Q0glujv6Qc",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1815929215.841644,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
         }
     ],
     "origins": [
         {
             "origin": "https://www.facebook.com",
             "localStorage": [
+                {
+                    "name": "mutex_falco_queue_log^$100058728397113^#100058728397113^#^#hmac_ttl.1784393208.AR07mGkxFHFMuxZXdAUijLT29vIcP7rGqT_vTo5BDs3ZzImm^$",
+                    "value": "lz6493:1784393210728"
+                },
                 {
                     "name": "CacheStorageVersion",
                     "value": "3b"
@@ -119,7 +113,11 @@
                 },
                 {
                     "name": "Session",
-                    "value": "nrpka9:1775173493094"
+                    "value": "bqbhk9:1784393252238"
+                },
+                {
+                    "name": "mutex_falco_queue_critical^$100058728397113^#100058728397113^#^#hmac_ttl.1784393208.AR07mGkxFHFMuxZXdAUijLT29vIcP7rGqT_vTo5BDs3ZzImm^$",
+                    "value": "lz6493:1784393210729"
                 },
                 {
                     "name": "_oz_bandwidthEstimate",
@@ -127,7 +125,11 @@
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1775173453352.4"
+                    "value": "1784393214847.2002"
+                },
+                {
+                    "name": "comet_ai_hts_chat_support_user",
+                    "value": "{\"comet_ai_hts_genpop_fb_ufac\":{\"attemptToken\":\"Q8CtDAFpye2je3o9ADgVZk5ifPF9-lKNckQBIXau3vKWpM2qVNznSqGHkPKkL5ElI1QHqZWnRXPpLNE4kEd3nS651xNZ2uXUdQVjVKW5o4JPEHW55q5oP-kh7KF3MCXiNLwfFOwr34A-D3tQTETuhctIaqm0sJa7rALpFqzUstktJ45at9FA6ynzW0Wx_XNDrdlHsZfOYHkXi5PWXzTM77GT506DgfDd5idCAEEcJBb1cYVh1U-BUjxw-eVdDYIiOwaZpSGVIla42zNU5g0iG_Ou8gjVot20ulP_S29UDmoCqRkrV-pZeSl4x_h2-ZnNYM6gOT-PUpyLcN6sPQPW7Kzv9YTVCbMX_lINYE7R9ByhH0Kf8dG2FYDfJfDru5deQOwxldcXi-xm6QhDvO5LF0vEbvUlBb-_GYdVMgQto2l9cPkzYyS6zn1hFfaCpUCaQ6UsucTA1tfa1nLaVLXmXJ01XCkRfHb4dRjL2wo-droXlQy9zwjrQMUCSfGTtQsgur_WU1XvQHzjDpj4001j4EOlbHAcXsKMXZBcY7vj4Gk\",\"nonce\":null,\"threadId\":null,\"userID\":null}}"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
@@ -147,7 +149,7 @@
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1775173460072"
+                    "value": "1784393212495"
                 },
                 {
                     "name": "_oz_bandwidthAndTTFBSamples",
@@ -159,7 +161,20 @@
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1775173460423"
+                    "value": "1784393213918"
+                },
+                {
+                    "name": "mutex_falco_queue_immediately^$100058728397113^#100058728397113^#^#hmac_ttl.1784393208.AR07mGkxFHFMuxZXdAUijLT29vIcP7rGqT_vTo5BDs3ZzImm^$",
+                    "value": "lz6493:1784393210729"
+                }
+            ]
+        },
+        {
+            "origin": "https://www.google.com",
+            "localStorage": [
+                {
+                    "name": "rc::a",
+                    "value": "dGltemF5MTQ1NHdtcQ=="
                 }
             ]
         }
