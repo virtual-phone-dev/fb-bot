@@ -55,17 +55,27 @@
             "value": "100050371094133",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1815224502.469549,
+            "expires": 1816017301.976519,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
         },
         {
-            "name": "xs",
-            "value": "8%3AzI5e4tnJl26kcw%3A2%3A1782126120%3A-1%3A-1%3A%3AAcwHbm3vxtLj7q3Q-UrJCpyDoWKiy-fe7FpMsShNfQ",
+            "name": "fr",
+            "value": "1nqyp35XfPyWaRHYy.AWdYQSQZ5fTeuyeLjTJE8fF6gI7fpblUZEoRhJBIRBGYTjOtdlo.BqXQYX..AAA.0.0.BqXQYX.AWcPzuGJOKCWqnI_ugd4ZMfArdg",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1815224502.469976,
+            "expires": 1792257301.976718,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "xs",
+            "value": "8%3AzI5e4tnJl26kcw%3A2%3A1782126120%3A-1%3A-1%3A%3AAcxY7LAlN2EMYmDdCfDp56A0DEEpKRXa1P3G-zoUnw",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1816017301.976831,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
@@ -75,24 +85,14 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1784293323,
+            "expires": 1785086131,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
         },
         {
-            "name": "fr",
-            "value": "1LdCoN8F3TT6TQlZK.AWcOgPZipXzTAcpVHsJzljIR8IfzMgdAUpmyMP-PuODhaoqqnmY.BqUO03..AAA.0.0.BqUO1E.AWcXwc3xgBSqcpepDXBtWeY9OrI",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1791464514.561746,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
             "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1783688523671%2C%22v%22%3A1%7D",
+            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1784481332854%2C%22v%22%3A1%7D",
             "domain": ".facebook.com",
             "path": "/",
             "expires": -1,
@@ -126,88 +126,48 @@
                     "value": "1783688517171"
                 },
                 {
-                    "name": "mutex_falco_queue_immediately^$100050371094133^#100050371094133^#^#hmac_ttl.1782126135.AR02Jo6Wg63VIoqBqLP4ixOfM51wbwira1y_ktt2EonOEFrz^$",
-                    "value": "96bri5:1783688517684"
-                },
-                {
-                    "name": "falco_queue_critical^$100050371094133^#100050371094133^#^#hmac_ttl.1782126135.AR02Jo6Wg63VIoqBqLP4ixOfM51wbwira1y_ktt2EonOEFrz^$f5a18e85a176fc820",
-                    "value": "{\"items\":[{\"name\":\"ods_web_batch\",\"policy\":{\"r\":1,\"s\":1},\"time\":1782126165998.7998,\"extra\":\"{\\\"batch\\\":{\\\"3185\\\":{\\\"ls_download_dependency.bootloader\\\":{\\\"LSEpdCookieSettingsUpsert\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSEncryptedBackupsStatusTriggerUpsert\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSClearThreadLimits\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSClearAllScreenTimeRecords\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSClearAllSupervisionEdgeRecords\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSClearAllSupervisionMetadataRecords\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSTruncatePakeMessagesDatabase\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSDeleteThenInsertMessagingPrivacySettings\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"LSTruncateQuietTime\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"3589\\\":{\\\"dgw_web_client\\\":{\\\"realtime.WebStreamAckManager.ack_expected\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"rpsignaling.DGWPinger.timeout_fired.reset\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"rpsignaling.DGWPinger.timeout.newtimeout\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"rpsignaling.DGWPinger.reset\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"rpsignaling.DGWPinger.reset.newtimeout\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"lightspeed.DGWPinger.reset\\\":{\\\"n\\\":10,\\\"d\\\":null},\\\"lightspeed.DGWPinger.reset.newtimeout\\\":{\\\"n\\\":10,\\\"d\\\":null},\\\"lightspeed.GroupedWebStream.ack_received\\\":{\\\"n\\\":5,\\\"d\\\":null},\\\"lightspeed.WebStreamAckManager.ack_received\\\":{\\\"n\\\":5,\\\"d\\\":null},\\\"realtime.DGWPinger.reset\\\":{\\\"n\\\":6,\\\"d\\\":null},\\\"realtime.DGWPinger.reset.newtimeout\\\":{\\\"n\\\":6,\\\"d\\\":null},\\\"realtime.GroupedWebStream.ack_received\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"realtime.WebStreamAckManager.ack_received\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"realtime.GroupedWebStream.data_received\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"realtime.GroupedWebStream.ack_sent\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"lightspeed.GroupedWebStream.data_received\\\":{\\\"n\\\":5,\\\"d\\\":null},\\\"lightspeed.GroupedWebStream.ack_sent\\\":{\\\"n\\\":5,\\\"d\\\":null},\\\"lightspeed.WebStreamAckManager.ack_expected\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"streamcontroller.DGWPinger.timeout_fired.reset\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"streamcontroller.DGWPinger.timeout.newtimeout\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"streamcontroller.DGWPinger.reset\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"streamcontroller.DGWPinger.reset.newtimeout\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"7173\\\":{\\\"entities.ff_js_web.dgw_client.2220391788200892.1041.C3\\\":{\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":8,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":8,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":8,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":8,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":8,\\\"d\\\":null}},\\\"entities.ff_js_web.comet_topnav_item_click.2220391788200892.1041.C3\\\":{\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.comet_topnav_item_impression.2220391788200892.1041.C3\\\":{\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.comet_auto_logging.2220391788200892.1041.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"event.filters.sampling\\\":{\\\"n\\\":4,\\\"d\\\":null}},\\\"entities.ff_js_web.perf.2220391788200892.1041.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log_immediately\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":2,\\\"d\\\":null}},\\\"entities.ff_js_web.switcher_button_tapped.2220391788200892.1041.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.switch_user_tapped.2220391788200892.1041.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.profile_engagement.2220391788200892.1041.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.merlin_unified_protocol_event.2220391788200892.1041.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":5,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":5,\\\"d\\\":null}}}}}\",\"tags\":[1,128],\"sessionId\":\"twvnsc:sge4hb:yf4k3p\",\"deviceId\":\"fd.ARs50YO4oIQoKXOl4Fu56iTs0NAaqrcdcEjsKvXdk1A9Sj58Tj9QygySFn1HKvDFdcZD3zPsxFjonv8E5x8z__df\",\"appVersion\":\"1041.868.611.0 (1041868611)\"}],\"ts\":1782126164599.4}"
-                },
-                {
-                    "name": "mutex_falco_queue_critical^$100050371094133^#100050371094133^#^#hmac_ttl.1783688516.AR09RgVcNcSq6jzeAx2rUnDMIQQAAzPTc53hIANCF3msj3UY^$",
-                    "value": "96bri5:1783688517684"
-                },
-                {
                     "name": "Session",
-                    "value": "3i3foi:1783688551319"
+                    "value": "9x6vte:1784481573246"
                 },
                 {
-                    "name": "falco_queue_log^$100050371094133^#100050371094133^#^#hmac_ttl.1782126135.AR02Jo6Wg63VIoqBqLP4ixOfM51wbwira1y_ktt2EonOEFrz^$f4bf589759a349fdb",
-                    "value": "{\"items\":[{\"name\":\"merlin_unified_protocol_event\",\"policy\":{\"r\":1},\"time\":1782126164895.1,\"extra\":\"{\\\"element_visibility_absolute_ts\\\":{\\\"min_visible_px\\\":[{\\\"enter_ts\\\":\\\"1782126149994\\\",\\\"exit_ts\\\":\\\"1782126163493\\\"}]},\\\"entity_id\\\":\\\"100056001891332\\\",\\\"origin\\\":\\\"fb_pymk_profile_card\\\",\\\"payload\\\":{\\\"placeholder_payload\\\":\\\"{\\\\\\\"csp\\\\\\\":0,\\\\\\\"feed_session_id\\\\\\\":\\\\\\\"1782126139950\\\\\\\",\\\\\\\"is_agg\\\\\\\":null,\\\\\\\"is_self\\\\\\\":null,\\\\\\\"is_seo\\\\\\\":false,\\\\\\\"logged_before\\\\\\\":false,\\\\\\\"nav_attribution_id_v2\\\\\\\":\\\\\\\"CometHomeRoot.react,comet.home,via_cold_start,1782126139097,1937,4748854339,,\\\\\\\",\\\\\\\"seo_container_id\\\\\\\":null,\\\\\\\"seo_type\\\\\\\":null,\\\\\\\"sid_raw\\\\\\\":\\\\\\\"twvnsc:sge4hb:yf4k3p\\\\\\\",\\\\\\\"source\\\\\\\":0,\\\\\\\"source_override\\\\\\\":203,\\\\\\\"story_height\\\\\\\":275,\\\\\\\"story_width\\\\\\\":162,\\\\\\\"vpvd_start_timestamp_ms\\\\\\\":1782126149994,\\\\\\\"vpvd_time_delta_ms\\\\\\\":13499,\\\\\\\"xt\\\\\\\":\\\\\\\"100056001891332\\\\\\\",\\\\\\\"dist_to_engagement\\\\\\\":-1,\\\\\\\"dist_to_fixed\\\\\\\":-1,\\\\\\\"dist_to_promo\\\\\\\":-1,\\\\\\\"dist_to_sponsored\\\\\\\":-1,\\\\\\\"dist_to_top\\\\\\\":1,\\\\\\\"min_gap_type\\\\\\\":3,\\\\\\\"story_category\\\\\\\":\\\\\\\"FIXED_POSITION\\\\\\\"}\\\"}}\",\"tags\":[1,128],\"sessionId\":\"twvnsc:sge4hb:yf4k3p\",\"deviceId\":\"fd.ARs50YO4oIQoKXOl4Fu56iTs0NAaqrcdcEjsKvXdk1A9Sj58Tj9QygySFn1HKvDFdcZD3zPsxFjonv8E5x8z__df\",\"appVersion\":\"1041.868.611.0 (1041868611)\"},{\"name\":\"merlin_unified_protocol_event\",\"policy\":{\"r\":1},\"time\":1782126164895.9,\"extra\":\"{\\\"element_visibility_absolute_ts\\\":{\\\"min_visible_px\\\":[{\\\"enter_ts\\\":\\\"1782126149997\\\",\\\"exit_ts\\\":\\\"1782126163496\\\"}]},\\\"entity_id\\\":\\\"100055721180364\\\",\\\"origin\\\":\\\"fb_pymk_profile_card\\\",\\\"payload\\\":{\\\"placeholder_payload\\\":\\\"{\\\\\\\"csp\\\\\\\":0,\\\\\\\"feed_session_id\\\\\\\":\\\\\\\"1782126139950\\\\\\\",\\\\\\\"is_agg\\\\\\\":null,\\\\\\\"is_self\\\\\\\":null,\\\\\\\"is_seo\\\\\\\":false,\\\\\\\"logged_before\\\\\\\":false,\\\\\\\"nav_attribution_id_v2\\\\\\\":\\\\\\\"CometHomeRoot.react,comet.home,via_cold_start,1782126139097,1937,4748854339,,\\\\\\\",\\\\\\\"seo_container_id\\\\\\\":null,\\\\\\\"seo_type\\\\\\\":null,\\\\\\\"sid_raw\\\\\\\":\\\\\\\"twvnsc:sge4hb:yf4k3p\\\\\\\",\\\\\\\"source\\\\\\\":0,\\\\\\\"source_override\\\\\\\":203,\\\\\\\"story_height\\\\\\\":275,\\\\\\\"story_width\\\\\\\":162,\\\\\\\"vpvd_start_timestamp_ms\\\\\\\":1782126149997,\\\\\\\"vpvd_time_delta_ms\\\\\\\":13499,\\\\\\\"xt\\\\\\\":\\\\\\\"100055721180364\\\\\\\",\\\\\\\"dist_to_engagement\\\\\\\":-1,\\\\\\\"dist_to_fixed\\\\\\\":-1,\\\\\\\"dist_to_promo\\\\\\\":-1,\\\\\\\"dist_to_sponsored\\\\\\\":-1,\\\\\\\"dist_to_top\\\\\\\":1,\\\\\\\"min_gap_type\\\\\\\":3,\\\\\\\"story_category\\\\\\\":\\\\\\\"FIXED_POSITION\\\\\\\"}\\\"}}\",\"tags\":[1,128],\"sessionId\":\"twvnsc:sge4hb:yf4k3p\",\"deviceId\":\"fd.ARs50YO4oIQoKXOl4Fu56iTs0NAaqrcdcEjsKvXdk1A9Sj58Tj9QygySFn1HKvDFdcZD3zPsxFjonv8E5x8z__df\",\"appVersion\":\"1041.868.611.0 (1041868611)\"},{\"name\":\"merlin_unified_protocol_event\",\"policy\":{\"r\":1},\"time\":1782126164896.4,\"extra\":\"{\\\"element_visibility_absolute_ts\\\":{\\\"min_visible_px\\\":[{\\\"enter_ts\\\":\\\"1782126149997\\\",\\\"exit_ts\\\":\\\"1782126163496\\\"}]},\\\"entity_id\\\":\\\"100076020796751\\\",\\\"origin\\\":\\\"fb_pymk_profile_card\\\",\\\"payload\\\":{\\\"placeholder_payload\\\":\\\"{\\\\\\\"csp\\\\\\\":0,\\\\\\\"feed_session_id\\\\\\\":\\\\\\\"1782126139950\\\\\\\",\\\\\\\"is_agg\\\\\\\":null,\\\\\\\"is_self\\\\\\\":null,\\\\\\\"is_seo\\\\\\\":false,\\\\\\\"logged_before\\\\\\\":false,\\\\\\\"nav_attribution_id_v2\\\\\\\":\\\\\\\"CometHomeRoot.react,comet.home,via_cold_start,1782126139097,1937,4748854339,,\\\\\\\",\\\\\\\"seo_container_id\\\\\\\":null,\\\\\\\"seo_type\\\\\\\":null,\\\\\\\"sid_raw\\\\\\\":\\\\\\\"twvnsc:sge4hb:yf4k3p\\\\\\\",\\\\\\\"source\\\\\\\":0,\\\\\\\"source_override\\\\\\\":203,\\\\\\\"story_height\\\\\\\":275,\\\\\\\"story_width\\\\\\\":162,\\\\\\\"vpvd_start_timestamp_ms\\\\\\\":1782126149997,\\\\\\\"vpvd_time_delta_ms\\\\\\\":13499,\\\\\\\"xt\\\\\\\":\\\\\\\"100076020796751\\\\\\\",\\\\\\\"dist_to_engagement\\\\\\\":-1,\\\\\\\"dist_to_fixed\\\\\\\":-1,\\\\\\\"dist_to_promo\\\\\\\":-1,\\\\\\\"dist_to_sponsored\\\\\\\":-1,\\\\\\\"dist_to_top\\\\\\\":1,\\\\\\\"min_gap_type\\\\\\\":3,\\\\\\\"story_category\\\\\\\":\\\\\\\"FIXED_POSITION\\\\\\\"}\\\"}}\",\"tags\":[1,128],\"sessionId\":\"twvnsc:sge4hb:yf4k3p\",\"deviceId\":\"fd.ARs50YO4oIQoKXOl4Fu56iTs0NAaqrcdcEjsKvXdk1A9Sj58Tj9QygySFn1HKvDFdcZD3zPsxFjonv8E5x8z__df\",\"appVersion\":\"1041.868.611.0 (1041868611)\"},{\"name\":\"merlin_unified_protocol_event\",\"policy\":{\"r\":1},\"time\":1782126164896.9,\"extra\":\"{\\\"element_visibility_absolute_ts\\\":{\\\"min_visible_px\\\":[{\\\"enter_ts\\\":\\\"1782126149997\\\",\\\"exit_ts\\\":\\\"1782126163497\\\"}]},\\\"entity_id\\\":\\\"100087367761281\\\",\\\"origin\\\":\\\"fb_pymk_profile_card\\\",\\\"payload\\\":{\\\"placeholder_payload\\\":\\\"{\\\\\\\"csp\\\\\\\":0,\\\\\\\"feed_session_id\\\\\\\":\\\\\\\"1782126139950\\\\\\\",\\\\\\\"is_agg\\\\\\\":null,\\\\\\\"is_self\\\\\\\":null,\\\\\\\"is_seo\\\\\\\":false,\\\\\\\"logged_before\\\\\\\":false,\\\\\\\"nav_attribution_id_v2\\\\\\\":\\\\\\\"CometHomeRoot.react,comet.home,via_cold_start,1782126139097,1937,4748854339,,\\\\\\\",\\\\\\\"seo_container_id\\\\\\\":null,\\\\\\\"seo_type\\\\\\\":null,\\\\\\\"sid_raw\\\\\\\":\\\\\\\"twvnsc:sge4hb:yf4k3p\\\\\\\",\\\\\\\"source\\\\\\\":0,\\\\\\\"source_override\\\\\\\":203,\\\\\\\"story_height\\\\\\\":275,\\\\\\\"story_width\\\\\\\":162,\\\\\\\"vpvd_start_timestamp_ms\\\\\\\":1782126149997,\\\\\\\"vpvd_time_delta_ms\\\\\\\":13500,\\\\\\\"xt\\\\\\\":\\\\\\\"100087367761281\\\\\\\",\\\\\\\"dist_to_engagement\\\\\\\":-1,\\\\\\\"dist_to_fixed\\\\\\\":-1,\\\\\\\"dist_to_promo\\\\\\\":-1,\\\\\\\"dist_to_sponsored\\\\\\\":-1,\\\\\\\"dist_to_top\\\\\\\":1,\\\\\\\"min_gap_type\\\\\\\":3,\\\\\\\"story_category\\\\\\\":\\\\\\\"FIXED_POSITION\\\\\\\"}\\\"}}\",\"tags\":[1,128],\"sessionId\":\"twvnsc:sge4hb:yf4k3p\",\"deviceId\":\"fd.ARs50YO4oIQoKXOl4Fu56iTs0NAaqrcdcEjsKvXdk1A9Sj58Tj9QygySFn1HKvDFdcZD3zPsxFjonv8E5x8z__df\",\"appVersion\":\"1041.868.611.0 (1041868611)\"},{\"name\":\"merlin_unified_protocol_event\",\"policy\":{\"r\":1},\"time\":1782126164897.2998,\"extra\":\"{\\\"element_visibility_absolute_ts\\\":{\\\"min_visible_px\\\":[{\\\"enter_ts\\\":\\\"1782126149998\\\",\\\"exit_ts\\\":\\\"1782126163497\\\"}]},\\\"entity_id\\\":\\\"AZZX0JX_MwqvlKRwQx1fHI1ui9IqvCO1Q_I32KvDEIv0KcxP_0Md2aRwSfWM3xecN9PnkzTNy7eGLQN20G1A2rWa_dhbzjLM2fL2hIcQiR7g_Q2hKU2lzv2lBa2sRrSKKGTyXTbdUXl87hc1bNABWd43xQwgSXYEVAtCzHI_i5zNYwnGoqdVDHV6amrXfSgyLqwcrRVagud9DUyRyxQ7CtHc07J32wTaToNzqapL2Ooji8q8ZZLKhJlabSytwfNDlagqxnpQmAvL7Xdz7AhYcU4RbUvRmNoAPL9S-ZSrMXZO8i8RH0sbIry27Zfmcz49sW5Cp92PCgHw_XcQ6izUIVVntGMZVPo4oIlQAW3GeCs_0ch_wRUgTuF8PH93w8aIyFZnQqiIczk1UlYFuGe8iL8RKm4XqWi1_RzQaPQoN00JBLSqBhT5FDc7ZbUugjh0Pj79NsqFNXbsp9VsKwpiFC-1IbR7F1uQyzJxkcQcPTrEWlh5uPT6A-RO9eqxSf0WTjvwPR268xqgV_gHdC8s8-5-9mhERp1VPKenP8dPVYL2ugyeLIzAemNQb1ohz-sgrJc-_lq6A_AImtAAtL0AxZ6O_rGXGQ9VQHoIEYVAfG8nIAbEOY_vZipi3ojyQhbj6RIiLCi9K6cGiQrqPW-UkS1PqQmGiAfuXvSk-Dmlx1CXyxGCe_10G8R0NjdYGWl7XcNw52XawRMvLiHe-PfgzVwiouM_NX3suUHn3W-LvhWN9EekyD3nDQFa_WN2udXw6FymNvpkCyUrSI-mQogFeXCO1xXO7-mXkphawPDr2_nGpIproBnJBmCIb5RhM0PU5loubDYW5gTG4NPkKtvm2VB5D9cP6OIIJko9WjuBeRoB96sfnHwoveDFtEzqbJ-VKJpOA5dttu7fIp3NTKuaTp-ZexdZH2W731ZcWFy__r74pf7DL668M6OfUiDOLhEhhNjPRSposFZuwO9EhB2z_DF9Z97p8H0RFMeZVxucV1dtNiK7SiIzS8M2_rAEFkE4DBI\\\",\\\"origin\\\":\\\"fb_newsfeed\\\",\\\"payload\\\":{\\\"placeholder_payload\\\":\\\"{\\\\\\\"csp\\\\\\\":0,\\\\\\\"feed_session_id\\\\\\\":\\\\\\\"1782126139950\\\\\\\",\\\\\\\"is_agg\\\\\\\":null,\\\\\\\"is_self\\\\\\\":null,\\\\\\\"is_seo\\\\\\\":false,\\\\\\\"logged_before\\\\\\\":false,\\\\\\\"nav_attribution_id_v2\\\\\\\":\\\\\\\"CometHomeRoot.react,comet.home,via_cold_start,1782126139097,1937,4748854339,,\\\\\\\",\\\\\\\"seo_container_id\\\\\\\":null,\\\\\\\"seo_type\\\\\\\":null,\\\\\\\"sid_raw\\\\\\\":\\\\\\\"twvnsc:sge4hb:yf4k3p\\\\\\\",\\\\\\\"source\\\\\\\":0,\\\\\\\"story_height\\\\\\\":371,\\\\\\\"story_width\\\\\\\":590,\\\\\\\"vpvd_start_timestamp_ms\\\\\\\":1782126149998,\\\\\\\"vpvd_time_delta_ms\\\\\\\":13499,\\\\\\\"xt\\\\\\\":\\\\\\\"AZZX0JX_MwqvlKRwQx1fHI1ui9IqvCO1Q_I32KvDEIv0KcxP_0Md2aRwSfWM3xecN9PnkzTNy7eGLQN20G1A2rWa_dhbzjLM2fL2hIcQiR7g_Q2hKU2lzv2lBa2sRrSKKGTyXTbdUXl87hc1bNABWd43xQwgSXYEVAtCzHI_i5zNYwnGoqdVDHV6amrXfSgyLqwcrRVagud9DUyRyxQ7CtHc07J32wTaToNzqapL2Ooji8q8ZZLKhJlabSytwfNDlagqxnpQmAvL7Xdz7AhYcU4RbUvRmNoAPL9S-ZSrMXZO8i8RH0sbIry27Zfmcz49sW5Cp92PCgHw_XcQ6izUIVVntGMZVPo4oIlQAW3GeCs_0ch_wRUgTuF8PH93w8aIyFZnQqiIczk1UlYFuGe8iL8RKm4XqWi1_RzQaPQoN00JBLSqBhT5FDc7ZbUugjh0Pj79NsqFNXbsp9VsKwpiFC-1IbR7F1uQyzJxkcQcPTrEWlh5uPT6A-RO9eqxSf0WTjvwPR268xqgV_gHdC8s8-5-9mhERp1VPKenP8dPVYL2ugyeLIzAemNQb1ohz-sgrJc-_lq6A_AImtAAtL0AxZ6O_rGXGQ9VQHoIEYVAfG8nIAbEOY_vZipi3ojyQhbj6RIiLCi9K6cGiQrqPW-UkS1PqQmGiAfuXvSk-Dmlx1CXyxGCe_10G8R0NjdYGWl7XcNw52XawRMvLiHe-PfgzVwiouM_NX3suUHn3W-LvhWN9EekyD3nDQFa_WN2udXw6FymNvpkCyUrSI-mQogFeXCO1xXO7-mXkphawPDr2_nGpIproBnJBmCIb5RhM0PU5loubDYW5gTG4NPkKtvm2VB5D9cP6OIIJko9WjuBeRoB96sfnHwoveDFtEzqbJ-VKJpOA5dttu7fIp3NTKuaTp-ZexdZH2W731ZcWFy__r74pf7DL668M6OfUiDOLhEhhNjPRSposFZuwO9EhB2z_DF9Z97p8H0RFMeZVxucV1dtNiK7SiIzS8M2_rAEFkE4DBI\\\\\\\",\\\\\\\"dist_to_engagement\\\\\\\":-1,\\\\\\\"dist_to_fixed\\\\\\\":-1,\\\\\\\"dist_to_promo\\\\\\\":-1,\\\\\\\"dist_to_sponsored\\\\\\\":-1,\\\\\\\"dist_to_top\\\\\\\":1,\\\\\\\"min_gap_type\\\\\\\":3,\\\\\\\"story_category\\\\\\\":\\\\\\\"FIXED_POSITION\\\\\\\"}\\\"}}\",\"tags\":[1,128],\"sessionId\":\"twvnsc:sge4hb:yf4k3p\",\"deviceId\":\"fd.ARs50YO4oIQoKXOl4Fu56iTs0NAaqrcdcEjsKvXdk1A9Sj58Tj9QygySFn1HKvDFdcZD3zPsxFjonv8E5x8z__df\",\"appVersion\":\"1041.868.611.0 (1041868611)\"}],\"ts\":1782126163497.7}"
-                },
-                {
-                    "name": "mutex_falco_queue_critical^$100050371094133^#100050371094133^#^#hmac_ttl.1782126135.AR02Jo6Wg63VIoqBqLP4ixOfM51wbwira1y_ktt2EonOEFrz^$",
-                    "value": "96bri5:1783688517684"
-                },
-                {
-                    "name": "falco_queue_critical^$100050371094133^#61570698896954^#^#hmac_ttl.1783688496.AR2oFc3t6c2pA-kgn7ZM6mC4eJ-8imSCiSGf6NN9T8UPrtjj^$f347a37683667ca8d",
-                    "value": "{\"items\":[{\"name\":\"ods_web_batch\",\"policy\":{\"r\":1,\"s\":1},\"time\":1783688516291.5999,\"extra\":\"{\\\"batch\\\":{\\\"2079\\\":{\\\"comet_video_player\\\":{\\\"NextgendashPrefetchCache.miss\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"comet_video_player.banzai_log_flusher\\\":{\\\"paused\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"requested_playing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"scrubbed\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"unpaused\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"3589\\\":{\\\"dgw_web_client\\\":{\\\"realtime.WebStreamAckManager.ack_expected\\\":{\\\"n\\\":7,\\\"d\\\":null},\\\"realtime.DGWPinger.reset\\\":{\\\"n\\\":14,\\\"d\\\":null},\\\"realtime.DGWPinger.reset.newtimeout\\\":{\\\"n\\\":14,\\\"d\\\":null},\\\"realtime.GroupedWebStream.ack_received\\\":{\\\"n\\\":7,\\\"d\\\":null},\\\"realtime.WebStreamAckManager.ack_received\\\":{\\\"n\\\":7,\\\"d\\\":null},\\\"realtime.GroupedWebStream.data_received\\\":{\\\"n\\\":7,\\\"d\\\":null},\\\"realtime.GroupedWebStream.ack_sent\\\":{\\\"n\\\":7,\\\"d\\\":null},\\\"rpsignaling.DGWPinger.timeout_fired.reset\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"rpsignaling.DGWPinger.timeout.newtimeout\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"7173\\\":{\\\"entities.ff_js_web.comet_topnav_item_click.2220391788200892.1042.C3\\\":{\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.comet_topnav_item_impression.2220391788200892.1042.C3\\\":{\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.video_player_www.2220391788200892.1042.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":4,\\\"d\\\":null}},\\\"entities.ff_js_web.media_playback_compound.2220391788200892.1042.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.comet_auto_logging.2220391788200892.1042.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":4,\\\"d\\\":null},\\\"event.filters.sampling\\\":{\\\"n\\\":4,\\\"d\\\":null}},\\\"entities.ff_js_web.perf.2220391788200892.1042.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log_immediately\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":3,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":2,\\\"d\\\":null}},\\\"entities.ff_js_web.switcher_button_tapped.2220391788200892.1042.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.switch_user_tapped.2220391788200892.1042.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.profile_engagement.2220391788200892.1042.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.merlin_unified_protocol_event.2220391788200892.1042.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null}}}}}\",\"tags\":[1,128],\"sessionId\":\"3i3foi:d199de:khezmk\",\"deviceId\":\"fd.ARtg29YXIi_97GmkXwGd5BHsN7dAaWT1_FSnneK8BRKDYupVl9Gh5ApOkpMr8QHclzU_Q1Egqc9zm6kimosnOKft\",\"appVersion\":\"1042.965.649.0 (1042965649)\"}],\"ts\":1783688514581.5999}"
-                },
-                {
-                    "name": "banzai:last_storage_flush",
-                    "value": "1783688502761"
+                    "name": "mutex_banzai",
+                    "value": "88mkhv:1784481330636"
                 },
                 {
                     "name": "_oz_bandwidthEstimate",
                     "value": "1550000"
                 },
                 {
-                    "name": "mutex_falco_queue_critical^$100050371094133^#61570698896954^#^#hmac_ttl.1783688496.AR2oFc3t6c2pA-kgn7ZM6mC4eJ-8imSCiSGf6NN9T8UPrtjj^$",
-                    "value": "96bri5:1783688517684"
-                },
-                {
-                    "name": "mutex_falco_queue_log^$100050371094133^#100050371094133^#^#hmac_ttl.1783688516.AR09RgVcNcSq6jzeAx2rUnDMIQQAAzPTc53hIANCF3msj3UY^$",
-                    "value": "96bri5:1783688517683"
-                },
-                {
-                    "name": "mutex_falco_queue_log^$100050371094133^#61570698896954^#^#hmac_ttl.1783688496.AR2oFc3t6c2pA-kgn7ZM6mC4eJ-8imSCiSGf6NN9T8UPrtjj^$",
-                    "value": "96bri5:1783688517681"
+                    "name": "banzai:last_storage_flush",
+                    "value": "1784481303967"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"100050371094133\",\"currentIntervalLastTick\":1783688524,\"currentIntervalStart\":1783688519,\"initRemoteAgg\":{\"timestamp\":1776112801,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1783688519,\"localStorageId\":\"57994963\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                    "value": "{\"actorId\":\"100050371094133\",\"currentIntervalLastTick\":1784481542,\"currentIntervalStart\":1784481303,\"initRemoteAgg\":{\"timestamp\":1776112801,\"today_s\":0},\"intervals\":[{\"end\":1783688524,\"start\":1783688519}],\"lastCallbackAttempt\":1784481303,\"localStorageId\":\"88018674\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                },
+                {
+                    "name": "last_headload_time",
+                    "value": "1784481327707"
                 },
                 {
                     "name": "RSTData",
                     "value": "{}"
                 },
                 {
-                    "name": "last_headload_time",
-                    "value": "1783688518230"
-                },
-                {
                     "name": "hb_timestamp",
-                    "value": "1783688503380"
+                    "value": "1784481304846"
                 },
                 {
                     "name": "_oz_bandwidthAndTTFBSamples",
                     "value": "{\"b\":[],\"t\":[]}"
                 },
                 {
+                    "name": "ps:100006969523553:16b2f4d3-079d-43a4-9c95-a2ebed2ffaa0",
+                    "value": "11f4b96e-70e5-495d-944f-080dbd4bab6f:1784481378253"
+                },
+                {
                     "name": "signal_flush_timestamp",
-                    "value": "1783688503678"
-                },
-                {
-                    "name": "mutex_falco_queue_immediately^$100050371094133^#100050371094133^#^#hmac_ttl.1783688516.AR09RgVcNcSq6jzeAx2rUnDMIQQAAzPTc53hIANCF3msj3UY^$",
-                    "value": "96bri5:1783688517684"
-                },
-                {
-                    "name": "mutex_falco_queue_immediately^$100050371094133^#61570698896954^#^#hmac_ttl.1783688496.AR2oFc3t6c2pA-kgn7ZM6mC4eJ-8imSCiSGf6NN9T8UPrtjj^$",
-                    "value": "96bri5:1783688517684"
-                },
-                {
-                    "name": "mutex_falco_queue_log^$100050371094133^#100050371094133^#^#hmac_ttl.1782126135.AR02Jo6Wg63VIoqBqLP4ixOfM51wbwira1y_ktt2EonOEFrz^$",
-                    "value": "96bri5:1783688517683"
+                    "value": "1784481304934"
                 }
             ]
         },
