@@ -23,6 +23,7 @@ async def visiter(browser, compte, url, comments, posts, blacklist, page_name=No
     await contexte.close()
 
 
+
 async def main():
     comptes = charger_json("comptes-fb.json", [])
     pages = charger_json("pages-tout-pays.json", [])

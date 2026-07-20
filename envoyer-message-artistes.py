@@ -252,7 +252,6 @@ async def envoyer_message(fichier2, fichier4, page, url_page, mon_compte):
     #await fermer_popup_message(page)
     
 
-        
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        

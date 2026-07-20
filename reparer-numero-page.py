@@ -3,7 +3,7 @@ from playwright.async_api import async_playwright
 from itertools import cycle
 from outils_playwright import (connecter_gmail, clic_div_aria_label_role_button, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, 
 charger_fichier_d, ajouter_dans_fichier, mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles, domaines_autoriser, clic_div_aria_label_role_button,
-query_selector_text, compter_followers_fb)
+query_selector_text, compter_followers_fb, verifier_nouveau_element, verifier_date_recontacte, verifier_commande)
 
 
 
@@ -150,14 +150,7 @@ async def compter_commentaire(page, nom, url):
                     
 
 
-async def numero_telephone(page):
-    
-    numero = await page.evaluate('''() => {
-        const spans = [...document.querySelectorAll('div[role="listitem"] span[dir="auto"]')];
-        const numeroTrouver = spans.map(s => s.textContent.trim()).find(t => /^\\+\\d/.test(t));
-        return numeroTrouver || null;
-    }''')
-    print(numero); return numero;
+
 
         
         
@@ -359,46 +352,141 @@ async def collecter_liens(fichier, context, page):
             await recuperer_lien(context, page)
             await sauvegarder_fichier(fichier_mot_debut, { "mot_cle": mot_suivant })
     
+
+
+async def numero_telephone(page):
+
+    # numero dans la bio
+    numero_bio = await page.evaluate('''() => {
+        const spans = [...document.querySelectorAll('span[dir="auto"]')];
+        for (const s of spans) {
+            const texte = s.textContent;
+            const match = texte.match(/\\+\\d{1,3}[\\s\\d]{6,}/);
+            if (match) {
+                return match[0].replace(/\\s+/g, '').trim();
+            }
+        }
+        return null;
+    }''')
     
     
+    # numero dans le span
+    numero_span = await page.evaluate("""
+    () => {
+        const spans = [...document.querySelectorAll('div[role="listitem"] span[dir="auto"]')];
+        const trouve = spans
+            .map(s => s.textContent.trim())
+            .find(t => /^\\+\\d/.test(t)) || null;
+        return trouve ? trouve.replace(/\\s+/g, '') : null;
+    }
+    """)
+    
+    print("numero_bio:", numero_bio)
+    print("numero_span ", numero_span); return numero_bio, numero_span
+    
+    
+    
+    
+async def reparer_numero(page, url):
+    await page.goto(url, timeout=0)
+    
+    await page.evaluate("window.scrollBy(0, document.body.scrollHeight)") # Scroll pour descendre en bas, (je descend en bas pour pouvoir afficher le numero span)
+    print("patiente 5s"); await asyncio.sleep(5)
+    
+    numero_bio, numero_span = await numero_telephone(page);
+    if numero_bio or numero_span: 
+        print("numéro trouvé"); 
+        
+        if numero_bio == numero_span:  # ✅ si les deux sont identiques, on enregistre juste telephone_bio
+            data = {"telephone_bio": numero_bio}
+        else:            
+            data = {}
+            if numero_bio:
+                data["telephone_bio"] = numero_bio
+                
+            if numero_span:
+                data["telephone_span"] = numero_span
+            
+            
+        await mettre_a_jour("pages_collecter_artistes2.json", data, "url", url)
+        await mettre_a_jour("artistes2.json", data, "url", url)
+    else:
+        print("pas de numero"); 
+        await mettre_a_jour("artistes2.json", {"telephone": 0}, "url", url)
+                    
+                    
+                    
 async def main():
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
-        headless=True, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
-
-        fichier_des_comptes = "mes_comptes_fb2.json"
-        comptes = await charger_comptes(fichier_des_comptes)
-        comptes = [c for c in comptes if c.get("message") == 1] # message_speciale
-        comptes = [c for c in comptes if not str(c.get("fichier", "")).strip().startswith("-")] # ignorer les comptes qui commencent par -
+        headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
+        fichier1 = "pages_collecter_artistes2.json"
+        fichier2 = "artistes2.json"
         
-        count = 0
-        while count < 2: 
-            for compte in comptes:
-                #fichier_cookie = compte["fichier"]
-                fichier_cookie = compte.get("fichier")
-                nomDeMonCompte = compte.get("id_inchangeable")
+        pages_fb = await verifier_nouveau_element(fichier1, fichier2, "url")
+        pages_fb = [p for p in pages_fb if "url" in p]
+        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]
+        pages_fb = [p for p in pages_fb if not p.get("telephone") and not p.get("telephone_bio") and not p.get("telephone_span")]
+        pages_fb = [p for p in pages_fb if not p.get("nom", "").strip().startswith("-")]  # exclut celles qui commencent par -
+        #pages_fb = [p for p in pages_fb if p.get("nom", "").strip().startswith("+")]  # ne garde que les pages qui ont + devant leur nom
+        
+        fichier3 = "mes_comptes_fb.json"
+        fichier4 = "mes_comptes_fb2.json"
+        comptes_fb = await verifier_nouveau_element(fichier3, fichier4, "btn_message")
+        comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c) and c.get("envoyer_message") == 1]
+        
+        fichier_page_message_debut = "artistes_debut.json"
+        page_message_debut = (await charger_fichier_d(fichier_page_message_debut)).get("url")
+        
+        index = next((i for i, page in enumerate(pages_fb) if page.get("url") == page_message_debut), 0)
+        page_suivant = None
+        pages_deja_contacter = set()
+        tour = 0
 
-                
-                print("✅", nomDeMonCompte); #print(name); print(url_page);
-                
-                context = await browser.new_context() #nouveau contexte pour chaque compte
-                
-                cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
+        if len(comptes_fb) == 0: print("Tout les comptes ont été utilisés")
+
+        for compte_fb in comptes_fb:  # 🔁 boucle EXTERNE : un compte à la fois
+            fichier_cookie = compte_fb.get("fichier")
+            mon_compte = compte_fb.get("fichier")
+
+            while index < len(pages_fb):  # 🔁 boucle INTERNE : toutes les pages pour CE compte
+                tour += 1
+                print("index ", index)
+
+                page = pages_fb[index]
+                url_page = page.get("url")
+
+                if url_page in pages_deja_contacter:
+                    index += 1
+                    continue
+
+                context = await browser.new_context()
+                cookies = charger_cookies(fichier_cookie)
                 await context.add_cookies(cookies)
 
                 page = await context.new_page()
                 await apply_stealth(page)
-                
-                await collecter_liens(fichier_cookie, context, page)
-                
-                #await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
-                #await sauvegarder_cookies(context, fichier_cookie)
-                
-                print("patiente 10000s"); await asyncio.sleep(10000)
+                print("✅ mon_compte : ", mon_compte)
+                print("Contacté :", url_page)
+
+                try:
+                    await reparer_numero(page, url_page)
+                except Exception as e:
+                    print("..erreur main", e)
+
+                await verifier_commande(page, 10)
+                await sauvegarder_cookies(context, fichier_cookie)
                 await context.close()
 
-            count += 1
+                pages_deja_contacter.add(url_page)
+                index += 1
 
+                #statut = await tour_suivant(fichier_page_message_debut, pages_fb, comptes_fb, page_suivant, tour, index, "url", "compte")
+                #if statut == "tout_mes_comptes_utiliser": break
 
-if __name__ == "__main__":
-    asyncio.run(main())
+            print(f"✅ Compte {mon_compte} a fini de contacter toutes les pages disponibles")
+
+        print("Tous les comptes ont contacté toutes les pages")
+
+asyncio.run(main())
+
