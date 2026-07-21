@@ -353,6 +353,30 @@ async def collecter_liens(fichier, context, page):
             await sauvegarder_fichier(fichier_mot_debut, { "mot_cle": mot_suivant })
     
 
+async def numero_telephoneg(page):
+    # span_proche_bio
+    
+    numero_details = await page.evaluate('''() => {
+        const container = document.querySelector('span[aria-label="Détails à la une"]');
+        let numero = null;
+        if (container) {
+            const items = [...container.querySelectorAll('span[role="listitem"]')];
+            for (const item of items) {
+                const texte = item.textContent.trim();
+                if (/^\\+\\d[\\d\\s]{5,}$/.test(texte)) {  // doit commencer par +
+                    numero = texte.replace(/\\s+/g, '');
+                    break;
+                }
+            }
+        }
+        return numero;
+    }''')
+
+    print("numero_details:", numero_details)
+
+
+
+
 
 async def numero_telephone(page):
 
@@ -381,8 +405,29 @@ async def numero_telephone(page):
     }
     """)
     
+    
+    # span_proche_bio
+    numero_span_proche_bio = await page.evaluate('''() => {
+        const container = document.querySelector('span[aria-label="Détails à la une"]');
+        let numero = null;
+        if (container) {
+            const items = [...container.querySelectorAll('span[role="listitem"]')];
+            for (const item of items) {
+                const texte = item.textContent.trim();
+                if (/^\\+\\d[\\d\\s]{5,}$/.test(texte)) {  // doit commencer par +
+                    numero = texte.replace(/\\s+/g, '');
+                    break;
+                }
+            }
+        }
+        return numero;
+    }''')
+
+    
     print("numero_bio:", numero_bio)
-    print("numero_span ", numero_span); return numero_bio, numero_span
+    print("numero_span ", numero_span); 
+    print("numero_span_proche_bio", numero_span_proche_bio); 
+    return numero_bio, numero_span, numero_span_proche_bio
     
     
     
@@ -391,10 +436,11 @@ async def reparer_numero(page, url):
     await page.goto(url, timeout=0)
     
     await page.evaluate("window.scrollBy(0, document.body.scrollHeight)") # Scroll pour descendre en bas, (je descend en bas pour pouvoir afficher le numero span)
-    print("patiente 5s"); await asyncio.sleep(5)
+    print("patiente 2s"); await asyncio.sleep(2); 
+    await page.evaluate("window.scrollBy(0, 500)"); print("patiente 3s"); await asyncio.sleep(3)
     
-    numero_bio, numero_span = await numero_telephone(page);
-    if numero_bio or numero_span: 
+    numero_bio, numero_span, numero_span_proche_bio = await numero_telephone(page);
+    if numero_bio or numero_span or numero_span_proche_bio: 
         print("numéro trouvé"); 
         
         if numero_bio == numero_span:  # ✅ si les deux sont identiques, on enregistre juste telephone_bio
@@ -405,13 +451,17 @@ async def reparer_numero(page, url):
                 data["telephone_bio"] = numero_bio
                 
             if numero_span:
-                data["telephone_span"] = numero_span
+                data["telephone_span"] = numero_span 
+                
+            if numero_span_proche_bio:
+                data["telephone_span_proche_bio"] = numero_span_proche_bio
             
             
         await mettre_a_jour("pages_collecter_artistes2.json", data, "url", url)
         await mettre_a_jour("artistes2.json", data, "url", url)
     else:
         print("pas de numero"); 
+        await mettre_a_jour("pages_collecter_artistes2.json", {"telephone": 0}, "url", url)
         await mettre_a_jour("artistes2.json", {"telephone": 0}, "url", url)
                     
                     
@@ -425,8 +475,8 @@ async def main():
         
         pages_fb = await verifier_nouveau_element(fichier1, fichier2, "url")
         pages_fb = [p for p in pages_fb if "url" in p]
-        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]
-        pages_fb = [p for p in pages_fb if not p.get("telephone") and not p.get("telephone_bio") and not p.get("telephone_span")]
+        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]         
+        pages_fb = [p for p in pages_fb if "telephone" not in p and "telephone_bio" not in p and "telephone_span" not in p]
         pages_fb = [p for p in pages_fb if not p.get("nom", "").strip().startswith("-")]  # exclut celles qui commencent par -
         #pages_fb = [p for p in pages_fb if p.get("nom", "").strip().startswith("+")]  # ne garde que les pages qui ont + devant leur nom
         
