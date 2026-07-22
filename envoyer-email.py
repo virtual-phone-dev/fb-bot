@@ -7,10 +7,30 @@ basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_
 format_date = "%d-%m-%Y"
 
 
-texte = """Pourquoi avoir sa propre application mobile ?
-Si vous avez votre propre application mobile, vous pourrez vendre de la publicité dans votre application.
+texte = """Si vous avez votre propre réseau social, vous pourrez gagnez des milliards en vendant la publicité comme Facebook.
+On propose la création de site internet, d'application mobile, et de robot.
 
-Je suis développeur, si vous avez un projet de créer un réseau social ou une application mobile, je suis disponible"""
+Nous sommes dans le code, et nous sommes aussi dans la musique.
+
+Nos numéros Whatsapp:
++242066789439
++242065323552
+
+Sur Facebook, Vous pouvez aussi nous envoyer un message sur n'importe quel page Blue Music
+
+🇨🇬 Blue Music Congo
+https://www.facebook.com/profile.php?id=61590983143767
+
+🇨🇮 Blue Music Côte d'Ivoire
+https://www.facebook.com/profile.php?id=61591566555411
+
+🇲🇬 Blue Music Madagascar
+https://www.facebook.com/profile.php?id=61591724200270
+
+🇹🇩 Blue Music Tchad
+https://www.facebook.com/profile.php?id=61591692635517
+"""
+
 
 objet = "Super Code"
 

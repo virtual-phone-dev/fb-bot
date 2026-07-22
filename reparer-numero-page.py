@@ -476,14 +476,14 @@ async def main():
         pages_fb = await verifier_nouveau_element(fichier1, fichier2, "url")
         pages_fb = [p for p in pages_fb if "url" in p]
         pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]         
-        pages_fb = [p for p in pages_fb if "telephone" not in p and "telephone_bio" not in p and "telephone_span" not in p]
+        #pages_fb = [p for p in pages_fb if "telephone" not in p and "telephone_bio" not in p and "telephone_span" not in p]
         pages_fb = [p for p in pages_fb if not p.get("nom", "").strip().startswith("-")]  # exclut celles qui commencent par -
         #pages_fb = [p for p in pages_fb if p.get("nom", "").strip().startswith("+")]  # ne garde que les pages qui ont + devant leur nom
         
         fichier3 = "mes_comptes_fb.json"
         fichier4 = "mes_comptes_fb2.json"
         comptes_fb = await verifier_nouveau_element(fichier3, fichier4, "btn_message")
-        comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c) and c.get("envoyer_message") == 1]
+        comptes_fb = [c for c in comptes_fb if await verifier_date_recontacte(c) and c.get("visiter_compte") == 1]
         
         fichier_page_message_debut = "artistes_debut.json"
         page_message_debut = (await charger_fichier_d(fichier_page_message_debut)).get("url")
