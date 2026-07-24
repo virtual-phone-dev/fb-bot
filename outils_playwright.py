@@ -1167,6 +1167,95 @@ async def collecter_liens(page, nomFichierCompte):
         
         
 
+
+
+async def obtenir_numero_telephone(page):
+
+    # numero dans la bio
+    numero_bio = await page.evaluate('''() => {
+        const spans = [...document.querySelectorAll('span[dir="auto"]')];
+        for (const s of spans) {
+            const texte = s.textContent;
+            const match = texte.match(/\\+\\d{1,3}[\\s\\d]{6,}/);
+            if (match) {
+                return match[0].replace(/\\s+/g, '').trim();
+            }
+        }
+        return null;
+    }''')
+    
+    
+    # numero dans le span
+    numero_span = await page.evaluate("""
+    () => {
+        const spans = [...document.querySelectorAll('div[role="listitem"] span[dir="auto"]')];
+        const trouve = spans
+            .map(s => s.textContent.trim())
+            .find(t => /^\\+\\d/.test(t)) || null;
+        return trouve ? trouve.replace(/\\s+/g, '') : null;
+    }
+    """)
+    
+    
+    # span_proche_bio
+    numero_span_proche_bio = await page.evaluate('''() => {
+        const container = document.querySelector('span[aria-label="Détails à la une"]');
+        let numero = null;
+        if (container) {
+            const items = [...container.querySelectorAll('span[role="listitem"]')];
+            for (const item of items) {
+                const texte = item.textContent.trim();
+                if (/^\\+\\d[\\d\\s]{5,}$/.test(texte)) {  // doit commencer par +
+                    numero = texte.replace(/\\s+/g, '');
+                    break;
+                }
+            }
+        }
+        return numero;
+    }''')
+
+    
+    print("numero_bio:", numero_bio)
+    print("numero_span ", numero_span); 
+    print("numero_span_proche_bio", numero_span_proche_bio); 
+    return numero_bio, numero_span, numero_span_proche_bio
+    
+    
+    
+    
+async def numero_telephone(page, url):
+    
+    await page.evaluate("window.scrollBy(0, document.body.scrollHeight)") # Scroll pour descendre en bas, (je descend en bas pour pouvoir afficher le numero span)
+    print("patiente 2s"); await asyncio.sleep(2); 
+    await page.evaluate("window.scrollBy(0, 500)"); print("patiente 3s"); await asyncio.sleep(3)
+    
+    numero_bio, numero_span, numero_span_proche_bio = await obtenir_numero_telephone(page);
+    if numero_bio or numero_span or numero_span_proche_bio: 
+        print("numéro trouvé"); 
+        
+        if numero_bio == numero_span:  # ✅ si les deux sont identiques, on enregistre juste telephone_bio
+            data = {"telephone_bio": numero_bio}
+        else:            
+            data = {}
+            if numero_bio:
+                data["telephone_bio"] = numero_bio
+                
+            if numero_span:
+                data["telephone_span"] = numero_span 
+                
+            if numero_span_proche_bio:
+                data["telephone_span_proche_bio"] = numero_span_proche_bio
+            
+            
+        await mettre_a_jour("pages_collecter_artistes2.json", data, "url", url)
+        await mettre_a_jour("artistes2.json", data, "url", url)
+    else:
+        print("pas de numero"); 
+        await mettre_a_jour("pages_collecter_artistes2.json", {"telephone": 0}, "url", url)
+        await mettre_a_jour("artistes2.json", {"telephone": 0}, "url", url)
+                    
+                    
+                    
 async def envoyer_message(page, MESSAGES, page_name=None, page_url=None, cookie_file=None):
 
     await page.evaluate("""

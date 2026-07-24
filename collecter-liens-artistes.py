@@ -3,7 +3,7 @@ from playwright.async_api import async_playwright
 from itertools import cycle
 from outils_playwright import (connecter_gmail, clic_div_aria_label_role_button, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, 
 charger_fichier_d, ajouter_dans_fichier, mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles, domaines_autoriser, clic_div_aria_label_role_button,
-query_selector_text, compter_followers_fb)
+query_selector_text, compter_followers_fb, numero_telephone)
 
 
 
@@ -149,17 +149,6 @@ async def compter_commentaire(page, nom, url):
                     await message(page, nom, url)
                     
 
-
-async def numero_telephone(page):
-    
-    numero = await page.evaluate('''() => {
-        const spans = [...document.querySelectorAll('div[role="listitem"] span[dir="auto"]')];
-        const numeroTrouver = spans.map(s => s.textContent.trim()).find(t => /^\\+\\d/.test(t));
-        return numeroTrouver || null;
-    }''')
-    print(numero); return numero;
-
-        
         
 async def nom_page(page, url):
     try: # recuperer nom_page
@@ -187,17 +176,8 @@ async def nom_page(page, url):
             if follower is not None and follower < 10000:
                 print("artiste trouvé"); 
                 await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url) # sauvegarder la page trouvé
-                await ajouter_dans_fichier("pages_collecter_artistes2.json", {"nom": name, "url": url}, "url", url) 
-                
-                
-                numero = await numero_telephone(page);
-                if numero: 
-                    print("numéro trouvé"); 
-                    await mettre_a_jour("pages_collecter_artistes2.json", {"telephone": numero}, "url", url)
-                else:
-                    print("pas de numero"); 
-                    await mettre_a_jour("pages_collecter_artistes2.json", {"telephone": 0}, "url", url)
-                    
+                await ajouter_dans_fichier("pages_collecter_artistes2.json", {"nom": name, "url": url}, "url", url)                 
+                await numero_telephone(page, url);
             else:
                 print("non trouvé")
         else:
@@ -312,6 +292,8 @@ async def verifier_dernier_mot():
                 break
                 
     return mots, mot_debut, fichier_mot_debut
+
+
 
 
 async def collecter_liens(fichier, context, page):

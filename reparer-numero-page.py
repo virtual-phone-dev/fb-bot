@@ -3,7 +3,7 @@ from playwright.async_api import async_playwright
 from itertools import cycle
 from outils_playwright import (connecter_gmail, clic_div_aria_label_role_button, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, 
 charger_fichier_d, ajouter_dans_fichier, mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles, domaines_autoriser, clic_div_aria_label_role_button,
-query_selector_text, compter_followers_fb, verifier_nouveau_element, verifier_date_recontacte, verifier_commande)
+query_selector_text, compter_followers_fb, verifier_nouveau_element, verifier_date_recontacte, verifier_commande, numero_telephone)
 
 
 
@@ -149,56 +149,7 @@ async def compter_commentaire(page, nom, url):
                     await message(page, nom, url)
                     
 
-
-
-
-        
-        
-async def nom_page(page, url):
-    try: # recuperer nom_page
-        name = await page.evaluate('''() => {
-        const el = document.querySelector('span[dir="auto"] div[role="button"]');
-        return el ? el.childNodes[0].textContent.trim() : null; }''')
-        
-        print("name aa", name)
-    except Exception as e:
-        print("pas de nom"); print(e)
-                
-        
-    btn_follower = await page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("Followers")); } """)
-    if not btn_follower: 
-        print("ami");
-        await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url, "ami": 1}, "url", url) #lien du compte ami
-    else:
-        await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url)
-        
-                    
-        statut = await query_selector_text(page, ["Artiste", "Musique/groupe", "Groupe", "Rappeur"])
-        if statut: 
-            
-            follower = await compter_followers_fb(page)
-            if follower is not None and follower < 10000:
-                print("artiste trouvé"); 
-                await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url) # sauvegarder la page trouvé
-                await ajouter_dans_fichier("pages_collecter_artistes2.json", {"nom": name, "url": url}, "url", url) 
-                
-                
-                numero = await numero_telephone(page);
-                if numero: 
-                    print("numéro trouvé"); 
-                    await mettre_a_jour("pages_collecter_artistes2.json", {"telephone": numero}, "url", url)
-                else:
-                    print("pas de numero"); 
-                    await mettre_a_jour("pages_collecter_artistes2.json", {"telephone": 0}, "url", url)
-                    
-            else:
-                print("non trouvé")
-        else:
-            print("pas artiste"); 
-            
-        return name;
-    
-                        
+              
                         
             
 async def email(page, nom_page, url):           
@@ -351,120 +302,15 @@ async def collecter_liens(fichier, context, page):
         
             await recuperer_lien(context, page)
             await sauvegarder_fichier(fichier_mot_debut, { "mot_cle": mot_suivant })
-    
-
-async def numero_telephoneg(page):
-    # span_proche_bio
-    
-    numero_details = await page.evaluate('''() => {
-        const container = document.querySelector('span[aria-label="Détails à la une"]');
-        let numero = null;
-        if (container) {
-            const items = [...container.querySelectorAll('span[role="listitem"]')];
-            for (const item of items) {
-                const texte = item.textContent.trim();
-                if (/^\\+\\d[\\d\\s]{5,}$/.test(texte)) {  // doit commencer par +
-                    numero = texte.replace(/\\s+/g, '');
-                    break;
-                }
-            }
-        }
-        return numero;
-    }''')
-
-    print("numero_details:", numero_details)
 
 
 
-
-
-async def numero_telephone(page):
-
-    # numero dans la bio
-    numero_bio = await page.evaluate('''() => {
-        const spans = [...document.querySelectorAll('span[dir="auto"]')];
-        for (const s of spans) {
-            const texte = s.textContent;
-            const match = texte.match(/\\+\\d{1,3}[\\s\\d]{6,}/);
-            if (match) {
-                return match[0].replace(/\\s+/g, '').trim();
-            }
-        }
-        return null;
-    }''')
-    
-    
-    # numero dans le span
-    numero_span = await page.evaluate("""
-    () => {
-        const spans = [...document.querySelectorAll('div[role="listitem"] span[dir="auto"]')];
-        const trouve = spans
-            .map(s => s.textContent.trim())
-            .find(t => /^\\+\\d/.test(t)) || null;
-        return trouve ? trouve.replace(/\\s+/g, '') : null;
-    }
-    """)
-    
-    
-    # span_proche_bio
-    numero_span_proche_bio = await page.evaluate('''() => {
-        const container = document.querySelector('span[aria-label="Détails à la une"]');
-        let numero = null;
-        if (container) {
-            const items = [...container.querySelectorAll('span[role="listitem"]')];
-            for (const item of items) {
-                const texte = item.textContent.trim();
-                if (/^\\+\\d[\\d\\s]{5,}$/.test(texte)) {  // doit commencer par +
-                    numero = texte.replace(/\\s+/g, '');
-                    break;
-                }
-            }
-        }
-        return numero;
-    }''')
-
-    
-    print("numero_bio:", numero_bio)
-    print("numero_span ", numero_span); 
-    print("numero_span_proche_bio", numero_span_proche_bio); 
-    return numero_bio, numero_span, numero_span_proche_bio
-    
-    
-    
-    
 async def reparer_numero(page, url):
     await page.goto(url, timeout=0)
+    await numero_telephone(page, url);
     
-    await page.evaluate("window.scrollBy(0, document.body.scrollHeight)") # Scroll pour descendre en bas, (je descend en bas pour pouvoir afficher le numero span)
-    print("patiente 2s"); await asyncio.sleep(2); 
-    await page.evaluate("window.scrollBy(0, 500)"); print("patiente 3s"); await asyncio.sleep(3)
     
-    numero_bio, numero_span, numero_span_proche_bio = await numero_telephone(page);
-    if numero_bio or numero_span or numero_span_proche_bio: 
-        print("numéro trouvé"); 
-        
-        if numero_bio == numero_span:  # ✅ si les deux sont identiques, on enregistre juste telephone_bio
-            data = {"telephone_bio": numero_bio}
-        else:            
-            data = {}
-            if numero_bio:
-                data["telephone_bio"] = numero_bio
-                
-            if numero_span:
-                data["telephone_span"] = numero_span 
-                
-            if numero_span_proche_bio:
-                data["telephone_span_proche_bio"] = numero_span_proche_bio
-            
-            
-        await mettre_a_jour("pages_collecter_artistes2.json", data, "url", url)
-        await mettre_a_jour("artistes2.json", data, "url", url)
-    else:
-        print("pas de numero"); 
-        await mettre_a_jour("pages_collecter_artistes2.json", {"telephone": 0}, "url", url)
-        await mettre_a_jour("artistes2.json", {"telephone": 0}, "url", url)
-                    
-                    
+
                     
 async def main():
     async with async_playwright() as p:
@@ -476,7 +322,7 @@ async def main():
         pages_fb = await verifier_nouveau_element(fichier1, fichier2, "url")
         pages_fb = [p for p in pages_fb if "url" in p]
         pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]         
-        #pages_fb = [p for p in pages_fb if "telephone" not in p and "telephone_bio" not in p and "telephone_span" not in p]
+        pages_fb = [p for p in pages_fb if "telephone" not in p and "telephone_bio" not in p and "telephone_span" not in p]
         pages_fb = [p for p in pages_fb if not p.get("nom", "").strip().startswith("-")]  # exclut celles qui commencent par -
         #pages_fb = [p for p in pages_fb if p.get("nom", "").strip().startswith("+")]  # ne garde que les pages qui ont + devant leur nom
         
