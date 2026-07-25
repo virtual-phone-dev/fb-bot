@@ -6,7 +6,7 @@ sauvegarder_par_bloc)
 
 
 async def exporter_numeros_txt():
-    fichier_entree = "artistes2.json"
+    fichier_entree = "pages_collecter_artistes2.json"
     fichier_sortie = "numeros.txt"
     
     artistes = await charger_fichier(fichier_entree)
@@ -16,8 +16,11 @@ async def exporter_numeros_txt():
     urls_vues = set()
     
     for item in artistes:
-        nom = item.get("nom", "").strip()
-        url = item.get("url", "")
+        #nom = item.get("nom", "").strip()
+        #url = item.get("url", "")
+        
+        nom = (item.get("nom") or "").strip()
+        url = (item.get("url") or "").strip()
         
         numeros = []
         for champ in ["telephone_bio", "telephone_span", "telephone_span_proche_bio"]:
