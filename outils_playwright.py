@@ -1254,7 +1254,8 @@ async def numero_telephone(page, url):
         await mettre_a_jour("pages_collecter_artistes2.json", {"telephone": 0}, "url", url)
         await mettre_a_jour("artistes2.json", {"telephone": 0}, "url", url)
                     
-                    
+
+                 
                     
 async def envoyer_message(page, MESSAGES, page_name=None, page_url=None, cookie_file=None):
 

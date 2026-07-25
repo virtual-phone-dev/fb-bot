@@ -55,7 +55,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1785435212,
+            "expires": 1785543147,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -65,20 +65,10 @@
             "value": "100007670940489",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1816366408.598626,
+            "expires": 1816473835.410845,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
-        },
-        {
-            "name": "alsfid",
-            "value": "{\"id\":\"f4bcfd3c6\",\"timestamp\":1778455017167.8}",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": -1,
-            "httpOnly": false,
-            "secure": false,
-            "sameSite": "Lax"
         },
         {
             "name": "ps_l",
@@ -101,33 +91,43 @@
             "sameSite": "Lax"
         },
         {
-            "name": "fr",
-            "value": "1XhRte0cQBx0rPseX.AWee_teOjaieQsPvObHXay5JDHwFeuLRzkB99q5qVacdmg4SHrI.BqYlnI..AAA.0.0.BqYlnI.AWfnEYHtFHGCwtgvtrhvHVK2F8M",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1792606408.599139,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
             "name": "xs",
-            "value": "27%3AJOnTDNfwF22UIg%3A2%3A1778450647%3A-1%3A-1%3A%3AAczYpWWFhPgFEHl9uJ5aEq7MUB1Q9KCPKar0d0ExiSI",
+            "value": "27%3AJOnTDNfwF22UIg%3A2%3A1778450647%3A-1%3A-1%3A%3AAcz5lD8ZNb071CMPfxPq_0JeK_M9CnNw1pCIssx6-TA",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1816366408.599271,
+            "expires": 1816473835.412894,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
-            "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1784830413676%2C%22v%22%3A1%7D",
+            "name": "i_user",
+            "value": "61592028017844",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": -1,
+            "expires": 1816474198.19521,
             "httpOnly": false,
             "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "fr",
+            "value": "1nqcQjEz4upoYyYCB.AWcWT-_RoMXcSaAB3LwfFSXKNn4qpg_GfHsYG8v58TrbpvmQnxU.BqY_1s..AAA.0.0.BqY_7Y.AWfZUmF74CkDJNwLCjfX1BDvX5Y",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1792714199.66895,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "alsfid",
+            "value": "{\"id\":\"f6b983ffe\",\"timestamp\":1784938576852.4001}",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1784938636.852685,
+            "httpOnly": false,
+            "secure": false,
             "sameSite": "Lax"
         }
     ],
@@ -140,48 +140,48 @@
                     "value": "3b"
                 },
                 {
-                    "name": "mw_encrypted_backups_restore_upsell_first_impression_time_key",
-                    "value": "1784830407339"
+                    "name": "Session",
+                    "value": "a8d18x:1784938611070"
                 },
                 {
-                    "name": "Session",
-                    "value": "6ie2lb:1784830441518"
+                    "name": "_oz_bandwidthEstimate",
+                    "value": "10000000"
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1784830410832.2"
+                    "value": "1784937838498.9"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"100007670940489\",\"currentIntervalLastTick\":1784830417,\"currentIntervalStart\":1784830409,\"initRemoteAgg\":{\"timestamp\":1784808828,\"today_s\":3653},\"intervals\":[],\"lastCallbackAttempt\":1784830409,\"localStorageId\":\"63830038\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                    "value": "{\"actorId\":\"61592028017844\",\"currentIntervalLastTick\":1784938581,\"currentIntervalStart\":1784938204,\"initRemoteAgg\":{\"timestamp\":-1,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1784938506,\"localStorageId\":\"62135046\",\"syncedL24HS\":-1,\"syncedTodayS\":302,\"lastSyncTimeStamp\":1784938506}"
                 },
                 {
                     "name": "last_headload_time",
-                    "value": "1784830407956"
+                    "value": "1784938203246"
                 },
                 {
                     "name": "RSTData",
                     "value": "{}"
                 },
                 {
-                    "name": "bdz_playback_state",
-                    "value": "{\"session_key\":\"mrjjjeht\",\"buffer_length\":60}"
+                    "name": "hb_timestamp",
+                    "value": "1784937867384"
                 },
                 {
-                    "name": "hb_timestamp",
-                    "value": "1784830413546"
+                    "name": "bdz_playback_state",
+                    "value": "{\"session_key\":\"mrlbpukn\",\"buffer_length\":60}"
+                },
+                {
+                    "name": "_oz_bandwidthAndTTFBSamples",
+                    "value": "{\"b\":[],\"t\":[]}"
                 },
                 {
                     "name": "ares_last_signal_flush",
-                    "value": "1783966408481"
+                    "value": "1784074204679"
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1784830413611"
-                },
-                {
-                    "name": "MqttGlobalStreamCounter:count-updated",
-                    "value": "{\"__t\":1784830413640,\"__v\":[\"{\\\"key\\\":\\\"95ffb9de-c3c2-465e-8365-57d254f00b8e\\\",\\\"event\\\":\\\"UPDATE\\\",\\\"value\\\":{\\\"totalConnectionStreams\\\":1}}\"]}"
+                    "value": "1784937837477"
                 }
             ]
         }

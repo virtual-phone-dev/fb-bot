@@ -85,17 +85,27 @@
             "value": "100052826291589",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1815224463.181005,
+            "expires": 1816441214.126799,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
         },
         {
-            "name": "xs",
-            "value": "40%3A4U9qtbsbFX03SQ%3A2%3A1782126054%3A-1%3A-1%3A%3AAcx0x5VkaGDpX4zelJAg3lWpZXi5Qnfr2Cmex1SHqA",
+            "name": "fr",
+            "value": "158q9wgvzkZdIGY5X.AWexDQoeI5rahPzmH13mykds18NzfwDoW27Xz2gqRVZCmEZhbWQ.BqY33_..AAA.0.0.BqY33_.AWfDP2Ay9RmvexbUozC5EZ4QkxM",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1815224463.181372,
+            "expires": 1792681214.127048,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "xs",
+            "value": "40%3A4U9qtbsbFX03SQ%3A2%3A1782126054%3A-1%3A-1%3A%3AAcyb5wW8dvTvzoxmVd82ZjEMUd7LElzzvmufvNOHWw",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1816441214.127222,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
@@ -105,24 +115,14 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1784293279,
+            "expires": 1785510014,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
         },
         {
-            "name": "fr",
-            "value": "1FgJSIZ6zdrXwlTFV.AWfrVnaPxg_bjNUzSIU7AOeTPmaeE6jtytxrPouy5DSNwvtzbp0.BqUO0Q..AAA.0.0.BqUO0V.AWdZttgjtX8cvIJpPcriaAnm2ks",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1791464468.395322,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
             "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1783688481957%2C%22v%22%3A1%7D",
+            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1784905216275%2C%22v%22%3A1%7D",
             "domain": ".facebook.com",
             "path": "/",
             "expires": -1,
@@ -140,20 +140,16 @@
                     "value": "3b"
                 },
                 {
-                    "name": "screen_time_event_log_100052826291589_691yd4",
-                    "value": "{\"actorId\":\"100052826291589\",\"events\":[{\"data\":\"comet.home\",\"tabID\":\"691yd4\",\"timestampMs\":1783688471189,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[[\"691yd4\",1783688471189]],\"continuousScreenTimeMs\":0,\"continuousSessionId\":\"1783688471189\",\"currentIntervalStartEvent\":{\"data\":\"comet.home\",\"tabID\":\"691yd4\",\"timestampMs\":1783688471189,\"type\":102},\"currentIntervalStartModule\":\"comet.home\",\"currentIntervalStartMs\":1783688471189,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1783688471189|691yd4|102|comet.home\",\"lastEventTimestampMs\":1783688471189,\"onReachRescheduleBaselineMs\":0,\"status\":\"active\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1783688471189|691yd4|102|comet.home\",\"lastEventTimestampMs\":1783688471189,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.home\",\"tabID\":\"691yd4\",\"timestampMs\":1783688474108,\"type\":101,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":2919,\"continuousSessionId\":\"1783688471189\",\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1783688474108|691yd4|101|comet.home\",\"lastEventTimestampMs\":1783688474108,\"onReachRescheduleBaselineMs\":0,\"status\":\"inactive\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1783688474108|691yd4|101|comet.home\",\"lastEventTimestampMs\":1783688474108,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]}]}"
+                    "name": "mutex_falco_queue_log^$100052826291589^#100052826291589^#^#hmac_ttl.1784905208.AR2eckNnN-DQEM0skgHtSmN3hMi-SDjWupkqYy8zTJnPvn-6^$",
+                    "value": "tctgpl:1784905212377"
                 },
                 {
                     "name": "mw_encrypted_backups_restore_upsell_first_impression_time_key",
                     "value": "1783688470347"
                 },
                 {
-                    "name": "screen_time_event_log_100052826291589_qymy6i",
-                    "value": "{\"actorId\":\"100052826291589\",\"events\":[{\"data\":\"comet.profile.timeline.list\",\"tabID\":\"qymy6i\",\"timestampMs\":1783688476943,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":2919,\"continuousSessionId\":\"1783688471189\",\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":2835,\"lastEventKey\":\"1783688476943|qymy6i|102|comet.profile.timeline.list\",\"lastEventTimestampMs\":1783688476943,\"onReachRescheduleBaselineMs\":0,\"status\":\"inactive\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1783688476943|qymy6i|102|comet.profile.timeline.list\",\"lastEventTimestampMs\":1783688476943,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile.timeline.list\",\"tabID\":\"qymy6i\",\"timestampMs\":1783688482906,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":2919,\"continuousSessionId\":\"1783688471189\",\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":8798,\"lastEventKey\":\"1783688482906|qymy6i|102|comet.profile.timeline.list\",\"lastEventTimestampMs\":1783688482906,\"onReachRescheduleBaselineMs\":0,\"status\":\"inactive\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1783688482906|qymy6i|102|comet.profile.timeline.list\",\"lastEventTimestampMs\":1783688482906,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]}]}"
-                },
-                {
                     "name": "Session",
-                    "value": "lqxg7g:1783688514659"
+                    "value": "6iyafm:1784905328226"
                 },
                 {
                     "name": "_oz_bandwidthEstimate",
@@ -161,31 +157,43 @@
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1783688462765.5999"
+                    "value": "1784905216016.5"
+                },
+                {
+                    "name": "screen_time_event_log_100052826291589_tctgpl",
+                    "value": "{\"actorId\":\"100052826291589\",\"events\":[{\"data\":\"comet.home\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905242343,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[[\"tctgpl\",1784905242343]],\"continuousScreenTimeMs\":29865,\"continuousSessionId\":\"1784905212478\",\"currentIntervalStartEvent\":{\"data\":\"comet.home\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905212478,\"type\":102},\"currentIntervalStartModule\":\"comet.home\",\"currentIntervalStartMs\":1784905212478,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905242343|tctgpl|102|comet.home\",\"lastEventTimestampMs\":1784905242343,\"onReachRescheduleBaselineMs\":0,\"status\":\"active\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905242343|tctgpl|102|comet.home\",\"lastEventTimestampMs\":1784905242343,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.home\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905247352,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[[\"tctgpl\",1784905247352]],\"continuousScreenTimeMs\":34874,\"continuousSessionId\":\"1784905212478\",\"currentIntervalStartEvent\":{\"data\":\"comet.home\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905212478,\"type\":102},\"currentIntervalStartModule\":\"comet.home\",\"currentIntervalStartMs\":1784905212478,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905247352|tctgpl|102|comet.home\",\"lastEventTimestampMs\":1784905247352,\"onReachRescheduleBaselineMs\":0,\"status\":\"active\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905247352|tctgpl|102|comet.home\",\"lastEventTimestampMs\":1784905247352,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905249443,\"type\":103,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":36965,\"continuousSessionId\":\"1784905212478\",\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905249443|tctgpl|103|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905249443,\"onReachRescheduleBaselineMs\":0,\"status\":\"inactive\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905249443|tctgpl|103|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905249443,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905252356,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":36965,\"continuousSessionId\":\"1784905212478\",\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":2913,\"lastEventKey\":\"1784905252356|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905252356,\"onReachRescheduleBaselineMs\":0,\"status\":\"inactive\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905252356|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905252356,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905257361,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":36965,\"continuousSessionId\":\"1784905212478\",\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":7918,\"lastEventKey\":\"1784905257361|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905257361,\"onReachRescheduleBaselineMs\":0,\"status\":\"inactive\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905257361|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905257361,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905262376,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":36965,\"continuousSessionId\":\"1784905212478\",\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":12933,\"lastEventKey\":\"1784905262376|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905262376,\"onReachRescheduleBaselineMs\":0,\"status\":\"inactive\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905262376|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905262376,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905267379,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":36965,\"continuousSessionId\":\"1784905212478\",\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":17936,\"lastEventKey\":\"1784905267379|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905267379,\"onReachRescheduleBaselineMs\":0,\"status\":\"inactive\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905267379|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905267379,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905272384,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":36965,\"continuousSessionId\":\"1784905212478\",\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":22941,\"lastEventKey\":\"1784905272384|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905272384,\"onReachRescheduleBaselineMs\":0,\"status\":\"inactive\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905272384|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905272384,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905277384,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":36965,\"continuousSessionId\":\"1784905212478\",\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":27941,\"lastEventKey\":\"1784905277384|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905277384,\"onReachRescheduleBaselineMs\":0,\"status\":\"inactive\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905277384|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905277384,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905282385,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905282385|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905282385,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905282385|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905282385,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905287387,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905287387|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905287387,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905287387|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905287387,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905292388,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905292388|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905292388,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905292388|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905292388,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"tctgpl\",\"timestampMs\":1784905297399,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905297399|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905297399,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1784905297399|tctgpl|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1784905297399,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]}]}"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"100052826291589\",\"currentIntervalLastTick\":1783688482,\"currentIntervalStart\":1783688471,\"initRemoteAgg\":{\"timestamp\":1776865642,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1783688471,\"localStorageId\":\"36647027\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                    "value": "{\"actorId\":\"100052826291589\",\"currentIntervalLastTick\":1784905297,\"currentIntervalStart\":1784905212,\"initRemoteAgg\":{\"timestamp\":1776865642,\"today_s\":0},\"intervals\":[{\"end\":1783688482,\"start\":1783688471}],\"lastCallbackAttempt\":1784905212,\"localStorageId\":\"76689980\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                },
+                {
+                    "name": "mutex_falco_queue_critical^$100052826291589^#100052826291589^#^#hmac_ttl.1784905208.AR2eckNnN-DQEM0skgHtSmN3hMi-SDjWupkqYy8zTJnPvn-6^$",
+                    "value": "tctgpl:1784905212377"
                 },
                 {
                     "name": "last_headload_time",
-                    "value": "1783688470907"
+                    "value": "1784905212327"
                 },
                 {
                     "name": "RSTData",
                     "value": "{}"
                 },
                 {
-                    "name": "hb_timestamp",
-                    "value": "1783688463411"
-                },
-                {
                     "name": "bdz_playback_state",
                     "value": "{\"session_key\":\"mr0nnqd6\",\"buffer_length\":60}"
                 },
                 {
+                    "name": "hb_timestamp",
+                    "value": "1784905245155"
+                },
+                {
                     "name": "_oz_bandwidthAndTTFBSamples",
                     "value": "{\"b\":[],\"t\":[]}"
+                },
+                {
+                    "name": "ps::dfd270aa-9157-4b64-b5b5-cecb4fa938af",
+                    "value": "ad9ce872-77fd-4f93-8f68-5f5dc4dbd208:1784905278265"
                 },
                 {
                     "name": "ares_last_signal_flush",
@@ -193,7 +201,15 @@
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1783688463477"
+                    "value": "1784905215197"
+                },
+                {
+                    "name": "ps:100052826291589:dfd270aa-9157-4b64-b5b5-cecb4fa938af",
+                    "value": "8cf84010-7ca2-4485-be01-7db40698db3e:1784905280800"
+                },
+                {
+                    "name": "mutex_falco_queue_immediately^$100052826291589^#100052826291589^#^#hmac_ttl.1784905208.AR2eckNnN-DQEM0skgHtSmN3hMi-SDjWupkqYy8zTJnPvn-6^$",
+                    "value": "tctgpl:1784905212377"
                 },
                 {
                     "name": "ps:61591692635517:3f78822c-1211-4a36-aef9-e7645c49f4d0",
