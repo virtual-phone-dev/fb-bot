@@ -1169,6 +1169,15 @@ async def collecter_liens(page, nomFichierCompte):
 
 
 
+def mettre_a_jour_s(conn, table_name, colonne_cle, valeur_cle, donnees: dict): # mettre_a_jour_s = mettre_a_jour pour sqlite
+    assignations = ", ".join(f"{col} = ?" for col in donnees)
+    requete = f"UPDATE {table_name} SET {assignations} WHERE {colonne_cle} = ?"
+    valeurs = tuple(donnees.values()) + (valeur_cle,)
+    conn.execute(requete, valeurs)
+    conn.commit()
+    
+    
+
 async def obtenir_numero_telephone(page):
 
     # numero dans la bio
@@ -1195,42 +1204,22 @@ async def obtenir_numero_telephone(page):
         return trouve ? trouve.replace(/\\s+/g, '') : null;
     }
     """)
-    
-    
-    # span_proche_bio
-    numero_span_proche_bio = await page.evaluate('''() => {
-        const container = document.querySelector('span[aria-label="Détails à la une"]');
-        let numero = null;
-        if (container) {
-            const items = [...container.querySelectorAll('span[role="listitem"]')];
-            for (const item of items) {
-                const texte = item.textContent.trim();
-                if (/^\\+\\d[\\d\\s]{5,}$/.test(texte)) {  // doit commencer par +
-                    numero = texte.replace(/\\s+/g, '');
-                    break;
-                }
-            }
-        }
-        return numero;
-    }''')
 
-    
     print("numero_bio:", numero_bio)
     print("numero_span ", numero_span); 
-    print("numero_span_proche_bio", numero_span_proche_bio); 
-    return numero_bio, numero_span, numero_span_proche_bio
+    return numero_bio, numero_span
     
     
     
     
-async def numero_telephone(page, url):
+async def numero_telephone(conn2, conn3, page, url):
     
     await page.evaluate("window.scrollBy(0, document.body.scrollHeight)") # Scroll pour descendre en bas, (je descend en bas pour pouvoir afficher le numero span)
     print("patiente 2s"); await asyncio.sleep(2); 
     await page.evaluate("window.scrollBy(0, 500)"); print("patiente 3s"); await asyncio.sleep(3)
     
-    numero_bio, numero_span, numero_span_proche_bio = await obtenir_numero_telephone(page);
-    if numero_bio or numero_span or numero_span_proche_bio: 
+    numero_bio, numero_span = await obtenir_numero_telephone(page);
+    if numero_bio or numero_span: 
         print("numéro trouvé"); 
         
         if numero_bio == numero_span:  # ✅ si les deux sont identiques, on enregistre juste telephone_bio
@@ -1243,17 +1232,13 @@ async def numero_telephone(page, url):
             if numero_span:
                 data["telephone_span"] = numero_span 
                 
-            if numero_span_proche_bio:
-                data["telephone_span_proche_bio"] = numero_span_proche_bio
-            
-            
-        await mettre_a_jour("pages_collecter_artistes2.json", data, "url", url)
-        await mettre_a_jour("artistes2.json", data, "url", url)
+        mettre_a_jour_s(conn2, "pages", "url", url, data)
+        mettre_a_jour_s(conn3, "pages", "url", url, data)
     else:
-        print("pas de numero"); 
-        await mettre_a_jour("pages_collecter_artistes2.json", {"telephone": 0}, "url", url)
-        await mettre_a_jour("artistes2.json", {"telephone": 0}, "url", url)
-                    
+        print("pas de numero")
+        mettre_a_jour_s(conn2, "pages", "url", url, {"telephone": 0})
+        mettre_a_jour_s(conn3, "pages", "url", url, {"telephone": 0})
+
 
                  
                     

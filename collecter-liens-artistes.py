@@ -1,4 +1,4 @@
-import json, asyncio, msvcrt, time, unicodedata
+import json, asyncio, msvcrt, time, unicodedata, subprocess, sys
 from playwright.async_api import async_playwright
 from itertools import cycle
 from outils_playwright import (connecter_gmail, clic_div_aria_label_role_button, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, 
@@ -65,6 +65,71 @@ async def save_cookies(context):
     
     
 
+
+"""
+Module générique de stockage SQLite, réutilisable pour n'importe quel projet
+de scraping (Facebook, emails, etc.).
+
+Principe : chaque projet définit son propre schéma (nom de fichier, nom de
+table, colonnes, colonne unique pour les doublons) et utilise les mêmes
+fonctions génériques pour créer, vérifier et insérer.
+
+Exemple d'utilisation en bas du fichier.
+"""
+
+import sqlite3
+
+
+def init_db(db_path, table_name, colonnes, colonne_unique):
+    """
+    Crée (si besoin) la base et la table.
+
+    db_path        : chemin du fichier .db, ex "pages_artistes.db"
+    table_name     : nom de la table, ex "pages"
+    colonnes       : dict {nom_colonne: type_sql}, ex {"nom": "TEXT", "url": "TEXT", "telephone": "TEXT"}
+    colonne_unique : nom de la colonne qui ne doit jamais avoir de doublon, ex "url"
+
+    Retourne la connexion, à garder ouverte pendant toute la durée du script.
+    """
+    conn = sqlite3.connect(db_path)
+
+    definitions = ["id INTEGER PRIMARY KEY AUTOINCREMENT"]
+    for nom_col, type_col in colonnes.items():
+        suffixe = " UNIQUE" if nom_col == colonne_unique else ""
+        definitions.append(f"{nom_col} {type_col}{suffixe}")
+    definitions.append("date_collecte DATETIME DEFAULT CURRENT_TIMESTAMP")
+
+    requete = f"CREATE TABLE IF NOT EXISTS {table_name} ({', '.join(definitions)})"
+    conn.execute(requete)
+    conn.commit()
+    return conn
+
+
+def existe_deja(conn, table_name, colonne, valeur):
+    """Vérifie si une valeur existe déjà dans une colonne (rapide, via l'index)."""
+    requete = f"SELECT 1 FROM {table_name} WHERE {colonne} = ? LIMIT 1"
+    cur = conn.execute(requete, (valeur,))
+    return cur.fetchone() is not None
+
+
+def sauvegarder(conn, table_name, donnees: dict):
+    """
+    Insère une ligne. Ignore silencieusement si la colonne UNIQUE existe déjà.
+
+    donnees : dict {nom_colonne: valeur}, ex {"nom": "Flavio", "url": "https://..."}
+    Retourne True si insérée, False si doublon ignoré.
+    """
+    colonnes = ", ".join(donnees.keys())
+    points_interrogation = ", ".join("?" for _ in donnees)
+    requete = f"INSERT OR IGNORE INTO {table_name} ({colonnes}) VALUES ({points_interrogation})"
+
+    cur = conn.execute(requete, tuple(donnees.values()))
+    conn.commit()
+    return cur.rowcount > 0
+
+
+
+            
 async def apply_stealth(page):
     await page.add_init_script(
     """
@@ -150,7 +215,7 @@ async def compter_commentaire(page, nom, url):
                     
 
         
-async def nom_page(page, url):
+async def nom_page(conn1, conn2, conn3, page, url):
     try: # recuperer nom_page
         name = await page.evaluate('''() => {
         const el = document.querySelector('span[dir="auto"] div[role="button"]');
@@ -164,20 +229,19 @@ async def nom_page(page, url):
     btn_follower = await page.evaluate("""() => { return [...document.querySelectorAll('span')].find(el => el.innerText.includes("Followers")); } """)
     if not btn_follower: 
         print("ami");
-        await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url, "ami": 1}, "url", url) #lien du compte ami
+        sauvegarder(conn1, "pages", {"nom": name, "url": url, "ami": 1}) #lien du compte ami
     else:
-        await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url)
-        
-                    
+        sauvegarder(conn1, "pages", {"nom": name, "url": url}) # on sauvegarde quand meme l'url (car quand ca sera en marche, notre robot saura qu'on a deja traité cet url)
+
         statut = await query_selector_text(page, ["Artiste", "Musique/groupe", "Groupe", "Rappeur"])
         if statut: 
             
             follower = await compter_followers_fb(page)
             if follower is not None and follower < 10000:
                 print("artiste trouvé"); 
-                await ajouter_dans_fichier("pages_collecter_artistes.json", {"nom": name, "url": url}, "url", url) # sauvegarder la page trouvé
-                await ajouter_dans_fichier("pages_collecter_artistes2.json", {"nom": name, "url": url}, "url", url)                 
-                await numero_telephone(page, url);
+                sauvegarder(conn1, "pages", {"nom": name, "url": url})  # sauvegarder la page trouvée
+                sauvegarder(conn2, "pages", {"nom": name, "url": url})
+                await numero_telephone(conn2, conn3, page, url);
             else:
                 print("non trouvé")
         else:
@@ -216,7 +280,7 @@ async def message(page, nom, url):
         
 
 
-async def recuperer_lien(context, page):
+async def recuperer_lien(conn1, conn2, conn3, context, page):    
     debut = time.monotonic()
     seen = set()
     
@@ -227,7 +291,9 @@ async def recuperer_lien(context, page):
 
     while True:
         try:
-            if time.monotonic() - debut > 60: print("⏹️ Fin des 1 minutes"); break # stop après 3 minutes  
+            if time.monotonic() - debut > 60 * 2: print("⏹️ Fin des 2 minutes"); return "liberer_memoire" # stop après 3 minutes 
+            #if time.monotonic() - debut > 60 * 5: print("⏹️ Fin des 5 minutes"); break # stop après 3 minutes 
+            
             
             links = await page.query_selector_all('[data-ad-rendering-role="profile_name"] a[href]')
             print(f"Trouvé {len(links)} liens")
@@ -241,40 +307,41 @@ async def recuperer_lien(context, page):
                     url = url.split("?")[0]
                 
                 if not url: continue 
-                if url in seen: continue # Skip déjà vus 
+                if url in seen: continue # Skip, déjà vu pendant CETTE session (RAM, rapide)
                 
                 if "-" in url or "%" in url: continue
                 if any(x in url for x in blacklist): continue # Skip blacklist
                 
-                contenu = await charger_fichier("pages_collecter_artistes.json") or []
-                
-                url_existe_deja = False 
-                for p in contenu: # verifier si url existe deja dans db
-                    if p.get("url") == url: 
-                        print("url existe déjà")
-                        url_existe_deja = True
-                        break 
+                # Vérification en base (remplace la lecture du JSON)
+                if existe_deja(conn1, "pages", "url", url):
+                    print("url existe déjà")
+                    seen.add(url)
+                    continue # si url existe_deja, on passe à l'url suivante
 
-                if url_existe_deja: continue  # si url_existe_deja=True, on passe à l'url suivante
                 seen.add(url)
                 print("Ouverture :", url)
                 
                 try:
+                    #if time.monotonic() - debut > 60 * 5: print("⏹️ Fin des 5 minutes aa"); return "liberer_memoire" # on libere la memoire après 3 minutes  
+                    
                     new_page = await context.new_page()
                     await new_page.goto(url)
-                    nom = await nom_page(new_page, url); #sauvegarder le lien du compte ami
-                        
+                    nom = await nom_page(conn1, conn2, conn3, new_page, url); #sauvegarder le lien du compte ami
+                                        
                     await new_page.close()
                 except Exception as e:
-                    print("cc.."); print(e) #en general, ici l'erreur cest quand ca a trop charger la page longtemps
+                    #print("cc.."); print(e) #en general, ici l'erreur cest quand ca a trop charger la page longtemps
+                    print("liberer_memoire aa"); return "liberer_memoire";
                     await new_page.close()
 
-            # Scroll pour charger plus de contenu 
-            await page.evaluate("window.scrollBy(0, document.body.scrollHeight)")
+            
+            await page.evaluate("window.scrollBy(0, document.body.scrollHeight)") # Scroll pour charger plus de contenu 
             print("patiente 1s"); await asyncio.sleep(1)
             
         except Exception as e:
-            print("..erreur"); #print(e)
+            #print("..erreur"); #print(e)
+            print("liberer_memoire bb"); return "liberer_memoire";
+        
         
         
 async def verifier_dernier_mot():
@@ -296,7 +363,7 @@ async def verifier_dernier_mot():
 
 
 
-async def collecter_liens(fichier, context, page):
+async def collecter_liens(conn1, conn2, conn3, fichier, context, page):
     await page.goto("https://fb.com", timeout=0)
     await verifier_blocage2(context, page, fichier)
     await basculer_sur_le_compte(page)
@@ -338,48 +405,89 @@ async def collecter_liens(fichier, context, page):
                 except Exception as e:
                     print("..erreur"); print(e) #en general, ici l'erreur cest quand ca essai de cliquer sur: Publications récentes, et ca rate parfois, et quand ca rate il scrolle juste et prend les pages avec post recent/et non recent
         
-            await recuperer_lien(context, page)
+            statut = await recuperer_lien(conn1, conn2, conn3, context, page)
+            if statut == "liberer_memoire": print("❌ on stop, Pour libérer la mémoire"); return
+            
             await sauvegarder_fichier(fichier_mot_debut, { "mot_cle": mot_suivant })
     
     
     
 async def main():
+    
+    conn1 = init_db(
+        db_path="pages_collecter_artistes.db",
+        table_name="pages",
+        colonnes={"nom": "TEXT", "url": "TEXT", "ami": "INTEGER"},
+        colonne_unique="url",
+    )
+    
+    conn2 = init_db(
+        db_path="pages_collecter_artistes2.db",
+        table_name="pages",
+        colonnes={"nom": "TEXT", "url": "TEXT"},
+        colonne_unique="url",
+    )
+    
+    conn3 = init_db(
+        db_path="artistes2.db",
+        table_name="pages",
+        colonnes={"nom": "TEXT", "url": "TEXT"},
+        colonne_unique="url",
+    )
+    
     async with async_playwright() as p:
-        browser = await p.chromium.launch(        
-        headless=True, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
-
         fichier_des_comptes = "mes_comptes_fb2.json"
         comptes = await charger_comptes(fichier_des_comptes)
         comptes = [c for c in comptes if c.get("message") == 1] # message_speciale
         comptes = [c for c in comptes if not str(c.get("fichier", "")).strip().startswith("-")] # ignorer les comptes qui commencent par -
         
-        count = 0
-        while count < 2: 
+        #count = 0
+        while True: 
             for compte in comptes:
-                #fichier_cookie = compte["fichier"]
-                fichier_cookie = compte.get("fichier")
-                nomDeMonCompte = compte.get("id_inchangeable")
+                try:
+                    #browser = await p.chromium.launch(        
+                    #headless=True, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
+                    
+                    browser = await p.chromium.launch(
+                    headless=True,
+                    args=[
+                        "--disable-blink-features=AutomationControlled",
+                        "--no-sandbox",
+                        "--disable-infobars",
+                        "--disable-web-security",
+                        "--disable-dev-shm-usage",     # évite d'utiliser /dev/shm (souvent limité)
+                        "--disable-gpu",
+                        "--js-flags=--max-old-space-size=256",  # limite la mémoire JS par processus
+                        "--single-process",             # un seul processus Chromium au lieu de plusieurs (risqué mais économe)
+                    ])
 
-                
-                print("✅", nomDeMonCompte); #print(name); print(url_page);
-                
-                context = await browser.new_context() #nouveau contexte pour chaque compte
-                
-                cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
-                await context.add_cookies(cookies)
+                    
+                    #fichier_cookie = compte["fichier"]
+                    fichier_cookie = compte.get("fichier")
+                    nomDeMonCompte = compte.get("id_inchangeable")
+                    
+                    print("✅", nomDeMonCompte); #print(name); print(url_page);
+                    #print("patiente 60s avant de close"); await asyncio.sleep(60)
+                    context = await browser.new_context() #nouveau contexte pour chaque compte
+                    
+                    cookies = charger_cookies(fichier_cookie) # Charger les cookies AVANT d'ouvrir la page
+                    await context.add_cookies(cookies)
 
-                page = await context.new_page()
-                await apply_stealth(page)
+                    page = await context.new_page()
+                    await apply_stealth(page)
+                    await collecter_liens(conn1, conn2, conn3, fichier_cookie, context, page)
+                                    
+                    #await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
+                    #await sauvegarder_cookies(context, fichier_cookie)
+                    await browser.close()
+                except Exception as e:
+                    print(e);
                 
-                await collecter_liens(fichier_cookie, context, page)
-                
-                #await sauvegarder_fichier(fichier_derniere_page, {"name": name}) # ✅ sauvegarde de la dernière page
-                #await sauvegarder_cookies(context, fichier_cookie)
-                
-                print("patiente 10000s"); await asyncio.sleep(10000)
-                await context.close()
-
-            count += 1
+            #count += 1
+            
+    conn1.close()
+    conn2.close()
+    conn3.close()
 
 
 if __name__ == "__main__":
