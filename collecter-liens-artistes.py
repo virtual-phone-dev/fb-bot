@@ -129,7 +129,7 @@ def sauvegarder(conn, table_name, donnees: dict):
 
 
 
-            
+
 async def apply_stealth(page):
     await page.add_init_script(
     """
@@ -291,7 +291,7 @@ async def recuperer_lien(conn1, conn2, conn3, context, page):
 
     while True:
         try:
-            if time.monotonic() - debut > 60 * 2: print("⏹️ Fin des 2 minutes"); return "liberer_memoire" # stop après 3 minutes 
+            if time.monotonic() - debut > 60 * 5: print("⏹️ Fin des 5 minutes"); return "liberer_memoire" # stop après 3 minutes 
             #if time.monotonic() - debut > 60 * 5: print("⏹️ Fin des 5 minutes"); break # stop après 3 minutes 
             
             
@@ -314,7 +314,7 @@ async def recuperer_lien(conn1, conn2, conn3, context, page):
                 
                 # Vérification en base (remplace la lecture du JSON)
                 if existe_deja(conn1, "pages", "url", url):
-                    print("url existe déjà")
+                    print("url existe déjà aa")
                     seen.add(url)
                     continue # si url existe_deja, on passe à l'url suivante
 
@@ -330,8 +330,8 @@ async def recuperer_lien(conn1, conn2, conn3, context, page):
                                         
                     await new_page.close()
                 except Exception as e:
-                    #print("cc.."); print(e) #en general, ici l'erreur cest quand ca a trop charger la page longtemps
-                    print("liberer_memoire aa"); return "liberer_memoire";
+                    print("cc.."); print(e) #en general, ici l'erreur cest quand ca a trop charger la page longtemps
+                    #print("liberer_memoire aa"); return "liberer_memoire";
                     await new_page.close()
 
             
@@ -406,9 +406,11 @@ async def collecter_liens(conn1, conn2, conn3, fichier, context, page):
                     print("..erreur"); print(e) #en general, ici l'erreur cest quand ca essai de cliquer sur: Publications récentes, et ca rate parfois, et quand ca rate il scrolle juste et prend les pages avec post recent/et non recent
         
             statut = await recuperer_lien(conn1, conn2, conn3, context, page)
-            if statut == "liberer_memoire": print("❌ on stop, Pour libérer la mémoire"); return
+            
             
             await sauvegarder_fichier(fichier_mot_debut, { "mot_cle": mot_suivant })
+            
+            if statut == "liberer_memoire": print("❌ on stop, Pour libérer la mémoire"); return
     
     
     

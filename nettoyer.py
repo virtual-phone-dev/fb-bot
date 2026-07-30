@@ -1,11 +1,70 @@
-import json, asyncio, re
+import json, asyncio, re, sqlite3
 from outils_playwright import (charger_fichier_t, charger_fichier, ajouter_dans_fichier, nettoyer_texte, mots_inutiles, domaines_autoriser, sauvegarder_sur_meme_ligne,
 sauvegarder_par_bloc)
 
 
 
 
-async def exporter_numeros_txt():
+async def exporter_numeros_depuis_sqlite_vers_txt():
+    db_path = "pages_collecter_artistes2.db"
+    fichier_sortie = "numeros.txt"
+
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+
+    cur = conn.execute("""
+        SELECT
+            nom,
+            url,
+            telephone_bio,
+            telephone_span
+        FROM pages
+    """)
+
+    lignes_sortie = []
+    count = 0
+    urls_vues = set()
+
+    for item in cur:
+        nom = (item["nom"] or "").strip()
+        url = (item["url"] or "").strip()
+
+        numeros = []
+        for champ in (
+            "telephone_bio",
+            "telephone_span",
+        ):
+            valeur = item[champ]
+            if valeur and valeur not in numeros:
+                numeros.append(valeur)
+
+        if not numeros:
+            continue
+
+        if url in urls_vues:
+            print(f"⚠️ DOUBLON détecté : {nom} ({url})")
+
+        urls_vues.add(url)
+
+        lignes_sortie.append(nom)
+        lignes_sortie.extend(numeros)
+        lignes_sortie.append("")
+
+        count += len(numeros)
+
+    conn.close()
+
+    with open(fichier_sortie, "w", encoding="utf-8") as f:
+        f.write("\n".join(lignes_sortie))
+
+    print(f"✅ {count} numéros exportés (artistes uniques: {len(urls_vues)}) dans {fichier_sortie}")
+
+
+
+
+
+
+async def exporter_numeros_depuis_json_vers_txt():
     fichier_entree = "pages_collecter_artistes2.json"
     fichier_sortie = "numeros.txt"
     
@@ -262,5 +321,5 @@ async def nettoyer_emails_gmail():
     
     
     
-asyncio.run(exporter_numeros_txt())
+asyncio.run(exporter_numeros_depuis_sqlite_vers_txt())
 
