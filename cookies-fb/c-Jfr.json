@@ -105,24 +105,14 @@
             "value": "100007670940489",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": -1,
+            "expires": 1817014133.978875,
             "httpOnly": false,
             "secure": true,
-            "sameSite": "Lax"
-        },
-        {
-            "name": "xs",
-            "value": "2%3AtjYfnEjMkdjRIA%3A2%3A1785446787%3A-1%3A-1%3A%3AAcxV4kUiRELK_7RvlE-2EyYiLiE6GDtfGb9geveZPg",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": -1,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "Lax"
+            "sameSite": "None"
         },
         {
             "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1785450596980%2C%22v%22%3A1%7D",
+            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1785465836779%2C%22v%22%3A1%7D",
             "domain": ".facebook.com",
             "path": "/",
             "expires": -1,
@@ -132,10 +122,20 @@
         },
         {
             "name": "fr",
-            "value": "1cvcCTlkY4whHFdks.AWfT6VivJb3E5gLKSN9cTl3wUtdPRkOrDH5KHo9nc7rDkfjrPpo.Bqa9Bf..AAA.0.0.Bqa9Ml.AWctZShm3sBJzNwkRHtmMmH1vKs",
+            "value": "1trGQt6FEGMCTUF2n.AWfmcnKZJ2aqb15XuPwfr8N3u26b85dIFU4jTE0sP5WOGFuIwls.BqbDv2..AAA.0.0.BqbDv2.AWfUixS3nOECwwp20KV338P47TU",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1793227301.506299,
+            "expires": 1793254133.97911,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "xs",
+            "value": "2%3AtjYfnEjMkdjRIA%3A2%3A1785446787%3A-1%3A-1%3A%3AAcxl0quVWPkme7eodn8egrkdc2XcwuceJa1tvd2Lrw",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1817014133.979398,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
@@ -147,23 +147,35 @@
             "localStorage": [
                 {
                     "name": "last_headload_time",
-                    "value": "1785451308048"
-                },
-                {
-                    "name": "Session",
-                    "value": "3v2jvb:1785451341063"
-                },
-                {
-                    "name": "mutex_screen_time_period_logging_mutex_100007670940489_facebook",
-                    "value": "spi3e9:1785451321345"
-                },
-                {
-                    "name": "mutex_banzai",
-                    "value": "spi3e9:1785451309475"
+                    "value": "1785478133326"
                 },
                 {
                     "name": "mw_encrypted_backups_restore_upsell_first_impression_time_key",
-                    "value": "1785451306956"
+                    "value": "1785478132448"
+                },
+                {
+                    "name": "mutex_falco_queue_critical^$100007670940489^#100007670940489^#^#hmac_ttl.1785478127.AR2B-x5pE_giIVhsEszbT841u2Y5p0YY8iyb6VpVrnPm-4wK^$",
+                    "value": "i1grhc:1785478132476"
+                },
+                {
+                    "name": "Session",
+                    "value": "6kdss0:1785478165864"
+                },
+                {
+                    "name": "mutex_falco_queue_log^$100007670940489^#100007670940489^#^#hmac_ttl.1785478127.AR2B-x5pE_giIVhsEszbT841u2Y5p0YY8iyb6VpVrnPm-4wK^$",
+                    "value": "i1grhc:1785478132476"
+                },
+                {
+                    "name": "mutex_screen_time_period_logging_mutex_100007670940489_facebook",
+                    "value": "i1grhc:1785478146413"
+                },
+                {
+                    "name": "mutex_banzai",
+                    "value": "i1grhc:1785478134701"
+                },
+                {
+                    "name": "mutex_falco_queue_immediately^$100007670940489^#100007670940489^#^#hmac_ttl.1785478127.AR2B-x5pE_giIVhsEszbT841u2Y5p0YY8iyb6VpVrnPm-4wK^$",
+                    "value": "i1grhc:1785478132476"
                 }
             ]
         }
