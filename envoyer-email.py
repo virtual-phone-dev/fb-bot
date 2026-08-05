@@ -7,16 +7,18 @@ basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_
 format_date = "%d-%m-%Y"
 
 
-texte = """Si vous avez votre propre réseau social, vous pourrez gagnez des milliards en vendant la publicité comme Facebook.
-On propose la création de site internet, d'application mobile, et de robot.
+texte = """Si vous avez votre propre site internet ou application mobile, vous pourrez vendre la publicité comme le fait Facebook
+Si vous avez votre propre site de vente en ligne, vous pourrez vendre la publicité comme le fait Amazon et prélever un pourcentage sur chaque vente effectuer sur votre site
 
-Nous sommes dans le code, et nous sommes aussi dans la musique.
+On propose la création de site internet, d'application mobile, et de robot, à des prix battants toute concurrence.
+On est aussi dans la musique.
 
 Nos numéros Whatsapp:
 +242066789439
 +242065323552
 
-Sur Facebook, Vous pouvez aussi nous envoyer un message sur n'importe quel page Blue Music
+🇧🇯 Blue Music Bénin
+https://www.facebook.com/profile.php?id=61592563409136
 
 🇨🇬 Blue Music Congo
 https://www.facebook.com/profile.php?id=61590983143767
@@ -24,11 +26,23 @@ https://www.facebook.com/profile.php?id=61590983143767
 🇨🇮 Blue Music Côte d'Ivoire
 https://www.facebook.com/profile.php?id=61591566555411
 
+🇬🇳 Blue Music Guinée
+https://www.facebook.com/profile.php?id=61588795262834
+
 🇲🇬 Blue Music Madagascar
 https://www.facebook.com/profile.php?id=61591724200270
 
+🇨🇩 Blue Music RDC
+https://www.facebook.com/profile.php?id=61592110483392
+
 🇹🇩 Blue Music Tchad
 https://www.facebook.com/profile.php?id=61591692635517
+
+🇦🇴 Blue Music Angola
+https://www.facebook.com/profile.php?id=61592592752659
+
+🇻🇪 Blue Music Venezuela
+https://www.facebook.com/profile.php?id=61592807603883
 """
 
 
@@ -252,7 +266,9 @@ async def main():
         
         fichier3 = "mes_emails.json"
         fichier4 = "mes_emails2.json"
+        
         compte_emails = await verifier_nouveau_element(fichier3, fichier4, "email")
+        compte_emails = [c for c in compte_emails if not c["fichier"].startswith("-")]
         compte_emails = [c for c in compte_emails if await verifier_date_recontacte(c)]
         
         fichier_email_debut = "email_debut.json"

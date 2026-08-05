@@ -805,7 +805,7 @@
             "value": "100006548437268",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1816635434.52969,
+            "expires": 1817284625.165773,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -815,50 +815,40 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1785704575,
+            "expires": 1786353424,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
-        },
-        {
-            "name": "xs",
-            "value": "31%3A9_XA9UtjS1YgmA%3A2%3A1778653898%3A-1%3A-1%3A%3AAczgijYbGrTrkhm4H6b5b4dxtPjl90iIuXRcbkgKqrM",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1816635434.530029,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
-            "name": "fr",
-            "value": "1ukDpMRhCoJEsw3M9.AWdPal0KeBfuYXnzdSbUYVSzSo5qXBM7PN-wPgPKLzwmOSi97j0.BqZnSr..AAA.0.0.BqZnSv.AWeQ8xOZHdx5zt9LrK9rBb80Pw0",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1792875438.744268,
-            "httpOnly": true,
-            "secure": true,
-            "sameSite": "None"
         },
         {
             "name": "i_user",
-            "value": "61592563409136",
+            "value": "61592631953454",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1816635710.88882,
+            "expires": -1,
             "httpOnly": false,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "fr",
+            "value": "1ViXJP13KrBqfCyc5.AWfwGMVZo9GXZtjuqQZOn5ueCXeBpBqlHeB0TPVXcbyIUhIgizM.BqcFyS..AAA.0.0.BqcFyS.AWcoqtVTQw0A4f_Y8zzVrJeRo4w",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1793524625.165982,
+            "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
-            "name": "alsfid",
-            "value": "{\"id\":\"f9b082936\",\"timestamp\":1785099920869.2}",
+            "name": "xs",
+            "value": "31%3A9_XA9UtjS1YgmA%3A2%3A1778653898%3A-1%3A-1%3A%3AAcyLQCY_BBC4VBa9eOFdUBO3U8OuOO6fB4FTsObpNVU",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1785099980.869305,
-            "httpOnly": false,
-            "secure": false,
-            "sameSite": "Lax"
+            "expires": 1817284625.166137,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
         }
     ],
     "origins": [
@@ -866,52 +856,52 @@
             "origin": "https://www.facebook.com",
             "localStorage": [
                 {
-                    "name": "armadillo_msgr_data_loss_stats",
-                    "value": "{}"
-                },
-                {
-                    "name": "Session",
-                    "value": "9fwzm1:1785099954186"
-                },
-                {
-                    "name": "_oz_bandwidthEstimate",
-                    "value": "7550000"
-                },
-                {
-                    "name": "banzai:last_storage_flush",
-                    "value": "1785099431073.5"
-                },
-                {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"61592563409136\",\"currentIntervalLastTick\":1785099924,\"currentIntervalStart\":1785099716,\"initRemoteAgg\":{\"timestamp\":-1,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1785099716,\"localStorageId\":\"71138460\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                    "value": "{\"actorId\":\"61592631953454\",\"currentIntervalLastTick\":1785748630,\"currentIntervalStart\":1785748621,\"initRemoteAgg\":{\"timestamp\":1785696348,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1785748621,\"localStorageId\":\"78841729\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
                 },
                 {
                     "name": "RSTData",
                     "value": "{}"
                 },
                 {
-                    "name": "screen_time_event_log_100006548437268_e5qwwc",
-                    "value": "{\"actorId\":\"100006548437268\",\"events\":[{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099653410,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099653410|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099653410,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099653410|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099653410,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099658410,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099658410|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099658410,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099658410|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099658410,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099663412,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099663412|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099663412,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099663412|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099663412,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099668412,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099668412|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099668412,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099668412|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099668412,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099673415,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099673415|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099673415,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099673415|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099673415,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099678415,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099678415|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099678415,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099678415|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099678415,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099683415,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099683415|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099683415,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099683415|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099683415,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099688416,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099688416|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099688416,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099688416|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099688416,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099693416,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099693416|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099693416,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099693416|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099693416,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099698420,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099698420|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099698420,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099698420|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099698420,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099703421,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099703421|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099703421,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099703421|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099703421,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099708505,\"type\":102,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099708505|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099708505,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099708505|e5qwwc|102|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099708505,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]},{\"data\":\"comet.profile_plus.create\",\"tabID\":\"e5qwwc\",\"timestampMs\":1785099711716,\"type\":101,\"sessionAfter\":[[1,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099711716|e5qwwc|101|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099711716,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}],[2,{\"activeTabs\":[],\"continuousScreenTimeMs\":0,\"continuousSessionId\":null,\"currentIntervalStartEvent\":null,\"currentIntervalStartModule\":null,\"currentIntervalStartMs\":null,\"currentSessionInactiveTimeMs\":0,\"lastEventKey\":\"1785099711716|e5qwwc|101|comet.profile_plus.create\",\"lastEventTimestampMs\":1785099711716,\"onReachRescheduleBaselineMs\":0,\"status\":\"none\"}]]}]}"
+                    "name": "bdz_playback_state",
+                    "value": "{\"session_key\":\"mryq7y7z\",\"buffer_length\":60}"
+                },
+                {
+                    "name": "mutex_falco_queue_immediately^$100006548437268^#61592631953454^#^#hmac_ttl.1785748611.AR24WJcoIVUO0AFrHeAfmQPdSz0kLGDYayrlsPh1gxIj7EA6^$",
+                    "value": "9hvubx:1785748619364"
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1785099432101"
+                    "value": "1785748624773"
                 },
                 {
-                    "name": "bdz_playback_state",
-                    "value": "{\"session_key\":\"mrnzvprq\",\"buffer_length\":60}"
+                    "name": "mutex_falco_queue_log^$100006548437268^#61592631953454^#^#hmac_ttl.1785748611.AR24WJcoIVUO0AFrHeAfmQPdSz0kLGDYayrlsPh1gxIj7EA6^$",
+                    "value": "9hvubx:1785748619364"
                 },
                 {
-                    "name": "_oz_bandwidthAndTTFBSamples",
-                    "value": "{\"b\":[],\"t\":[]}"
+                    "name": "mutex_falco_queue_critical^$100006548437268^#61592631953454^#^#hmac_ttl.1785748611.AR24WJcoIVUO0AFrHeAfmQPdSz0kLGDYayrlsPh1gxIj7EA6^$",
+                    "value": "9hvubx:1785748619364"
                 },
                 {
                     "name": "ares_last_signal_flush",
-                    "value": "1784235721526"
+                    "value": "1784884624127"
+                },
+                {
+                    "name": "ps:100077037736623:88b29339-5be3-422d-bff0-5ebddfa1ce4f",
+                    "value": "6a4dc20b-2b54-4f46-9e97-48433d2e6130:1785748623693"
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1785099432432"
+                    "value": "1785748625839"
+                },
+                {
+                    "name": "Session",
+                    "value": "gyyo0s:1785748658691"
+                },
+                {
+                    "name": "banzai:last_storage_flush",
+                    "value": "1785748627499.8"
                 }
             ]
         }

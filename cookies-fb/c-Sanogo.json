@@ -35,8 +35,28 @@
             "value": "100057654672387",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1815936441.541669,
+            "expires": 1817231041.273458,
             "httpOnly": false,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "ps_l",
+            "value": "1",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1820247314.001232,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "ps_n",
+            "value": "1",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1820247314.001406,
+            "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
@@ -45,50 +65,40 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1785005412,
+            "expires": 1786300203,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
         },
         {
-            "name": "fr",
-            "value": "1xuO7UBPiwZqhfy8i.AWdSC77fdlWiEvyiubWz9Ce4o5t1_FxldQ5Jnnr5uqbCcinbV5E.BqW8o6..AAA.0.0.BqW8o6.AWfYUz_knn7l-eeQZYcou6JMprg",
+            "name": "i_user",
+            "value": "61592632463548",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1792176441.542284,
+            "expires": 1817224121.191522,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "fr",
+            "value": "1HzI9KTIO5YlxPOWI.AWfBEm-Ve6QFkiHDGxIKOnYwfmwPf4ZF2JlTXA0RRiwbZI_qNtY.Bqb4tC..AAA.0.0.Bqb4tC.AWcutRpHjb_gX23JjXgFUZ__gIM",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1793471041.30201,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "7%3AkiPPSr9tn1Bmng%3A2%3A1778450724%3A-1%3A-1%3A%3AAcxJq4M0TFma-RW3BqbL9ArPHFrJGAlmT2xSpnSsbts",
+            "value": "7%3AkiPPSr9tn1Bmng%3A2%3A1778450724%3A-1%3A-1%3A%3AAcypQyaOruIGLKt_xeZuVjVnqYMYGd7Sfn4oiNTpOsw",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1815936441.542864,
+            "expires": 1817231041.302158,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
-        },
-        {
-            "name": "i_user",
-            "value": "61591668107830",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1815936607.875964,
-            "httpOnly": false,
-            "secure": true,
-            "sameSite": "None"
-        },
-        {
-            "name": "alsfid",
-            "value": "{\"id\":\"f24b0c24a\",\"timestamp\":1784400771146.4}",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": 1784400831.146654,
-            "httpOnly": false,
-            "secure": false,
-            "sameSite": "Lax"
         }
     ],
     "origins": [
@@ -96,36 +106,16 @@
             "origin": "https://www.facebook.com",
             "localStorage": [
                 {
-                    "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"61591668107830\",\"currentIntervalLastTick\":1784400771,\"currentIntervalStart\":1784400611,\"initRemoteAgg\":{\"timestamp\":-1,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1784400611,\"localStorageId\":\"28018692\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
-                },
-                {
                     "name": "armadillo_msgr_data_loss_stats",
                     "value": "{}"
-                },
-                {
-                    "name": "RSTData",
-                    "value": "{}"
-                },
-                {
-                    "name": "hb_timestamp",
-                    "value": "1784400131088"
                 },
                 {
                     "name": "CacheStorageVersion",
                     "value": "3b"
                 },
                 {
-                    "name": "_oz_bandwidthAndTTFBSamples",
-                    "value": "{\"b\":[],\"t\":[]}"
-                },
-                {
-                    "name": "signal_flush_timestamp",
-                    "value": "1784400101188"
-                },
-                {
                     "name": "Session",
-                    "value": "ok1f35:1784400805551"
+                    "value": "xfxnc2:1785695750064"
                 },
                 {
                     "name": "_oz_bandwidthEstimate",
@@ -133,7 +123,43 @@
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1784400101739.4001"
+                    "value": "1785687317282.2"
+                },
+                {
+                    "name": "screen_time_period_logging_facebook",
+                    "value": "{\"actorId\":\"61592632463548\",\"currentIntervalLastTick\":1785695744,\"currentIntervalStart\":1785695404,\"initRemoteAgg\":{\"timestamp\":1785695343,\"today_s\":7198},\"intervals\":[],\"lastCallbackAttempt\":1785695644,\"localStorageId\":\"58456864\",\"syncedL24HS\":-1,\"syncedTodayS\":7483,\"lastSyncTimeStamp\":1785695644}"
+                },
+                {
+                    "name": "last_headload_time",
+                    "value": "1785688368021"
+                },
+                {
+                    "name": "RSTData",
+                    "value": "{}"
+                },
+                {
+                    "name": "hb_timestamp",
+                    "value": "1785694548271"
+                },
+                {
+                    "name": "bdz_playback_state",
+                    "value": "{\"session_key\":\"mrxq7czy\",\"buffer_length\":60}"
+                },
+                {
+                    "name": "_oz_bandwidthAndTTFBSamples",
+                    "value": "{\"b\":[],\"t\":[]}"
+                },
+                {
+                    "name": "ares_last_signal_flush",
+                    "value": "1784824130446"
+                },
+                {
+                    "name": "signal_flush_timestamp",
+                    "value": "1785694520532"
+                },
+                {
+                    "name": "ps:61592632463548:cb862708-04c3-4aff-ad69-6be7ffcd82d4",
+                    "value": "753fdb75-3f47-4da8-88e7-12b4380eac17:1785695703052"
                 }
             ]
         },

@@ -415,7 +415,6 @@ async def collecter_liens(conn1, conn2, conn3, fichier, context, page):
     
     
 async def main():
-    
     conn1 = init_db(
         db_path="pages_collecter_artistes.db",
         table_name="pages",
@@ -449,7 +448,6 @@ async def main():
                 try:
                     #browser = await p.chromium.launch(        
                     #headless=True, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
-                    
                     browser = await p.chromium.launch(
                     headless=True,
                     args=[
