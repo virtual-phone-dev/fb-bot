@@ -446,20 +446,17 @@ async def main():
         while True: 
             for compte in comptes:
                 try:
-                    #browser = await p.chromium.launch(        
-                    #headless=True, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
-                    browser = await p.chromium.launch(
-                    headless=True,
-                    args=[
-                        "--disable-blink-features=AutomationControlled",
-                        "--no-sandbox",
-                        "--disable-infobars",
-                        "--disable-web-security",
-                        "--disable-dev-shm-usage",     # évite d'utiliser /dev/shm (souvent limité)
-                        "--disable-gpu",
-                        "--js-flags=--max-old-space-size=256",  # limite la mémoire JS par processus
-                        "--single-process",             # un seul processus Chromium au lieu de plusieurs (risqué mais économe)
-                    ])
+                    browser = await p.chromium.launch(        
+                    headless=True, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
+                    
+                    #browser = await p.chromium.launch(
+                    #headless=True,
+                    #args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security",
+                    #    "--disable-dev-shm-usage",     # évite d'utiliser /dev/shm (souvent limité)
+                    #    "--disable-gpu",
+                    #    "--js-flags=--max-old-space-size=256",  # limite la mémoire JS par processus
+                    #    "--single-process",             # un seul processus Chromium au lieu de plusieurs (risqué mais économe)
+                    #])
 
                     
                     #fichier_cookie = compte["fichier"]
