@@ -121,18 +121,8 @@
             "sameSite": "Lax"
         },
         {
-            "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1786335406893%2C%22v%22%3A1%7D",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": -1,
-            "httpOnly": false,
-            "secure": true,
-            "sameSite": "Lax"
-        },
-        {
             "name": "xs",
-            "value": "40%3A4U9qtbsbFX03SQ%3A2%3A1782126054%3A-1%3A-1%3A%3AAcwwWdXFy7D-gCdD3vXp58k3Y_332UEfeFj-KRyhB7zx",
+            "value": "40%3A4U9qtbsbFX03SQ%3A2%3A1782126054%3A-1%3A-1%3A%3AAcxbm1Rq2pI8eYM4oin6TFB4OjTa5GPR8VHQ3WywCRhx",
             "domain": ".facebook.com",
             "path": "/",
             "expires": -1,
@@ -141,11 +131,21 @@
             "sameSite": "Lax"
         },
         {
-            "name": "fr",
-            "value": "14TVoO2X4XoCJTqfp.AWflu_zbsqXjqWCSmaP8-31Q9hUmsnm63UMz3kKsNGLRk9Wat9A.BqeV3m..AAA.0.0.BqeWBi.AWf1LhvDh8uLLXtuf4ZV-Ca1zrk",
+            "name": "presence",
+            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1786389740511%2C%22v%22%3A1%7D",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1794115426.695835,
+            "expires": -1,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "fr",
+            "value": "1Nk4CPTvARLOpr6rV.AWcx-wnvXTTKvnDD5lCcfbcj-9bva6ItbEaoqYaUlVqWH4oLZFA.BqeiTX..AAA.0.0.BqeifF.AWe5CIzRy-IHkmOCw7_AK97vXGo",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1794166468.584167,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
@@ -156,20 +156,24 @@
             "origin": "https://www.facebook.com",
             "localStorage": [
                 {
+                    "name": "last_headload_time",
+                    "value": "1786390474113"
+                },
+                {
                     "name": "Session",
-                    "value": "xoe76n:1786339467611"
+                    "value": "295fco:1786390507679"
                 },
                 {
                     "name": "mutex_screen_time_period_logging_mutex_100052826291589_facebook",
-                    "value": "dgyus1:1786339447848"
+                    "value": "rzbaqh:1786390488028"
                 },
                 {
                     "name": "mutex_banzai",
-                    "value": "dgyus1:1786339434090"
+                    "value": "rzbaqh:1786390474280"
                 },
                 {
                     "name": "mw_encrypted_backups_restore_upsell_first_impression_time_key",
-                    "value": "1786339433471"
+                    "value": "1786390473822"
                 }
             ]
         }

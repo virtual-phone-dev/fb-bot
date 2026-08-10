@@ -15,7 +15,7 @@
             "value": "100001863360806",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1817559211.57217,
+            "expires": 1817893448.167826,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
@@ -35,7 +35,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1786628828,
+            "expires": 1786962326,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -62,40 +62,40 @@
         },
         {
             "name": "xs",
-            "value": "33%3AlRh9sDUR6lJT-A%3A2%3A1773093012%3A-1%3A-1%3A%3AAcx4pzAm_EwrOQAttlYCnRK_0wMtvbTQZxX1Hc8uiP4",
+            "value": "33%3AlRh9sDUR6lJT-A%3A2%3A1773093012%3A-1%3A-1%3A%3AAcy5RQWlM1MYlsNTjorWDJX_BUYpa0hzoLwSkfsytdA",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1817559211.572498,
+            "expires": 1817893448.168751,
             "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "i_user",
+            "value": "61593069723673",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1817893500.025685,
+            "httpOnly": false,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "fr",
-            "value": "1pzh7PRDXzhzVCj73..BqdI0t..AAA.0.0.BqdI1Z.AWfaIU8LuqBxIs_GBDTEPAOMW9U",
+            "value": "18wASTBTSBbYwz1se..BqeabI..AAA.0.0.Bqeab9.AWd1FGiLp6UK0SvBeaqiWszMLI0",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1793799256.059371,
+            "expires": 1794133501.683737,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
-            "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1786024029329%2C%22v%22%3A1%7D",
-            "domain": ".facebook.com",
-            "path": "/",
-            "expires": -1,
-            "httpOnly": false,
-            "secure": true,
-            "sameSite": "Lax"
-        },
-        {
             "name": "alsfid",
-            "value": "{\"id\":\"f5bd9786a\",\"timestamp\":1786024032652}",
+            "value": "{\"id\":\"fde6f25bc\",\"timestamp\":1786357653322.5}",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1786024092.652443,
+            "expires": 1786357713.322846,
             "httpOnly": false,
             "secure": false,
             "sameSite": "Lax"
@@ -106,36 +106,16 @@
             "origin": "https://www.facebook.com",
             "localStorage": [
                 {
-                    "name": "mutex_falco_queue_immediately^$100001863360806^#100001863360806^#^#hmac_ttl.1786024023.AR2r8n7GiLX2ygl-Mu80QGWhViOz3K_rIlWtSMXOrV9Axfg1^$",
-                    "value": "hrv5qm:1786024024513"
-                },
-                {
-                    "name": "mutex_falco_queue_critical^$100001863360806^#100001863360806^#^#hmac_ttl.1786024023.AR2r8n7GiLX2ygl-Mu80QGWhViOz3K_rIlWtSMXOrV9Axfg1^$",
-                    "value": "hrv5qm:1786024024516"
-                },
-                {
-                    "name": "falco_queue_immediately^$100001863360806^#61592333133918^#^#hmac_ttl.1786023820.AR0nRVUIK5O9h0FaoHVmKOtG-B93IF2pR2e9OZVI5jPmTiMq^$fcc3f22048dc194b9",
-                    "value": "{\"items\":[{\"name\":\"perf\",\"policy\":{\"r\":1,\"s\":1},\"time\":1786024023250.9,\"extra\":\"{\\\"marker_id\\\":30618615,\\\"action_id\\\":2,\\\"instance_id\\\":8,\\\"sample_rate\\\":1,\\\"method\\\":\\\"random_sampling\\\",\\\"duration_ns\\\":\\\"332699951\\\",\\\"points\\\":[{\\\"name\\\":\\\"HeroTrace_end\\\",\\\"timeSinceStart\\\":\\\"330\\\"},{\\\"name\\\":\\\"visuallyComplete\\\",\\\"timeSinceStart\\\":\\\"331\\\"},{\\\"name\\\":\\\"vcWithoutImage\\\",\\\"timeSinceStart\\\":\\\"331\\\"},{\\\"name\\\":\\\"logVC\\\",\\\"timeSinceStart\\\":\\\"331\\\"}],\\\"metadata\\\":{\\\"application_analytics\\\":{\\\"time_since_qpl_module_init\\\":198170.5},\\\"memory_stats\\\":{\\\"total_mem\\\":4294967296},\\\"network_stats\\\":{\\\"downlink_megabits\\\":1.35,\\\"network_subtype\\\":\\\"3g\\\",\\\"rtt_ms\\\":300},\\\"sitedata_info\\\":{\\\"client_push_phase\\\":\\\"C3\\\",\\\"client_revision\\\":1044619432,\\\"server_revision\\\":1044619432},\\\"locale_info\\\":{\\\"locale\\\":\\\"fr_FR\\\",\\\"isRTL\\\":0}},\\\"marker_type\\\":1,\\\"flags\\\":1,\\\"annotations\\\":{\\\"tracePolicy\\\":\\\"comet.app\\\",\\\"origin_trace_policy\\\":\\\"comet.settings.profile_access\\\",\\\"originating_user_id\\\":\\\"61592333133918\\\",\\\"origin\\\":\\\"voice_switcher\\\",\\\"originating_surface\\\":\\\"voice_switcher\\\",\\\"landing_trace_policy\\\":\\\"comet.settings.profile_access\\\",\\\"target_profile_id\\\":\\\"100001863360806\\\",\\\"websession_id\\\":\\\"og5h5g\\\",\\\"brsid\\\":\\\"7670913901570491035\\\",\\\"referrer\\\":\\\"comet.settings.profile_access\\\",\\\"interactionId\\\":\\\"0ee792f4-aac8-4611-8754-97a564990964\\\",\\\"interactionClass\\\":\\\"responsive\\\",\\\"pkg_cohort\\\":\\\"HYP:comet_plat_default_pkg\\\",\\\"clientRevision\\\":\\\"1044619432\\\",\\\"serverRevision\\\":\\\"1044619432\\\",\\\"pushPhase\\\":\\\"C3\\\",\\\"loomRefId\\\":\\\"cdc4a741-aac9-457b-869a-407ebcb4146f_7\\\"},\\\"annotations_int\\\":{\\\"numReactCommit\\\":\\\"0\\\",\\\"revisit\\\":\\\"0\\\",\\\"instance_revisit\\\":\\\"0\\\",\\\"sessionOfflineStatusCount\\\":\\\"0\\\",\\\"is_switching_to_main_profile\\\":\\\"2\\\",\\\"startTimestamp\\\":\\\"1786024020426\\\",\\\"usedJSHeapSizeStart\\\":\\\"149449882\\\",\\\"usedJSHeapSizeEnd\\\":\\\"150348535\\\",\\\"JSTotalHeapSize\\\":\\\"156204827\\\",\\\"JSHeapSizeLimit\\\":\\\"2145386496\\\",\\\"JSDeviceMemory\\\":\\\"4294967296\\\",\\\"hidden\\\":\\\"0\\\",\\\"navStartOffset\\\":\\\"202244\\\",\\\"incompleteLockCount\\\":\\\"1\\\",\\\"mutationRootCount\\\":\\\"0\\\",\\\"mutatedElementCount\\\":\\\"0\\\",\\\"visualChangeRecordCount\\\":\\\"0\\\",\\\"paintedElementCount\\\":\\\"0\\\",\\\"height\\\":\\\"720\\\",\\\"width\\\":\\\"1280\\\",\\\"scrollY\\\":\\\"0\\\",\\\"finalScrollY\\\":\\\"0\\\",\\\"initialScrollY\\\":\\\"0\\\",\\\"js_cacheCount\\\":\\\"1\\\",\\\"js_cacheRate\\\":\\\"100\\\",\\\"js_encodedBodySize\\\":\\\"0\\\",\\\"js_decodedBodySize\\\":\\\"0\\\",\\\"js_totalCount\\\":\\\"1\\\",\\\"js_transferSize\\\":\\\"0\\\",\\\"css_cacheCount\\\":\\\"0\\\",\\\"css_cacheRate\\\":\\\"0\\\",\\\"css_encodedBodySize\\\":\\\"0\\\",\\\"css_decodedBodySize\\\":\\\"0\\\",\\\"css_totalCount\\\":\\\"0\\\",\\\"css_transferSize\\\":\\\"0\\\",\\\"img_cacheCount\\\":\\\"0\\\",\\\"img_cacheRate\\\":\\\"0\\\",\\\"img_encodedBodySize\\\":\\\"0\\\",\\\"img_decodedBodySize\\\":\\\"0\\\",\\\"img_totalCount\\\":\\\"0\\\",\\\"img_transferSize\\\":\\\"0\\\",\\\"translations_cacheCount\\\":\\\"0\\\",\\\"translations_cacheRate\\\":\\\"0\\\",\\\"translations_encodedBodySize\\\":\\\"0\\\",\\\"translations_decodedBodySize\\\":\\\"0\\\",\\\"translations_totalCount\\\":\\\"0\\\",\\\"translations_transferSize\\\":\\\"0\\\",\\\"cssBgElementCount\\\":\\\"0\\\",\\\"cssBgTimingCount\\\":\\\"0\\\"},\\\"annotations_double\\\":{\\\"devicePixelRatio\\\":1,\\\"vcCalculationOverhead\\\":0.09999990463256836,\\\"mutationProcessingOverhead\\\":0,\\\"cssBgScanOverhead\\\":0,\\\"CLS\\\":0.21620553359683795,\\\"vcMetaDataLoggingLatency\\\":0.2999999523162842,\\\"vcTotalLoggingOverhead\\\":0.39999985694885254},\\\"annotations_bool\\\":{\\\"is_mobile\\\":false},\\\"annotations_string_array\\\":{\\\"CometTags\\\":[\\\"comet_aa_coinflip:true\\\",\\\"comet_preloader_deferred_threads:1\\\",\\\"comet_preloader_display_threads:5\\\",\\\"lastServerTagFlushed\\\",\\\"logged_in\\\",\\\"should_use_bt_safe_js\\\"],\\\"loomProviders\\\":[\\\"InteractionTracing\\\",\\\"QPL\\\",\\\"ResourceTiming\\\",\\\"VisualCompletion\\\"],\\\"incompleteLocks\\\":[\\\"InteractionTracing\\\"]},\\\"config_type\\\":\\\"prod\\\"}\",\"tags\":[1,384],\"sessionId\":\"og5h5g:rp1c6d:bsd34q\",\"deviceId\":\"fd.ARuUXkaj_R8jugaTeTBF6rE0s8I3DCGXxyllCR7gwaKDr5J0ps1MvmCxyRDmJsewVAJTD1UzP5gvDFDSq8s6mFpl\",\"appVersion\":\"1044.619.432.0 (1044619432)\",\"logImmediate\":true},{\"name\":\"auto_logging_heartbeat_event\",\"policy\":{\"r\":1,\"s\":1},\"time\":1786024023307.9998,\"extra\":\"{\\\"ad_account_id\\\":\\\"1453239146104365\\\",\\\"app_session_id\\\":\\\"7cdf6f2a148274fd\\\",\\\"browser_session_id\\\":\\\"f965962f0\\\",\\\"flow_session_id\\\":\\\"f5bd9786a\\\",\\\"business_id\\\":null,\\\"page_uri\\\":\\\"https://www.facebook.com/settings/?tab=profile_access\\\",\\\"tab\\\":null,\\\"tool\\\":\\\"Business Settings\\\",\\\"backing_user_type\\\":\\\"UNKNOWN\\\",\\\"metadata\\\":{\\\"web_session_id\\\":\\\"bu6z48\\\",\\\"is_mma\\\":\\\"false\\\",\\\"flowlet_stack_size\\\":\\\"1\\\",\\\"is_login_as\\\":\\\"false\\\",\\\"heap_size_delta\\\":\\\"5987172\\\",\\\"js_heap_size_limit\\\":\\\"2145386496\\\",\\\"used_js_heap_size\\\":\\\"151314682\\\",\\\"total_js_heap_size\\\":\\\"157081102\\\",\\\"client_time_performance_now_lag\\\":\\\"-0.39990234375\\\",\\\"client_time_date_now\\\":\\\"1786024020815\\\"},\\\"client_time\\\":1786024020815.0999,\\\"event_index\\\":2155,\\\"event_type\\\":\\\"heartbeat\\\",\\\"heartbeat_type\\\":\\\"STOP\\\",\\\"event_sampling_rate\\\":null}\",\"tags\":[1,128],\"sessionId\":\"og5h5g:bu6z48:bsd34q\",\"deviceId\":\"fd.ARuUXkaj_R8jugaTeTBF6rE0s8I3DCGXxyllCR7gwaKDr5J0ps1MvmCxyRDmJsewVAJTD1UzP5gvDFDSq8s6mFpl\",\"appVersion\":\"1044.619.432.0 (1044619432)\"},{\"name\":\"web_time_spent_navigation\",\"policy\":{\"r\":1},\"time\":1786024023699.5999,\"extra\":\"{\\\"cause\\\":\\\"unload\\\",\\\"custom_data_json\\\":\\\"{\\\\\\\"source_pa\\\\\\\":\\\\\\\"{\\\\\\\\\\\\\\\"0\\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\\"bookmark_id\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"tp-comet.settings.profile_access\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"bookmark_type_name\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"session\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"og5h5g:rp1c6d:bsd34q\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"subsession\\\\\\\\\\\\\\\":1,\\\\\\\\\\\\\\\"tap_point\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"via_cold_start\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"timestamp\\\\\\\\\\\\\\\":1786023822886,\\\\\\\\\\\\\\\"trace_policy\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"comet.settings.profile_access\\\\\\\\\\\\\\\"}}\\\\\\\",\\\\\\\"source_pav2\\\\\\\":\\\\\\\"CometProfilePlusAdminPermissionsRoot.react,comet.settings.profile_access,via_cold_start,1786023822886,867485,,,\\\\\\\",\\\\\\\"source_uri\\\\\\\":\\\\\\\"/settings/?tab=profile_access\\\\\\\",\\\\\\\"source_imp_id\\\\\\\":\\\\\\\"0Z0F1Q37n0RgI2w7K\\\\\\\",\\\\\\\"source_visitation_id\\\\\\\":\\\\\\\"comet.settings.profile_access:bsd34q:1:1786023822.887\\\\\\\"}\\\",\\\"sid_raw\\\":\\\"og5h5g:bu6z48:bsd34q\\\",\\\"source_path\\\":\\\"comet.settings.profile_access\\\"}\",\"tags\":[1,128],\"sessionId\":\"og5h5g:bu6z48:bsd34q\",\"deviceId\":\"fd.ARuUXkaj_R8jugaTeTBF6rE0s8I3DCGXxyllCR7gwaKDr5J0ps1MvmCxyRDmJsewVAJTD1UzP5gvDFDSq8s6mFpl\",\"appVersion\":\"1044.619.432.0 (1044619432)\"},{\"name\":\"web_time_spent_bit_array\",\"policy\":{\"r\":1},\"time\":1786024023699.9,\"extra\":\"{\\\"sid_raw\\\":\\\"og5h5g:rp1c6d:bsd34q\\\",\\\"start_endpoint\\\":\\\"comet.settings.profile_access\\\",\\\"start_event\\\":\\\"mousemove\\\",\\\"start_time\\\":1786023960,\\\"tos_array\\\":[-134160331,520355551],\\\"tos_cum\\\":109,\\\"tos_id\\\":\\\"bsd34q\\\",\\\"tos_len\\\":62,\\\"tos_seq\\\":3}\",\"tags\":[1,128],\"sessionId\":\"og5h5g:bu6z48:bsd34q\",\"deviceId\":\"fd.ARuUXkaj_R8jugaTeTBF6rE0s8I3DCGXxyllCR7gwaKDr5J0ps1MvmCxyRDmJsewVAJTD1UzP5gvDFDSq8s6mFpl\",\"appVersion\":\"1044.619.432.0 (1044619432)\"}],\"ts\":1786024021209.7998}"
-                },
-                {
-                    "name": "falco_queue_critical^$100001863360806^#61592333133918^#^#hmac_ttl.1786023820.AR0nRVUIK5O9h0FaoHVmKOtG-B93IF2pR2e9OZVI5jPmTiMq^$f659d671499ba178d",
-                    "value": "{\"items\":[{\"name\":\"ods_web_batch\",\"policy\":{\"r\":1,\"s\":1},\"time\":1786024023694.9998,\"extra\":\"{\\\"batch\\\":{\\\"3589\\\":{\\\"dgw_web_client\\\":{\\\"realtime.WebStreamAckManager.ack_expected\\\":{\\\"n\\\":9,\\\"d\\\":null},\\\"realtime.DGWPinger.reset\\\":{\\\"n\\\":18,\\\"d\\\":null},\\\"realtime.DGWPinger.reset.newtimeout\\\":{\\\"n\\\":18,\\\"d\\\":null},\\\"realtime.GroupedWebStream.ack_received\\\":{\\\"n\\\":9,\\\"d\\\":null},\\\"realtime.WebStreamAckManager.ack_received\\\":{\\\"n\\\":9,\\\"d\\\":null},\\\"realtime.GroupedWebStream.data_received\\\":{\\\"n\\\":9,\\\"d\\\":null},\\\"realtime.GroupedWebStream.ack_sent\\\":{\\\"n\\\":9,\\\"d\\\":null},\\\"lightspeed.DGWPinger.timeout_fired.reset\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"lightspeed.DGWPinger.timeout.newtimeout\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"lightspeed.DGWPinger.reset\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"lightspeed.DGWPinger.reset.newtimeout\\\":{\\\"n\\\":1,\\\"d\\\":null}}},\\\"7173\\\":{\\\"entities.ff_js_web.auto_logging_network_event.2220391788200892.1044.C3\\\":{\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":11,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":11,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":11,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":11,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":11,\\\"d\\\":null},\\\"event.logged\\\":{\\\"n\\\":10,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":7,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":7,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":10,\\\"d\\\":null}},\\\"entities.ff_js_web.business_permission_events.2220391788200892.1044.C3\\\":{\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.comet_auto_logging.2220391788200892.1044.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":157,\\\"d\\\":null},\\\"event.filters.sampling\\\":{\\\"n\\\":157,\\\"d\\\":null}},\\\"entities.ff_js_web.auto_logging_hover_event.2220391788200892.1044.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.comet_topnav_item_click.2220391788200892.1044.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.comet_topnav_item_impression.2220391788200892.1044.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.auto_logging_click_event.2220391788200892.1044.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":2,\\\"d\\\":null}},\\\"entities.ff_js_web.perf.2220391788200892.1044.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log_immediately\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":2,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.switcher_button_tapped.2220391788200892.1044.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.switch_user_tapped.2220391788200892.1044.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.profile_engagement.2220391788200892.1044.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.upload_method.streaming.log\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batched\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.batch_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.queue_processing\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.streamed.with_ack\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.uploaded\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.info.streaming.enqueued\\\":{\\\"n\\\":1,\\\"d\\\":null}},\\\"entities.ff_js_web.auto_logging_heartbeat_event.2220391788200892.1044.C3\\\":{\\\"event.logged\\\":{\\\"n\\\":1,\\\"d\\\":null},\\\"event.captured\\\":{\\\"n\\\":1,\\\"d\\\":null}}}}}\",\"tags\":[1,128],\"sessionId\":\"og5h5g:bu6z48:bsd34q\",\"deviceId\":\"fd.ARuUXkaj_R8jugaTeTBF6rE0s8I3DCGXxyllCR7gwaKDr5J0ps1MvmCxyRDmJsewVAJTD1UzP5gvDFDSq8s6mFpl\",\"appVersion\":\"1044.619.432.0 (1044619432)\"}],\"ts\":1786024021205}"
+                    "name": "armadillo_msgr_data_loss_stats",
+                    "value": "{}"
                 },
                 {
                     "name": "CacheStorageVersion",
                     "value": "3b"
                 },
                 {
-                    "name": "mw_encrypted_backups_restore_upsell_first_impression_time_key",
-                    "value": "1786024024726"
-                },
-                {
                     "name": "Session",
-                    "value": "og5h5g:1786024085312"
-                },
-                {
-                    "name": "falco_queue_log^$100001863360806^#61592333133918^#^#hmac_ttl.1786023820.AR0nRVUIK5O9h0FaoHVmKOtG-B93IF2pR2e9OZVI5jPmTiMq^$f8e08b1a1e2e07fe5",
-                    "value": "{\"items\":[{\"name\":\"auto_logging_network_event\",\"policy\":{\"r\":1,\"s\":1},\"time\":1786024023329.7,\"extra\":\"{\\\"ad_account_id\\\":\\\"1453239146104365\\\",\\\"app_session_id\\\":\\\"7cdf6f2a148274fd\\\",\\\"browser_session_id\\\":\\\"f965962f0\\\",\\\"flow_session_id\\\":\\\"f5bd9786a\\\",\\\"business_id\\\":null,\\\"page_uri\\\":\\\"https://www.facebook.com/settings/?tab=profile_access\\\",\\\"tab\\\":null,\\\"tool\\\":\\\"Business Settings\\\",\\\"backing_user_type\\\":\\\"UNKNOWN\\\",\\\"metadata\\\":{\\\"call_flowlet_id\\\":\\\"18896\\\",\\\"trigger_flowlet_id\\\":\\\"18824\\\",\\\"web_session_id\\\":\\\"bu6z48\\\",\\\"is_mma\\\":\\\"false\\\",\\\"request_path\\\":\\\"/ajax/bnzai\\\",\\\"request_type\\\":\\\"OTHER\\\",\\\"initiator_type\\\":\\\"xmlhttprequest\\\",\\\"method\\\":\\\"POST\\\"},\\\"client_time\\\":1786024020823.2998,\\\"event_index\\\":2156,\\\"initiator_type\\\":\\\"xmlhttprequest\\\",\\\"event_type\\\":\\\"network_request\\\",\\\"trigger_flowlet\\\":\\\"//:0/mouse:18656/click(element=ff4744d21):18824\\\",\\\"call_flowlet\\\":\\\"//:0/then:18896\\\",\\\"request_map\\\":{\\\"method\\\":\\\"POST\\\",\\\"path\\\":\\\"/ajax/bnzai\\\"}}\",\"tags\":[1,128],\"sessionId\":\"og5h5g:bu6z48:bsd34q\",\"deviceId\":\"fd.ARuUXkaj_R8jugaTeTBF6rE0s8I3DCGXxyllCR7gwaKDr5J0ps1MvmCxyRDmJsewVAJTD1UzP5gvDFDSq8s6mFpl\",\"appVersion\":\"1044.619.432.0 (1044619432)\"},{\"name\":\"auto_logging_network_event\",\"policy\":{\"r\":1,\"s\":1},\"time\":1786024023331.9998,\"extra\":\"{\\\"ad_account_id\\\":\\\"1453239146104365\\\",\\\"app_session_id\\\":\\\"7cdf6f2a148274fd\\\",\\\"browser_session_id\\\":\\\"f965962f0\\\",\\\"flow_session_id\\\":\\\"f5bd9786a\\\",\\\"business_id\\\":null,\\\"page_uri\\\":\\\"https://www.facebook.com/settings/?tab=profile_access\\\",\\\"tab\\\":null,\\\"tool\\\":\\\"Business Settings\\\",\\\"backing_user_type\\\":\\\"UNKNOWN\\\",\\\"metadata\\\":{\\\"call_flowlet_id\\\":\\\"18836\\\",\\\"trigger_flowlet_id\\\":\\\"18824\\\",\\\"web_session_id\\\":\\\"bu6z48\\\",\\\"is_mma\\\":\\\"false\\\",\\\"request_name\\\":\\\"CometProfileSwitchMutation\\\",\\\"stringified_response_size\\\":\\\"212\\\",\\\"http_response_status\\\":\\\"200\\\",\\\"initiator_type\\\":\\\"xmlhttprequest\\\",\\\"is_response_data_empty\\\":\\\"false\\\",\\\"method\\\":\\\"POST\\\",\\\"request_path\\\":\\\"/api/graphql/\\\",\\\"request_type\\\":\\\"GRAPH_QL\\\",\\\"round_trip_time_ms\\\":\\\"260.60009765625\\\",\\\"heap_size_delta\\\":\\\"0\\\",\\\"js_heap_size_limit\\\":\\\"2145386496\\\",\\\"used_js_heap_size\\\":\\\"151314682\\\",\\\"total_js_heap_size\\\":\\\"157081102\\\"},\\\"client_time\\\":1786024020756.4,\\\"event_index\\\":2154,\\\"related_event_index\\\":2152,\\\"initiator_type\\\":\\\"xmlhttprequest\\\",\\\"event_type\\\":\\\"network_response\\\",\\\"trigger_flowlet\\\":\\\"//:0/mouse:18656/click(element=ff4744d21):18824\\\",\\\"call_flowlet\\\":\\\"//:0/addEventListener(click):4398/addEventListener(click):18828/then:18836\\\",\\\"response_map\\\":{\\\"status\\\":\\\"200\\\"},\\\"event_sampling_rate\\\":null}\",\"tags\":[1,128],\"sessionId\":\"og5h5g:bu6z48:bsd34q\",\"deviceId\":\"fd.ARuUXkaj_R8jugaTeTBF6rE0s8I3DCGXxyllCR7gwaKDr5J0ps1MvmCxyRDmJsewVAJTD1UzP5gvDFDSq8s6mFpl\",\"appVersion\":\"1044.619.432.0 (1044619432)\"},{\"name\":\"auto_logging_network_event\",\"policy\":{\"r\":1,\"s\":1},\"time\":1786024023661.7,\"extra\":\"{\\\"ad_account_id\\\":\\\"1453239146104365\\\",\\\"app_session_id\\\":\\\"7cdf6f2a148274fd\\\",\\\"browser_session_id\\\":\\\"f965962f0\\\",\\\"flow_session_id\\\":\\\"f5bd9786a\\\",\\\"business_id\\\":null,\\\"page_uri\\\":\\\"https://www.facebook.com/settings/?tab=profile_access\\\",\\\"tab\\\":null,\\\"tool\\\":\\\"Business Settings\\\",\\\"backing_user_type\\\":\\\"UNKNOWN\\\",\\\"metadata\\\":{\\\"call_flowlet_id\\\":\\\"18896\\\",\\\"trigger_flowlet_id\\\":\\\"18824\\\",\\\"web_session_id\\\":\\\"bu6z48\\\",\\\"is_mma\\\":\\\"false\\\",\\\"stringified_response_size\\\":\\\"2\\\",\\\"http_response_status\\\":\\\"200\\\",\\\"initiator_type\\\":\\\"xmlhttprequest\\\",\\\"is_response_data_empty\\\":\\\"true\\\",\\\"method\\\":\\\"POST\\\",\\\"request_path\\\":\\\"/ajax/bnzai\\\",\\\"request_type\\\":\\\"OTHER\\\",\\\"round_trip_time_ms\\\":\\\"342.5\\\",\\\"heap_size_delta\\\":\\\"-2638530\\\",\\\"js_heap_size_limit\\\":\\\"2145386496\\\",\\\"used_js_heap_size\\\":\\\"148676152\\\",\\\"total_js_heap_size\\\":\\\"157015884\\\"},\\\"client_time\\\":1786024021165.7998,\\\"event_index\\\":2157,\\\"related_event_index\\\":2156,\\\"initiator_type\\\":\\\"xmlhttprequest\\\",\\\"event_type\\\":\\\"network_response\\\",\\\"trigger_flowlet\\\":\\\"//:0/mouse:18656/click(element=ff4744d21):18824\\\",\\\"call_flowlet\\\":\\\"//:0/then:18896\\\",\\\"response_map\\\":{\\\"status\\\":\\\"200\\\"},\\\"event_sampling_rate\\\":null}\",\"tags\":[1,128],\"sessionId\":\"og5h5g:bu6z48:bsd34q\",\"deviceId\":\"fd.ARuUXkaj_R8jugaTeTBF6rE0s8I3DCGXxyllCR7gwaKDr5J0ps1MvmCxyRDmJsewVAJTD1UzP5gvDFDSq8s6mFpl\",\"appVersion\":\"1044.619.432.0 (1044619432)\"}],\"ts\":1786024021171.5999}"
+                    "value": "laprja:1786357687822"
                 },
                 {
                     "name": "_oz_bandwidthEstimate",
@@ -143,19 +123,15 @@
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1786023208997.9"
-                },
-                {
-                    "name": "mutex_falco_queue_log^$100001863360806^#61592333133918^#^#hmac_ttl.1786023820.AR0nRVUIK5O9h0FaoHVmKOtG-B93IF2pR2e9OZVI5jPmTiMq^$",
-                    "value": "hrv5qm:1786024024513"
-                },
-                {
-                    "name": "mutex_falco_queue_critical^$100001863360806^#61592333133918^#^#hmac_ttl.1786023820.AR0nRVUIK5O9h0FaoHVmKOtG-B93IF2pR2e9OZVI5jPmTiMq^$",
-                    "value": "hrv5qm:1786024024514"
+                    "value": "1786348975363.3"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"100001863360806\",\"currentIntervalLastTick\":1786024058,\"currentIntervalStart\":1786024025,\"initRemoteAgg\":{\"timestamp\":1785932431,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1786024025,\"localStorageId\":\"29827131\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                    "value": "{\"actorId\":\"61593069723673\",\"currentIntervalLastTick\":1786357655,\"currentIntervalStart\":1786357505,\"initRemoteAgg\":{\"timestamp\":-1,\"today_s\":0},\"intervals\":[],\"lastCallbackAttempt\":1786357505,\"localStorageId\":\"95443219\",\"syncedL24HS\":null,\"syncedTodayS\":null}"
+                },
+                {
+                    "name": "last_headload_time",
+                    "value": "1786357505551"
                 },
                 {
                     "name": "RSTData",
@@ -163,11 +139,11 @@
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1786023210444"
+                    "value": "1786357479948"
                 },
                 {
                     "name": "bdz_playback_state",
-                    "value": "{\"session_key\":\"ms3a6u4v\",\"buffer_length\":60}"
+                    "value": "{\"session_key\":\"ms8sqfro\",\"buffer_length\":60}"
                 },
                 {
                     "name": "_oz_bandwidthAndTTFBSamples",
@@ -175,19 +151,11 @@
                 },
                 {
                     "name": "ares_last_signal_flush",
-                    "value": "1785160029199"
-                },
-                {
-                    "name": "mutex_falco_queue_log^$100001863360806^#100001863360806^#^#hmac_ttl.1786024023.AR2r8n7GiLX2ygl-Mu80QGWhViOz3K_rIlWtSMXOrV9Axfg1^$",
-                    "value": "hrv5qm:1786024024513"
+                    "value": "1785493507668"
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1786023210686"
-                },
-                {
-                    "name": "mutex_falco_queue_immediately^$100001863360806^#61592333133918^#^#hmac_ttl.1786023820.AR0nRVUIK5O9h0FaoHVmKOtG-B93IF2pR2e9OZVI5jPmTiMq^$",
-                    "value": "hrv5qm:1786024024513"
+                    "value": "1786357450081"
                 }
             ]
         }
