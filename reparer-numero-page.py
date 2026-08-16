@@ -1,9 +1,10 @@
-import json, asyncio, msvcrt, time, unicodedata
+import json, asyncio, msvcrt, time, unicodedata, sqlite3
 from playwright.async_api import async_playwright
 from itertools import cycle
 from outils_playwright import (connecter_gmail, clic_div_aria_label_role_button, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, 
 charger_fichier_d, ajouter_dans_fichier, mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles, domaines_autoriser, clic_div_aria_label_role_button,
-query_selector_text, compter_followers_fb, verifier_nouveau_element, verifier_date_recontacte, verifier_commande, numero_telephone)
+query_selector_text, compter_followers_fb, verifier_nouveau_element, verifier_date_recontacte, verifier_commande, numero_telephone, init_db, existe_deja, sauvegarder,
+mettre_a_jour_sqlite)
 
 
 
@@ -149,24 +150,24 @@ async def compter_commentaire(page, nom, url):
                     await message(page, nom, url)
                     
 
-              
-                        
+           
             
-async def email(page, nom_page, url):           
+async def email(conn1, conn2, conn3, page, nom_page, url):           
     element = await page.query_selector('[href^="mailto:"]') # recuperer email
 
-    email = None
+    adresse_email = None
     if element:
         href = await element.get_attribute("href")
         
         if href:
-            email = href.replace("mailto:", "").strip()
+            adresse_email = href.replace("mailto:", "").strip()
             
-            if email.endswith(domaines_autoriser):
-                print("email :", email)
-                await ajouter_dans_fichier("emails_collecter.json", {"email": email, "nom": nom_page}, "email", email)
+            if "@" in adresse_email and "." in adresse_email.split("@")[-1]:
+                print("email :", adresse_email)
+                #await ajouter_dans_fichier("emails_collecter.json", {"email": email, "nom": nom_page}, "email", email)
+                mettre_a_jour_sqlite(conn3, "pages", {"email": adresse_email}, "url", url)
     
-    await mettre_a_jour("pages_collecter2.json", {"verfierEmail": 1}, "page", url)
+    #await mettre_a_jour("pages_collecter2.json", {"verfierEmail": 1}, "page", url)
     
 
         
@@ -305,6 +306,11 @@ async def collecter_liens(fichier, context, page):
 
 
 
+async def reparer_email(conn1, conn2, conn3, page, nom_page, url):
+    await page.goto(url, timeout=0)
+    await email(conn1, conn2, conn3, page, nom_page, url)
+ 
+ 
 async def reparer_numero(page, url):
     await page.goto(url, timeout=0)
     await numero_telephone(page, url);
@@ -313,17 +319,31 @@ async def reparer_numero(page, url):
 
                     
 async def main():
+    conn1 = init_db(
+        db_path="pages_collecter_artistes.db", table_name="pages",
+        colonnes={"nom": "TEXT", "url": "TEXT", "ami": "INTEGER"}, colonne_unique="url",
+    )
+    
+    conn2 = init_db(
+        db_path="pages_collecter_artistes2.db", table_name="pages",
+        colonnes={"nom": "TEXT", "url": "TEXT"}, colonne_unique="url",
+    )
+    
+    conn3 = init_db(
+        db_path="artistes2.db", table_name="pages",
+        colonnes={"nom": "TEXT", "url": "TEXT"}, colonne_unique="url",
+    )
+    
     async with async_playwright() as p:
         browser = await p.chromium.launch(        
         headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
-        fichier1 = "pages_collecter_artistes2.json"
-        fichier2 = "artistes2.json"
         
-        pages_fb = await verifier_nouveau_element(fichier1, fichier2, "url")
+        conn2.row_factory = sqlite3.Row
+        pages_fb = [dict(r) for r in conn2.execute("SELECT * FROM pages").fetchall()]
         pages_fb = [p for p in pages_fb if "url" in p]
-        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]         
-        pages_fb = [p for p in pages_fb if "telephone" not in p and "telephone_bio" not in p and "telephone_span" not in p]
-        pages_fb = [p for p in pages_fb if not p.get("nom", "").strip().startswith("-")]  # exclut celles qui commencent par -
+        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]
+        pages_fb = [p for p in pages_fb if not p.get("telephone") and not p.get("telephone_bio") and not p.get("telephone_span")]
+        #pages_fb = [p for p in pages_fb if not p.get("nom", "").strip().startswith("-")]  # exclut celles qui commencent par -
         #pages_fb = [p for p in pages_fb if p.get("nom", "").strip().startswith("+")]  # ne garde que les pages qui ont + devant leur nom
         
         fichier3 = "mes_comptes_fb.json"
@@ -344,6 +364,7 @@ async def main():
         for compte_fb in comptes_fb:  # 🔁 boucle EXTERNE : un compte à la fois
             fichier_cookie = compte_fb.get("fichier")
             mon_compte = compte_fb.get("fichier")
+            print("aa ")
 
             while index < len(pages_fb):  # 🔁 boucle INTERNE : toutes les pages pour CE compte
                 tour += 1
@@ -351,6 +372,8 @@ async def main():
 
                 page = pages_fb[index]
                 url_page = page.get("url")
+                nom_page = page.get("nom")
+                print("nom_page ", nom_page)
 
                 if url_page in pages_deja_contacter:
                     index += 1
@@ -366,7 +389,7 @@ async def main():
                 print("Contacté :", url_page)
 
                 try:
-                    await reparer_numero(page, url_page)
+                    await reparer_email(conn1, conn2, conn3, page, nom_page, url_page)
                 except Exception as e:
                     print("..erreur main", e)
 
@@ -383,6 +406,11 @@ async def main():
             print(f"✅ Compte {mon_compte} a fini de contacter toutes les pages disponibles")
 
         print("Tous les comptes ont contacté toutes les pages")
+        
+    conn1.close()
+    conn2.close()
+    conn3.close()
+    
 
 asyncio.run(main())
 

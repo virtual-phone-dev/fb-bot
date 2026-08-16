@@ -3,7 +3,7 @@ from playwright.async_api import async_playwright
 from itertools import cycle
 from outils_playwright import (connecter_gmail, clic_div_aria_label_role_button, sauvegarder_cookies, charger_cookies, sauvegarder_fichier, charger_fichier, 
 charger_fichier_d, ajouter_dans_fichier, mettre_a_jour, post_recent, verifier_blocage2, nettoyer_texte, mots_inutiles, domaines_autoriser, clic_div_aria_label_role_button,
-query_selector_text, compter_followers_fb, numero_telephone)
+query_selector_text, compter_followers_fb, numero_telephone, init_db, existe_deja, sauvegarder)
 
 
 
@@ -76,57 +76,6 @@ fonctions génériques pour créer, vérifier et insérer.
 
 Exemple d'utilisation en bas du fichier.
 """
-
-import sqlite3
-
-
-def init_db(db_path, table_name, colonnes, colonne_unique):
-    """
-    Crée (si besoin) la base et la table.
-
-    db_path        : chemin du fichier .db, ex "pages_artistes.db"
-    table_name     : nom de la table, ex "pages"
-    colonnes       : dict {nom_colonne: type_sql}, ex {"nom": "TEXT", "url": "TEXT", "telephone": "TEXT"}
-    colonne_unique : nom de la colonne qui ne doit jamais avoir de doublon, ex "url"
-
-    Retourne la connexion, à garder ouverte pendant toute la durée du script.
-    """
-    conn = sqlite3.connect(db_path)
-
-    definitions = ["id INTEGER PRIMARY KEY AUTOINCREMENT"]
-    for nom_col, type_col in colonnes.items():
-        suffixe = " UNIQUE" if nom_col == colonne_unique else ""
-        definitions.append(f"{nom_col} {type_col}{suffixe}")
-    definitions.append("date_collecte DATETIME DEFAULT CURRENT_TIMESTAMP")
-
-    requete = f"CREATE TABLE IF NOT EXISTS {table_name} ({', '.join(definitions)})"
-    conn.execute(requete)
-    conn.commit()
-    return conn
-
-
-def existe_deja(conn, table_name, colonne, valeur):
-    """Vérifie si une valeur existe déjà dans une colonne (rapide, via l'index)."""
-    requete = f"SELECT 1 FROM {table_name} WHERE {colonne} = ? LIMIT 1"
-    cur = conn.execute(requete, (valeur,))
-    return cur.fetchone() is not None
-
-
-def sauvegarder(conn, table_name, donnees: dict):
-    """
-    Insère une ligne. Ignore silencieusement si la colonne UNIQUE existe déjà.
-
-    donnees : dict {nom_colonne: valeur}, ex {"nom": "Flavio", "url": "https://..."}
-    Retourne True si insérée, False si doublon ignoré.
-    """
-    colonnes = ", ".join(donnees.keys())
-    points_interrogation = ", ".join("?" for _ in donnees)
-    requete = f"INSERT OR IGNORE INTO {table_name} ({colonnes}) VALUES ({points_interrogation})"
-
-    cur = conn.execute(requete, tuple(donnees.values()))
-    conn.commit()
-    return cur.rowcount > 0
-
 
 
 
@@ -416,24 +365,18 @@ async def collecter_liens(conn1, conn2, conn3, fichier, context, page):
     
 async def main():
     conn1 = init_db(
-        db_path="pages_collecter_artistes.db",
-        table_name="pages",
-        colonnes={"nom": "TEXT", "url": "TEXT", "ami": "INTEGER"},
-        colonne_unique="url",
+        db_path="pages_collecter_artistes.db", table_name="pages",
+        colonnes={"nom": "TEXT", "url": "TEXT", "ami": "INTEGER"}, colonne_unique="url",
     )
     
     conn2 = init_db(
-        db_path="pages_collecter_artistes2.db",
-        table_name="pages",
-        colonnes={"nom": "TEXT", "url": "TEXT"},
-        colonne_unique="url",
+        db_path="pages_collecter_artistes2.db", table_name="pages",
+        colonnes={"nom": "TEXT", "url": "TEXT"}, colonne_unique="url",
     )
     
     conn3 = init_db(
-        db_path="artistes2.db",
-        table_name="pages",
-        colonnes={"nom": "TEXT", "url": "TEXT"},
-        colonne_unique="url",
+        db_path="artistes2.db", table_name="pages",
+        colonnes={"nom": "TEXT", "url": "TEXT"}, colonne_unique="url",
     )
     
     async with async_playwright() as p:

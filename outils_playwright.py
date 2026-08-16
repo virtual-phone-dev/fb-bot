@@ -1,4 +1,4 @@
-import json, os, asyncio, random, sqlite3, msvcrt, time, unicodedata
+import json, os, asyncio, random, sqlite3, msvcrt, time, unicodedata, sqlite3
 from datetime import datetime
 format_date = "%d-%m-%Y"
 
@@ -502,8 +502,34 @@ async def verifier_nouveau_element(fichier1, fichier2, cle_db):
 
     return emails_collecter2       
         
-        
-        
+
+
+# mettre_a_jour_version_sqlite
+def mettre_a_jour_sqlite(conn, table_name, donnees: dict, colonne_cle, valeur_cle):
+    """
+    Met à jour une ligne existante, identifiée par colonne_cle = valeur_cle.
+    Si aucune ligne ne correspond, insère une nouvelle ligne à la place (upsert).
+
+    donnees : dict {nom_colonne: nouvelle_valeur}
+    Retourne "mis_a_jour", "insere" ou False (en cas d'erreur d'insertion).
+    """
+    assignations = ", ".join(f"{col} = ?" for col in donnees)
+    requete = f"UPDATE {table_name} SET {assignations} WHERE {colonne_cle} = ?"
+    valeurs = tuple(donnees.values()) + (valeur_cle,)
+    cur = conn.execute(requete, valeurs)
+    conn.commit()
+
+    if cur.rowcount > 0:
+        return "mis_a_jour"
+
+    # Aucune ligne trouvée -> on insère une nouvelle ligne avec la clé + les données
+    a_inserer = {colonne_cle: valeur_cle, **donnees}
+    if sauvegarder(conn, table_name, a_inserer):
+        return "insere"
+    return False
+
+
+
 async def acceder_page(page):
     textes = ["Richesse avec SATAN", "Secte de SATAN"]
 
@@ -885,6 +911,59 @@ async def recuperer_texte_insta(page, posts, fichier_posts):
         pass #print("Impossible de récupérer le texte :", e)           
          
          
+         
+         
+# sqlite
+
+def init_db(db_path, table_name, colonnes, colonne_unique):
+    """
+    Crée (si besoin) la base et la table.
+
+    db_path        : chemin du fichier .db, ex "pages_artistes.db"
+    table_name     : nom de la table, ex "pages"
+    colonnes       : dict {nom_colonne: type_sql}, ex {"nom": "TEXT", "url": "TEXT", "telephone": "TEXT"}
+    colonne_unique : nom de la colonne qui ne doit jamais avoir de doublon, ex "url"
+
+    Retourne la connexion, à garder ouverte pendant toute la durée du script.
+    """
+    conn = sqlite3.connect(db_path)
+
+    definitions = ["id INTEGER PRIMARY KEY AUTOINCREMENT"]
+    for nom_col, type_col in colonnes.items():
+        suffixe = " UNIQUE" if nom_col == colonne_unique else ""
+        definitions.append(f"{nom_col} {type_col}{suffixe}")
+    definitions.append("date_collecte DATETIME DEFAULT CURRENT_TIMESTAMP")
+
+    requete = f"CREATE TABLE IF NOT EXISTS {table_name} ({', '.join(definitions)})"
+    conn.execute(requete)
+    conn.commit()
+    return conn
+
+
+def existe_deja(conn, table_name, colonne, valeur):
+    """Vérifie si une valeur existe déjà dans une colonne (rapide, via l'index)."""
+    requete = f"SELECT 1 FROM {table_name} WHERE {colonne} = ? LIMIT 1"
+    cur = conn.execute(requete, (valeur,))
+    return cur.fetchone() is not None
+
+
+def sauvegarder(conn, table_name, donnees: dict):
+    """
+    Insère une ligne. Ignore silencieusement si la colonne UNIQUE existe déjà.
+
+    donnees : dict {nom_colonne: valeur}, ex {"nom": "Flavio", "url": "https://..."}
+    Retourne True si insérée, False si doublon ignoré.
+    """
+    colonnes = ", ".join(donnees.keys())
+    points_interrogation = ", ".join("?" for _ in donnees)
+    requete = f"INSERT OR IGNORE INTO {table_name} ({colonnes}) VALUES ({points_interrogation})"
+
+    cur = conn.execute(requete, tuple(donnees.values()))
+    conn.commit()
+    return cur.rowcount > 0
+
+
+
          
 # Charger cookies
 def charger_cookies(fichier):
