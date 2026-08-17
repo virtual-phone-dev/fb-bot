@@ -376,7 +376,7 @@ async def main():
     
     conn3 = init_db(
         db_path="artistes2.db", table_name="pages",
-        colonnes={"nom": "TEXT", "url": "TEXT"}, colonne_unique="url",
+        colonnes={"nom": "TEXT", "url": "TEXT", "email": "TEXT"}, colonne_unique="url",
     )
     
     async with async_playwright() as p:
