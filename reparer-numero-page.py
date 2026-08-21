@@ -152,7 +152,12 @@ async def compter_commentaire(page, nom, url):
 
            
             
-async def email(conn1, conn2, conn3, page, nom_page, url):           
+async def email(conn1, conn2, conn3, page, nom_page, url):        
+    await page.evaluate("window.scrollBy(0, document.body.scrollHeight)") # Scroll pour descendre en bas, (je descend en bas pour pouvoir afficher l'email)
+    print("patiente 2s"); await asyncio.sleep(2); 
+    await page.evaluate("window.scrollBy(0, 500)"); print("patiente 3s"); await asyncio.sleep(3)
+    
+    
     element = await page.query_selector('[href^="mailto:"]') # recuperer email
 
     adresse_email = None
