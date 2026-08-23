@@ -369,7 +369,10 @@ async def main():
         for compte_fb in comptes_fb:  # 🔁 boucle EXTERNE : un compte à la fois
             fichier_cookie = compte_fb.get("fichier")
             mon_compte = compte_fb.get("fichier")
-            print("aa ")
+            
+            context = await browser.new_context()
+            cookies = charger_cookies(fichier_cookie)
+            await context.add_cookies(cookies)
 
             while index < len(pages_fb):  # 🔁 boucle INTERNE : toutes les pages pour CE compte
                 tour += 1
@@ -384,10 +387,6 @@ async def main():
                     index += 1
                     continue
 
-                context = await browser.new_context()
-                cookies = charger_cookies(fichier_cookie)
-                await context.add_cookies(cookies)
-
                 page = await context.new_page()
                 await apply_stealth(page)
                 print("✅ mon_compte : ", mon_compte)
@@ -396,18 +395,15 @@ async def main():
                 try:
                     await reparer_email(conn1, conn2, conn3, page, nom_page, url_page)
                 except Exception as e:
-                    print("..erreur main", e)
+                    print("..erreur dans main", e)
 
                 await verifier_commande(page, 10)
                 await sauvegarder_cookies(context, fichier_cookie)
-                await context.close()
 
                 pages_deja_contacter.add(url_page)
                 index += 1
-
-                #statut = await tour_suivant(fichier_page_message_debut, pages_fb, comptes_fb, page_suivant, tour, index, "url", "compte")
-                #if statut == "tout_mes_comptes_utiliser": break
-
+                
+            await context.close()
             print(f"✅ Compte {mon_compte} a fini de contacter toutes les pages disponibles")
 
         print("Tous les comptes ont contacté toutes les pages")
