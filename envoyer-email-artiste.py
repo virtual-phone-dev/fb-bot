@@ -7,18 +7,36 @@ basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_
 format_date = "%d-%m-%Y"
 
 
-texte = """Salut c'est Blue Music,
-On organise une competition de musique internationale 100% en ligne à travers nos pages Blue Music. 
+texte = """On organise une 2e competition de musique internationale 100% en ligne, mais cette fois ci, ca va uniquement se dérouler sur Whatsapp.
+Le gagnant gagnera des posts gratuit dans toute les pages Facebook Blue Music de tout les pays pendant une année.
 La competition concernera tout les pays ou nous avons une page Blue Music.
-Le gagnant gagnera des posts gratuit dans toute les pages Blue Music de tout les pays pendant une année.
-Pour participer, vous nous envoyer en message sur notre page Facebook, le lien de votre clip officiel
-ou encore, vous envoyer une video dans laquelle vous chanter dans n'importe qu'elle style de votre choix.
-Le public choisira le Champion à travers les likes, mais aussi, pour ceux qui veulent voter, ils auront la possibilité de voter avec de l'argent réel.
-La competition va durer 1 mois.
+Pour participer, vous envoyer sur whatsapp une video dans laquelle vous chanter dans n'importe qu'elle style de votre choix.
+Le public pourra voter sur Whatsapp.
+Pour voter c'est simple, Les fans vont juste Laissez un cœur (❤️) et WhatsApp affichera le compteur exact du nombre de cœurs sur chaque video.
+La competition va durer 1 mois, et les éliminatoires de la compétition sont déjà en cours.
+
+Venez participez, la compétition a déja débuter sur la chaine whatsapp
+
+Au Bénin 
+https://whatsapp.com/channel/0029VbDaNNsBVJkuScBF5s1g
+
+Au Burkina Faso
+https://whatsapp.com/channel/0029Vb8LGMg1dAvxeTtqrA0m
+
+Au Congo
+https://whatsapp.com/channel/0029Vb8irZR4SpkLtBeQtj3B
+
+En Guinée
+https://whatsapp.com/channel/0029VbDrGgf8F2pBJnJGW541/100
+
+En RDC
+https://whatsapp.com/channel/0029VbDdxKu4yltS2d6ogs3L
 
 Nos numéros Whatsapp:
 +242066789439
 +242065323552
+
+Nos pages Facebook
 
 🇧🇯 Blue Music Bénin
 https://www.facebook.com/profile.php?id=61592563409136

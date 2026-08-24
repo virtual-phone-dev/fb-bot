@@ -152,7 +152,7 @@ async def compter_commentaire(page, nom, url):
 
            
             
-async def email(conn1, conn2, conn3, page, nom_page, url):        
+async def email(conn1, conn2, page, nom_page, url):        
     await page.evaluate("window.scrollBy(0, document.body.scrollHeight)") # Scroll pour descendre en bas, (je descend en bas pour pouvoir afficher l'email)
     print("patiente 2s"); await asyncio.sleep(2); 
     await page.evaluate("window.scrollBy(0, 500)"); print("patiente 3s"); await asyncio.sleep(3)
@@ -170,7 +170,7 @@ async def email(conn1, conn2, conn3, page, nom_page, url):
             if "@" in adresse_email and "." in adresse_email.split("@")[-1]:
                 print("email :", adresse_email)
                 #await ajouter_dans_fichier("emails_collecter.json", {"email": email, "nom": nom_page}, "email", email)
-                mettre_a_jour_sqlite(conn3, "pages", {"email": adresse_email}, "url", url)
+                mettre_a_jour_sqlite(conn2, "pages", {"email": adresse_email}, "url", url)
     
     #await mettre_a_jour("pages_collecter2.json", {"verfierEmail": 1}, "page", url)
     
@@ -311,9 +311,9 @@ async def collecter_liens(fichier, context, page):
 
 
 
-async def reparer_email(conn1, conn2, conn3, page, nom_page, url):
+async def reparer_email(conn1, conn2, page, nom_page, url):
     await page.goto(url, timeout=0)
-    await email(conn1, conn2, conn3, page, nom_page, url)
+    await email(conn1, conn2, page, nom_page, url)
  
  
 async def reparer_numero(page, url):
@@ -386,6 +386,8 @@ async def main():
                 if url_page in pages_deja_contacter:
                     index += 1
                     continue
+                    
+                await sauvegarder_fichier(fichier_page_message_debut, {"url": url_page})
 
                 page = await context.new_page()
                 await apply_stealth(page)
@@ -393,12 +395,13 @@ async def main():
                 print("Contacté :", url_page)
 
                 try:
-                    await reparer_email(conn1, conn2, conn3, page, nom_page, url_page)
+                    await reparer_email(conn1, conn2, page, nom_page, url_page)
                 except Exception as e:
                     print("..erreur dans main", e)
 
                 await verifier_commande(page, 10)
                 await sauvegarder_cookies(context, fichier_cookie)
+                await page.close()
 
                 pages_deja_contacter.add(url_page)
                 index += 1
