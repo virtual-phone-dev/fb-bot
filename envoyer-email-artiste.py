@@ -23,6 +23,12 @@ https://whatsapp.com/channel/0029VbDaNNsBVJkuScBF5s1g
 Au Burkina Faso
 https://whatsapp.com/channel/0029Vb8LGMg1dAvxeTtqrA0m
 
+Au Cameroun
+https://whatsapp.com/channel/0029Vb9zDsy6LwHgFUyGVr1S
+
+En Centrafrique
+https://whatsapp.com/channel/0029VbDDsaT90x2yR4Vsjd3E
+
 Au Congo
 https://whatsapp.com/channel/0029Vb8irZR4SpkLtBeQtj3B
 
@@ -32,9 +38,12 @@ https://whatsapp.com/channel/0029VbDrGgf8F2pBJnJGW541/100
 En RDC
 https://whatsapp.com/channel/0029VbDdxKu4yltS2d6ogs3L
 
+Au Tchad
+https://whatsapp.com/channel/0029Vb8TQuu2v1IziiebDH1H
+
 Nos numéros Whatsapp:
-+242066789439
 +242065323552
++242066789439
 
 Nos pages Facebook
 

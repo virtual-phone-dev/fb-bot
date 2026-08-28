@@ -346,8 +346,8 @@ async def main():
         conn2.row_factory = sqlite3.Row
         pages_fb = [dict(r) for r in conn2.execute("SELECT * FROM pages").fetchall()]
         pages_fb = [p for p in pages_fb if "url" in p]
-        pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]
-        pages_fb = [p for p in pages_fb if not p.get("telephone") and not p.get("telephone_bio") and not p.get("telephone_span")]
+        #pages_fb = [p for p in pages_fb if await verifier_date_recontacte(p)]
+        #pages_fb = [p for p in pages_fb if not p.get("telephone") and not p.get("telephone_bio") and not p.get("telephone_span")]
         #pages_fb = [p for p in pages_fb if not p.get("nom", "").strip().startswith("-")]  # exclut celles qui commencent par -
         #pages_fb = [p for p in pages_fb if p.get("nom", "").strip().startswith("+")]  # ne garde que les pages qui ont + devant leur nom
         
