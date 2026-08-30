@@ -390,7 +390,7 @@ async def main():
             for compte in comptes:
                 try:
                     browser = await p.chromium.launch(        
-                    headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
+                    headless=True, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
                     
                     #browser = await p.chromium.launch(
                     #headless=True,
