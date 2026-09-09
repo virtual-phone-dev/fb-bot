@@ -240,8 +240,8 @@ async def recuperer_lien(conn1, conn2, conn3, context, page):
 
     while True:
         try:
-            if time.monotonic() - debut > 60 * 2: print("⏹️ Fin des 2 minutes"); return "liberer_memoire" # stop après 2 minutes 
-            #if time.monotonic() - debut > 60 * 2: print("⏹️ Fin des 2 minutes"); break # stop après 2 minutes 
+            if time.monotonic() - debut > 60 * 3: print("⏹️ Fin des 3 minutes"); return "liberer_memoire" # stop après 2 minutes 
+            #if time.monotonic() - debut > 60 * 3: print("⏹️ Fin des 3 minutes"); break # stop après 2 minutes 
             
             
             links = await page.query_selector_all('[data-ad-rendering-role="profile_name"] a[href]')

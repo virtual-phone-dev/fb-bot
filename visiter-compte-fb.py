@@ -37,8 +37,8 @@ async def main():
             page = await context.new_page()
             await appliquer_stealth(page)            
             await visiter_page(page, url_page)
+           
             await verifier_commande(page, 5)
-            
             await sauvegarder_cookies(context, fichier)
             await context.close()
 
