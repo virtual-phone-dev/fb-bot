@@ -55,7 +55,7 @@
             "value": "1280x720",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1789477238,
+            "expires": 1789675493,
             "httpOnly": false,
             "secure": true,
             "sameSite": "Lax"
@@ -85,34 +85,34 @@
             "value": "100067454640496",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1820407168.101972,
+            "expires": 1820606451.59528,
             "httpOnly": false,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "fr",
-            "value": "19BOjyEUhfuUpPG5z.AWcRcOsUExCBTF6akFZxm4szjxUJJf1Hetcpaa_zWBvpnLTPk9A.BqoAH_..AAA.0.0.BqoAH_.AWcL3SLX-pyX2RSF4CkDnSsE1Rg",
+            "value": "1lBpzGym3EJNKNlyq.AWdGKXERgRVJWZn9HAqI9uUE_cwPgS9F_ADejMfz0iYG6UPf42Q.Bqowx0..AAA.0.0.Bqowx0.AWfXsSrTIbwKjKHsBm4DWQlBUMo",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1796647168.102142,
+            "expires": 1796846451.595424,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "xs",
-            "value": "14%3AsnhyYp74JXRNAw%3A2%3A1788871161%3A-1%3A-1%3A%3AAczpgPHREdzQwLWNiz1u-AG8YjafRjb49-3il7SxCA",
+            "value": "14%3AsnhyYp74JXRNAw%3A2%3A1788871161%3A-1%3A-1%3A%3AAcy0T55fP4QYdYS204CJhYXfPML79JatF144xTW1XA",
             "domain": ".facebook.com",
             "path": "/",
-            "expires": 1820407168.102269,
+            "expires": 1820606451.59554,
             "httpOnly": true,
             "secure": true,
             "sameSite": "None"
         },
         {
             "name": "presence",
-            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1788872440255%2C%22v%22%3A1%7D",
+            "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1789070693379%2C%22v%22%3A1%7D",
             "domain": ".facebook.com",
             "path": "/",
             "expires": -1,
@@ -139,7 +139,7 @@
                 },
                 {
                     "name": "Session",
-                    "value": "2nmkjz:1788872586931"
+                    "value": "fbybo5:1789070733389"
                 },
                 {
                     "name": "_oz_bandwidthEstimate",
@@ -147,15 +147,19 @@
                 },
                 {
                     "name": "banzai:last_storage_flush",
-                    "value": "1788871157692.1"
+                    "value": "1789070452467.8"
+                },
+                {
+                    "name": "ps:61594497621564:2e1b2f0c-1360-40b8-a396-7100394906d9",
+                    "value": "692c1cbc-06b1-4feb-b4dc-943d0285c2d9:1789070694188"
                 },
                 {
                     "name": "screen_time_period_logging_facebook",
-                    "value": "{\"actorId\":\"100067454640496\",\"currentIntervalLastTick\":1788872557,\"currentIntervalStart\":1788871166,\"initRemoteAgg\":{\"timestamp\":1788872375,\"today_s\":1208},\"intervals\":[],\"lastCallbackAttempt\":1788872374,\"localStorageId\":\"73618074\",\"syncedL24HS\":-1,\"syncedTodayS\":1208,\"lastSyncTimeStamp\":1788872374}"
+                    "value": "{\"actorId\":\"100067454640496\",\"currentIntervalLastTick\":1789070701,\"currentIntervalStart\":1789070450,\"initRemoteAgg\":{\"timestamp\":1788872375,\"today_s\":0},\"intervals\":[{\"end\":1788872557,\"start\":1788871166}],\"lastCallbackAttempt\":1789070450,\"localStorageId\":\"77735419\",\"syncedL24HS\":-1,\"syncedTodayS\":1208,\"lastSyncTimeStamp\":1788872374}"
                 },
                 {
                     "name": "last_headload_time",
-                    "value": "1788872480188"
+                    "value": "1789070452630"
                 },
                 {
                     "name": "RSTData",
@@ -167,7 +171,7 @@
                 },
                 {
                     "name": "hb_timestamp",
-                    "value": "1788871035473"
+                    "value": "1789070482086"
                 },
                 {
                     "name": "_oz_bandwidthAndTTFBSamples",
@@ -179,11 +183,11 @@
                 },
                 {
                     "name": "signal_flush_timestamp",
-                    "value": "1788871035529"
+                    "value": "1789070452146"
                 },
                 {
-                    "name": "falco_queue_immediately^$100067454640496^#100067454640496^#^#hmac_ttl.1788871163.AR1cDVzhEl6PYU24aZq2KllawwVoaLMWEFwA1RrdD5DRHjwE^$ff36f65ecaa24a6f7",
-                    "value": "{\"items\":[{\"name\":\"web_time_spent_navigation\",\"policy\":{\"r\":1},\"time\":1788872434389.95,\"extra\":\"{\\\"cause\\\":\\\"unload\\\",\\\"custom_data_json\\\":\\\"{\\\\\\\"source_pa\\\\\\\":\\\\\\\"{\\\\\\\\\\\\\\\"0\\\\\\\\\\\\\\\":{\\\\\\\\\\\\\\\"bookmark_id\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"4748854339\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"bookmark_type_name\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"session\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"2nmkjz:ict4do:qs1k9e\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"subsession\\\\\\\\\\\\\\\":1,\\\\\\\\\\\\\\\"tap_point\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"via_cold_start\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"timestamp\\\\\\\\\\\\\\\":1788871165547,\\\\\\\\\\\\\\\"trace_policy\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"comet.home\\\\\\\\\\\\\\\"}}\\\\\\\",\\\\\\\"source_pav2\\\\\\\":\\\\\\\"CometSinglePostDialogRoot.react,comet.post.single_dialog,unexpected,1788872424489,260711,,,;CometSinglePostDialogRoot.react,comet.post.single_dialog,unexpected,1788872414927,617654,,229#230#301,;CometSinglePostDialogRoot.react,comet.post.single_dialog,unexpected,1788872390699,333798,,229#230#301,;ProfileCometTimelineListViewRoot.react,comet.profile.timeline.list,unexpected,1788871237713,688503,250100865708545,,;CometSinglePostDialogRoot.react,comet.post.single_dialog,unexpected,1788871188699,484188,,304#10#230#301,;CometHomeRoot.react,comet.home,via_cold_start,1788871165547,960470,4748854339,,\\\\\\\",\\\\\\\"source_uri\\\\\\\":\\\\\\\"/permalink.php?story_fbid=pfbid021DdKKwd1FNNbfNHEztGpPXUs47FFjM4SMNbcumJaU5JV4jKXpyTK7k76kZcv12R1l&id=61565657932968&__cft__[0]=AZhQwu-BAagpLQWnc7MMPVKnh_8z9nkcPyiAyQZ9IP8adiyNT4PJrTXV42CqFsOc1xOHpU8PxkjrE9lfCnDYwLYbJJ6cfuVcOpyAYXp0pk9SosMXW5iRgQhn0t3P33RcJgFPZcFD28diZZ7fJkcB5i4r37Gc6w1ipeRF&__tn__=%2CO%2CP-R\\\\\\\",\\\\\\\"source_container_id\\\\\\\":\\\\\\\"UzpfSTYxNTY1NjU3OTMyOTY4OjEyMjIwMzYwOTU1MDUyMTkzMToxMjIyMDM2MDk1NTA1MjE5MzE=\\\\\\\",\\\\\\\"source_visitation_id\\\\\\\":\\\\\\\"comet.profile.timeline.list:qs1k9e:1:1788871237.717\\\\\\\"}\\\",\\\"sid_raw\\\":\\\"2nmkjz:ict4do:qs1k9e\\\",\\\"source_path\\\":\\\"comet.post.single_dialog\\\"}\",\"tags\":[1,128],\"sessionId\":\"2nmkjz:ict4do:qs1k9e\",\"deviceId\":\"fd.ARscKqw6bxNAitN60IQwd3JhtqlBiczcEVnq5kdHKDbzzLnEyRmLXmLubUIvkTwf4Aa3ZkgFXDtFvuGspTZJgonj\",\"appVersion\":\"1046.969.912.0 (1046969912)\"},{\"name\":\"web_time_spent_bit_array\",\"policy\":{\"r\":1},\"time\":1788872434390.25,\"extra\":\"{\\\"sid_raw\\\":\\\"2nmkjz:ict4do:qs1k9e\\\",\\\"start_endpoint\\\":\\\"comet.post.single_dialog\\\",\\\"start_event\\\":\\\"mousemove\\\",\\\"start_time\\\":1788872399,\\\"tos_array\\\":[1610546431,0],\\\"tos_cum\\\":782,\\\"tos_id\\\":\\\"qs1k9e\\\",\\\"tos_len\\\":35,\\\"tos_seq\\\":20}\",\"tags\":[1,128],\"sessionId\":\"2nmkjz:ict4do:qs1k9e\",\"deviceId\":\"fd.ARscKqw6bxNAitN60IQwd3JhtqlBiczcEVnq5kdHKDbzzLnEyRmLXmLubUIvkTwf4Aa3ZkgFXDtFvuGspTZJgonj\",\"appVersion\":\"1046.969.912.0 (1046969912)\"}],\"ts\":1788872433399.8}"
+                    "name": "ps:61594087629517:2e1b2f0c-1360-40b8-a396-7100394906d9",
+                    "value": "8c38cea6-76f8-4a2b-b5a5-4fefbd44b1ce:1789070686292"
                 }
             ]
         }
