@@ -1,8 +1,9 @@
-import json, asyncio, time, msvcrt
+import json, asyncio, time, msvcrt, sqlite3
 from playwright.async_api import async_playwright
 from datetime import datetime, timedelta
 from outils_playwright import (connecter_gmail, charger_cookies, sauvegarder_cookies, sauvegarder_sur_meme_ligne, sauvegarder_fichier, charger_fichier, charger_fichier_d,
-basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_nouveau_element, verifier_nouveau_message, init_db, existe_deja, sauvegarder)
+basculer_sur_la_page, reparer_fb, ajouter_dans_fichier, mettre_a_jour, verifier_nouveau_element, verifier_nouveau_message, init_db, existe_deja, sauvegarder, 
+mettre_a_jour_sq)
 
 format_date = "%d-%m-%Y"
 
@@ -17,28 +18,46 @@ La competition va durer 1 mois, et les éliminatoires de la compétition sont d�
 
 Venez participez, la compétition a déja débuter sur la chaine whatsapp
 
-Au Bénin 
+🇦🇴 En Angola
+https://whatsapp.com/channel/0029Vb9LzsmLikg5haIOXy33
+
+🇧🇯 Au Bénin 
 https://whatsapp.com/channel/0029VbDaNNsBVJkuScBF5s1g
 
-Au Burkina Faso
+🇧🇫 Au Burkina Faso
 https://whatsapp.com/channel/0029Vb8LGMg1dAvxeTtqrA0m
 
-Au Cameroun
+🇨🇲 Au Cameroun
 https://whatsapp.com/channel/0029Vb9zDsy6LwHgFUyGVr1S
 
-En Centrafrique
+🇨🇫 En Centrafrique
 https://whatsapp.com/channel/0029VbDDsaT90x2yR4Vsjd3E
 
-Au Congo
+🇨🇬 Au Congo
 https://whatsapp.com/channel/0029Vb8irZR4SpkLtBeQtj3B
 
-En Guinée
-https://whatsapp.com/channel/0029VbDrGgf8F2pBJnJGW541/100
+🇫🇷 En France
+https://whatsapp.com/channel/0029Vb8vmtQ6rsQqxEq9Zv3n
 
-En RDC
+🇬🇳 En Guinée
+https://whatsapp.com/channel/0029VbDrGgf8F2pBJnJGW541
+
+🇲🇬 A Madagascar
+https://whatsapp.com/channel/0029VbDfP6v0VycAO2cW7P1R
+
+🇲🇱 Au Mali
+https://whatsapp.com/channel/0029Vb94qAwDeON0CIBgo43B
+
+🇲🇿 Au Moçambique 
+https://whatsapp.com/channel/0029Vb8xxkG35fM0UGptKe0L
+
+🇨🇩 En RDC
 https://whatsapp.com/channel/0029VbDdxKu4yltS2d6ogs3L
 
-Au Tchad
+🇸🇳 Au Sénégal
+https://whatsapp.com/channel/0029Vb95t0kBqbr8gCWOYK2S
+
+🇹🇩 Au Tchad
 https://whatsapp.com/channel/0029Vb8TQuu2v1IziiebDH1H
 
 Nos numéros Whatsapp:
@@ -46,6 +65,9 @@ Nos numéros Whatsapp:
 +242066789439
 
 Nos pages Facebook
+
+🇦🇴 Blue Music Angola
+https://www.facebook.com/profile.php?id=61592592752659
 
 🇧🇯 Blue Music Bénin
 https://www.facebook.com/profile.php?id=61592563409136
@@ -62,6 +84,9 @@ https://www.facebook.com/profile.php?id=61590983143767
 🇨🇮 Blue Music Côte d'Ivoire
 https://www.facebook.com/profile.php?id=61591566555411
 
+🇫🇷 Blue Music France
+https://www.facebook.com/profile.php?id=61594497621564
+
 🇬🇳 Blue Music Guinée
 https://www.facebook.com/profile.php?id=61588795262834
 
@@ -73,9 +98,6 @@ https://www.facebook.com/profile.php?id=61592110483392
 
 🇹🇩 Blue Music Tchad
 https://www.facebook.com/profile.php?id=61591692635517
-
-🇦🇴 Blue Music Angola
-https://www.facebook.com/profile.php?id=61592592752659
 
 🇻🇪 Blue Music Venezuela
 https://www.facebook.com/profile.php?id=61592807603883
@@ -157,7 +179,7 @@ async def apply_stealth(page):
 
 
     
-async def envoyer_email(fichier2, fichier4, page, email, mon_email):
+async def envoyer_email(conn2, fichier4, page, email, mon_email):
     while True:
         try:
             textes = ["Nouveau message", "Compose"]
@@ -230,10 +252,10 @@ async def envoyer_email(fichier2, fichier4, page, email, mon_email):
                 if await btn.count() > 0:
                     await btn.click()
                     trouver = True
-                    await verifier_commande(page, 10)
-                    #print("patiente 10s"); await asyncio.sleep(10)
-                    await marquer_contact(fichier2, "email", email, jours_recontact=60)
+                    
+                    mettre_a_jour_sq(conn2, "pages", "email", email, {"deja_contacter": 1}) # 💾 marque le message comme envoyé pour cet artiste
                     await marquer_contact(fichier4, "email", mon_email) #sauvegarde date recontacte de mon compte_email
+                    await verifier_commande(page, 10)
                     break
             if trouver: break
         except:
@@ -294,29 +316,31 @@ async def marquer_contact(fichier, cle_db, cle, jours_recontact=1):
 
         
 async def main():
-    conn1 = init_db(
-        db_path="pages_collecter_artistes.db", table_name="pages",
-        colonnes={"nom": "TEXT", "url": "TEXT", "ami": "INTEGER"}, colonne_unique="url",
-    )
+    #conn1 = init_db(db_path="pages_collecter_artistes.db", table_name="pages", colonnes={"nom": "TEXT", "url": "TEXT", "ami": "INTEGER"}, colonne_unique="url")
     
     conn2 = init_db(
         db_path="pages_collecter_artistes2.db", table_name="pages",
-        colonnes={"nom": "TEXT", "url": "TEXT"}, colonne_unique="url",
+        colonnes={"nom": "TEXT", "url": "TEXT", "deja_contacter": "INTEGER"}, colonne_unique="url",
     )
     
-    conn3 = init_db(
-        db_path="artistes2.db", table_name="pages",
-        colonnes={"nom": "TEXT", "url": "TEXT"}, colonne_unique="url",
-    )
+    #conn3 = init_db(db_path="artistes2.db", table_name="pages", colonnes={"nom": "TEXT", "url": "TEXT"}, colonne_unique="url")
     
     async with async_playwright() as p:
         browser = await p.chromium.launch(
         headless=False, args=["--disable-blink-features=AutomationControlled", "--no-sandbox", "--disable-infobars", "--disable-web-security"])
 
-        fichier1 = "emails_collecter.json"
-        fichier2 = "emails_collecter2.json"
-        emails = await verifier_nouveau_element(fichier1, fichier2, "email") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
-        emails = [e for e in emails if await verifier_date_recontacte(e)]
+        #fichier1 = "emails_collecter.json"
+        #fichier2 = "emails_collecter2.json"
+        #emails = await verifier_nouveau_element(fichier1, fichier2, "email") # on verifie si ya de nouveaux emails , pour le mettre dans notre fichier de collectes 
+        #emails = [e for e in emails if await verifier_date_recontacte(e)]
+        
+        # 💾 lecture directe depuis SQLite au lieu de emails_collecter.json / emails_collecter2.json
+        conn2.row_factory = sqlite3.Row
+        emails = [dict(r) for r in conn2.execute("SELECT * FROM pages").fetchall()]
+        emails = [e for e in emails if e.get("email")]  # ne garder que les lignes avec un email renseigné
+        emails = [e for e in emails if not e.get("deja_contacter")]  # <- exclut ceux déjà contactés
+
+        #emails = [e for e in emails if await verifier_date_recontacte(e)]
         
         fichier3 = "mes_emails.json"
         fichier4 = "mes_emails2.json"
@@ -366,7 +390,8 @@ async def main():
                 if statut == "erreur_serveur_gmail": await context.close(); continue
                 if statut == "Impossible_de_vous_connecter": await context.close(); continue
                     
-                await envoyer_email(conn1, conn2, conn3, fichier2, fichier4, page, email, mon_email)
+                await envoyer_email(conn2, fichier4, page, email, mon_email)
+                #await envoyer_email(conn1, conn2, conn3, fichier4, page, email, mon_email)
                 
                 emails_deja_contacter.add(email)
                 index += 1
@@ -378,9 +403,9 @@ async def main():
                 #print("patiente 10000s"); await asyncio.sleep(10000)
                 await context.close()
                 
-    conn1.close()
+    #conn1.close()
     conn2.close()
-    conn3.close()
+    #conn3.close()
 
 
 asyncio.run(main())

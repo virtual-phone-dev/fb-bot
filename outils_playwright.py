@@ -1248,7 +1248,7 @@ async def collecter_liens(page, nomFichierCompte):
 
 
 
-def mettre_a_jour_s(conn, table_name, colonne_cle, valeur_cle, donnees: dict): # mettre_a_jour_s = mettre_a_jour pour sqlite
+def mettre_a_jour_sq(conn, table_name, colonne_cle, valeur_cle, donnees: dict): # mettre_a_jour_s = mettre_a_jour pour sqlite
     assignations = ", ".join(f"{col} = ?" for col in donnees)
     requete = f"UPDATE {table_name} SET {assignations} WHERE {colonne_cle} = ?"
     valeurs = tuple(donnees.values()) + (valeur_cle,)
@@ -1311,12 +1311,12 @@ async def numero_telephone(conn2, conn3, page, url):
             if numero_span:
                 data["telephone_span"] = numero_span 
                 
-        mettre_a_jour_s(conn2, "pages", "url", url, data)
-        mettre_a_jour_s(conn3, "pages", "url", url, data)
+        mettre_a_jour_sq(conn2, "pages", "url", url, data)
+        mettre_a_jour_sq(conn3, "pages", "url", url, data)
     else:
         print("pas de numero")
-        mettre_a_jour_s(conn2, "pages", "url", url, {"telephone": 0})
-        mettre_a_jour_s(conn3, "pages", "url", url, {"telephone": 0})
+        mettre_a_jour_sq(conn2, "pages", "url", url, {"telephone": 0})
+        mettre_a_jour_sq(conn3, "pages", "url", url, {"telephone": 0})
 
 
                  
