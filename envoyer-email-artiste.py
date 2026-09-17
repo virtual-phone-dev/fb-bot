@@ -21,6 +21,9 @@ Venez participez, la compétition a déja débuter sur la chaine whatsapp
 🇦🇴 En Angola
 https://whatsapp.com/channel/0029Vb9LzsmLikg5haIOXy33
 
+🇩🇪 En Allemagne
+https://whatsapp.com/channel/0029Vb8evvoInlqTveLtni2z
+
 🇧🇯 Au Bénin 
 https://whatsapp.com/channel/0029VbDaNNsBVJkuScBF5s1g
 
@@ -42,13 +45,16 @@ https://whatsapp.com/channel/0029Vb8vmtQ6rsQqxEq9Zv3n
 🇬🇳 En Guinée
 https://whatsapp.com/channel/0029VbDrGgf8F2pBJnJGW541
 
-🇲🇬 A Madagascar
-https://whatsapp.com/channel/0029VbDfP6v0VycAO2cW7P1R
-
 🇲🇱 Au Mali
 https://whatsapp.com/channel/0029Vb94qAwDeON0CIBgo43B
 
-🇲🇿 Au Moçambique 
+🇲🇬 A Madagascar
+https://whatsapp.com/channel/0029VbDfP6v0VycAO2cW7P1R
+
+🇲🇷 En Mauritanie
+https://whatsapp.com/channel/0029Vb8e6DdDuMRhS7VhrL3v
+
+🇲🇿 Au Mozambique 
 https://whatsapp.com/channel/0029Vb8xxkG35fM0UGptKe0L
 
 🇨🇩 En RDC
