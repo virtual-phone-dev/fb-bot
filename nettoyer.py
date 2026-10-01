@@ -5,6 +5,41 @@ sauvegarder_par_bloc)
 
 
 
+async def exporter_nom_url_vers_txt():
+    db_path = "pages_collecter_artistes2.db"
+    fichier_sortie = "artistes.txt"
+
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+
+    cur = conn.execute("SELECT nom, url FROM pages")
+
+    lignes_sortie = []
+    count = 0
+
+    for item in cur:
+        nom = (item["nom"] or "").strip()
+        url = (item["url"] or "").strip()
+
+        if not url:
+            continue
+
+        lignes_sortie.append(nom)
+        lignes_sortie.append(url)
+        lignes_sortie.append("")
+
+        count += 1
+
+    conn.close()
+
+    with open(fichier_sortie, "w", encoding="utf-8") as f:
+        f.write("\n".join(lignes_sortie))
+
+    print(f"✅ {count} artistes exportés dans {fichier_sortie}")
+    
+
+
+
 async def exporter_numeros_depuis_sqlite_vers_txt():
     db_path = "pages_collecter_artistes2.db"
     fichier_sortie = "numeros.txt"

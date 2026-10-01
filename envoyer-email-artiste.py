@@ -8,15 +8,14 @@ mettre_a_jour_sq)
 format_date = "%d-%m-%Y"
 
 
-texte = """On organise une 2e competition de musique internationale 100% en ligne, mais cette fois ci, ca va uniquement se dérouler sur Whatsapp.
-Le gagnant gagnera des posts gratuit dans toute les pages Facebook Blue Music de tout les pays pendant une année.
-La competition concernera tout les pays ou nous avons une page Blue Music.
-Pour participer, vous envoyer sur whatsapp une video dans laquelle vous chanter dans n'importe qu'elle style de votre choix.
-Le public pourra voter sur Whatsapp.
-Pour voter c'est simple, Les fans vont juste Laissez un cœur (❤️) et WhatsApp affichera le compteur exact du nombre de cœurs sur chaque video.
-La competition va durer 1 mois, et les éliminatoires de la compétition sont déjà en cours.
+texte = """
+Pourquoi ne pas avoir un Accord Gagnant-Gagnant ?
 
-Venez participez, la compétition a déja débuter sur la chaine whatsapp
+voila ce qu'on propose, on vous fait un post gratuit sur une de nos pages facebook ou chaine whatsapp et en retour, vous inviter votre communauté à venir interragir avec le post.
+et si l'accord fonctionne bien, on pourra l'étendre sur nos autres pages et chaque fois que vous avez quelque chose à publier.
+
+
+Nos chaines whatsapp
 
 🇦🇴 En Angola
 https://whatsapp.com/channel/0029Vb9LzsmLikg5haIOXy33
@@ -39,6 +38,9 @@ https://whatsapp.com/channel/0029VbDDsaT90x2yR4Vsjd3E
 🇨🇬 Au Congo
 https://whatsapp.com/channel/0029Vb8irZR4SpkLtBeQtj3B
 
+🇨🇮 En Côte d'ivoire
+https://whatsapp.com/channel/0029Vb99c2KCHDymKusOiM0v
+
 🇫🇷 En France
 https://whatsapp.com/channel/0029Vb8vmtQ6rsQqxEq9Zv3n
 
@@ -57,6 +59,9 @@ https://whatsapp.com/channel/0029Vb8e6DdDuMRhS7VhrL3v
 🇲🇿 Au Mozambique 
 https://whatsapp.com/channel/0029Vb8xxkG35fM0UGptKe0L
 
+🇳🇪 Au Niger
+https://whatsapp.com/channel/0029Vb9CFtSBvvsmXZuOit0k
+
 🇨🇩 En RDC
 https://whatsapp.com/channel/0029VbDdxKu4yltS2d6ogs3L
 
@@ -66,9 +71,6 @@ https://whatsapp.com/channel/0029Vb95t0kBqbr8gCWOYK2S
 🇹🇩 Au Tchad
 https://whatsapp.com/channel/0029Vb8TQuu2v1IziiebDH1H
 
-Nos numéros Whatsapp:
-+242065323552
-+242066789439
 
 Nos pages Facebook
 
@@ -110,6 +112,13 @@ https://www.facebook.com/profile.php?id=61592807603883
 
 🇿🇲 Blue Music Zambia
 https://www.facebook.com/profile.php?id=61592637041302
+
+Nos numéros Whatsapp:
++242065323552
++242066789439
+
+Sur Facebook, n'oubliez pas de regarder nos pages facebook du Cameroun et de la RDC
+Sur whatsapp aussi, n'oubliez pas de regarder nos chaines whatsapp du Cameroun et de la RDC qui ont beaucoup d'abonnés
 """
 
 
