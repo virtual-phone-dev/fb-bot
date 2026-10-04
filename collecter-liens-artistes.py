@@ -186,7 +186,7 @@ async def nom_page(conn1, conn2, conn3, page, url):
         if statut: 
             
             follower = await compter_followers_fb(page)
-            if follower is not None and follower < 10000:
+            if follower is not None and follower < 10000000:
                 print("artiste trouvé"); 
                 sauvegarder(conn1, "pages", {"nom": name, "url": url})  # sauvegarder la page trouvée
                 sauvegarder(conn2, "pages", {"nom": name, "url": url})
